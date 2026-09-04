@@ -26,12 +26,21 @@ from lead.policy.transfuser.decoder.center_net_decoder import (
     CenterNetBoundingBoxPrediction,
     CenterNetDecoder,
 )
+from lead.policy.transfuser.decoder.observability_decoder import ObservabilityDecoder
 from lead.policy.transfuser.decoder.perspective_decoder import PerspectiveDecoder
 from lead.policy.transfuser.decoder.planning_decoder import PlanningDecoder
 from lead.policy.transfuser.decoder.radar_detector import RadarDetector
+from lead.policy.transfuser.encoder.observability_gate import (
+    ObservabilityTokenTargets,
+    gate_loss,
+)
 from lead.policy.transfuser.encoder.transfuser_backbone import TransfuserBackbone
 from lead.policy.transfuser.utils import precision
 from lead.policy.transfuser.utils.gpu_augmentation import augment_rgb_batch
+from lead.policy.transfuser.utils.sensor_degradation import (
+    apply_sensor_degradation,
+    degrade_batch,
+)
 
 if typing.TYPE_CHECKING:
     from lead.policy.transfuser.visualization.feature_map_visualizer import (
@@ -95,6 +104,20 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 lead_config,
             )
 
+        if self.config.use_observability:
+            self.observability_decoder = ObservabilityDecoder(lead_config)
+
+        self.gates_fusion = (
+            self.config.use_observability and self.config.use_observability_gate
+        )
+        if self.gates_fusion:
+            if not hasattr(self.backbone, "gate_logits"):
+                raise TypeError(
+                    f"use_observability_gate needs a backbone with a modality "
+                    f"axis to gate; '{self.config.backbone_target}' has none.",
+                )
+            self.observability_token_targets = ObservabilityTokenTargets(lead_config)
+
         if self.config.use_radar_detection:
             self.radar_detector = RadarDetector(
                 bev_input_dim=self.backbone.num_lidar_features,
@@ -110,14 +133,59 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
     def augment_batch(self, batch: TransfuserForwardBatch) -> TransfuserForwardBatch:
         """Inherited, see superclass."""
         data_config = self.lead_config.training.data
-        if not self.training or not data_config.use_color_augmentation:
+        if not self.training:
             return batch
-        if "rgb" in batch:
+        if data_config.use_color_augmentation and "rgb" in batch:
             batch["rgb"] = augment_rgb_batch(
                 batch["rgb"],
                 data_config.color_augmentation_probability,
             )
+        # After the colour augmentation, so a degraded sample is degraded from
+        # the image the model would otherwise have seen.
+        if data_config.use_sensor_degradation:
+            batch = apply_sensor_degradation(
+                batch,
+                data_config.sensor_degradation_probability,
+                data_config.sensor_degradation_max_severity,
+            )
         return batch
+
+    def degrade_batch(self, batch: TransfuserForwardBatch) -> TransfuserForwardBatch:
+        """Inherited, see superclass."""
+        inference = self.lead_config.evaluation.inference
+        reference = batch.get("rgb")
+        if reference is None:
+            reference = batch.get("rasterized_lidar")
+        generator = (
+            None if reference is None else self._degradation_generator(reference.device)
+        )
+        return degrade_batch(
+            batch,
+            inference.degrade_modality,
+            inference.degrade_severity,
+            generator,
+        )
+
+    def _degradation_generator(self, device: torch.device) -> torch.Generator:
+        """The seeded stream this run draws its sensor damage from.
+
+        Built once and kept, so the draws advance across the route instead of
+        restarting every tick -- a per-tick reset would feed the same frozen
+        noise pattern to every frame, which is not what a failing sensor does.
+
+        Args:
+            device: Device the batch lives on.
+
+        Returns:
+            The generator, seeded from ``evaluation.inference.degrade_seed``.
+        """
+        key = str(device)
+        if getattr(self, "_degrade_generator_key", None) != key:
+            generator = torch.Generator(device=device)
+            generator.manual_seed(self.lead_config.evaluation.inference.degrade_seed)
+            self._degrade_generator = generator
+            self._degrade_generator_key = key
+        return self._degrade_generator
 
     def forward(self, batch: TransfuserForwardBatch) -> Prediction:
         auxiliary_log: AuxiliaryLog = {}
@@ -125,9 +193,12 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
             pred_target_speed_scalar
         ) = None
         pred_semantic = pred_depth = pred_bounding_box = pred_bev_semantic = None
+        pred_observability = None
 
         # Backbone
         bev_features, image_features = self.backbone(batch)
+        # Read straight after the backbone ran, before anything else can touch it.
+        gate_logits = self.backbone.gate_logits if self.gates_fusion else None
 
         # Radar detection
         radar_features = radar_predictions = None
@@ -183,6 +254,9 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                     auxiliary_log,
                 )
 
+            if self.config.use_observability:
+                pred_observability = self.observability_decoder(bev_feature_grid)
+
         # Collect predictions
         return Prediction(
             # Planning prediction
@@ -195,6 +269,8 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
             depth=pred_depth,
             bounding_box=pred_bounding_box,
             bev_semantic=pred_bev_semantic,
+            observability=pred_observability,
+            observability_gate=gate_logits,
             radar_features=radar_features,
             radar_predictions=radar_predictions,
             auxiliary_log=auxiliary_log,
@@ -235,6 +311,28 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 batch,
                 loss,
                 log=auxiliary_log,
+            )
+
+        # Observability loss
+        if self.config.use_observability:
+            assert predictions.observability is not None
+            self.observability_decoder.compute_loss(
+                predictions.observability,
+                batch,
+                loss,
+                log=auxiliary_log,
+            )
+
+        # Fusion gate loss, against the same targets reduced to the token grids
+        if self.gates_fusion and predictions.observability_gate:
+            token_target, token_mask = self.observability_token_targets(
+                batch["observability"],
+                batch["observability_mask"],
+            )
+            loss["loss_observability_gate"] = gate_loss(
+                predictions.observability_gate,
+                token_target,
+                token_mask,
             )
 
         # Bounding box detection loss
@@ -432,6 +530,10 @@ class Prediction:
     )
     depth: jt.Float[torch.Tensor, "bs img_height img_width"] | None
     bounding_box: CenterNetBoundingBoxPrediction | None
+    # Per-modality observability logits over the BEV cell grid.
+    observability: jt.Float[torch.Tensor, "bs n_modalities cell_h cell_w"] | None
+    # The fusion gate's logits, one tensor per gated block.
+    observability_gate: list[jt.Float[torch.Tensor, "bs n_tokens n_modalities"]] | None
     radar_features: jt.Float[torch.Tensor, "B Q C"] | None
     radar_predictions: jt.Float[torch.Tensor, "B Q 4"] | None
 

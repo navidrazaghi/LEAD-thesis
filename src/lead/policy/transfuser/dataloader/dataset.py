@@ -128,6 +128,9 @@ _CACHE_FINGER_PRINT_FIELDS = (
     "duplicate_radar_near_ego",
     "duplicate_radar_radius_meter",
     "duplicate_radar_repeat_count",
+    # Observability labels (observability.py); the head toggle is excluded like
+    # every other, but how the targets are shaped is not.
+    "observability_soft_targets",
     # BEV-semantic labels (label_builders.py, bev_raster.py).
     "bev_downsample_factor",
     "pedestrian_bev_extent_scale",
@@ -238,7 +241,12 @@ class TransfuserDataset(AbstractPolicyDataset):
                 # them would couple the store's coverage to the planning head.
                 builds=self._build_planning_targets,
             )
-        if config.detect_boxes or config.use_bev_semantic or config.use_semantic:
+        if (
+            config.detect_boxes
+            or config.use_bev_semantic
+            or config.use_semantic
+            or config.use_observability
+        ):
             parts["privileged_targets"] = SamplePart(
                 reads=SceneLoadingSpec(
                     read_semantic_cameras=config.use_semantic,
@@ -498,6 +506,8 @@ def _privileged_codecs(
         codecs["semantic"] = {"name": "png", "quantization_scale": 1}
     if transfuser_config.use_bev_semantic:
         codecs["bev_semantic"] = {"name": "png", "quantization_scale": 1}
+    if transfuser_config.use_observability:
+        codecs |= {"observability": "zlib", "observability_mask": "zlib"}
     return codecs
 
 

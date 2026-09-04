@@ -54,6 +54,12 @@ class TransfuserTrainingSample(PolicyTrainingSample):
     # Radar detection labels: [x, y, velocity, valid] per query.
     radar_detections: Float32[np.ndarray, "n_queries 4"] | None = None
 
+    # --- Observability targets, on the same grid as the CenterNet targets ---
+    # Per modality, how well it resolves the cell; only the masked cells carry
+    # a measurement, so the loss reads both together.
+    observability: Float32[np.ndarray, "n_modalities cell_h cell_w"] | None = None
+    observability_mask: Float32[np.ndarray, "n_modalities cell_h cell_w"] | None = None
+
     # --- Planning targets, in the sample's view frame ---
     future_waypoints: Float64[np.ndarray, "n_waypoints 2"] | None = None
     future_yaws: Float64[np.ndarray, " n_waypoints"] | None = None
@@ -126,6 +132,9 @@ class TransfuserForwardBatch(TypedDict, total=False):
     center_net_avg_factor: Int64[torch.Tensor, " b"]
     radar_detections: Float32[torch.Tensor, "b n_queries 4"]
 
+    observability: Float32[torch.Tensor, "b n_modalities cell_h cell_w"]
+    observability_mask: Float32[torch.Tensor, "b n_modalities cell_h cell_w"]
+
     future_waypoints: Float32[torch.Tensor, "b n_waypoints 2"]
     future_yaws: Float32[torch.Tensor, " b n_waypoints"]
     route: Float32[torch.Tensor, "b n_checkpoints 2"]
@@ -175,6 +184,9 @@ class TransfuserOutputs(TypedDict, total=False):
     center_net_bounding_boxes: BoxRowsPixelFrame
     center_net_avg_factor: Int64[np.ndarray, ""]
     radar_detections: Float32[np.ndarray, "n_queries 4"]
+
+    observability: Float32[np.ndarray, "n_modalities cell_h cell_w"]
+    observability_mask: Float32[np.ndarray, "n_modalities cell_h cell_w"]
 
     future_waypoints: Float64[np.ndarray, "n_waypoints 2"]
     future_yaws: Float64[np.ndarray, " n_waypoints"]

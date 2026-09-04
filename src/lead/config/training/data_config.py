@@ -69,6 +69,16 @@ class TrainingDataConfig(ConfigNode):
     # Probability of each color augmentation op applying, per sample.
     color_augmentation_probability: float = 0.2
 
+    # If true degrade one modality of some samples during training and scale
+    # that modality's observability targets to match, so a model learns what a
+    # failing sensor looks like. The recorded data holds no such variation, so
+    # without this an observability head only ever learns occlusion.
+    use_sensor_degradation: bool = False
+    # Probability a sample is degraded at all.
+    sensor_degradation_probability: float = 0.5
+    # Upper bound of the per-sample severity; 1.0 allows a fully lost modality.
+    sensor_degradation_max_severity: float = 1.0
+
     # --- Cache store ---
     # The store's location is per policy: ``policy.<name>.cache_store_root``.
     read_from_cache_store: bool = False

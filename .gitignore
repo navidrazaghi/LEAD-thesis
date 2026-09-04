@@ -80,3 +80,13 @@ core.*
 /*.sh
 /*.sif
 !/setup.py
+
+# Artifacts of running this stack, not part of it: the dataset, the CARLA
+# build, trained checkpoints, downloaded reference weights, and result files.
+/data/
+/outputs/
+/checkpoints/
+/reference/
+/bin/
+/results/
+*.orig

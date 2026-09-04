@@ -596,6 +596,7 @@ class AbstractDrivingAgent(BaseAgent, autonomous_agent.AutonomousAgent, abc.ABC)
             self.policy.build_features(scene_data),
             self.device,
         )
+        self.features = self.policy.degrade_batch(self.features)
         self.save_input_log()
         prediction = self.policy_runner.forward(self.features)
         self.control = self.compute_control(prediction, self.features)

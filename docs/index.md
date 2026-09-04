@@ -32,3 +32,19 @@ bias: where clean abstraction and data-loading throughput conflict, we trade a
 little abstraction for throughput.
 
 - [Architecture](architecture.md): understand the design of the repository and how data is loaded and processed.
+
+## Observability-gated fusion
+
+The work this fork adds: a deformable fusion operator whose modality weights are
+shifted by a predicted per-cell observability, trained against sensor
+degradation. Read them in this order.
+
+- [The ablation ladder](ablation_ladder.md): the seven models, what each one
+  isolates, how to reproduce them, and what has been measured. **Start here** —
+  the rest only makes sense against the ladder.
+- [Deformable fusion](deformable_fusion.md): the sparse attention operator that
+  replaces the dense fusion transformer, and the calibrated reference points.
+- [Observability](observability.md): the per-cell, per-modality supervision, the
+  gate that consumes it, and the degradation curriculum.
+- [Running on the lab A100](server_setup_notes.md): environment facts and the
+  traps that cost real time — several of them fail quietly rather than loudly.
