@@ -10,6 +10,9 @@ from lead.config.policy.transfuser.boxes_detection_config import (
 from lead.config.policy.transfuser.camera_config import TransfuserCameraConfig
 from lead.config.policy.transfuser.lidar_config import TransfuserLidarConfig
 from lead.config.policy.transfuser.navigation_config import TransfuserNavigationConfig
+from lead.config.policy.transfuser.observability_config import (
+    TransfuserObservabilityConfig,
+)
 from lead.config.policy.transfuser.planning_config import TransfuserPlanningConfig
 from lead.config.policy.transfuser.radar_config import TransfuserRadarConfig
 from lead.config.policy.transfuser.semantic_config import TransfuserSemanticConfig
@@ -24,6 +27,7 @@ class TransfuserConfig(
     TransfuserBevConfig,
     TransfuserBoxesDetectionConfig,
     TransfuserNavigationConfig,
+    TransfuserObservabilityConfig,
     TransfuserPlanningConfig,
     AbstractPolicyConfig,
 ):
@@ -66,7 +70,16 @@ class TransfuserConfig(
             "loss_center_net_yaw_res": 1.0,
             "loss_center_net_velocity": 1.0,
             "radar_loss": 1.0,
+            "loss_observability": 1.0,
+            "loss_observability_gate": self.observability_gate_loss_weight,
         }
+
+        if not self.use_observability:
+            weights["loss_observability"] = 0.0
+
+        # The gate is supervised by the same targets, so it needs them built.
+        if not (self.use_observability and self.use_observability_gate):
+            weights["loss_observability_gate"] = 0.0
 
         if self.LTF:
             weights["loss_center_net_velocity"] = 0.0

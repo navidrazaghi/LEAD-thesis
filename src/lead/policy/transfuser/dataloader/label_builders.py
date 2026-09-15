@@ -29,7 +29,7 @@ from lead.config.policy.transfuser.label_classes import (
     PerspectiveSemanticClass,
 )
 from lead.log_reader import SceneData, view_geometry
-from lead.policy.transfuser.dataloader import bev_raster
+from lead.policy.transfuser.dataloader import bev_raster, observability
 from lead.policy.transfuser.dataloader.sample import TransfuserOutputs
 from lead.policy.transfuser.decoder import center_net_decoder
 from lead.policy.transfuser.utils import semantics
@@ -108,6 +108,12 @@ def build_labels(
             lead_config,
             box_rows_pixel_frame,
         )
+
+    # Observability, from the visibility counts the expert measured. Built
+    # whichever heads are on, like every other label: the head toggle decides
+    # what is consumed from the store, not what is written into it.
+    if view_boxes is not None:
+        data.update(observability.build_observability_targets(view_boxes, lead_config))
 
     # Semantic segmentation, reduced from the scene's class and actor ids and
     # the tick's boxes (raw CARLA classes into TransFuser's label space).

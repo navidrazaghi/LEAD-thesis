@@ -114,9 +114,11 @@ class TransfuserBackbone(nn.Module):
             image_start_index + 3
         ]["reduction"]
 
-        # The top-down pyramid feeds the box and BEV semantic heads only, so
-        # with both off it would train on no gradient.
-        self.builds_bev_feature_grid = config.detect_boxes or config.use_bev_semantic
+        # The top-down pyramid feeds the box, BEV semantic and observability
+        # heads only, so with all of them off it would train on no gradient.
+        self.builds_bev_feature_grid = (
+            config.detect_boxes or config.use_bev_semantic or config.use_observability
+        )
         if self.builds_bev_feature_grid:
             self.upsample = nn.Upsample(
                 scale_factor=self.config.bev_upsample_factor,

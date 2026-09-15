@@ -36,6 +36,28 @@ class TransfuserBackboneConfig(ConfigNode):
     resid_pdrop: float = 0.1
     # Attention dropout probability.
     attn_pdrop: float = 0.1
+    # Deformable fusion attention; read only by the backbone_deformable_fusion
+    # variant, ignored by every other backbone_target.
+    # Points each query samples per attention head, per modality. The attention
+    # cost is linear in this, where the dense operator is quadratic in the token
+    # count.
+    deformable_num_points: int = 4
+    # If true each query predicts a refinement of its reference points from its
+    # own content, which is what lets it learn where on the other modality's
+    # grid to read. If false the reference points stay at the query's own cell
+    # and the other grid's centre.
+    deformable_learn_cross_reference: bool = True
+    # If true seed the cross-modal reference points from the rig's calibration:
+    # each BEV cell anchors where it projects into the stitched image, and each
+    # image token where its ray meets the ground plane. If false they start at
+    # the other grid's centre, which is the ablation isolating what the
+    # geometric prior contributes.
+    deformable_calibrated_reference: bool = False
+    # Height above the ego's ground plane at which the two grids are put into
+    # correspondence, in meters. Roughly half a car, so a BEV cell anchors near
+    # the middle of whatever occupies it rather than at its footprint.
+    deformable_reference_height_meter: float = 0.8
+
     # Mean of the normal distribution initialization for linear layers in the GPT.
     gpt_linear_layer_init_mean: float = 0.0
     # Std of the normal distribution initialization for linear layers in the GPT.
