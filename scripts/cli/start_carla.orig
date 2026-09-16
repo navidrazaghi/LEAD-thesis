@@ -11,12 +11,16 @@ if [ "$2" != "" ]; then
 	streaming_port=$2
 fi
 
-# PATCHED for this host (A100, no iGPU): forcing the NVIDIA ICD + PRIME offload
-# made CarlaUE4 exit at startup. Default Vulkan loader works. Orig: start_carla.orig
+# Restrict Vulkan to the NVIDIA GPU: with an AMD iGPU and Mesa's software
+# lavapipe ICD also installed, -graphicsadapter=0 can otherwise select the
+# wrong device and CARLA renders on the CPU.
+VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json \
+__NV_PRIME_RENDER_OFFLOAD=1 \
 $(dotenv CARLA_ROOT)/CarlaUE4.sh \
     -world-port=$port \
     -resx=800 \
     -resy=600 \
     -nosound \
+    -graphicsadapter=0 \
     -carla-streaming-port=$streaming_port \
     -RenderOffScreen
