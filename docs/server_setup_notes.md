@@ -57,25 +57,66 @@ which CARLA is 44 G. There is no scratch volume. The full dataset does not fit
 even if it could be downloaded, and Fail2Drive wants a second 44 G CARLA build.
 Plan on a subset from the start.
 
-## CARLA renders on the CPU
+## CARLA renders on the CPU: the account has no access to the render node
 
-The running server was started with `-RenderOffScreen` and picked the Mesa
-software rasterizer instead of the A100. Evidence: `CarlaUE4-Linux-Shipping`
-does not appear in `nvidia-smi` while the A100 sits at 0% utilization; the
-process holds 400% CPU, 248 threads and 17 GB RSS; it has `libvulkan_lvp.so`
-(lavapipe) mapped; and `~/.cache/mesa_shader_cache` is populated.
-
-The cost is total: a run logged `System time = 5187 s` against
-`Game time = 1.150 s`, a ratio of 0.000x. At that rate one Bench2Drive route
-takes on the order of two weeks, so closed-loop evaluation cannot happen at all
-until this is fixed.
-
-The NVIDIA Vulkan ICD is installed and its library resolves, so the first thing
-to try is forcing it and dropping every software driver from consideration:
+**Fix**, as root, then log out and back in so the groups take effect:
 
 ```bash
-export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+sudo usermod -aG video,render razzaghi
 ```
 
-Then restart CARLA and check that `CarlaUE4` appears in `nvidia-smi`. Untested
-so far: the currently running evaluation was left alone deliberately.
+### What happens without it
+
+CARLA falls back to the Mesa software rasterizer. `CarlaUE4-Linux-Shipping` does
+not appear in `nvidia-smi` while the A100 sits at 0% utilization; the process
+holds 400% CPU, 248 threads and 17 GB RSS; `libvulkan_lvp.so` (lavapipe) is
+mapped; `~/.cache/mesa_shader_cache` fills up. One run logged
+`System time = 5187 s` against `Game time = 1.150 s` — a ratio of 0.000x, which
+puts a single Bench2Drive route somewhere around two weeks.
+
+### Why it happens
+
+CUDA and graphics reach the GPU through different device nodes, and only one of
+them is open to this account:
+
+| node | access | used by |
+| :--- | :----- | :------ |
+| `/dev/nvidia0` | `crw-rw-rw-`, world | CUDA — which is why training works |
+| `/dev/dri/card1` | ACL: root and gdm only | Vulkan |
+| `/dev/dri/renderD129` | ACL: root and gdm only | Vulkan |
+
+So the NVIDIA Vulkan driver cannot open its device and refuses to initialize,
+Vulkan enumerates no NVIDIA GPU, and the loader hands UE4 the one driver that
+needs no device node at all: lavapipe, on the CPU.
+
+Forcing the ICD does **not** help — that was the first guess and it is wrong:
+
+```
+$ VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json vkprobe
+vkCreateInstance failed: -9        # VK_ERROR_INCOMPATIBLE_DRIVER
+```
+
+Nor is it a version or packaging problem. `libGLX_nvidia.so.0` exports
+`vk_icdGetInstanceProcAddr` and `vk_icdNegotiateLoaderICDInterfaceVersion`, has
+no missing dependencies, and kernel module and userspace both read 595.71.05
+from the same `nvidia-driver-595-server` package. Calling the negotiation entry
+point directly returns `VK_ERROR_INITIALIZATION_FAILED` (-3) for every interface
+version from 1 to 7, and every `vk_icdGetInstanceProcAddr` lookup returns NULL.
+A driver that cannot open its device fails exactly this way.
+
+The host is a VMware VM (`/dev/dri/card0` belongs to `vmwgfx`) with the A100
+passed through on `card1`, which is the kind of setup where the render node ends
+up owned by the display manager and nobody else.
+
+### Confirming the fix
+
+```bash
+$ groups                     # must now list video and render
+$ vkprobe                    # must list the A100 as DISCRETE_GPU, not llvmpipe
+```
+
+`vkprobe` is a ~30-line Vulkan enumeration probe; rebuild it any time with
+`gcc probe.c -o vkprobe /usr/lib/x86_64-linux-gnu/libvulkan.so.1`. Before the
+fix it reports one device, `llvmpipe (LLVM 20.1.2, 256 bits)`, type `CPU`.
+
+Then restart CARLA and check that `CarlaUE4` appears in `nvidia-smi`.
