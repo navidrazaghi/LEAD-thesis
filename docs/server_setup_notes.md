@@ -57,22 +57,21 @@ which CARLA is 44 G. There is no scratch volume. The full dataset does not fit
 even if it could be downloaded, and Fail2Drive wants a second 44 G CARLA build.
 Plan on a subset from the start.
 
-## CARLA renders on the CPU
+## CARLA rendered on the CPU — fixed
 
-Two separate faults. The first is fixed; the second is not, and until it is,
-closed-loop evaluation cannot run.
+Two separate faults, both now repaired. CARLA runs on the A100.
 
-**Fault 1 — the account could not open the render node.** Fixed:
+**Fault 1 — the account could not open the render node.**
 
 ```bash
 sudo usermod -aG video,render razzaghi     # then log out and back in
 ```
 
-`/dev/dri/card1` and `/dev/dri/renderD129` now open. Vulkan still enumerates
-only llvmpipe, so this was necessary but not sufficient.
+`/dev/dri/card1` and `/dev/dri/renderD129` opened afterwards, but Vulkan still
+enumerated only llvmpipe: necessary, not sufficient.
 
-**Fault 2 — the driver install is damaged.** `dpkg -V` reports seven files the
-packages installed and that are no longer on disk:
+**Fault 2 — the driver install was damaged.** `dpkg -V` reported seven files the
+packages had installed and that were no longer on disk:
 
 | package | missing |
 | :------ | :------ |
@@ -85,22 +84,35 @@ the `.so` dev links with it. The missing `libcuda.so` is the same fault that
 breaks Triton, so the `~/.local/cuda-stubs` workaround above is patching a
 symptom of this.
 
-Restore them, as root:
+Restoring them fixed it:
 
 ```bash
 sudo apt install --reinstall libnvidia-gl-595-server libnvidia-compute-595-server
 sudo ldconfig
 ```
 
-Then re-run `vkprobe`. Note that the Vulkan-specific files — `nvidia_icd.json`,
-`nvidia_layers.json`, `libnvidia-glvkspirv.so`, `libGLX_nvidia.so` — are all
-present and unmodified, so the reinstall is not guaranteed to fix Vulkan; `dpkg`
-verifies presence, not contents. If Vulkan still fails afterwards, the next
-thing to try is the desktop driver flavour (`nvidia-driver-595`) in place of the
-`-server` one, which is built for compute and only carries graphics as a
-secondary concern.
+The two EGL registrations were the cause. Without them the NVIDIA driver had no
+registered rendering path, so its Vulkan ICD refused to initialize and the
+loader fell through to the one driver that needs no GPU.
 
-### What happens while it is broken
+`libcuda.so` came back in the same reinstall, so the `~/.local/cuda-stubs`
+symlink above is now redundant. Harmless to keep; unnecessary to set.
+
+### Confirmed working
+
+```
+$ vkprobe
+physical devices: 2
+  [0] type=DISCRETE_GPU    name=NVIDIA A100-SXM4-40GB
+  [1] type=CPU             name=llvmpipe (LLVM 20.1.2, 256 bits)
+```
+
+The A100 enumerates first, which is what UE4 takes. A CARLA server started
+afterwards showed up in `nvidia-smi` as `C+G` holding 6222 MiB, mapped
+`libEGL_nvidia` / `libGLX_nvidia` / `libnvidia-egl-gbm` and no lavapipe, and sat
+at 144% CPU instead of 400%.
+
+### What it looked like while broken
 
 CARLA falls back to the Mesa software rasterizer. `CarlaUE4-Linux-Shipping` does
 not appear in `nvidia-smi` while the A100 sits at 0% utilization; the process
