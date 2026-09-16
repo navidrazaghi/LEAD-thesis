@@ -57,15 +57,50 @@ which CARLA is 44 G. There is no scratch volume. The full dataset does not fit
 even if it could be downloaded, and Fail2Drive wants a second 44 G CARLA build.
 Plan on a subset from the start.
 
-## CARLA renders on the CPU: the account has no access to the render node
+## CARLA renders on the CPU
 
-**Fix**, as root, then log out and back in so the groups take effect:
+Two separate faults. The first is fixed; the second is not, and until it is,
+closed-loop evaluation cannot run.
+
+**Fault 1 — the account could not open the render node.** Fixed:
 
 ```bash
-sudo usermod -aG video,render razzaghi
+sudo usermod -aG video,render razzaghi     # then log out and back in
 ```
 
-### What happens without it
+`/dev/dri/card1` and `/dev/dri/renderD129` now open. Vulkan still enumerates
+only llvmpipe, so this was necessary but not sufficient.
+
+**Fault 2 — the driver install is damaged.** `dpkg -V` reports seven files the
+packages installed and that are no longer on disk:
+
+| package | missing |
+| :------ | :------ |
+| `libnvidia-compute-595-server` | `libcuda.so`, `libnvidia-ml.so`, `libnvidia-nvvm.so`, `libnvidia-ptxjitcompiler.so` |
+| `libnvidia-gl-595-server` | `/usr/share/glvnd/egl_vendor.d/10_nvidia.json`, `/usr/share/egl/egl_external_platform.d/15_nvidia_gbm.json`, `nvidia/wine/nvngx.dll` |
+
+Every one is an unversioned development symlink or a GLVND/EGL vendor
+registration — the shape of a cleanup that stripped the graphics stack and took
+the `.so` dev links with it. The missing `libcuda.so` is the same fault that
+breaks Triton, so the `~/.local/cuda-stubs` workaround above is patching a
+symptom of this.
+
+Restore them, as root:
+
+```bash
+sudo apt install --reinstall libnvidia-gl-595-server libnvidia-compute-595-server
+sudo ldconfig
+```
+
+Then re-run `vkprobe`. Note that the Vulkan-specific files — `nvidia_icd.json`,
+`nvidia_layers.json`, `libnvidia-glvkspirv.so`, `libGLX_nvidia.so` — are all
+present and unmodified, so the reinstall is not guaranteed to fix Vulkan; `dpkg`
+verifies presence, not contents. If Vulkan still fails afterwards, the next
+thing to try is the desktop driver flavour (`nvidia-driver-595`) in place of the
+`-server` one, which is built for compute and only carries graphics as a
+secondary concern.
+
+### What happens while it is broken
 
 CARLA falls back to the Mesa software rasterizer. `CarlaUE4-Linux-Shipping` does
 not appear in `nvidia-smi` while the A100 sits at 0% utilization; the process
@@ -74,39 +109,32 @@ mapped; `~/.cache/mesa_shader_cache` fills up. One run logged
 `System time = 5187 s` against `Game time = 1.150 s` — a ratio of 0.000x, which
 puts a single Bench2Drive route somewhere around two weeks.
 
-### Why it happens
+### What has been ruled out
 
-CUDA and graphics reach the GPU through different device nodes, and only one of
-them is open to this account:
+Vulkan enumerates exactly one device, `llvmpipe (LLVM 20.1.2, 256 bits)`, type
+`CPU`. The A100 is invisible to it, so the loader hands UE4 the one driver that
+needs no GPU at all.
 
-| node | access | used by |
-| :--- | :----- | :------ |
-| `/dev/nvidia0` | `crw-rw-rw-`, world | CUDA — which is why training works |
-| `/dev/dri/card1` | ACL: root and gdm only | Vulkan |
-| `/dev/dri/renderD129` | ACL: root and gdm only | Vulkan |
-
-So the NVIDIA Vulkan driver cannot open its device and refuses to initialize,
-Vulkan enumerates no NVIDIA GPU, and the loader hands UE4 the one driver that
-needs no device node at all: lavapipe, on the CPU.
-
-Forcing the ICD does **not** help — that was the first guess and it is wrong:
+Forcing the ICD does not help, which was the first guess and was wrong:
 
 ```
 $ VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json vkprobe
 vkCreateInstance failed: -9        # VK_ERROR_INCOMPATIBLE_DRIVER
 ```
 
-Nor is it a version or packaging problem. `libGLX_nvidia.so.0` exports
-`vk_icdGetInstanceProcAddr` and `vk_icdNegotiateLoaderICDInterfaceVersion`, has
-no missing dependencies, and kernel module and userspace both read 595.71.05
-from the same `nvidia-driver-595-server` package. Calling the negotiation entry
-point directly returns `VK_ERROR_INITIALIZATION_FAILED` (-3) for every interface
-version from 1 to 7, and every `vk_icdGetInstanceProcAddr` lookup returns NULL.
-A driver that cannot open its device fails exactly this way.
+It is not a loader/driver version mismatch either. Calling
+`vk_icdNegotiateLoaderICDInterfaceVersion` on `libGLX_nvidia.so.0` directly
+returns `VK_ERROR_INITIALIZATION_FAILED` (-3) for every interface version from 1
+to 7, and every `vk_icdGetInstanceProcAddr` lookup returns NULL. The library
+exports all the right symbols and has no missing dependencies; kernel module and
+userspace both read 595.71.05. The driver simply declines to start.
 
-The host is a VMware VM (`/dev/dri/card0` belongs to `vmwgfx`) with the A100
-passed through on `card1`, which is the kind of setup where the render node ends
-up owned by the display manager and nobody else.
+Nor is the GPU itself restricted: virtualization mode is `None`, MIG disabled,
+compute mode `Default`. CUDA works, which is why training runs fine — CUDA goes
+through `/dev/nvidia0` and never touches the graphics path.
+
+The host is a VMware VM: `/dev/dri/card0` belongs to `vmwgfx` and the A100 is
+passed through on `card1`.
 
 ### Confirming the fix
 
