@@ -53,6 +53,12 @@ _RARE_SCENARIO_LOGS = 30
 # Cameras the model actually ingests, matching TransfuserCameraConfig.
 _USED_CAMERAS = ("pcam_l0", "pcam_f0", "pcam_r0")
 
+# 38 of the released logs ship without sync.arrow, the table that aligns the
+# modalities on a common timestamp. The scene index finds nothing in such a log
+# and the cache build dies on it with "no scenes match splits", so they are
+# skipped rather than downloaded and tripped over later.
+_REQUIRED_FILES = ("sync.arrow", "ego_state_se3.arrow", "lidar.lidar_top.arrow")
+
 
 def fetch_listing(cache: pathlib.Path) -> list[str]:
     """The repo's file list, downloaded once and cached on disk.
@@ -136,20 +142,30 @@ class Log:
 def build_logs(files: list[str], weather: dict[str, dict]) -> list[Log]:
     """Group the file list into logs and attach each one's weather.
 
+    Logs the release published incomplete are dropped here, so a broken one
+    never reaches the cache build.
+
     Args:
         files: Every repo file path.
         weather: Route weather keyed by route stem.
 
     Returns:
-        One entry per log directory.
+        One entry per usable log directory.
     """
-    directories = sorted(
-        {"/".join(p.split("/")[:4]) for p in files if p.startswith("logs/")}
-    )
+    contents: dict[str, set[str]] = collections.defaultdict(set)
+    for path in files:
+        parts = path.split("/")
+        if path.startswith("logs/") and len(parts) >= 5:
+            contents["/".join(parts[:4])].add(parts[4])
+
+    skipped = 0
     logs = []
-    for directory in directories:
+    for directory in sorted(contents):
         parts = directory.split("/")
         if len(parts) < 4:
+            continue
+        if not all(name in contents[directory] for name in _REQUIRED_FILES):
+            skipped += 1
             continue
         match = _LOG_NAME.match(parts[3])
         if match is None:
@@ -162,6 +178,8 @@ def build_logs(files: list[str], weather: dict[str, dict]) -> list[Log]:
                 weather.get(match.group("stem"), {}),
             ),
         )
+    if skipped:
+        print(f"skipped {skipped} logs the release published incomplete")
     return logs
 
 

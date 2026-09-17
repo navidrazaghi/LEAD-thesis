@@ -3,13 +3,32 @@
 Environment facts found on `razzaghi@213.233.184.253`, and what each one costs
 if it is missed. Nothing here is a LEAD bug; it is all local machine state.
 
-## Environment variables every run needs
+## Launching a training run
+
+Use `~/run_rung.sh <output-name> [overrides...]`. It carries the environment
+below, so no run can accidentally start without it. Everything here was found
+the hard way; each line is load-bearing.
 
 ```bash
+ulimit -n 65536                                   # see below — the expensive one
 export TIMM_USE_OLD_CACHE=1                       # weights from ~/.cache/torch, not the Hub
-export LIBRARY_PATH=$HOME/.local/cuda-stubs:$LIBRARY_PATH   # lets Triton link
 export LEAD_RUNTIME_TYPE_CHECKING=false           # only when torch.compile is on
+export LIBRARY_PATH=$HOME/.local/cuda-stubs:$LIBRARY_PATH   # redundant since the driver reinstall
 ```
+
+**`ulimit -n 65536` is not optional, and skipping it does not fail loudly.**
+The cache store opens an LMDB environment per log, and with 450 logs across the
+dataloader workers the default soft limit of 1024 runs out. Training then emits
+`OSError: [Errno 24] Too many open files`, restarts workers, and *keeps going*
+— at 0.06 steps/s instead of 3.15, a 50x slowdown that looks like ordinary GPU
+contention. Measured on this machine:
+
+| | steps/s | one epoch |
+| :--- | ---: | ---: |
+| default soft limit 1024 | 0.06 | 34 h |
+| raised to 65536 | 3.15–5.9 | 25–40 min |
+
+The hard limit is 1048576, so raising the soft limit needs no root.
 
 **`TIMM_USE_OLD_CACHE=1`** — the backbone builds `resnet34` with
 `pretrained=True`, which reaches for huggingface.co. That host is unreachable
@@ -49,6 +68,29 @@ The 1.1 TB Py123D dataset is HuggingFace-hosted, and neither the direct host nor
 the mirror's file CDN is reachable. Getting the data onto this machine needs a
 route that does not exist yet — a proxy, or a transfer from somewhere that can
 reach the Hub.
+
+## The dataset subset, and what it cost to make usable
+
+`scripts/common/fetch_dataset_subset.py` pulls a stratified 450-log subset
+(18 GB) rather than the full release, which does not fit. Four things bit on
+the way from "downloaded" to "training runs", none of which a unit test would
+have caught:
+
+1. **38 of the released logs ship without `sync.arrow`.** The scene index finds
+   nothing in them and the cache build dies with `no scenes match splits`,
+   which reads like the data root is wrong. The fetcher now skips them.
+2. **The depth cameras are not optional in practice.** Dropping them saves 40%
+   of the download, and the cache build still succeeds — because `depth_target`
+   is not a cacheable part, so it never runs there. Training reads it live and
+   dies on the first batch. Fetch with `--keep-depth` unless you also set
+   `policy.transfuser.use_depth=false`.
+3. **The cache must be rebuilt when the log set changes.** Swapping six broken
+   logs for six good ones left the cache covering a set that no longer matched,
+   and training failed on a missing LMDB directory.
+4. **The file-descriptor limit**, above.
+
+The lesson behind all four: a green cache build says nothing about whether
+training will run. It exercises a strict subset of the data path.
 
 ## Disk
 
