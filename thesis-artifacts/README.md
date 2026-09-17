@@ -161,3 +161,21 @@ Chain logs of these runs are in `logs/diverse/`.
 The checkpoints of the five models above (`outputs/<run>/model_0030.pth`), for
 the same size reason as before. Without them every result above is reproducible
 from the configs, at 11.5 hours (dense) to 16.7 hours (deformable) of training per model on one A100.
+
+## After the server was lost (2026-10-17)
+
+Access to the lab server ended while a seed-2 replicate was training. What that
+leaves, and where it is:
+
+| | |
+| :--- | :--- |
+| `results/seed_replicates_record.md` | The seed-1 replicate in full — its CSV never left the machine, so this is the record of it — and what the seed spread means for every other comparison here |
+| `results/training_curves_consistency_seeds.csv` | Per-epoch training objective, seeds 0 and 1, both stages |
+| `results/five_models_table.csv` | The five diverse-subset models side by side: score, route completion, infraction penalty, scored routes, drops |
+| `figures/` | The three figures made from those tables |
+| `scripts/server_home/run_after_seed2.sh` | The two experiments that were queued and never ran, with every parameter as it would have run |
+
+Lost with the machine: the trained weights of all models, the seed-1 results
+CSV (transcribed above), and the unfinished seed-2 run. Every result reported in
+the thesis is in `results/`; the configs here define each run exactly, so any of
+them can be reproduced on other hardware at 11.5 to 16.7 hours per model.

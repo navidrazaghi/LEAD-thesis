@@ -1,0 +1,13 @@
+model,condition,mean_driving_score,scored_routes,mean_route_completion
+Baseline (dense),intact,66.44,30,85.6
+Baseline (dense),lidar_destroyed,50.17,30,78.8
+Baseline (dense),camera_destroyed,45.27,29,85.0
+Deformable,intact,64.50,30,84.2
+Deformable,lidar_destroyed,76.22,30,91.1
+Deformable,camera_destroyed,12.52,28,38.4
+Deformable + curriculum v2,intact,64.48,30,82.9
+Deformable + curriculum v2,lidar_destroyed,67.34,30,87.2
+Deformable + curriculum v2,camera_destroyed,43.52,29,71.9
+Dense + curriculum v2,intact,57.46,30,84.8
+Dense + curriculum v2,lidar_destroyed,68.50,29,86.2
+Dense + curriculum v2,camera_destroyed,45.63,28,83.1
