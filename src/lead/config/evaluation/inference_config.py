@@ -14,6 +14,15 @@ class InferenceConfig(ConfigNode):
     # Confidence threshold for brake action (full brake applied if confidence exceeds this)
     brake_threshold: float = 0.9
     # If true be strict when load weight
+    # --- Sensor degradation at inference ---
+    # Which modality to damage while driving: "camera", "lidar" or "none".
+    # This is how the robustness claim is measured: a sweep of severities at a
+    # fixed modality traces the degradation curve, where the training-time
+    # curriculum instead randomises both per sample.
+    degrade_modality: str = "none"
+    # How badly to damage it, in [0, 1]. Zero is a no-op whatever the modality.
+    degrade_severity: float = 0.0
+
     strict_weight_load: bool = True
 
     # --- Image Processing ---

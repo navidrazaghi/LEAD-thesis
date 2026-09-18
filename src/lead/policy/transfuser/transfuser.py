@@ -37,7 +37,10 @@ from lead.policy.transfuser.encoder.observability_gate import (
 from lead.policy.transfuser.encoder.transfuser_backbone import TransfuserBackbone
 from lead.policy.transfuser.utils import precision
 from lead.policy.transfuser.utils.gpu_augmentation import augment_rgb_batch
-from lead.policy.transfuser.utils.sensor_degradation import apply_sensor_degradation
+from lead.policy.transfuser.utils.sensor_degradation import (
+    apply_sensor_degradation,
+    degrade_batch,
+)
 
 if typing.TYPE_CHECKING:
     from lead.policy.transfuser.visualization.feature_map_visualizer import (
@@ -146,6 +149,15 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 data_config.sensor_degradation_max_severity,
             )
         return batch
+
+    def degrade_batch(self, batch: TransfuserForwardBatch) -> TransfuserForwardBatch:
+        """Inherited, see superclass."""
+        inference = self.lead_config.evaluation.inference
+        return degrade_batch(
+            batch,
+            inference.degrade_modality,
+            inference.degrade_severity,
+        )
 
     def forward(self, batch: TransfuserForwardBatch) -> Prediction:
         auxiliary_log: AuxiliaryLog = {}

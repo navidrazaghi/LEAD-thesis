@@ -17,7 +17,10 @@ from lead.policy.transfuser.encoder.observability_gate import (
     ObservabilityTokenTargets,
     gate_loss,
 )
-from lead.policy.transfuser.utils.sensor_degradation import apply_sensor_degradation
+from lead.policy.transfuser.utils.sensor_degradation import (
+    apply_sensor_degradation,
+    degrade_batch,
+)
 
 IMAGE_SHAPE = (12, 36)
 BEV_SHAPE = (10, 12)
@@ -338,3 +341,83 @@ class TestGateLossWeight:
         config.use_observability_gate = True
 
         assert config.per_task_loss_weights(0)["loss_observability_gate"] > 0.0
+
+
+class TestInferenceDegradation:
+    """Tests for the fixed degradation that traces the robustness curve."""
+
+    @pytest.fixture
+    def batch(self) -> dict:
+        torch.manual_seed(5)
+        return {
+            "rgb": torch.full((4, 3, 32, 96), 200, dtype=torch.uint8),
+            "rasterized_lidar": torch.rand(4, 1, 64, 96),
+        }
+
+    def test_none_is_a_no_op(self, batch: dict) -> None:
+        original = {key: value.clone() for key, value in batch.items()}
+        out = degrade_batch(batch, "none", 1.0)
+        for key, value in original.items():
+            assert torch.equal(out[key], value), key
+
+    def test_zero_severity_is_a_no_op(self, batch: dict) -> None:
+        original = {key: value.clone() for key, value in batch.items()}
+        out = degrade_batch(batch, "camera", 0.0)
+        for key, value in original.items():
+            assert torch.equal(out[key], value), key
+
+    def test_camera_degradation_leaves_lidar_alone(self, batch: dict) -> None:
+        lidar = batch["rasterized_lidar"].clone()
+        brightness = batch["rgb"].float().mean()
+
+        out = degrade_batch(batch, "camera", 0.8)
+
+        assert out["rgb"].float().mean() < brightness
+        assert torch.equal(out["rasterized_lidar"], lidar)
+
+    def test_lidar_degradation_leaves_the_camera_alone(self, batch: dict) -> None:
+        rgb = batch["rgb"].clone()
+        occupancy = (batch["rasterized_lidar"] > 0).float().mean()
+
+        out = degrade_batch(batch, "lidar", 0.8)
+
+        assert (out["rasterized_lidar"] > 0).float().mean() < occupancy
+        assert torch.equal(out["rgb"], rgb)
+
+    def test_every_sample_gets_the_same_damage(self) -> None:
+        # The training curriculum randomises severity and modality per sample;
+        # a curve point must not, or the run averages over severities instead
+        # of measuring one. Both still add per-pixel noise, so the samples are
+        # never bit-identical: what separates them is how far apart their means
+        # land, which is an order of magnitude tighter under fixed damage.
+        def spread(images: torch.Tensor) -> float:
+            per_sample = images.float().mean(dim=(1, 2, 3))
+            return (per_sample.max() - per_sample.min()).item()
+
+        torch.manual_seed(5)
+        fixed = degrade_batch(
+            {"rgb": torch.full((16, 3, 64, 192), 200, dtype=torch.uint8)},
+            "camera",
+            0.5,
+        )
+        torch.manual_seed(5)
+        random = apply_sensor_degradation(
+            {"rgb": torch.full((16, 3, 64, 192), 200, dtype=torch.uint8)},
+            probability=1.0,
+            max_severity=1.0,
+        )
+
+        assert spread(fixed["rgb"]) < 0.2 * spread(random["rgb"])
+
+    def test_severity_is_monotone(self) -> None:
+        brightness = []
+        for severity in (0.2, 0.5, 0.9):
+            torch.manual_seed(5)
+            batch = {"rgb": torch.full((2, 3, 16, 48), 200, dtype=torch.uint8)}
+            out = degrade_batch(batch, "camera", severity)
+            brightness.append(out["rgb"].float().mean().item())
+        assert brightness[0] > brightness[1] > brightness[2]
+
+    def test_an_unknown_modality_is_refused(self, batch: dict) -> None:
+        with pytest.raises(ValueError, match="camera"):
+            degrade_batch(batch, "radar", 0.5)

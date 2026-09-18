@@ -165,3 +165,48 @@ def apply_sensor_degradation(
         batch["observability"] = target * survives[:, :, None, None]
 
     return batch
+
+
+def degrade_batch(
+    batch: dict,
+    modality: str,
+    severity: float,
+) -> dict:
+    """Damage one modality of an inference batch by a fixed amount.
+
+    The training curriculum draws a modality and a severity per sample, which
+    is what teaches the gate; measuring what the gate learned needs the
+    opposite — the same damage applied to every sample, so a run is one point
+    on a degradation curve rather than an average over random ones. The damage
+    itself is the training curriculum's, so the two stay comparable.
+
+    Args:
+        batch: The collated model inputs, modified in place.
+        modality: ``"camera"``, ``"lidar"``, or ``"none"`` to leave it alone.
+        severity: How much to damage it, in ``[0, 1]``.
+
+    Returns:
+        The same batch.
+
+    Raises:
+        ValueError: If ``modality`` is not one of the three accepted names.
+    """
+    if modality == "none" or severity <= 0.0:
+        return batch
+    if modality not in ("camera", "lidar"):
+        raise ValueError(
+            f"degrade modality must be 'camera', 'lidar' or 'none', got '{modality}'.",
+        )
+
+    reference = batch.get("rgb")
+    if reference is None:
+        reference = batch.get("rasterized_lidar")
+    if reference is None:
+        return batch
+
+    amount = torch.full((reference.shape[0],), float(severity))
+    if modality == "camera" and "rgb" in batch:
+        batch["rgb"] = degrade_camera(batch["rgb"], amount)
+    elif modality == "lidar" and "rasterized_lidar" in batch:
+        batch["rasterized_lidar"] = degrade_lidar(batch["rasterized_lidar"], amount)
+    return batch

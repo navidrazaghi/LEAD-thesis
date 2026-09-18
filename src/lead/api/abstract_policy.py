@@ -59,6 +59,23 @@ class AbstractPolicy(nn.Module, abc.ABC, Generic[BatchT, PredictionT]):
         """
         return self.get_policy_config().input_cameras
 
+    def degrade_batch(self, batch: BatchT) -> BatchT:
+        """Damage the sensors of one inference batch, on its device.
+
+        Called by the driving agent between featurization and the forward
+        pass, which is where ``augment_batch`` sits during training. Driving
+        under a degraded sensor is how a robustness claim gets measured, so
+        this is a first-class step rather than a test harness bolted on
+        outside.
+
+        Args:
+            batch: The collated model inputs.
+
+        Returns:
+            The batch with the configured degradation applied; no-op by default.
+        """
+        return batch
+
     @abc.abstractmethod
     def forward(self, batch: BatchT) -> PredictionT:
         """Compute predictions for one batch of model inputs."""
