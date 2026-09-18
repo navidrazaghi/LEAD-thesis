@@ -1,7 +1,14 @@
 #!/bin/bash
-# One ablation rung. Usage: run_rung.sh <name> [extra config overrides...]
+# One ablation rung. Usage: run_rung.sh <output-name> [config overrides...]
+#
 # ulimit is not optional: the default 1024 starves the LMDB cache readers and
 # training crawls at 1/50th speed without ever failing outright.
+#
+# resume_from_last_checkpoint also decides whether load_state_dict is strict
+# (train.py:97). So it must be false on the first launch of a posttrain, whose
+# initial_weights_file comes from a pretrain that has no planning decoder, and
+# true only when resuming a run into its own architecture. Overrides land last,
+# so passing it explicitly wins over the default here.
 set -u
 NAME=$1; shift
 ulimit -n 65536
