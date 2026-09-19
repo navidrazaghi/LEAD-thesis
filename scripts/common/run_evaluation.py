@@ -312,6 +312,11 @@ def parse_args() -> argparse.Namespace:
         default=20,
         help="Restart CARLA after this many routes; it degrades over long runs.",
     )
+    parser.add_argument(
+        "--plan-only",
+        action="store_true",
+        help="Report the matrix and stop, without starting CARLA or driving.",
+    )
     return parser.parse_args()
 
 
@@ -337,6 +342,11 @@ def main() -> None:
         f"{len(jobs)} runs in the matrix, {len(done)} already done, "
         f"{len(pending)} to go",
     )
+    for name, _, modality, severity, _ in pending[:1]:
+        print(f"  first pending: {name} at {modality}:{severity}")
+    if args.plan_only:
+        print("plan only; nothing started")
+        return
     if not pending:
         return
 
