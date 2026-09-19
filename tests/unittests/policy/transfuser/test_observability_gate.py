@@ -20,6 +20,7 @@ from lead.policy.transfuser.encoder.observability_gate import (
 from lead.policy.transfuser.utils.sensor_degradation import (
     apply_sensor_degradation,
     degrade_batch,
+    degrade_camera,
 )
 
 IMAGE_SHAPE = (12, 36)
@@ -421,3 +422,37 @@ class TestInferenceDegradation:
     def test_an_unknown_modality_is_refused(self, batch: dict) -> None:
         with pytest.raises(ValueError, match="camera"):
             degrade_batch(batch, "radar", 0.5)
+
+
+class TestDegradationUnderAutocast:
+    """The training step runs under autocast, and that changed the dtypes.
+
+    The blur inside the camera degradation is a convolution, so autocast hands
+    it back in bfloat16 while the image it is mixed with is still float32. A
+    bare call on the CPU never sees that, which is why it reached a training
+    run before it was caught.
+    """
+
+    def test_camera_degradation_survives_autocast(self) -> None:
+        rgb = torch.full((4, 3, 32, 96), 200, dtype=torch.uint8)
+        with torch.autocast(device_type="cpu", dtype=torch.bfloat16):
+            out = degrade_camera(rgb, torch.full((4,), 0.6))
+        assert out.dtype == torch.uint8
+        assert out.float().mean() < rgb.float().mean()
+
+    def test_the_training_curriculum_survives_autocast(self) -> None:
+        batch = {
+            "rgb": torch.full((4, 3, 32, 96), 200, dtype=torch.uint8),
+            "rasterized_lidar": torch.rand(4, 1, 64, 96),
+            "observability": torch.ones(4, NUM_OBSERVABILITY_CHANNELS, 20, 24),
+        }
+        with torch.autocast(device_type="cpu", dtype=torch.bfloat16):
+            out = apply_sensor_degradation(batch, probability=1.0, max_severity=1.0)
+        assert torch.isfinite(out["rasterized_lidar"]).all()
+        assert out["rgb"].dtype == torch.uint8
+
+    def test_the_inference_degradation_survives_autocast(self) -> None:
+        batch = {"rgb": torch.full((4, 3, 32, 96), 200, dtype=torch.uint8)}
+        with torch.autocast(device_type="cpu", dtype=torch.bfloat16):
+            out = degrade_batch(batch, "camera", 0.6)
+        assert out["rgb"].dtype == torch.uint8

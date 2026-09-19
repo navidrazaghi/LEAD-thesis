@@ -76,7 +76,9 @@ def degrade_camera(
 
     # One blur for the whole batch, then mixed in per sample: a per-sample sigma
     # would need a kernel each, and the mix already spans no blur to full blur.
-    blurred = _gaussian_blur(x, _MAX_BLUR_SIGMA)
+    # The cast back is load-bearing: the blur is a conv2d, so under autocast it
+    # returns bfloat16 while x is still float32, and lerp refuses the mismatch.
+    blurred = _gaussian_blur(x, _MAX_BLUR_SIGMA).to(x.dtype)
     x = torch.lerp(x, blurred, per_sample)
 
     gain = 1.0 - (1.0 - _MIN_IMAGE_GAIN) * per_sample
