@@ -50,6 +50,11 @@ _SCORE_FIELDS = (
     "num_infractions",
 )
 _FIELDS = ("model", "modality", "severity", "route", *_SCORE_FIELDS, "seconds")
+# Statuses that describe the simulator giving up rather than the agent driving
+# badly. A row carrying one of these is not a measurement, so it is neither
+# treated as done on resume nor left to poison the next few runs: CARLA is
+# restarted immediately after one.
+_INFRASTRUCTURE_FAILURES = ("TickRuntime", "NoResult", "Agent timed out")
 
 
 def free_port(start: int) -> int:
@@ -277,14 +282,32 @@ def run_route(
     return None
 
 
+def is_measurement(status: str | None) -> bool:
+    """Whether a status reflects the agent's driving rather than a sim failure.
+
+    Args:
+        status: The status the leaderboard reported, if any.
+
+    Returns:
+        True when the row is a usable measurement.
+    """
+    if not status:
+        return False
+    return not any(marker in status for marker in _INFRASTRUCTURE_FAILURES)
+
+
 def load_done(out: pathlib.Path) -> set[tuple[str, str, str, str]]:
-    """Which runs the results CSV already holds.
+    """Which runs the results CSV already holds a usable measurement for.
+
+    Rows whose status names a simulator failure are deliberately not counted,
+    so re-running the sweep retries them instead of carrying the failure into
+    the final table.
 
     Args:
         out: The results CSV.
 
     Returns:
-        The ``(model, modality, severity, route)`` keys already written.
+        The ``(model, modality, severity, route)`` keys already measured.
     """
     if not out.exists():
         return set()
@@ -292,6 +315,7 @@ def load_done(out: pathlib.Path) -> set[tuple[str, str, str, str]]:
         return {
             (row["model"], row["modality"], row["severity"], row["route"])
             for row in csv.DictReader(handle)
+            if is_measurement(row.get("status"))
         }
 
 
@@ -343,7 +367,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--restart-every",
         type=int,
-        default=20,
+        default=8,
         help="Restart CARLA after this many routes; it degrades over long runs.",
     )
     parser.add_argument(
@@ -397,14 +421,16 @@ def main() -> None:
     carla = Carla(args.carla_root, port)
     work_dir = ROOT / "outputs" / "eval_scratch"
     print(f"CARLA on {port}, traffic manager on {tm_port}")
+    restart_next = False
     carla.start()
 
     try:
         for index, (name, model, modality, severity, route) in enumerate(pending, 1):
-            if index % args.restart_every == 0 or not carla.alive():
+            if index % args.restart_every == 0 or not carla.alive() or restart_next:
                 print("  restarting CARLA")
                 carla.stop()
                 carla.start()
+                restart_next = False
             started = time.time()
             scores = run_route(
                 model,
@@ -431,9 +457,14 @@ def main() -> None:
                 row["status"] = "NoResult"
             writer.writerow(row)
             handle.flush()
+            # One sim failure is usually the first of several: the server is
+            # already unwell and the next runs burn twenty minutes each before
+            # failing the same way. Replace it now rather than after it dies.
+            restart_next = not is_measurement(row["status"])
             print(
                 f"[{index}/{len(pending)}] {name} {modality}:{severity} {route} "
-                f"-> DS {row['driving_score']} ({row['status']}, {elapsed}s)",
+                f"-> DS {row['driving_score']} ({row['status']}, {elapsed}s)"
+                f"{'  [sim failure, will restart]' if restart_next else ''}",
             )
     finally:
         carla.stop()
