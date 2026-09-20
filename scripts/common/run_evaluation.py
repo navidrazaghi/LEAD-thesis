@@ -119,18 +119,41 @@ class Carla:
         raise RuntimeError(f"CARLA did not answer on port {self.port}")
 
     def stop(self) -> None:
-        """Kill the server and every process it spawned."""
-        if self.process is None:
-            return
-        try:
-            os.killpg(os.getpgid(self.process.pid), signal.SIGTERM)
-            self.process.wait(timeout=30)
-        except (ProcessLookupError, subprocess.TimeoutExpired):
+        """Kill the server, then sweep for any orphan holding its port.
+
+        The launcher shell exits once the engine binary is up, which reparents
+        the binary to init and out of the group ``killpg`` reaches. Left alone
+        it keeps ~6 GB of VRAM and its port, and a sweep that restarts CARLA
+        every twenty routes would accumulate one of those each time.
+        """
+        if self.process is not None:
             try:
-                os.killpg(os.getpgid(self.process.pid), signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-        self.process = None
+                os.killpg(os.getpgid(self.process.pid), signal.SIGTERM)
+                self.process.wait(timeout=30)
+            except (ProcessLookupError, subprocess.TimeoutExpired):
+                try:
+                    os.killpg(os.getpgid(self.process.pid), signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            self.process = None
+        self._kill_orphans()
+        time.sleep(3)
+
+    def _kill_orphans(self) -> None:
+        """Kill any CarlaUE4 process still serving this instance's port."""
+        marker = f"-world-port={self.port}".encode()
+        for entry in pathlib.Path("/proc").iterdir():
+            if not entry.name.isdigit():
+                continue
+            try:
+                cmdline = (entry / "cmdline").read_bytes()
+            except OSError:
+                continue
+            if marker in cmdline and b"CarlaUE4" in cmdline:
+                try:
+                    os.kill(int(entry.name), signal.SIGKILL)
+                except (ProcessLookupError, PermissionError):
+                    pass
 
     def alive(self) -> bool:
         """Whether the server is still running.
@@ -203,6 +226,13 @@ def run_route(
             "TIMM_USE_OLD_CACHE": "1",
             "WANDB_MODE": "offline",
             "OMP_NUM_THREADS": "1",
+            # ``python -m lead`` is argparse-only and rejects key=value
+            # arguments, unlike the training entry point. Config for an
+            # evaluation run travels in this dotlist instead.
+            "LEAD_CONFIG": (
+                f"evaluation.inference.degrade_modality={modality} "
+                f"evaluation.inference.degrade_severity={severity}"
+            ),
         },
     )
     command = [
@@ -220,19 +250,19 @@ def run_route(
         str(tm_port),
         "--output-dir",
         str(work_dir),
-        f"evaluation.inference.degrade_modality={modality}",
-        f"evaluation.inference.degrade_severity={severity}",
     ]
+    transcript = work_dir / "run.log"
     try:
-        subprocess.run(  # noqa: S603
-            command,
-            cwd=ROOT,
-            env=environment,
-            timeout=_ROUTE_TIMEOUT_S,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            check=False,
-        )
+        with transcript.open("w", encoding="utf-8") as sink:
+            subprocess.run(  # noqa: S603
+                command,
+                cwd=ROOT,
+                env=environment,
+                timeout=_ROUTE_TIMEOUT_S,
+                stdout=sink,
+                stderr=subprocess.STDOUT,
+                check=False,
+            )
     except subprocess.TimeoutExpired:
         return None
 
@@ -240,6 +270,10 @@ def run_route(
         scores = read_score(endpoint)
         if scores is not None:
             return scores
+    if transcript.exists():
+        tail = transcript.read_text(encoding="utf-8", errors="replace").splitlines()
+        for line in tail[-4:]:
+            print(f"      | {line}")
     return None
 
 
