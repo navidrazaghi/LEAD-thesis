@@ -32,7 +32,17 @@ class TransfuserObservabilityConfig(ConfigNode):
     # base fusion has no modality axis to shift. The gate is zero-initialized,
     # so turning it on does not move the starting point.
     use_observability_gate: bool = False
+    # Weight of the dense head's supervision relative to the other tasks.
+    # Worth turning down: the per-task weights are normalized by their sum, so
+    # every auxiliary task at full weight quietly shrinks the driving losses.
+    observability_loss_weight: float = 1.0
     # Weight of the gate's own supervision relative to the other tasks. The
     # gate also receives gradient through the driving losses, so this only sets
     # how hard it is pulled towards the expert's measured visibility.
     observability_gate_loss_weight: float = 1.0
+    # Scales how much of the attention output enters the residual stream, per
+    # token. The gate decides which modality a query reads from; this decides
+    # how much of that read survives into the token, which the gate cannot
+    # touch. Zero-initialized, so turning it on does not move the starting
+    # point. Needs a deformable backbone for the same reason the gate does.
+    use_residual_gain: bool = False

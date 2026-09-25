@@ -36,6 +36,7 @@ from lead.policy.transfuser.encoder.deformable_attention import (
     default_reference_points,
 )
 from lead.policy.transfuser.encoder.observability_gate import ObservabilityGate
+from lead.policy.transfuser.encoder.residual_gain import ResidualGain
 from lead.policy.transfuser.encoder.transfuser_backbone import (
     GPT,
     TransfuserBackbone,
@@ -57,6 +58,7 @@ class DeformableBlock(nn.Module):
         learn_cross_reference: bool,
         base_reference_points: torch.Tensor | None,
         gated: bool,
+        gained: bool,
     ) -> None:
         """Initialize a transformer block with deformable attention.
 
@@ -72,11 +74,14 @@ class DeformableBlock(nn.Module):
             base_reference_points: Reference points to start from, or None for
                 the operator's geometry-free defaults.
             gated: Whether an observability gate shifts the modality weights.
+            gained: Whether a residual gain scales how much of the attention
+                output enters the token.
         """
         super().__init__()
         self.ln1 = nn.LayerNorm(n_embd)
         self.ln2 = nn.LayerNorm(n_embd)
         self.gate = ObservabilityGate(n_embd, len(spatial_shapes)) if gated else None
+        self.residual_gain = ResidualGain(n_embd) if gained else None
         self.attn = MultiScaleDeformableAttention(
             n_embd=n_embd,
             n_head=n_head,
@@ -112,7 +117,10 @@ class DeformableBlock(nn.Module):
         """
         normalized = self.ln1(x)
         gate_logits = self.gate(normalized) if self.gate is not None else None
-        x = x + self.attn(normalized, gate_logits)
+        attended = self.attn(normalized, gate_logits)
+        if self.residual_gain is not None:
+            attended = attended * self.residual_gain(normalized)
+        x = x + attended
         return x + self.mlp(self.ln2(x)), gate_logits
 
 
@@ -208,6 +216,7 @@ class DeformableGPT(GPT):
                     config.deformable_learn_cross_reference,
                     base_reference_points,
                     config.use_observability_gate,
+                    config.use_residual_gain,
                 )
                 for _ in range(config.n_layer)
             ],
@@ -218,6 +227,8 @@ class DeformableGPT(GPT):
         self.apply(self._init_weights)
         for block in self.blocks.blocks:
             block.attn.reset_parameters()
+            if block.residual_gain is not None:
+                block.residual_gain.reset_parameters()
             if block.gate is not None:
                 block.gate.reset_parameters()
 
