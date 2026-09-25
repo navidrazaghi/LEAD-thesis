@@ -37,6 +37,7 @@ from lead.policy.transfuser.dataloader.sample import (
     TransfuserOutputs,
     TransfuserTrainingSample,
 )
+from lead.policy.transfuser.utils import latency_curriculum
 
 LOG = logging.getLogger(__name__)
 
@@ -171,6 +172,67 @@ class TransfuserDataset(AbstractPolicyDataset):
         super().prepare_read()
         # Disable threading: the DataLoader already splits across workers.
         cv2.setNumThreads(0)
+
+    def postprocess_outputs(
+        self,
+        outputs: dict[str, typing.Any],
+        scene_index: int,
+        loading_seconds: float,
+    ) -> dict[str, typing.Any]:
+        """Inherited, see superclass; adds the latency curriculum's label shift.
+
+        This runs per sample on the CPU worker, which is where per-sample
+        randomness belongs: the shift picks a different execution tick for each
+        sample, so it cannot be a batch-level augmentation, and it must not sit
+        inside a part because a part's output is what gets cached.
+        """
+        outputs = super().postprocess_outputs(outputs, scene_index, loading_seconds)
+        return self._apply_latency_curriculum(outputs)
+
+    def _apply_latency_curriculum(
+        self,
+        outputs: dict[str, typing.Any],
+    ) -> dict[str, typing.Any]:
+        """Re-anchor the planning label onto the tick the plan is executed at.
+
+        Args:
+            outputs: The merged part outputs of one sample.
+
+        Returns:
+            The same outputs; the planning label is replaced when the
+            curriculum is on and this sample was drawn for it.
+        """
+        config = self.lead_config.policy.transfuser
+        data_config = self.lead_config.training.data
+        horizon = config.num_ego_pose_prediction
+        stride = config.future_ego_pose_iterations[0]
+        max_shift_index = config.future_ego_pose_extra_ticks // stride
+
+        waypoints = outputs.get("future_waypoints")
+        if max_shift_index == 0 or waypoints is None:
+            return outputs
+
+        generator = np.random.default_rng()
+        selected = generator.random() < data_config.latency_curriculum_probability
+        severity = (
+            generator.random() * data_config.sensor_degradation_max_severity
+            if selected
+            else 0.0
+        )
+        shift_index = latency_curriculum.sample_shift_index(
+            severity,
+            max_shift_index,
+            generator,
+        )
+        shifted, shifted_yaws = latency_curriculum.shifted_planning_label(
+            waypoints,
+            outputs["future_yaws"],
+            shift_index,
+            horizon,
+        )
+        outputs["future_waypoints"] = shifted
+        outputs["future_yaws"] = shifted_yaws
+        return outputs
 
     @property
     def cache_finger_print(self) -> dict[str, str]:

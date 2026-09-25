@@ -85,6 +85,11 @@ class TrainingDataConfig(ConfigNode):
     # out image regions, "ego_state" jitters the navigation points and
     # under-reports the speed.
     deployment_perturbation_families: tuple[str, ...] = ()
+    # Chance a sample's planning label is re-anchored onto a later tick, which
+    # is the training-time form of execution latency. Needs the policy's
+    # future_ego_pose_extra_ticks to be non-zero; with that at its default this
+    # has nothing to shift onto and is inert.
+    latency_curriculum_probability: float = 0.0
 
     # --- Cache store ---
     # The store's location is per policy: ``policy.<name>.cache_store_root``.

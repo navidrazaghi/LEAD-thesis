@@ -115,6 +115,13 @@ class AbstractPolicyConfig(ConfigNode, abc.ABC):
     future_ego_pose_length_s: float = 2.0
     # A model choice, not a dataset limit: how densely to predict the plan.
     future_ego_pose_frequency: int = 4
+    # Extra future ticks to read so a latency curriculum can re-anchor the
+    # planning label to a later pose. Zero reads exactly the window the plan
+    # needs and is the only value that leaves the usable scene set unchanged:
+    # every extra tick asked for here drops the scenes near the end of a log,
+    # which would quietly make a rung trained with it a different experiment
+    # from one trained without.
+    future_ego_pose_extra_ticks: int = 0
 
     def _fastest_frequency(self, store_freq: int) -> int:
         """The highest rate in Hz the dataset stores one modality at.
@@ -208,9 +215,24 @@ class AbstractPolicyConfig(ConfigNode, abc.ABC):
 
     @property
     def future_ego_pose_iterations(self) -> tuple[int, ...]:
-        """Scene iterations ahead of the anchor the planning labels are read at."""
+        """Scene iterations ahead of the anchor the planning labels are read at.
+
+        Raises:
+            ValueError: If the extra latency ticks are not a whole number of
+                strides. A shift that lands between two label ticks would have
+                no pose to re-anchor on, so it is refused here rather than
+                silently rounded into a mislabelled horizon.
+        """
         stride = self._stride("future_ego_pose", self.future_ego_pose_frequency, 1)
-        return tuple(range(stride, self.future_ego_pose_num_iterations + 1, stride))
+        extra = self.future_ego_pose_extra_ticks
+        if extra % stride:
+            raise ValueError(
+                f"future_ego_pose_extra_ticks={extra} is not a multiple of the "
+                f"{stride}-tick planning stride; a latency shift has to land on "
+                f"a label tick to have a pose to re-anchor on.",
+            )
+        last = self.future_ego_pose_num_iterations + extra
+        return tuple(range(stride, last + 1, stride))
 
     @property
     def num_ego_pose_prediction(self) -> int:
@@ -219,8 +241,15 @@ class AbstractPolicyConfig(ConfigNode, abc.ABC):
         Derived from the future span and its stride, never independently
         configurable, so the model's output width and the scene filter's
         future fetch can never disagree.
+
+        The latency curriculum's extra ticks are deliberately excluded. They
+        widen what is *read* so a plan can be re-anchored onto a later pose;
+        they must not widen what is *predicted*, or turning the curriculum on
+        would change the head's output width and make every existing
+        checkpoint incompatible with it.
         """
-        return len(self.future_ego_pose_iterations)
+        stride = self._stride("future_ego_pose", self.future_ego_pose_frequency, 1)
+        return self.future_ego_pose_num_iterations // stride
 
     def _num_iterations(self, field: str, length_s: float) -> int:
         """The tick count one span covers.
