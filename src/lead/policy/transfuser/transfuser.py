@@ -147,6 +147,7 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 batch,
                 data_config.sensor_degradation_probability,
                 data_config.sensor_degradation_max_severity,
+                data_config.deployment_perturbation_families,
             )
         return batch
 

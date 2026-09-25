@@ -78,6 +78,13 @@ class TrainingDataConfig(ConfigNode):
     sensor_degradation_probability: float = 0.5
     # Upper bound of the per-sample severity; 1.0 allows a fully lost modality.
     sensor_degradation_max_severity: float = 1.0
+    # Deployment-perturbation families sampled alongside the two appearance
+    # ones, each equally likely. Empty reproduces the appearance-only
+    # curriculum draw for draw, which is what keeps the rung that established
+    # that curriculum's effect a valid control. Accepted: "occlusion" blacks
+    # out image regions, "ego_state" jitters the navigation points and
+    # under-reports the speed.
+    deployment_perturbation_families: tuple[str, ...] = ()
 
     # --- Cache store ---
     # The store's location is per policy: ``policy.<name>.cache_store_root``.
