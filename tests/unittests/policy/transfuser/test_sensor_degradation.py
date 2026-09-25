@@ -17,6 +17,7 @@ import torch
 
 from lead.policy.transfuser.utils.sensor_degradation import (
     apply_sensor_degradation,
+    degrade_batch,
     degrade_camera,
     degrade_ego_state,
     degrade_lidar,
@@ -32,10 +33,18 @@ def _rgb(batch_size: int = 4, height: int = 32, width: int = 48) -> torch.Tensor
 
 
 def _batch(batch_size: int = 4) -> dict:
-    """Build the fields the curriculum touches, with no zeros to hide behind."""
+    """Build the fields the curriculum touches, with no zeros to hide behind.
+
+    Deterministic on purpose: several tests below compare two batches built by
+    two calls, so any unseeded content here would differ before the damage does
+    and the comparison would test nothing.
+    """
+    source = torch.Generator().manual_seed(0)
     return {
         "rgb": _rgb(batch_size),
-        "rasterized_lidar": torch.rand(batch_size, 1, 16, 16) + 0.5,
+        "rasterized_lidar": torch.rand(
+            batch_size, 1, 16, 16, generator=source,
+        ) + 0.5,
         "speed": torch.full((batch_size,), 8.0),
         "target_point": torch.ones(batch_size, 2),
         "previous_target_point": torch.ones(batch_size, 2),
@@ -259,6 +268,50 @@ class TestDeploymentFamilies:
                 max_severity=1.0,
                 deployment_families=("weather",),
             )
+
+
+class TestInferenceSweep:
+    """``degrade_batch`` is what the closed-loop sweep drives every run through."""
+
+    @pytest.mark.parametrize(
+        "modality",
+        ["camera", "lidar", "occlusion", "ego_state"],
+    )
+    def test_every_sweepable_family_changes_the_batch(self, modality: str) -> None:
+        batch = _batch()
+        original = {key: value.clone() for key, value in batch.items()}
+        degrade_batch(batch, modality, severity=1.0)
+        changed = any(
+            not torch.equal(batch[key], value) for key, value in original.items()
+        )
+        assert changed, modality
+
+    @pytest.mark.parametrize(
+        "modality",
+        ["camera", "lidar", "occlusion", "ego_state", "none"],
+    )
+    def test_zero_severity_is_a_no_op_for_every_family(self, modality: str) -> None:
+        batch = _batch()
+        original = {key: value.clone() for key, value in batch.items()}
+        degrade_batch(batch, modality, severity=0.0)
+        for key, value in original.items():
+            assert torch.equal(batch[key], value), f"{modality}/{key}"
+
+    @pytest.mark.parametrize("modality", ["occlusion", "ego_state"])
+    def test_a_seeded_generator_pairs_two_models_on_one_route(
+        self,
+        modality: str,
+    ) -> None:
+        """Constraint of the protocol: identical damage, two checkpoints."""
+        first, second = _batch(), _batch()
+        degrade_batch(first, modality, 0.6, torch.Generator().manual_seed(99))
+        degrade_batch(second, modality, 0.6, torch.Generator().manual_seed(99))
+        for key in first:
+            assert torch.equal(first[key], second[key]), key
+
+    def test_an_unknown_condition_is_refused(self) -> None:
+        with pytest.raises(ValueError, match="degrade modality must be"):
+            degrade_batch(_batch(), "weather", severity=1.0)
 
 
 @pytest.mark.parametrize("severity_value", [0.0, 0.25, 0.5, 0.75, 1.0])

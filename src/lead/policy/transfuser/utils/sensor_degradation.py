@@ -409,9 +409,11 @@ def degrade_batch(
     """
     if modality == "none" or severity <= 0.0:
         return batch
-    if modality not in ("camera", "lidar"):
+    accepted = ("camera", "lidar", *_BATCH_LEVEL_FAMILIES)
+    if modality not in accepted:
         raise ValueError(
-            f"degrade modality must be 'camera', 'lidar' or 'none', got '{modality}'.",
+            f"degrade modality must be one of {(*accepted, 'none')}, "
+            f"got '{modality}'.",
         )
 
     reference = batch.get("rgb")
@@ -429,4 +431,10 @@ def degrade_batch(
             amount,
             generator,
         )
+    elif modality == "occlusion" and "rgb" in batch:
+        # The visible fraction is the training signal's, not the driver's, so
+        # inference keeps only the damaged image.
+        batch["rgb"], _ = degrade_occlusion(batch["rgb"], amount, generator)
+    elif modality == "ego_state":
+        batch = degrade_ego_state(batch, amount, generator)
     return batch
