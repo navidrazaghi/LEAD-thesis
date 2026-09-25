@@ -153,11 +153,39 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
     def degrade_batch(self, batch: TransfuserForwardBatch) -> TransfuserForwardBatch:
         """Inherited, see superclass."""
         inference = self.lead_config.evaluation.inference
+        reference = batch.get("rgb")
+        if reference is None:
+            reference = batch.get("rasterized_lidar")
+        generator = (
+            None if reference is None else self._degradation_generator(reference.device)
+        )
         return degrade_batch(
             batch,
             inference.degrade_modality,
             inference.degrade_severity,
+            generator,
         )
+
+    def _degradation_generator(self, device: torch.device) -> torch.Generator:
+        """The seeded stream this run draws its sensor damage from.
+
+        Built once and kept, so the draws advance across the route instead of
+        restarting every tick -- a per-tick reset would feed the same frozen
+        noise pattern to every frame, which is not what a failing sensor does.
+
+        Args:
+            device: Device the batch lives on.
+
+        Returns:
+            The generator, seeded from ``evaluation.inference.degrade_seed``.
+        """
+        key = str(device)
+        if getattr(self, "_degrade_generator_key", None) != key:
+            generator = torch.Generator(device=device)
+            generator.manual_seed(self.lead_config.evaluation.inference.degrade_seed)
+            self._degrade_generator = generator
+            self._degrade_generator_key = key
+        return self._degrade_generator
 
     def forward(self, batch: TransfuserForwardBatch) -> Prediction:
         auxiliary_log: AuxiliaryLog = {}

@@ -202,3 +202,43 @@ $ vkprobe                    # must list the A100 as DISCRETE_GPU, not llvmpipe
 fix it reports one device, `llvmpipe (LLVM 20.1.2, 256 bits)`, type `CPU`.
 
 Then restart CARLA and check that `CarlaUE4` appears in `nvidia-smi`.
+
+## Reading a closed-loop result status
+
+`TickRuntime` looks like a simulator fault and is not one. `scenario_manager`
+raises it at a hard cap:
+
+```python
+self.tick_count += 1
+if self.tick_count > 4000:
+    raise TickRuntimeError("RuntimeError, tick_count > 4000")
+```
+
+So it means the agent spent its whole step budget without reaching the goal —
+stalling or crawling. It belongs with `Agent got blocked`, not with the
+infrastructure failures, and **the leaderboard records a full score for those
+routes** (route completion 11–93% in the pilot, driving scores 7–34).
+
+Treating it as infrastructure cost real time and nearly produced a wrong result:
+
+- Those rows were dropped from the analysis, and dropped *unevenly* — six from
+  the clean condition, four from `camera:0.5`, none from `camera:1.0`. Removing
+  the worst runs from the clean condition while keeping them elsewhere made a
+  degraded model look better than an intact one (mean DS 48.2 vs 32.9). With
+  every row counted the ordering behaves sanely again.
+- The sweep retried them, burning ~20 minutes per route to reproduce the same
+  number. A retry landing on the same score is the signature of a real agent
+  failure; genuine sim flakiness does not reproduce that cleanly.
+
+The wall-clock tell: nothing that completed ran past 750 s, and nothing that hit
+the cap ran under 890 s. Burning all 4000 ticks simply takes the longest.
+
+Only `NoResult` and `Agent timed out` remain in `_INFRASTRUCTURE_FAILURES`.
+
+## Sweep logs are block buffered
+
+`run_evaluation.py` calls `_unbuffer_stdout()` for a reason. Redirected stdout
+buffers by block, so a multi-hour sweep writes **nothing** to its log until it
+exits. A healthy run looks dead, and worse, any `grep` over the log answers
+confidently about an empty file — which is how a check for simulator failures
+came back clean while failures were in fact accumulating.

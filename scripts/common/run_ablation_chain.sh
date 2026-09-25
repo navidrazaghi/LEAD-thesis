@@ -98,10 +98,24 @@ run_rung rung2_deformable_calibrated \
   policy.transfuser.deformable_calibrated_reference=true \
   || { log "chain stopped at rung2"; exit 1; }
 
-# Rung 3: the full method. The observability head, the gate that reads it, and
-# the degradation curriculum that gives the gate something to learn from. These
-# three move together on purpose — the curriculum without the gate is just
-# augmentation, and the gate without it has no signal.
+# Rungs 2a and 2b exist because rung 3 turns on three things at once, and a
+# result that cannot say which one did the work is not a result. The obvious
+# rival explanation for any robustness gain is the dullest one: a model trained
+# on damaged sensors drives better with damaged sensors, gate or no gate. These
+# two rungs are what answers that.
+#
+# 2a: the curriculum alone. If this recovers most of rung 3's robustness, the
+# contribution is sensor augmentation and the gate is decoration.
+run_rung rung2a_curriculum_only   policy.transfuser.backbone_target="$DEFORMABLE"   policy.transfuser.deformable_calibrated_reference=true   training.data.use_sensor_degradation=true   || { log "chain stopped at rung2a"; exit 1; }
+
+# 2b: adds the observability head but not the gate, so the head is trained and
+# its features are in the encoder, yet nothing steers the fusion with them.
+# Against 2b, rung 3 is the gate and nothing else.
+run_rung rung2b_observability_ungated   policy.transfuser.backbone_target="$DEFORMABLE"   policy.transfuser.deformable_calibrated_reference=true   policy.transfuser.use_observability=true   training.data.use_sensor_degradation=true   || { log "chain stopped at rung2b"; exit 1; }
+
+# Rung 3: the full method — the observability head, the gate that reads it, and
+# the degradation curriculum. Read against 2b it isolates the gate; against 2a
+# it isolates the head and the gate together.
 run_rung rung3_observability_gated \
   policy.transfuser.backbone_target="$DEFORMABLE" \
   policy.transfuser.deformable_calibrated_reference=true \
@@ -109,5 +123,23 @@ run_rung rung3_observability_gated \
   policy.transfuser.use_observability_gate=true \
   training.data.use_sensor_degradation=true \
   || { log "chain stopped at rung3"; exit 1; }
+
+# Rung 4: rung 3 with its two auxiliary losses turned down.
+#
+# The first pass measured rung 3 losing to rung2a -- curriculum only, no gate --
+# in absolute waypoint error under every condition, clean included, even while
+# its gate demonstrably reallocated attention 26x more than any ungated model.
+# The mechanism worked and did not pay for itself.
+#
+# One rival explanation is arithmetic rather than conceptual. train.py divides
+# the per-task weights by their sum, so rung 3 at full weight spends 2 of 12
+# parts on observability and hands its driving losses 1/12 where rung2a gets
+# 1/10. At 0.2 each the sum is 10.4 and the driving losses are back within a
+# few percent of rung2a's share, with the gate still supervised.
+#
+# This is a decisive test, not a rescue attempt. If rung 4 lands near rung2a's
+# 0.442 while still reallocating, the dilution was the problem. If it lands
+# near rung 3, the gate genuinely does not pay, and that is the finding.
+run_rung rung4_light_auxiliary   policy.transfuser.backbone_target="$DEFORMABLE"   policy.transfuser.deformable_calibrated_reference=true   policy.transfuser.use_observability=true   policy.transfuser.use_observability_gate=true   policy.transfuser.observability_loss_weight=0.2   policy.transfuser.observability_gate_loss_weight=0.2   training.data.use_sensor_degradation=true   || { log "chain stopped at rung4"; exit 1; }
 
 log "chain finished: all rungs complete"

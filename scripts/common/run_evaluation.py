@@ -33,14 +33,29 @@ import socket
 import subprocess
 import sys
 import time
+import zlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 # CARLA needs this long to answer RPC after launch on this machine; it is a
 # ceiling, not a sleep, so a fast boot costs nothing.
 _CARLA_BOOT_TIMEOUT_S = 180
-# A route that has not finished by now is wedged; the observed time is about
-# five minutes, so this is generous rather than tight.
-_ROUTE_TIMEOUT_S = 1800
+# A route that has not finished by now is wedged. The floor is the
+# leaderboard's own hard cap of 4000 simulation ticks: a model that stalls
+# burns all of them, which measured at about 1300 s on an idle machine.
+#
+# This machine is shared. Under a load average near 30 the same 4000 ticks ran
+# past 2400 s, and the guard then discarded the run -- so the baseline lost
+# exactly the routes where it stalls, which are the routes the comparison most
+# needs. Because the simulation is synchronous with a fixed time step, that
+# contention costs wall clock and nothing else: the scores are unaffected, only
+# the time taken to produce them.
+#
+# Raising it to 5400 s did not help: the cell it was raised for failed again at
+# 5400 s, which means that cell is wedged rather than slow and no ceiling
+# reaches it. So the ceiling is set from the other direction -- by what a wedge
+# costs. The longest healthy run measured is 1152 s, and 2700 s keeps more than
+# twice that as headroom while halving the price of each wedge.
+_ROUTE_TIMEOUT_S = 2700
 _SCORE_FIELDS = (
     "driving_score",
     "route_completion",
@@ -54,7 +69,36 @@ _FIELDS = ("model", "modality", "severity", "route", *_SCORE_FIELDS, "seconds")
 # badly. A row carrying one of these is not a measurement, so it is neither
 # treated as done on resume nor left to poison the next few runs: CARLA is
 # restarted immediately after one.
-_INFRASTRUCTURE_FAILURES = ("TickRuntime", "NoResult", "Agent timed out")
+# A TickRuntime is deliberately absent here. It is raised by scenario_manager
+# at a hard cap of 4000 simulation ticks, so it means the agent used its whole
+# step budget without reaching the goal -- driving too slowly or stalling. The
+# leaderboard still records a full score for those routes, and dropping them
+# discards the worst runs unevenly across conditions, which flatters whichever
+# condition stalls most.
+_INFRASTRUCTURE_FAILURES = ("NoResult", "Agent timed out")
+
+
+def _unbuffer_stdout() -> None:
+    """Flush progress lines as they happen, not when the pipe buffer fills.
+
+    Redirected stdout is block buffered, so a sweep that takes hours writes
+    nothing to its log until it ends. That makes a healthy run look dead, and
+    makes any grep over the log quietly answer about an empty file.
+    """
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
+
+
+def route_seed(route: pathlib.Path) -> int:
+    """A stable seed for one route's sensor damage.
+
+    Args:
+        route: The route file being driven.
+
+    Returns:
+        A seed derived from the route name, equal across runs and machines.
+    """
+    return zlib.crc32(route.name.encode()) % (2**31)
 
 
 def free_port(start: int) -> int:
@@ -235,8 +279,18 @@ def run_route(
             # arguments, unlike the training entry point. Config for an
             # evaluation run travels in this dotlist instead.
             "LEAD_CONFIG": (
+                # The demo video is on by default and costs about 200 MB and a
+                # slab of CPU per route, encoded alongside the simulation it is
+                # competing with. Across a 270-run sweep that is pure overhead:
+                # nothing in the results table is read off a video, and each
+                # one is deleted with the scratch directory on the next run.
+                "evaluation.produce_demo_video=false "
                 f"evaluation.inference.degrade_modality={modality} "
-                f"evaluation.inference.degrade_severity={severity}"
+                f"evaluation.inference.degrade_severity={severity} "
+                # Keyed on the route alone, so every checkpoint meets the
+                # identical damage there and the models can be compared route
+                # by route, while different routes still get different noise.
+                f"evaluation.inference.degrade_seed={route_seed(route)}"
             ),
         },
     )
@@ -257,19 +311,34 @@ def run_route(
         str(work_dir),
     ]
     transcript = work_dir / "run.log"
-    try:
-        with transcript.open("w", encoding="utf-8") as sink:
-            subprocess.run(  # noqa: S603
-                command,
-                cwd=ROOT,
-                env=environment,
-                timeout=_ROUTE_TIMEOUT_S,
-                stdout=sink,
-                stderr=subprocess.STDOUT,
-                check=False,
-            )
-    except subprocess.TimeoutExpired:
-        return None
+    with transcript.open("w", encoding="utf-8") as sink:
+        # Not subprocess.run: its timeout kills only the direct child, and
+        # ``python -m lead`` spawns the leaderboard evaluator underneath it.
+        # That grandchild would survive, keep its CARLA connection and its
+        # slice of GPU memory, and drag on every remaining run of the sweep.
+        # start_new_session puts the pair in one process group so both go.
+        process = subprocess.Popen(  # noqa: S603
+            command,
+            cwd=ROOT,
+            env=environment,
+            stdout=sink,
+            stderr=subprocess.STDOUT,
+            start_new_session=True,
+        )
+        try:
+            process.wait(timeout=_ROUTE_TIMEOUT_S)
+        except subprocess.TimeoutExpired:
+            print(f"      | timed out after {_ROUTE_TIMEOUT_S}s, killing the group")
+            for sig in (signal.SIGTERM, signal.SIGKILL):
+                try:
+                    os.killpg(process.pid, sig)
+                    process.wait(timeout=30)
+                    break
+                except (ProcessLookupError, PermissionError):
+                    break
+                except subprocess.TimeoutExpired:
+                    continue
+            return None
 
     for endpoint in sorted(work_dir.rglob("checkpoint_endpoint.json")):
         scores = read_score(endpoint)
@@ -299,9 +368,11 @@ def is_measurement(status: str | None) -> bool:
 def load_done(out: pathlib.Path) -> set[tuple[str, str, str, str]]:
     """Which runs the results CSV already holds a usable measurement for.
 
-    Rows whose status names a simulator failure are deliberately not counted,
-    so re-running the sweep retries them instead of carrying the failure into
-    the final table.
+    A row whose status names a simulator failure is not counted, so re-running
+    the sweep retries it instead of carrying the failure into the final table.
+    A cell that has failed twice is the exception: it is treated as settled,
+    because a third attempt costs a full route timeout and has never yet
+    produced a measurement.
 
     Args:
         out: The results CSV.
@@ -312,11 +383,29 @@ def load_done(out: pathlib.Path) -> set[tuple[str, str, str, str]]:
     if not out.exists():
         return set()
     with out.open(newline="", encoding="utf-8") as handle:
-        return {
-            (row["model"], row["modality"], row["severity"], row["route"])
-            for row in csv.DictReader(handle)
-            if is_measurement(row.get("status"))
-        }
+        rows = list(csv.DictReader(handle))
+
+    measured = {
+        (row["model"], row["modality"], row["severity"], row["route"])
+        for row in rows
+        if is_measurement(row.get("status"))
+    }
+    # A cell that failed once may have been unlucky: a server that died, a port
+    # still closing. A cell that failed twice is failing for a reason another
+    # attempt will not fix, and each attempt costs the whole route timeout. It
+    # is counted as settled so the budget goes to cells that can still be
+    # measured; the missing row stays visible in the CSV as a failure.
+    failures: dict[tuple[str, str, str, str], int] = {}
+    for row in rows:
+        key = (row["model"], row["modality"], row["severity"], row["route"])
+        if not is_measurement(row.get("status")):
+            failures[key] = failures.get(key, 0) + 1
+    abandoned = {key for key, count in failures.items() if count >= 2}
+    if abandoned:
+        print(f"  {len(abandoned)} cell(s) abandoned after two failures")
+        for model, modality, severity, route in sorted(abandoned):
+            print(f"    {model} {modality}:{severity} {route}")
+    return measured | abandoned
 
 
 def parse_args() -> argparse.Namespace:
@@ -380,6 +469,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     """Run the matrix, appending each finished route to the results CSV."""
+    _unbuffer_stdout()
     args = parse_args()
     models = [pair.split("=", 1) for pair in args.models]
     conditions = [pair.split(":", 1) for pair in args.conditions]
@@ -388,11 +478,18 @@ def main() -> None:
         for line in args.routes.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+    # Models innermost, on purpose. Model-major order means an interruption
+    # at 60% leaves two models complete and the third untouched -- and the
+    # third is the one the whole comparison is about. This way every prefix of
+    # the sweep holds complete model-triples, so a sweep that dies early is
+    # still a smaller version of the same experiment rather than a useless one.
+    # It costs nothing: every route is a fresh subprocess that loads its
+    # checkpoint anyway, so switching models per run is free.
     jobs = [
         (name, pathlib.Path(path), modality, severity, route)
-        for name, path in models
         for modality, severity in conditions
         for route in routes
+        for name, path in models
     ]
     done = load_done(args.out)
     pending = [job for job in jobs if (job[0], job[2], job[3], job[4]) not in done]

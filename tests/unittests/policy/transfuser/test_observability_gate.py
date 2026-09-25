@@ -456,3 +456,81 @@ class TestDegradationUnderAutocast:
         with torch.autocast(device_type="cpu", dtype=torch.bfloat16):
             out = degrade_batch(batch, "camera", 0.6)
         assert out["rgb"].dtype == torch.uint8
+
+
+def test_degrade_camera_accepts_the_float_batch_inference_hands_it() -> None:
+    """The inference path passes float32, not uint8, and must not be rejected.
+
+    ``features_to_batch`` casts every model input to float32 before the driving
+    agent calls ``degrade_batch``, while training degrades the collated uint8
+    batch. Annotating only uint8 made every degraded evaluation run raise under
+    the default runtime type checking, and the pilot only survived because an
+    unrelated flag happened to disable it.
+    """
+    rgb = torch.full((2, 3, 16, 16), 128.0)
+    out = degrade_camera(rgb, torch.tensor([0.5, 0.5]))
+
+    assert out.dtype == torch.float32
+    assert out.shape == rgb.shape
+    assert not torch.equal(out, rgb)
+
+
+def test_both_dtypes_are_damaged_by_the_same_amount() -> None:
+    """uint8 and float32 carry 0-255 values, so the damage must match.
+
+    Guards the claim the comparison rests on: a training-time degradation and
+    an evaluation-time one of the same severity are the same degradation, so a
+    robustness number measures the model rather than a scale mismatch.
+    """
+    severity = torch.tensor([0.7])
+    as_float = torch.full((1, 3, 16, 16), 200.0)
+    as_uint8 = as_float.to(torch.uint8)
+
+    torch.manual_seed(0)
+    from_float = degrade_camera(as_float, severity)
+    torch.manual_seed(0)
+    from_uint8 = degrade_camera(as_uint8, severity)
+
+    # uint8 truncates on the way back; anything beyond that is a scale bug.
+    assert (from_float.round() - from_uint8.float()).abs().max() <= 1.0
+
+
+@pytest.mark.parametrize(
+    ("modality", "key"),
+    [("camera", "rgb"), ("lidar", "rasterized_lidar")],
+)
+def test_one_seed_reproduces_one_sequence_of_damage(modality, key) -> None:
+    """Two runs under the same seed must meet byte-identical damage.
+
+    This is what makes the per-route paired comparison mean anything: the two
+    checkpoints being compared face the same noise and the same dropped
+    returns, so the difference between them is the model.
+    """
+
+    def sequence(seed: int) -> list[torch.Tensor]:
+        generator = torch.Generator()
+        generator.manual_seed(seed)
+        frames = []
+        for _ in range(3):
+            batch = {
+                "rgb": torch.full((1, 3, 16, 16), 128.0),
+                "rasterized_lidar": torch.ones(1, 2, 16, 16),
+            }
+            frames.append(degrade_batch(batch, modality, 0.5, generator)[key].clone())
+        return frames
+
+    first, again, other = sequence(7), sequence(7), sequence(8)
+
+    assert all(torch.equal(a, b) for a, b in zip(first, again))
+    assert any(not torch.equal(a, b) for a, b in zip(first, other))
+    # A generator rebuilt per tick would freeze one pattern onto every frame,
+    # which is not what a failing sensor does.
+    assert not torch.equal(first[0], first[1])
+
+
+def test_unseeded_degradation_still_works_for_training() -> None:
+    """Training draws from the global stream and must not need a generator."""
+    batch = {"rgb": torch.full((2, 3, 16, 16), 128.0)}
+    out = degrade_batch(batch, "camera", 0.5)
+
+    assert out["rgb"].shape == (2, 3, 16, 16)

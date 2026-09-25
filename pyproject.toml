@@ -85,9 +85,10 @@ packages.find.exclude = [ "data*", "outputs*", "3rd_party*", "common*", "tests*"
 # kernels; cu128 covers both. torch 2.13 breaks torch.compile on our model
 # (FakeTensor data-pointer access in the DDP graph compiler), so the pins stay
 # on 2.8 until that is resolved.
-sources.torch = [ { index = "pytorch-cu128" } ]
-sources.torchvision = [ { index = "pytorch-cu128" } ]
-index = [ { name = "pytorch-cu128", url = "https://download.pytorch.org/whl/cu128", explicit = true } ]
+# PATCHED (download.pytorch.org unreachable here; PyPI torch 2.8 is the same cu128 build)
+# sources.torch = [ { index = "pytorch-cu128" } ]
+# sources.torchvision = [ { index = "pytorch-cu128" } ]
+# index = [ { name = "pytorch-cu128", url = "https://download.pytorch.org/whl/cu128", explicit = true } ]
 
 [tool.ruff]
 line-length = 88

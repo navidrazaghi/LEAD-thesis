@@ -70,7 +70,7 @@ class TransfuserConfig(
             "loss_center_net_yaw_res": 1.0,
             "loss_center_net_velocity": 1.0,
             "radar_loss": 1.0,
-            "loss_observability": 1.0,
+            "loss_observability": self.observability_loss_weight,
             "loss_observability_gate": self.observability_gate_loss_weight,
         }
 

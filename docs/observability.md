@@ -128,3 +128,60 @@ measurement: the dataset records visibility under nominal sensors only, so the
 degraded value cannot be observed, only posited. Real weather stays a held-out
 test, which is what makes it an out-of-distribution result rather than a
 memorized one.
+
+## Why the ladder has rungs 2a and 2b
+
+Rung 3 turns on three things at once: the observability head, the gate, and the
+sensor-degradation curriculum. An earlier version of the chain did this on
+purpose, reasoning that "the curriculum without the gate is just augmentation."
+That reasoning is backwards. Being just augmentation is exactly why it has to be
+run: it is the rival explanation for every robustness number the method
+produces, and the dullest one.
+
+Put plainly — a model trained on damaged sensors drives better with damaged
+sensors. Gate or no gate. Comparing rung 3 against a rung 0 that never saw a
+damaged sensor cannot distinguish the mechanism from the augmentation, so on its
+own it supports no claim about the gate at all.
+
+The two rungs close it:
+
+| rung | curriculum | observability head | gate | what it isolates |
+| :--- | :--------- | :----------------- | :--- | :--------------- |
+| 2 | no | no | no | the calibrated reference |
+| 2a | yes | no | no | **the curriculum alone** |
+| 2b | yes | yes | no | the head, trained but not steering |
+| 3 | yes | yes | yes | **the gate, and nothing else** |
+
+Read 3 against 2b and the only difference is the gate. Read 2a against 2 and you
+get the honest size of the augmentation effect, which is the number a reviewer
+will ask for first. If 2a already recovers most of rung 3's robustness, the
+contribution is augmentation and the gate is decoration — better to know that
+from the table than from the committee.
+
+## Evaluation-time damage is seeded
+
+`evaluation.inference.degrade_seed` seeds the noise and the dropout, and
+`run_evaluation.py` derives it from the route name alone. Two checkpoints driven
+over one route therefore meet the *same* damage rather than two draws from one
+distribution, which is what makes the per-route paired comparison mean anything;
+different routes still get different noise.
+
+The generator is built once per process and advances across ticks. Reseeding it
+per tick would freeze one noise pattern onto every frame, which is not how a
+failing sensor behaves.
+
+Without this the numbers are not reproducible: re-running one row gives a
+different score, and the two models in a comparison are damaged differently.
+
+## A trap worth remembering
+
+`degrade_camera` was annotated `jt.UInt8`, because training degrades the collated
+uint8 batch. At inference `features_to_batch` has already cast every model input
+to float32, and `LEAD_RUNTIME_TYPE_CHECKING` defaults to **true**, so every
+degraded evaluation run raised a `TypeCheckError` unless the caller happened to
+disable type checking. The pilot only ran because that flag was being cleared for
+an unrelated reason — `torch.compile`. The annotation is `jt.Real` now.
+
+Both dtypes carry 0-255 values (the backbone divides by 255 itself), so the
+degradation arithmetic was always identical across the two paths; only the
+annotation disagreed.

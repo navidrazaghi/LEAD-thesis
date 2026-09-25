@@ -59,14 +59,24 @@ def _gaussian_blur(
 
 
 def degrade_camera(
-    rgb: jt.UInt8[torch.Tensor, "b 3 h w"],
+    rgb: jt.Real[torch.Tensor, "b 3 h w"],
     severity: jt.Float[torch.Tensor, " b"],
-) -> jt.UInt8[torch.Tensor, "b 3 h w"]:
+    generator: torch.Generator | None = None,
+) -> jt.Real[torch.Tensor, "b 3 h w"]:
     """Dim, blur and add noise to each image in proportion to its severity.
 
+    The two callers hand this different dtypes for the same pixels. Training
+    degrades the collated uint8 batch; at inference ``features_to_batch`` has
+    already cast every model input to float32. Both carry 0-255 values -- the
+    backbone divides by 255 itself -- so the arithmetic below is identical and
+    only the annotation has to admit both. Narrowing it to uint8 makes every
+    degraded evaluation run raise under the default runtime type checking.
+
     Args:
-        rgb: The collated camera batch.
+        rgb: The collated camera batch, 0-255 valued, uint8 or float.
         severity: Per-sample severity in ``[0, 1]``; zero leaves a sample alone.
+        generator: Draws the noise, so a run can repeat its own damage. None
+            uses the global stream, which is what training wants.
 
     Returns:
         The degraded batch, same dtype, device and layout.
@@ -84,13 +94,19 @@ def degrade_camera(
     gain = 1.0 - (1.0 - _MIN_IMAGE_GAIN) * per_sample
     x = x * gain
 
-    noise = torch.randn_like(x) * (_MAX_NOISE_STD * 255.0) * per_sample
+    noise = torch.randn(
+        x.shape,
+        generator=generator,
+        device=x.device,
+        dtype=x.dtype,
+    ) * (_MAX_NOISE_STD * 255.0) * per_sample
     return (x + noise).clamp(0.0, 255.0).to(rgb.dtype)
 
 
 def degrade_lidar(
     rasterized_lidar: jt.Float[torch.Tensor, "b c h w"],
     severity: jt.Float[torch.Tensor, " b"],
+    generator: torch.Generator | None = None,
 ) -> jt.Float[torch.Tensor, "b c h w"]:
     """Drop returns from the BEV raster in proportion to each sample's severity.
 
@@ -100,6 +116,8 @@ def degrade_lidar(
     Args:
         rasterized_lidar: The collated BEV density raster.
         severity: Per-sample severity in ``[0, 1]``.
+        generator: Draws the dropout, so a run can repeat its own damage. None
+            uses the global stream, which is what training wants.
 
     Returns:
         The thinned raster, same shape and dtype.
@@ -108,7 +126,13 @@ def degrade_lidar(
         rasterized_lidar.device,
         rasterized_lidar.dtype,
     )
-    keep = torch.rand_like(rasterized_lidar) >= (_MAX_POINT_DROPOUT * per_sample)
+    draw = torch.rand(
+        rasterized_lidar.shape,
+        generator=generator,
+        device=rasterized_lidar.device,
+        dtype=rasterized_lidar.dtype,
+    )
+    keep = draw >= (_MAX_POINT_DROPOUT * per_sample)
     return rasterized_lidar * keep
 
 
@@ -173,6 +197,7 @@ def degrade_batch(
     batch: dict,
     modality: str,
     severity: float,
+    generator: torch.Generator | None = None,
 ) -> dict:
     """Damage one modality of an inference batch by a fixed amount.
 
@@ -186,6 +211,9 @@ def degrade_batch(
         batch: The collated model inputs, modified in place.
         modality: ``"camera"``, ``"lidar"``, or ``"none"`` to leave it alone.
         severity: How much to damage it, in ``[0, 1]``.
+        generator: Draws the damage. Seeding it is what lets two checkpoints be
+            compared on the same route under the *same* damage rather than two
+            samples from the same distribution.
 
     Returns:
         The same batch.
@@ -208,7 +236,11 @@ def degrade_batch(
 
     amount = torch.full((reference.shape[0],), float(severity))
     if modality == "camera" and "rgb" in batch:
-        batch["rgb"] = degrade_camera(batch["rgb"], amount)
+        batch["rgb"] = degrade_camera(batch["rgb"], amount, generator)
     elif modality == "lidar" and "rasterized_lidar" in batch:
-        batch["rasterized_lidar"] = degrade_lidar(batch["rasterized_lidar"], amount)
+        batch["rasterized_lidar"] = degrade_lidar(
+            batch["rasterized_lidar"],
+            amount,
+            generator,
+        )
     return batch
