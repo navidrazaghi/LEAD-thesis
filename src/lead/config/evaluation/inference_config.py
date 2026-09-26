@@ -64,6 +64,17 @@ class InferenceConfig(ConfigNode):
     # starting point rather than a commitment: the calibrator keeps adapting
     # during the scored route, so a warm start that was wrong is corrected.
     caution_initial_lambda: float = 0.0
+    # How far the camera's predicted depth and a BEV cell's true range may
+    # differ before the two modalities count as contradicting each other. Wide
+    # enough to absorb the depth head's own error and the fact that a cell is
+    # projected at one reference height rather than as a volume; narrow enough
+    # that a sensor which has stopped seeing a surface still shows up.
+    caution_depth_tolerance_meter: float = 2.5
+    # Which caution signal drives the governor. "observability" reads the
+    # trained head and is blind to single-modality failure by construction;
+    # "cross_modal" compares the depth head against the LiDAR returns, needs no
+    # label at all, and is informative exactly where the other is not.
+    caution_signal: str = "observability"
     # If true be strict when load weight
     # --- Sensor degradation at inference ---
     # Which modality to damage while driving: "camera", "lidar" or "none".

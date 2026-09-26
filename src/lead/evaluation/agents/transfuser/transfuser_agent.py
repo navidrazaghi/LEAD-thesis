@@ -115,17 +115,61 @@ class TransfuserAgent(AbstractDrivingAgent):
             )
         return target_speed
 
+    def _caution_signal(
+        self,
+        prediction: Prediction,
+        features: dict[str, typing.Any],
+    ) -> float | None:
+        """Read whichever caution signal this run is configured to act on.
+
+        Args:
+            prediction: Raw predictions of the frozen model.
+            features: The batched model inputs the prediction was computed on,
+                which is where the LiDAR raster the camera is checked against
+                lives.
+
+        Returns:
+            The caution in ``[0, 1]``, or None when the model does not produce
+            what the configured signal needs.
+
+        Raises:
+            ValueError: If the configured signal is not one that exists.
+        """
+        signal = self.lead_config.evaluation.inference.caution_signal
+        if signal == "observability":
+            if prediction.observability is None:
+                return None
+            return caution_signals.observability_caution(
+                prediction.observability,
+                self.lead_config,
+            )
+        if signal == "cross_modal":
+            if prediction.depth is None or "rasterized_lidar" not in features:
+                return None
+            return caution_signals.cross_modal_caution(
+                prediction.depth,
+                features["rasterized_lidar"],
+                self.lead_config,
+            )
+        raise ValueError(
+            f"caution_signal must be 'observability' or 'cross_modal', "
+            f"got {signal!r}.",
+        )
+
     def _apply_caution_governor(
         self,
         prediction: Prediction,
+        features: dict[str, typing.Any],
         target_speed: torch.Tensor,
         ego_speed_mps: float,
     ) -> torch.Tensor:
         """Scale the target speed by how well the model resolves the road ahead.
 
         Args:
-            prediction: Raw predictions of the model, read for its observability
-                head; the head is not recomputed and the model is not touched.
+            prediction: Raw predictions of the model, read for whichever head
+                the configured signal needs; nothing is recomputed and the
+                model is not touched.
+            features: The batched model inputs the prediction was computed on.
             target_speed: The post-processed target speed.
             ego_speed_mps: Current speed, which decides whether an unresolved
                 corridor counts as a risk this tick.
@@ -133,13 +177,10 @@ class TransfuserAgent(AbstractDrivingAgent):
         Returns:
             The target speed, scaled.
         """
-        if prediction.observability is None:
+        caution = self._caution_signal(prediction, features)
+        if caution is None:
             return target_speed
-
-        self.caution = caution_signals.observability_caution(
-            prediction.observability,
-            self.lead_config,
-        )
+        self.caution = caution
         # Update before acting, so the scalar applied this tick already reflects
         # this tick's risk rather than lagging it by one frame.
         self.caution_calibrator.update(
@@ -178,6 +219,7 @@ class TransfuserAgent(AbstractDrivingAgent):
         ):
             target_speed = self._apply_caution_governor(
                 prediction,
+                features,
                 target_speed,
                 float(features["speed"].reshape(-1)[0]),
             )

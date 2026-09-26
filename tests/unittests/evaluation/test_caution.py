@@ -13,8 +13,11 @@ import pytest
 import torch
 
 from lead.config import LeadConfig
+from lead.policy.transfuser.encoder.fusion_geometry import bev_cell_centres
 from lead.evaluation.inference.caution import (
+    cell_camera_geometry,
     corridor_mask,
+    cross_modal_caution,
     observability_caution,
     surrogate_risk_event,
     target_speed_multiplier,
@@ -154,6 +157,55 @@ class TestCorridor:
         assert bool(mask.any())
         assert not bool(mask.all())
 
+    def test_the_selected_cells_are_the_ones_actually_ahead(
+        self,
+        config: LeadConfig,
+    ) -> None:
+        """Checked against independently computed cell centres, not the mask.
+
+        Columns run along x and rows along y. A mask built on the transposed
+        convention stays non-empty and passes every symmetric check while
+        pointing across the road instead of along it, so the only test that
+        catches it is one that asks where the selected cells actually are.
+        """
+        transfuser = config.policy.transfuser
+        rows = transfuser.lidar_bev_grid_rows
+        cols = transfuser.lidar_bev_grid_cols
+        centres = torch.as_tensor(
+            bev_cell_centres(config), dtype=torch.float32,
+        ).reshape(rows, cols, 2)
+
+        mask = corridor_mask(config, rows, cols, torch.device("cpu"))
+        assert bool(mask.any()), "the corridor selected nothing"
+
+        governor = config.evaluation.inference
+        selected = centres[mask]
+        assert bool((selected[:, 0] >= 0.0).all()), "a selected cell is behind the ego"
+        assert bool(
+            (selected[:, 0] <= governor.caution_corridor_length_meter).all(),
+        ), "a selected cell is beyond the corridor's length"
+        assert bool(
+            (selected[:, 1].abs() <= governor.caution_corridor_half_width_meter).all(),
+        ), "a selected cell is outside the corridor's width"
+
+    def test_it_selects_every_cell_that_qualifies(self, config: LeadConfig) -> None:
+        """The complement of the test above: nothing in the corridor is missed."""
+        transfuser = config.policy.transfuser
+        rows = transfuser.lidar_bev_grid_rows
+        cols = transfuser.lidar_bev_grid_cols
+        centres = torch.as_tensor(
+            bev_cell_centres(config), dtype=torch.float32,
+        ).reshape(rows, cols, 2)
+        governor = config.evaluation.inference
+
+        expected = (
+            (centres[..., 0] >= 0.0)
+            & (centres[..., 0] <= governor.caution_corridor_length_meter)
+            & (centres[..., 1].abs() <= governor.caution_corridor_half_width_meter)
+        )
+        mask = corridor_mask(config, rows, cols, torch.device("cpu"))
+        assert torch.equal(mask, expected)
+
     def test_a_corridor_off_the_grid_reports_maximum_caution(
         self,
         config: LeadConfig,
@@ -193,6 +245,124 @@ class TestMapping:
             multiplier = target_speed_multiplier(caution, 0.8, config)
             assert multiplier <= previous
             previous = multiplier
+
+
+class TestCrossModalGeometry:
+    """The projection table the label-free signal is built on."""
+
+    def test_it_covers_every_bev_token(self, config: LeadConfig) -> None:
+        transfuser = config.policy.transfuser
+        count = transfuser.lidar_bev_grid_rows * transfuser.lidar_bev_grid_cols
+        geometry = cell_camera_geometry(config)
+        assert geometry.image_xy.shape == (count, 2)
+        assert geometry.axial_depth.shape == (count,)
+        assert geometry.visible.shape == (count,)
+
+    def test_some_cells_are_seen_and_some_are_not(self, config: LeadConfig) -> None:
+        """Cells behind the rig have no projection; that must be recorded."""
+        geometry = cell_camera_geometry(config)
+        assert bool(geometry.visible.any())
+        assert not bool(geometry.visible.all())
+
+    def test_visible_cells_land_inside_the_stitched_image(
+        self,
+        config: LeadConfig,
+    ) -> None:
+        geometry = cell_camera_geometry(config)
+        seen = geometry.image_xy[geometry.visible]
+        assert bool((seen >= 0.0).all())
+        assert bool((seen <= 1.0).all())
+
+    def test_depth_grows_with_distance_ahead(self, config: LeadConfig) -> None:
+        """The axial depth has to track the cell's actual range, or the
+        comparison against the depth head is comparing nothing."""
+        transfuser = config.policy.transfuser
+        rows = transfuser.lidar_bev_grid_rows
+        cols = transfuser.lidar_bev_grid_cols
+        centres = torch.as_tensor(
+            bev_cell_centres(config), dtype=torch.float32,
+        )
+        geometry = cell_camera_geometry(config)
+        corridor = corridor_mask(config, rows, cols, torch.device("cpu")).reshape(-1)
+        chosen = corridor & geometry.visible
+        forward = centres[chosen, 0]
+        depth = geometry.axial_depth[chosen]
+        assert len(forward) >= 2
+        # Not equality: the cameras sit off the ego origin and off the axis, so
+        # the two differ by the mounting offset rather than being the same
+        # number.
+        order_by_range = torch.argsort(forward)
+        assert bool((torch.diff(depth[order_by_range]) >= -1.0).all())
+
+
+class TestCrossModalCaution:
+    """What the label-free signal reports, and when."""
+
+    @staticmethod
+    def _inputs(config: LeadConfig, depth_value: float, lidar_value: float):
+        transfuser = config.policy.transfuser
+        depth = torch.full(
+            (1, transfuser.final_image_height // 8, transfuser.final_image_width // 8),
+            depth_value,
+        )
+        lidar = torch.full((1, 1, 64, 64), lidar_value)
+        return depth, lidar
+
+    def test_agreement_reports_no_caution(self, config: LeadConfig) -> None:
+        """Empty road: LiDAR returns nothing and the camera sees far.
+
+        With no returns and the camera predicting depth well beyond every cell
+        in the corridor, neither contradiction fires.
+        """
+        depth, lidar = self._inputs(config, depth_value=45.0, lidar_value=0.0)
+        assert cross_modal_caution(depth, lidar, config) == pytest.approx(0.0)
+
+    def test_lidar_returns_the_camera_sees_through_are_caught(
+        self,
+        config: LeadConfig,
+    ) -> None:
+        """What a dimmed or blurred camera looks like against an intact sweep."""
+        depth, lidar = self._inputs(config, depth_value=45.0, lidar_value=1.0)
+        assert cross_modal_caution(depth, lidar, config) > 0.9
+
+    def test_a_surface_the_lidar_lost_is_caught(self, config: LeadConfig) -> None:
+        """What dropout looks like against an intact camera.
+
+        The camera puts a surface at a corridor cell's own range while the
+        sweep returns nothing there.
+        """
+        transfuser = config.policy.transfuser
+        rows = transfuser.lidar_bev_grid_rows
+        cols = transfuser.lidar_bev_grid_cols
+        geometry = cell_camera_geometry(config)
+        corridor = corridor_mask(config, rows, cols, torch.device("cpu")).reshape(-1)
+        chosen = corridor & geometry.visible
+        typical = float(geometry.axial_depth[chosen].median())
+
+        depth, lidar = self._inputs(config, depth_value=typical, lidar_value=0.0)
+        assert cross_modal_caution(depth, lidar, config) > 0.0
+
+    def test_the_signal_is_a_fraction(self, config: LeadConfig) -> None:
+        for depth_value in (5.0, 15.0, 30.0, 45.0):
+            for lidar_value in (0.0, 1.0):
+                depth, lidar = self._inputs(config, depth_value, lidar_value)
+                caution = cross_modal_caution(depth, lidar, config)
+                assert 0.0 <= caution <= 1.0
+
+    def test_it_reacts_to_single_modality_damage(self, config: LeadConfig) -> None:
+        """The whole reason this signal exists alongside the trained head.
+
+        The observability signal reports per modality and combines by the
+        better of the two, so one destroyed sensor leaves it silent. This one
+        is a comparison between the two, so a single failure is exactly what
+        it sees.
+        """
+        agreeing, lidar = self._inputs(config, depth_value=45.0, lidar_value=0.0)
+        quiet = cross_modal_caution(agreeing, lidar, config)
+
+        broken, intact_lidar = self._inputs(config, depth_value=45.0, lidar_value=1.0)
+        loud = cross_modal_caution(broken, intact_lidar, config)
+        assert loud - quiet > 0.5
 
 
 class TestSurrogateRisk:

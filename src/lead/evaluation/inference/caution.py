@@ -23,10 +23,15 @@ because a mean over the whole grid is dominated by cells behind the car and out
 to the sides, where being unable to see costs nothing.
 """
 
+import functools
+import typing
+
 import jaxtyping as jt
+import numpy as np
 import torch
 
 from lead.config import LeadConfig
+from lead.policy.transfuser.encoder import fusion_geometry
 
 
 def corridor_mask(
@@ -50,19 +55,23 @@ def corridor_mask(
     config = lead_config.policy.transfuser
     governor = lead_config.evaluation.inference
 
-    # Cell centres in meters, on the same axes the BEV raster is built on.
-    row_edges = torch.linspace(
-        config.bev_min_x_meter, config.bev_max_x_meter, cell_height + 1, device=device,
-    )
+    # Columns run along x, back to front, and rows along y, left to right. That
+    # is the raster's own convention, stated where the observability targets are
+    # rasterized, and getting it backwards is not something a constant test
+    # field can reveal -- the mask stays non-empty and every symmetric check
+    # still passes while the corridor points across the road.
     column_edges = torch.linspace(
-        config.bev_min_y_meter, config.bev_max_y_meter, cell_width + 1, device=device,
+        config.bev_min_x_meter, config.bev_max_x_meter, cell_width + 1, device=device,
     )
-    forward = 0.5 * (row_edges[:-1] + row_edges[1:])
-    lateral = 0.5 * (column_edges[:-1] + column_edges[1:])
+    row_edges = torch.linspace(
+        config.bev_min_y_meter, config.bev_max_y_meter, cell_height + 1, device=device,
+    )
+    forward = 0.5 * (column_edges[:-1] + column_edges[1:])
+    lateral = 0.5 * (row_edges[:-1] + row_edges[1:])
 
     ahead = (forward >= 0.0) & (forward <= governor.caution_corridor_length_meter)
     within = lateral.abs() <= governor.caution_corridor_half_width_meter
-    return ahead.view(-1, 1) & within.view(1, -1)
+    return within.view(-1, 1) & ahead.view(1, -1)
 
 
 def observability_caution(
@@ -133,6 +142,173 @@ def target_speed_multiplier(
     floor = lead_config.evaluation.inference.caution_speed_floor
     demand = min(max(caution * conservativeness, 0.0), 1.0)
     return float(1.0 - (1.0 - floor) * demand)
+
+
+class CellCameraGeometry(typing.NamedTuple):
+    """Where each BEV token sits in the stitched image, and how far away it is.
+
+    Attributes:
+        image_xy: Normalized ``(x, y)`` position in the stitched image, in
+            ``[0, 1]``, of the camera that sees the cell most centrally.
+        axial_depth: Distance along that camera's optical axis, in meters,
+            which is the quantity a CARLA depth map records.
+        visible: Whether any input camera sees the cell at all.
+    """
+
+    image_xy: jt.Float[torch.Tensor, "n 2"]
+    axial_depth: jt.Float[torch.Tensor, " n"]
+    visible: jt.Bool[torch.Tensor, " n"]
+
+
+@functools.lru_cache(maxsize=4)
+def _cell_camera_geometry_cached(
+    config_id: int,
+    lead_config: LeadConfig,
+) -> CellCameraGeometry:
+    """Build the projection table once per config; see ``cell_camera_geometry``."""
+    del config_id
+    specs = fusion_geometry.stitched_camera_specs(lead_config)
+    centres = fusion_geometry.bev_cell_centres(lead_config)
+    height = lead_config.policy.transfuser.deformable_reference_height_meter
+    points = np.concatenate(
+        [centres, np.full((centres.shape[0], 1), height)],
+        axis=1,
+    )
+
+    count = centres.shape[0]
+    best_xy = np.zeros((count, 2))
+    best_depth = np.zeros(count)
+    found = np.zeros(count, dtype=bool)
+    best_offset = np.full(count, np.inf)
+
+    for camera_index, spec in enumerate(specs):
+        pixels, inside = fusion_geometry.project_to_camera(spec, points)
+        # The depth a CARLA camera records is along its optical axis, not the
+        # straight-line distance, so the comparison has to use the same one.
+        rotation = fusion_geometry.world_to_camera_rotation(spec["rot"])
+        in_camera = (points - np.asarray(spec["pos"])) @ rotation.T
+        axial = in_camera[:, 0]
+
+        offset = np.abs(pixels[:, 0] - spec["width"] / 2.0)
+        wins = inside & (offset < best_offset)
+        best_xy[wins, 0] = pixels[wins, 0] + camera_index * spec["width"]
+        best_xy[wins, 1] = pixels[wins, 1]
+        best_depth[wins] = axial[wins]
+        best_offset[wins] = offset[wins]
+        found |= wins
+
+    transfuser = lead_config.policy.transfuser
+    best_xy[:, 0] /= transfuser.final_image_width
+    best_xy[:, 1] /= transfuser.final_image_height
+    return CellCameraGeometry(
+        torch.as_tensor(best_xy, dtype=torch.float32),
+        torch.as_tensor(best_depth, dtype=torch.float32),
+        torch.as_tensor(found),
+    )
+
+
+def cell_camera_geometry(lead_config: LeadConfig) -> CellCameraGeometry:
+    """The image position and axial depth of every BEV token.
+
+    Fixed by the rig and the token grids, so it is built once and reused; the
+    loader re-expresses a perturbated rig into the nominal one, so the network
+    always observes this same calibration.
+
+    Args:
+        lead_config: Root config tree.
+
+    Returns:
+        The projection table.
+    """
+    return _cell_camera_geometry_cached(id(lead_config), lead_config)
+
+
+def cross_modal_caution(
+    depth_prediction: jt.Float[torch.Tensor, "bs img_h img_w"],
+    rasterized_lidar: jt.Float[torch.Tensor, "bs 1 bev_h bev_w"],
+    lead_config: LeadConfig,
+) -> float:
+    """How much the camera's depth and the LiDAR's returns contradict each other.
+
+    This is the signal the observability head cannot supply. That head reports
+    per modality, so with one sensor destroyed the other still resolves the
+    scene and the combined estimate correctly says nothing is wrong. Useful, and
+    also blind exactly where a single failure has to be caught. Two sensors
+    looking at one world give a second signal that needs no label at all: they
+    have to agree about what is there, and a broken one stops agreeing.
+
+    Two contradictions are counted, and they catch opposite failures. A cell the
+    LiDAR reports occupied while the camera predicts free space beyond it means
+    the camera is seeing through something -- what a dimmed or blurred image
+    does. A cell the camera puts a surface at while the LiDAR returns nothing
+    means the sweep has lost it -- what dropout does.
+
+    Args:
+        depth_prediction: The depth head's metric output, in meters.
+        rasterized_lidar: The BEV density raster the model was given.
+        lead_config: Root config tree.
+
+    Returns:
+        The fraction of examined corridor cells whose two modalities disagree;
+        zero when there is nothing to examine.
+    """
+    transfuser = lead_config.policy.transfuser
+    governor = lead_config.evaluation.inference
+    rows = transfuser.lidar_bev_grid_rows
+    cols = transfuser.lidar_bev_grid_cols
+    device = depth_prediction.device
+
+    geometry = cell_camera_geometry(lead_config)
+    image_xy = geometry.image_xy.to(device)
+    axial_depth = geometry.axial_depth.to(device)
+    visible = geometry.visible.to(device)
+
+    examined = visible & corridor_mask(lead_config, rows, cols, device).reshape(-1)
+    # Beyond the depth head's far plane its output carries no information, so a
+    # disagreement there would be an artefact of the quantization rather than of
+    # the sensors.
+    examined = examined & (axial_depth < transfuser_depth_far_plane(lead_config))
+    if not bool(examined.any()):
+        return 0.0
+
+    # Sample the predicted depth where each cell lands, in the [-1, 1] frame
+    # grid_sample uses.
+    grid = (2.0 * image_xy - 1.0).view(1, -1, 1, 2).expand(
+        depth_prediction.shape[0], -1, -1, -1,
+    )
+    sampled = torch.nn.functional.grid_sample(
+        depth_prediction.unsqueeze(1).float(),
+        grid,
+        mode="bilinear",
+        padding_mode="border",
+        align_corners=False,
+    ).reshape(depth_prediction.shape[0], -1)
+
+    occupancy = torch.nn.functional.adaptive_avg_pool2d(
+        rasterized_lidar.float(),
+        (rows, cols),
+    ).reshape(rasterized_lidar.shape[0], -1)
+
+    tolerance = governor.caution_depth_tolerance_meter
+    lidar_occupied = occupancy > 0.0
+    sees_through = sampled > axial_depth + tolerance
+    sees_a_surface = (sampled - axial_depth).abs() <= tolerance
+
+    disagree = (lidar_occupied & sees_through) | (~lidar_occupied & sees_a_surface)
+    counted = disagree[:, examined]
+    return float(counted.float().mean())
+
+
+def transfuser_depth_far_plane(lead_config: LeadConfig) -> float:
+    """The far plane the depth labels were quantized against, in meters.
+
+    Args:
+        lead_config: Root config tree.
+
+    Returns:
+        The far plane.
+    """
+    return float(lead_config.expert.storage.save_depth_max_meters)
 
 
 def surrogate_risk_event(
