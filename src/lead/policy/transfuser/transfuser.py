@@ -30,6 +30,11 @@ from lead.policy.transfuser.decoder.observability_decoder import ObservabilityDe
 from lead.policy.transfuser.decoder.perspective_decoder import PerspectiveDecoder
 from lead.policy.transfuser.decoder.planning_decoder import PlanningDecoder
 from lead.policy.transfuser.decoder.radar_detector import RadarDetector
+from lead.policy.transfuser.decoder.waypoint_ensemble import (
+    WaypointEnsemble,
+    bootstrap_weights,
+    ensemble_loss,
+)
 from lead.policy.transfuser.encoder.observability_gate import (
     ObservabilityTokenTargets,
     gate_loss,
@@ -130,6 +135,25 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 lead_config=lead_config,
             )
 
+        # A second, deliberately weaker set of readouts of the planning
+        # context. Their disagreement is the signal; it needs the planning
+        # decoder to exist, because the context they read is the one it builds.
+        self.carries_waypoint_ensemble = (
+            self.config.use_waypoint_ensemble and self.config.use_planning_decoder
+        )
+        if self.config.use_waypoint_ensemble and not self.config.use_planning_decoder:
+            raise ValueError(
+                "use_waypoint_ensemble reads the planning decoder's context "
+                "tokens, so it needs use_planning_decoder.",
+            )
+        if self.carries_waypoint_ensemble:
+            inference = lead_config.evaluation.inference
+            self.waypoint_ensemble = WaypointEnsemble(
+                lead_config,
+                num_members=inference.caution_ensemble_members,
+                num_layers=inference.caution_ensemble_layers,
+            )
+
     def augment_batch(self, batch: TransfuserForwardBatch) -> TransfuserForwardBatch:
         """Inherited, see superclass."""
         data_config = self.lead_config.training.data
@@ -195,6 +219,7 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
         ) = None
         pred_semantic = pred_depth = pred_bounding_box = pred_bev_semantic = None
         pred_observability = None
+        pred_waypoint_ensemble = None
 
         # Backbone
         bev_features, image_features = self.backbone(batch)
@@ -224,6 +249,12 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 batch,
                 log=auxiliary_log,
             )
+            # Read straight after the decoder ran, before anything else can
+            # touch it, as the gate logits are.
+            if self.carries_waypoint_ensemble:
+                pred_waypoint_ensemble = self.waypoint_ensemble(
+                    self.planning_decoder.context_tokens,
+                )
 
         # Semantic segmentation forward pass
         if self.config.use_semantic:
@@ -272,6 +303,7 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
             bev_semantic=pred_bev_semantic,
             observability=pred_observability,
             observability_gate=gate_logits,
+            waypoint_ensemble=pred_waypoint_ensemble,
             radar_features=radar_features,
             radar_predictions=radar_predictions,
             auxiliary_log=auxiliary_log,
@@ -322,6 +354,28 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 batch,
                 loss,
                 log=auxiliary_log,
+            )
+
+        # Ensemble loss. Every member appears in it, which is what keeps the
+        # first-step gradient check satisfied: a member left out would carry
+        # trainable parameters that never receive a gradient. The bootstrap
+        # weights are what make the members differ -- without them they fit the
+        # same data from different starts and converge on each other, and the
+        # spread the governor reads shrinks to nothing.
+        if (
+            self.carries_waypoint_ensemble
+            and predictions.waypoint_ensemble is not None
+            and "future_waypoints" in batch
+        ):
+            members = predictions.waypoint_ensemble
+            loss["loss_waypoint_ensemble"] = ensemble_loss(
+                members,
+                batch["future_waypoints"],
+                bootstrap_weights(
+                    members.shape[1],
+                    members.shape[0],
+                    members.device,
+                ),
             )
 
         # Fusion gate loss, against the same targets reduced to the token grids
@@ -535,6 +589,8 @@ class Prediction:
     observability: jt.Float[torch.Tensor, "bs n_modalities cell_h cell_w"] | None
     # The fusion gate's logits, one tensor per gated block.
     observability_gate: list[jt.Float[torch.Tensor, "bs n_tokens n_modalities"]] | None
+    # Every ensemble member's plan, for the caution governor to take a spread of.
+    waypoint_ensemble: jt.Float[torch.Tensor, "bs n_members n_waypoints 2"] | None
     radar_features: jt.Float[torch.Tensor, "B Q C"] | None
     radar_predictions: jt.Float[torch.Tensor, "B Q 4"] | None
 

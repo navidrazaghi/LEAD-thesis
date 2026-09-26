@@ -151,9 +151,14 @@ class TransfuserAgent(AbstractDrivingAgent):
                 features["rasterized_lidar"],
                 self.lead_config,
             )
+        if signal == "ensemble":
+            members = prediction.auxiliary_log.get("waypoint_ensemble")
+            if members is None:
+                return None
+            return caution_signals.ensemble_caution(members, self.lead_config)
         raise ValueError(
-            f"caution_signal must be 'observability' or 'cross_modal', "
-            f"got {signal!r}.",
+            f"caution_signal must be 'observability', 'cross_modal' or "
+            f"'ensemble', got {signal!r}.",
         )
 
     def _apply_caution_governor(

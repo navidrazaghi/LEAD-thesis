@@ -31,6 +31,7 @@ import numpy as np
 import torch
 
 from lead.config import LeadConfig
+from lead.policy.transfuser.decoder import waypoint_ensemble
 from lead.policy.transfuser.encoder import fusion_geometry
 
 
@@ -297,6 +298,38 @@ def cross_modal_caution(
     disagree = (lidar_occupied & sees_through) | (~lidar_occupied & sees_a_surface)
     counted = disagree[:, examined]
     return float(counted.float().mean())
+
+
+def ensemble_caution(
+    member_waypoints: jt.Float[torch.Tensor, "bs members waypoints 2"],
+    lead_config: LeadConfig,
+) -> float:
+    """How much the ensemble's readouts disagree about where to go, in ``[0, 1]``.
+
+    The spread is in meters and the governor wants a fraction, so it is divided
+    by the spread at which the plan is considered fully unresolved. That scale
+    is the one number here that cannot be derived: it says how much
+    disagreement is a lot, in the units of the thing being disagreed about. It
+    is a config field for that reason, and the calibrator's scalar is what
+    decides how much slowing any given fraction buys -- so getting the scale
+    somewhat wrong changes the signal's gain, not its direction.
+
+    The ensemble producing these must have been in evaluation mode. Its decoder
+    layers carry dropout, and in training mode the spread includes a different
+    mask per member rather than a different opinion -- a real uncertainty
+    measure, but not the one this claims to be reporting.
+
+    Args:
+        member_waypoints: Every member's predicted waypoints.
+        lead_config: Root config tree.
+
+    Returns:
+        Zero when the members agree exactly, one when they are at least the
+        configured spread apart.
+    """
+    scale = lead_config.evaluation.inference.caution_spread_meter
+    spread = float(waypoint_ensemble.ensemble_spread(member_waypoints).mean())
+    return float(min(max(spread / scale, 0.0), 1.0))
 
 
 def transfuser_depth_far_plane(lead_config: LeadConfig) -> float:

@@ -46,3 +46,15 @@ class TransfuserObservabilityConfig(ConfigNode):
     # touch. Zero-initialized, so turning it on does not move the starting
     # point. Needs a deformable backbone for the same reason the gate does.
     use_residual_gain: bool = False
+    # Carry several independent readouts of the planning context, so their
+    # disagreement can be read as a caution signal. Unlike the observability
+    # head this needs no label, and unlike the cross-modal check it says
+    # something about a scene that is perfectly visible and simply unlike
+    # anything in training.
+    use_waypoint_ensemble: bool = False
+    # Weight of the ensemble's supervision relative to the other tasks. The
+    # intended use is a fine-tune with everything else frozen, where nothing is
+    # left to dilute; at full weight in a joint run this would shrink the
+    # driving losses like any other task, because the weights are normalized by
+    # their sum.
+    waypoint_ensemble_loss_weight: float = 1.0

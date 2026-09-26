@@ -75,6 +75,19 @@ class InferenceConfig(ConfigNode):
     # "cross_modal" compares the depth head against the LiDAR returns, needs no
     # label at all, and is informative exactly where the other is not.
     caution_signal: str = "observability"
+    # Member spread, in meters, at which the ensemble counts as fully unable to
+    # agree on a plan. The one number in the ensemble signal that cannot be
+    # derived: it says how much disagreement is a lot, in the units of the
+    # thing being disagreed about. Getting it somewhat wrong changes the
+    # signal's gain rather than its direction, because the calibrator decides
+    # how much slowing any given fraction buys.
+    caution_spread_meter: float = 2.0
+    # Members the waypoint ensemble carries, and decoder layers each one gets.
+    # Four shallow readouts rather than one deep one: the quantity wanted is
+    # the disagreement between independent answers, and depth buys accuracy
+    # that the frozen features already determine.
+    caution_ensemble_members: int = 4
+    caution_ensemble_layers: int = 1
     # If true be strict when load weight
     # --- Sensor degradation at inference ---
     # Which modality to damage while driving: "camera", "lidar" or "none".

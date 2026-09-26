@@ -166,6 +166,11 @@ class PlanningDecoder(nn.Module):
             data=data,
             log=log,
         )
+        # Kept so a second readout can be taken off the same context without
+        # paying for the encoder twice, the way the backbone keeps its gate
+        # logits. Read it straight after this returns, before anything else can
+        # run the decoder again.
+        self.context_tokens = context_tokens
 
         bs = context_tokens.shape[0]
 

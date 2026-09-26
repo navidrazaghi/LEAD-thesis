@@ -72,7 +72,11 @@ class TransfuserConfig(
             "radar_loss": 1.0,
             "loss_observability": self.observability_loss_weight,
             "loss_observability_gate": self.observability_gate_loss_weight,
+            "loss_waypoint_ensemble": self.waypoint_ensemble_loss_weight,
         }
+
+        if not self.use_waypoint_ensemble:
+            weights["loss_waypoint_ensemble"] = 0.0
 
         if not self.use_observability:
             weights["loss_observability"] = 0.0
