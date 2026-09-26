@@ -10,6 +10,11 @@ checked rather than eyeballed.
 import numpy as np
 import pytest
 
+from lead.config import LeadConfig
+from lead.evaluation.inference.caution import (
+    surrogate_risk_event,
+    target_speed_multiplier,
+)
 from lead.evaluation.inference.conformal import ConformalCautionCalibrator
 
 
@@ -121,6 +126,77 @@ class TestReporting:
             "num_updates",
         }
         assert state["target_risk"] == pytest.approx(0.1)
+
+
+class TestTheLoopCloses:
+    """Whether the calibrator can move the risk it adapts against.
+
+    The convergence proofs above feed it an abstract stream. What decides
+    whether any of that matters is the actuator: caution scales the target
+    speed, the surrogate risk asks whether speed exceeds a threshold, and if
+    the floor cannot bring speed under that threshold then risk fires on every
+    tick whatever the scalar does. The scalar then pins at its ceiling, the
+    realised rate stays at one, and what looks like calibration is a slow
+    switch to maximum caution.
+
+    These run the whole loop -- caution to multiplier to speed to risk to
+    scalar -- and judge by the realised rate rather than by where the scalar
+    ended, because a fixed point just under the ceiling is a closed loop and a
+    ceiling is not.
+    """
+
+    @staticmethod
+    def _drive(
+        nominal_speed: float,
+        caution: float,
+        config: LeadConfig,
+        ticks: int = 20000,
+    ) -> float:
+        """Realised risk rate after running the closed loop to convergence."""
+        governor = config.evaluation.inference
+        calibrator = ConformalCautionCalibrator(
+            target_risk=governor.caution_target_risk,
+            step_size=governor.caution_step_size,
+            ceiling=governor.caution_ceiling,
+        )
+        for _ in range(ticks):
+            multiplier = target_speed_multiplier(caution, calibrator.value, config)
+            calibrator.update(
+                surrogate_risk_event(caution, nominal_speed * multiplier, config),
+            )
+        return calibrator.realised_risk
+
+    @pytest.mark.parametrize("nominal_speed", [6.0, 8.0, 10.0, 12.0, 14.0])
+    def test_the_realised_rate_reaches_the_target_at_driving_speeds(
+        self,
+        nominal_speed: float,
+    ) -> None:
+        """With the shipped defaults, the loop closes rather than saturating."""
+        config = LeadConfig()
+        rate = self._drive(nominal_speed, 0.993, config)
+        target = config.evaluation.inference.caution_target_risk
+        assert rate == pytest.approx(target, abs=0.02), (nominal_speed, rate)
+
+    def test_it_stays_off_where_nothing_is_risky(self) -> None:
+        """Below the risk speed there is nothing to control and no reason to act."""
+        config = LeadConfig()
+        assert self._drive(4.0, 0.993, config) == pytest.approx(0.0, abs=1e-3)
+
+    def test_no_caution_means_no_risk_at_any_speed(self) -> None:
+        config = LeadConfig()
+        assert self._drive(14.0, 0.0, config) == pytest.approx(0.0, abs=1e-3)
+
+    def test_an_unreachable_threshold_saturates(self) -> None:
+        """The failure the defaults were changed to avoid, kept legible.
+
+        With a risk speed the floor cannot reach, risk fires on every tick
+        however cautious the governor becomes. Nothing raises; the rate simply
+        never comes down, which is why this is judged on the rate.
+        """
+        config = LeadConfig()
+        config.evaluation.inference.caution_risk_speed_mps = 2.0
+        config.evaluation.inference.caution_speed_floor = 0.4
+        assert self._drive(10.0, 0.993, config) > 0.9
 
 
 class TestContract:

@@ -23,7 +23,16 @@ class InferenceConfig(ConfigNode):
     # Slowest the governor may drive, as a fraction of the predicted speed. A
     # floor rather than a free hand: the calibrator bounds a long-run average
     # and says nothing about one tick, so it must not be able to stop the car.
-    caution_speed_floor: float = 0.4
+    #
+    # Set together with caution_risk_speed_mps below, because the pair decides
+    # whether the calibrator can control the risk it is adapting against at
+    # all. At 0.40 with a 2 m/s risk speed, a policy driving faster than about
+    # 5 m/s cannot get under the threshold even at full caution, so risk fires
+    # on every tick, the scalar pins at its ceiling and the calibration is a
+    # slow switch rather than a calibration. Simulated over the loop, 0.30 with
+    # a 5 m/s risk speed holds the realised rate on target from 6 to 14 m/s and
+    # correctly stays off below that.
+    caution_speed_floor: float = 0.3
     # How the two modalities combine into one per-cell confidence.
     #
     # "best" is the default because it is what the evidence supports: the
@@ -48,8 +57,14 @@ class InferenceConfig(ConfigNode):
     caution_corridor_half_width_meter: float = 4.0
     # Surrogate risk: carrying speed into a stretch the model cannot resolve.
     # Infractions are what matter but are too rare and too late to calibrate on.
+    #
+    # The speed here has to be reachable by slowing, or the calibrator is
+    # adapting against something it cannot move: at 2 m/s nothing above about
+    # 5 m/s nominal can get under it even at the floor, and the scalar simply
+    # saturates. Five is the value that leaves the loop closed across the speed
+    # range the benchmark actually drives at; see caution_speed_floor.
     caution_risk_threshold: float = 0.5
-    caution_risk_speed_mps: float = 2.0
+    caution_risk_speed_mps: float = 5.0
     # Long-run rate of surrogate risk events the calibrator converges to, and
     # how fast it moves. The target is the knob a reader can reason about; the
     # threshold it implies is what gets adapted.
