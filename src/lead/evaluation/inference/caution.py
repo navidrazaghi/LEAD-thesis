@@ -23,6 +23,7 @@ because a mean over the whole grid is dominated by cells behind the car and out
 to the sides, where being unable to see costs nothing.
 """
 
+import collections
 import functools
 import typing
 
@@ -306,13 +307,18 @@ def ensemble_caution(
 ) -> float:
     """How much the ensemble's readouts disagree about where to go, in ``[0, 1]``.
 
-    The spread is in meters and the governor wants a fraction, so it is divided
-    by the spread at which the plan is considered fully unresolved. That scale
-    is the one number here that cannot be derived: it says how much
-    disagreement is a lot, in the units of the thing being disagreed about. It
-    is a config field for that reason, and the calibrator's scalar is what
-    decides how much slowing any given fraction buys -- so getting the scale
-    somewhat wrong changes the signal's gain, not its direction.
+    What is read is the *excess* spread over what the members disagree by when
+    nothing is wrong, not the spread itself. A trained ensemble has an
+    irreducible floor -- its members are fitted to one dataset and agree closely
+    but never exactly -- and that floor carries no information about the scene.
+    Measured on the rung-4 ensemble it is 0.124 m, against 0.199 m with both
+    sensors destroyed, so reading the absolute value would spend most of the
+    output range describing the floor and leave the part that moves compressed
+    into almost nothing.
+
+    Both the floor and the scale are properties of a particular trained
+    ensemble, so both are config fields rather than constants, and both come
+    from a measurement on the calibration routes.
 
     The ensemble producing these must have been in evaluation mode. Its decoder
     layers carry dropout, and in training mode the spread includes a different
@@ -324,12 +330,112 @@ def ensemble_caution(
         lead_config: Root config tree.
 
     Returns:
-        Zero when the members agree exactly, one when they are at least the
-        configured spread apart.
+        Zero when the members disagree no more than they do with intact
+        sensors, one when they exceed that by at least the configured scale.
+
+    Raises:
+        ValueError: If the scale is not positive, which would make the mapping
+            undefined rather than merely badly tuned.
     """
-    scale = lead_config.evaluation.inference.caution_spread_meter
-    spread = float(waypoint_ensemble.ensemble_spread(member_waypoints).mean())
-    return float(min(max(spread / scale, 0.0), 1.0))
+    return caution_from_spread(ensemble_spread_metres(member_waypoints), lead_config)
+
+
+def ensemble_spread_metres(
+    member_waypoints: jt.Float[torch.Tensor, "bs members waypoints 2"],
+) -> float:
+    """The raw disagreement, in meters, before any mapping.
+
+    Kept separate from the mapping because smoothing has to happen here rather
+    than on the mapped value. The mapping clamps at zero, so a frame quieter
+    than the baseline reports zero rather than something negative, and
+    averaging mapped values would carry that one-sided clipping into the mean.
+
+    Args:
+        member_waypoints: Every member's predicted waypoints.
+
+    Returns:
+        The mean spread over the batch.
+    """
+    return float(
+        waypoint_ensemble.ensemble_spread(member_waypoints).mean().detach(),
+    )
+
+
+def caution_from_spread(spread_metres: float, lead_config: LeadConfig) -> float:
+    """Map a spread in meters onto caution in ``[0, 1]``.
+
+    Args:
+        spread_metres: The disagreement, smoothed or not.
+        lead_config: Root config tree.
+
+    Returns:
+        The caution the governor acts on.
+
+    Raises:
+        ValueError: If the scale is not positive, which would make the mapping
+            undefined rather than merely badly tuned.
+    """
+    governor = lead_config.evaluation.inference
+    scale = governor.caution_spread_meter
+    if scale <= 0.0:
+        raise ValueError(
+            f"caution_spread_meter must be positive, got {scale}.",
+        )
+    excess = spread_metres - governor.caution_spread_baseline_meter
+    return float(min(max(excess / scale, 0.0), 1.0))
+
+
+class RollingMean:
+    """Mean of the last N values, for smoothing a per-tick signal.
+
+    The ensemble's disagreement needs this to be usable at all. Measured over
+    240 frames, its spread under intact sensors has a mean of 0.124 m and a
+    ninetieth percentile of 0.254 m, while destroying both sensors moves the
+    mean only to 0.199 m. So the frame-to-frame variation on a clean scene is
+    larger than the shift the fault causes, and no per-tick threshold can
+    separate them: one that stays quiet on intact frames stays quiet on the
+    fault too.
+
+    What the fault produces is a shift in the *mean*, and averaging over a
+    window shrinks the variation around it as one over the square root of the
+    window while leaving the shift alone. A window of ten ticks -- half a
+    second -- is roughly what it takes here, which the governor can afford
+    because it has no reason to react within a single frame.
+    """
+
+    def __init__(self, window: int) -> None:
+        """Build an empty window.
+
+        Args:
+            window: How many values to average over; one disables smoothing.
+
+        Raises:
+            ValueError: If the window is not positive.
+        """
+        if window < 1:
+            raise ValueError(f"window must be at least one tick, got {window}.")
+        self._window = window
+        self._values: collections.deque[float] = collections.deque(maxlen=window)
+
+    def update(self, value: float) -> float:
+        """Add one value and return the mean of the window.
+
+        Before the window is full the mean is taken over what has arrived, so
+        the governor starts acting immediately rather than staying blind for
+        the first half second of every route.
+
+        Args:
+            value: The newest observation.
+
+        Returns:
+            The mean over the window so far.
+        """
+        self._values.append(value)
+        return sum(self._values) / len(self._values)
+
+    def reset(self) -> None:
+        """Forget the window, for the start of a new route."""
+        self._values.clear()
 
 
 def transfuser_depth_far_plane(lead_config: LeadConfig) -> float:

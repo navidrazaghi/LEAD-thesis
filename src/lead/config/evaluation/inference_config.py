@@ -75,13 +75,37 @@ class InferenceConfig(ConfigNode):
     # "cross_modal" compares the depth head against the LiDAR returns, needs no
     # label at all, and is informative exactly where the other is not.
     caution_signal: str = "observability"
-    # Member spread, in meters, at which the ensemble counts as fully unable to
-    # agree on a plan. The one number in the ensemble signal that cannot be
-    # derived: it says how much disagreement is a lot, in the units of the
-    # thing being disagreed about. Getting it somewhat wrong changes the
-    # signal's gain rather than its direction, because the calibrator decides
-    # how much slowing any given fraction buys.
-    caution_spread_meter: float = 2.0
+    # Ensemble spread under intact sensors, in meters. Members never agree
+    # exactly, so a trained ensemble has an irreducible floor -- measured at
+    # 0.124 m for the rung-4 ensemble -- and caution has to respond to the
+    # excess over that floor rather than to the absolute spread. Reading the
+    # absolute value instead put the whole trained range, 0.12 to 0.20 m, into
+    # a caution of 0.06 to 0.10, so even both sensors destroyed bought a six
+    # percent reduction in speed: a signal that moved correctly and did
+    # nothing.
+    #
+    # Both this and the scale below are properties of a particular trained
+    # ensemble, not of the architecture. Re-measure them for a new checkpoint
+    # with scripts/common/ensemble_spread_range.py, which prints the pair it
+    # recommends, and take the baseline from the calibration route set so it is
+    # not fitted to the routes the governor is then scored on.
+    # Ticks the caution signal is averaged over before it is acted on. The
+    # ensemble needs this to be usable at all: measured over 240 frames, its
+    # spread under intact sensors has a mean of 0.124 m and a ninetieth
+    # percentile of 0.254 m, while destroying both sensors moves the mean only
+    # to 0.199 m. Frame-to-frame variation on a clean scene is therefore larger
+    # than the shift the fault causes, and no per-tick threshold can separate
+    # them. What the fault moves is the mean, and averaging shrinks the
+    # variation around it as one over the square root of the window, so ten
+    # ticks -- half a second at the simulator's rate -- is about what it takes.
+    # One disables smoothing.
+    caution_smoothing_ticks: int = 10
+    caution_spread_baseline_meter: float = 0.124
+    # How much excess spread over that baseline counts as fully unable to agree.
+    # Measured excess at full joint degradation is 0.074 m, so this puts that
+    # condition near the top of the range and leaves everything milder near the
+    # bottom.
+    caution_spread_meter: float = 0.075
     # Members the waypoint ensemble carries, and decoder layers each one gets.
     # Four shallow readouts rather than one deep one: the quantity wanted is
     # the disagreement between independent answers, and depth buys accuracy

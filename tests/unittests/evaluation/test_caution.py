@@ -9,14 +9,17 @@ compares a mechanism against its own absence -- if the un-governed arm is not
 reproduced bit for bit, it compares two tunings instead.
 """
 
+import numpy as np
 import pytest
 import torch
 
 from lead.config import LeadConfig
 from lead.evaluation.inference.caution import (
+    RollingMean,
     cell_camera_geometry,
     corridor_mask,
     cross_modal_caution,
+    ensemble_caution,
     observability_caution,
     surrogate_risk_event,
     target_speed_multiplier,
@@ -363,6 +366,160 @@ class TestCrossModalCaution:
         broken, intact_lidar = self._inputs(config, depth_value=45.0, lidar_value=1.0)
         loud = cross_modal_caution(broken, intact_lidar, config)
         assert loud - quiet > 0.5
+
+
+class TestEnsembleCaution:
+    """The spread-to-caution mapping, which reads excess over a floor.
+
+    A trained ensemble never agrees exactly, so part of its spread carries no
+    information about the scene. Reading the absolute value spends the output
+    range on that floor: measured on the rung-4 ensemble the whole trained
+    range, 0.124 m intact to 0.199 m with both sensors destroyed, mapped into a
+    caution of 0.06 to 0.10 -- correct in direction and useless in size.
+    """
+
+    @staticmethod
+    def _members(spread_m: float, config: LeadConfig) -> torch.Tensor:
+        """Two members displaced so their population spread is as asked."""
+        del config
+        waypoints = torch.zeros(1, 2, 8, 2)
+        waypoints[0, 0, :, 0] = -spread_m
+        waypoints[0, 1, :, 0] = spread_m
+        return waypoints
+
+    def test_agreement_at_the_floor_reports_no_caution(
+        self,
+        config: LeadConfig,
+    ) -> None:
+        baseline = config.evaluation.inference.caution_spread_baseline_meter
+        members = self._members(baseline, config)
+        # Absolute tolerance, not approx's default: the spread is computed in
+        # float32 from a constructed displacement, so landing exactly on the
+        # baseline leaves a residue of order 1e-7 that the default rejects.
+        assert ensemble_caution(members, config) == pytest.approx(0.0, abs=1e-5)
+
+    def test_disagreeing_less_than_the_floor_is_still_zero(
+        self,
+        config: LeadConfig,
+    ) -> None:
+        """Below the floor there is nothing to report, not negative caution."""
+        assert ensemble_caution(self._members(0.0, config), config) == 0.0
+
+    def test_a_full_scale_excess_reports_full_caution(
+        self,
+        config: LeadConfig,
+    ) -> None:
+        governor = config.evaluation.inference
+        excess = (
+            governor.caution_spread_baseline_meter + governor.caution_spread_meter
+        )
+        members = self._members(excess, config)
+        assert ensemble_caution(members, config) == pytest.approx(1.0)
+
+    def test_the_measured_conditions_land_where_they_should(
+        self,
+        config: LeadConfig,
+    ) -> None:
+        """The numbers this mapping was set from, checked end to end.
+
+        Intact and every single-modality condition sit at or below the floor;
+        joint destruction is the one that has to reach the top of the range.
+        """
+        measured = {
+            "none": 0.1242,
+            "camera:1.0": 0.1351,
+            "lidar:1.0": 0.1261,
+            "both:0.5": 0.1218,
+            "both:1.0": 0.1985,
+        }
+        quiet = {
+            key: ensemble_caution(self._members(value, config), config)
+            for key, value in measured.items()
+            if key != "both:1.0"
+        }
+        loud = ensemble_caution(self._members(measured["both:1.0"], config), config)
+        assert all(value < 0.25 for value in quiet.values()), quiet
+        assert loud > 0.9, loud
+
+    def test_it_is_always_a_fraction(self, config: LeadConfig) -> None:
+        for spread in (0.0, 0.05, 0.124, 0.2, 1.0, 50.0):
+            caution = ensemble_caution(self._members(spread, config), config)
+            assert 0.0 <= caution <= 1.0
+
+    def test_a_non_positive_scale_is_refused(self, config: LeadConfig) -> None:
+        config.evaluation.inference.caution_spread_meter = 0.0
+        with pytest.raises(ValueError, match="caution_spread_meter"):
+            ensemble_caution(self._members(0.5, config), config)
+
+
+class TestRollingMean:
+    """Smoothing the raw signal, which is what makes the ensemble usable."""
+
+    def test_it_averages_the_window(self) -> None:
+        window = RollingMean(3)
+        assert window.update(1.0) == pytest.approx(1.0)
+        assert window.update(3.0) == pytest.approx(2.0)
+        assert window.update(5.0) == pytest.approx(3.0)
+
+    def test_it_forgets_beyond_the_window(self) -> None:
+        window = RollingMean(2)
+        window.update(100.0)
+        window.update(0.0)
+        assert window.update(0.0) == pytest.approx(0.0)
+
+    def test_a_partial_window_averages_what_has_arrived(self) -> None:
+        """So the governor acts from the first tick rather than staying blind."""
+        assert RollingMean(50).update(4.0) == pytest.approx(4.0)
+
+    def test_a_window_of_one_is_no_smoothing(self) -> None:
+        window = RollingMean(1)
+        assert window.update(2.0) == pytest.approx(2.0)
+        assert window.update(9.0) == pytest.approx(9.0)
+
+    def test_reset_forgets_the_route(self) -> None:
+        window = RollingMean(4)
+        window.update(10.0)
+        window.reset()
+        assert window.update(1.0) == pytest.approx(1.0)
+
+    def test_a_non_positive_window_is_refused(self) -> None:
+        with pytest.raises(ValueError, match="at least one tick"):
+            RollingMean(0)
+
+    def test_it_separates_what_a_single_tick_cannot(self) -> None:
+        """The property the whole change exists for, on the measured numbers.
+
+        Intact frames have a mean of 0.124 m and a spread wide enough that the
+        ninetieth percentile, 0.254 m, sits above the mean under joint
+        destruction, 0.199 m. So a per-tick reading cannot tell the two apart.
+        Averaging ten ticks shrinks the variation without touching the shift,
+        and the two distributions separate.
+        """
+        generator = np.random.default_rng(0)
+        sigma = 0.101  # implied by the measured mean and ninetieth percentile
+
+        def route(mean: float, window: int) -> list[float]:
+            smoother = RollingMean(window)
+            return [
+                smoother.update(abs(generator.normal(mean, sigma)))
+                for _ in range(400)
+            ]
+
+        def confusable(window: int) -> float:
+            """Fraction of faulted ticks that look like an ordinary intact one."""
+            intact, faulted = route(0.124, window), route(0.199, window)
+            threshold = float(np.median(intact))
+            return sum(1 for value in faulted if value < threshold) / len(faulted)
+
+        per_tick = confusable(1)
+        smoothed = confusable(10)
+
+        # Per tick, a fifth of the faulted stream is indistinguishable from an
+        # ordinary intact frame, which is why no single-frame threshold works.
+        # Over ten ticks that essentially disappears.
+        assert per_tick > 0.15, per_tick
+        assert smoothed < 0.05, smoothed
+        assert smoothed < per_tick / 4.0, (smoothed, per_tick)
 
 
 class TestSurrogateRisk:

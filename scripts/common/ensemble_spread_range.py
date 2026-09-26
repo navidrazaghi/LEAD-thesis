@@ -60,6 +60,11 @@ from lead.policy.transfuser.utils.sensor_degradation import (  # noqa: E402
 # Fixed, so two checkpoints meet identical damage on identical frames.
 _DAMAGE_SEED = 20260826
 
+# Quantile of the intact frames the caution baseline is taken at. Caution
+# is clamped at zero, so a baseline at the mean leaves half the intact
+# frames reporting something and the governor slowing on a clean scene.
+_INTACT_QUANTILE = 0.9
+
 # Every condition the governor could be evaluated under, including the joint one
 # the observability signal is blind to by construction.
 _CONDITIONS = (
@@ -170,6 +175,7 @@ def main() -> int:
         print(f"\n{name}")
         print(f"  {'condition':<14}{'spread (m)':>12}{'caution':>10}{'frames':>9}")
         intact = None
+        intact_frames: list[float] = []
         for modality, severity in _CONDITIONS:
             spreads, cautions = spread_under(
                 model,
@@ -196,14 +202,56 @@ def main() -> int:
             )
             if modality == "none":
                 intact = spread
+                intact_frames = spreads
 
         if intact is not None:
             print(f"  {'--- swing from intact ---':<14}")
+            largest = 0.0
             for row in rows:
                 if row["model"] != name or row["condition"] == "none:0.0":
                     continue
                 moved = float(row["spread_m"]) - intact
+                largest = max(largest, moved)
                 print(f"  {row['condition']:<14}{moved:+12.4f}")
+
+            # The baseline is a high quantile of the intact frames, not their
+            # mean, and the difference matters more than it looks. Caution is
+            # clamped at zero, so frames quieter than the baseline report zero
+            # rather than something negative, and a baseline at the mean leaves
+            # half the intact frames above it -- which averages to a standing
+            # caution on a scene where nothing is wrong. Reading a quantile
+            # instead says what the governor should actually mean: act when the
+            # disagreement is unusual for intact sensors.
+            ordered = sorted(intact_frames)
+            index = min(
+                len(ordered) - 1,
+                int(_INTACT_QUANTILE * len(ordered)),
+            )
+            baseline = ordered[index]
+            headroom = max(
+                float(row["spread_m"]) - baseline
+                for row in rows
+                if row["model"] == name and row["condition"] != "none:0.0"
+            )
+            print(
+                f"\n  intact frames: mean {intact:.4f}, "
+                f"p{int(_INTACT_QUANTILE * 100)} {baseline:.4f}, "
+                f"max {ordered[-1]:.4f}",
+            )
+            if headroom > 0.0:
+                print(
+                    f"  set from this measurement:"
+                    f"\n    evaluation.inference.caution_spread_baseline_meter"
+                    f"={baseline:.3f}"
+                    f"\n    evaluation.inference.caution_spread_meter"
+                    f"={headroom:.3f}",
+                )
+            else:
+                print(
+                    "  no condition's mean spread exceeds the intact "
+                    f"p{int(_INTACT_QUANTILE * 100)};\n  there is nothing for "
+                    "the governor to act on and no scale worth setting.",
+                )
 
     arguments.out.parent.mkdir(parents=True, exist_ok=True)
     with arguments.out.open("w", encoding="utf-8", newline="") as handle:

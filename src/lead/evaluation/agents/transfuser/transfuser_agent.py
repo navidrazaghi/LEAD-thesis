@@ -57,6 +57,12 @@ class TransfuserAgent(AbstractDrivingAgent):
             ceiling=inference.caution_ceiling,
             value=inference.caution_initial_lambda,
         )
+        # Carried across the route like the calibrator, and for a related
+        # reason: what the fault moves is the mean of the signal, and a window
+        # rebuilt per tick would only ever hold one sample.
+        self.caution_window = caution_signals.RollingMean(
+            inference.caution_smoothing_ticks,
+        )
         self.caution = 0.0
 
     def compute_control(
@@ -139,23 +145,34 @@ class TransfuserAgent(AbstractDrivingAgent):
         if signal == "observability":
             if prediction.observability is None:
                 return None
-            return caution_signals.observability_caution(
-                prediction.observability,
-                self.lead_config,
+            return self.caution_window.update(
+                caution_signals.observability_caution(
+                    prediction.observability,
+                    self.lead_config,
+                ),
             )
         if signal == "cross_modal":
             if prediction.depth is None or "rasterized_lidar" not in features:
                 return None
-            return caution_signals.cross_modal_caution(
-                prediction.depth,
-                features["rasterized_lidar"],
-                self.lead_config,
+            return self.caution_window.update(
+                caution_signals.cross_modal_caution(
+                    prediction.depth,
+                    features["rasterized_lidar"],
+                    self.lead_config,
+                ),
             )
         if signal == "ensemble":
-            members = prediction.auxiliary_log.get("waypoint_ensemble")
+            members = prediction.waypoint_ensemble
             if members is None:
                 return None
-            return caution_signals.ensemble_caution(members, self.lead_config)
+            # Smoothed in meters and mapped afterwards, not the other way
+            # round: the mapping clamps at zero, so averaging mapped values
+            # would carry that one-sided clipping into the mean and leave a
+            # standing caution on a scene where nothing is wrong.
+            smoothed = self.caution_window.update(
+                caution_signals.ensemble_spread_metres(members),
+            )
+            return caution_signals.caution_from_spread(smoothed, self.lead_config)
         raise ValueError(
             f"caution_signal must be 'observability', 'cross_modal' or "
             f"'ensemble', got {signal!r}.",
