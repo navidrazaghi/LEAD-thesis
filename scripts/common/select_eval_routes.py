@@ -19,6 +19,15 @@ confounds both:
     against roughly half of Bench2Drive — so this is a genuine
     out-of-distribution test that needs no synthetic damage at all.
 
+``calibration``
+    Clear-weather routes the scored sets do not use. The caution governor
+    adapts a scalar online against an observed risk rate, and both that scalar's
+    starting point and the step size that moves it have to come from somewhere.
+    If they came from the routes the governor is then scored on, the mechanism
+    would be fitted to its own test and any improvement would be unreadable.
+    This set is where they come from instead, and it is built by exclusion so
+    the disjointness is enforced rather than remembered.
+
 Selection is stratified by town and deterministic, so re-running reproduces the
 same sets.
 """
@@ -131,19 +140,52 @@ def stratify(routes: list[Route], count: int) -> list[Route]:
     return sorted(chosen, key=lambda route: route.path.name)
 
 
-def report(name: str, routes: list[Route], pool: int) -> None:
+def read_route_names(paths: list[pathlib.Path]) -> set[str]:
+    """Collect the route file names listed in existing set files.
+
+    Args:
+        paths: Route-list files, one file name per line. A path that does not
+            exist is skipped, so a first run needs no bootstrapping.
+
+    Returns:
+        Every name listed across them.
+    """
+    names: set[str] = set()
+    for path in paths:
+        if not path.exists():
+            print(f"  note: {path} does not exist yet, nothing to exclude from it")
+            continue
+        names.update(
+            line.strip() for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        )
+    return names
+
+
+def report(name: str, routes: list[Route], pool: int, pool_towns: int = 0) -> None:
     """Print what a chosen set covers.
 
     Args:
         name: The set's name.
         routes: The chosen routes.
         pool: How many were available to choose from.
+        pool_towns: How many towns the pool this was drawn from spans; zero
+            skips the coverage note.
     """
     towns = collections.Counter(route.town for route in routes)
     print(f"\n{name}: {len(routes)} of {pool} available")
     print("  towns: " + ", ".join(f"{t}={c}" for t, c in towns.most_common()))
     adverse = sum(1 for route in routes if route.is_adverse)
     print(f"  adverse-weather routes in the set: {adverse}")
+    if pool_towns and len(towns) < pool_towns:
+        # Said out loud because it is a property of the data, not a setting:
+        # the clear pool is dominated by one town, so once the scored set has
+        # taken the small towns there is nothing left for a disjoint set to
+        # spread over. Any conclusion drawn from this set inherits that.
+        print(
+            f"  note: spans {len(towns)} of the {pool_towns} towns its pool "
+            f"offers; the remainder were already taken by the scored sets",
+        )
 
 
 def parse_args() -> argparse.Namespace:
@@ -173,16 +215,43 @@ def parse_args() -> argparse.Namespace:
         help="Adverse-weather routes for the out-of-distribution test.",
     )
     parser.add_argument(
+        "--calibration-count",
+        type=int,
+        default=20,
+        help="Clear-weather routes to calibrate the caution governor on.",
+    )
+    parser.add_argument(
+        "--exclude",
+        type=pathlib.Path,
+        nargs="*",
+        default=None,
+        help=(
+            "Route lists the calibration set must not reuse. Defaults to the "
+            "scored degradation sets, which is what keeps calibration honest."
+        ),
+    )
+    parser.add_argument(
         "--out",
         type=pathlib.Path,
         default=here / "src/lead/routes/eval_sets",
         help="Where to write the route lists.",
     )
-    return parser.parse_args()
+    arguments = parser.parse_args()
+    if arguments.exclude is None:
+        arguments.exclude = [
+            arguments.out / "degradation.txt",
+            arguments.out / "degradation_30.txt",
+        ]
+    return arguments
 
 
 def main() -> None:
-    """Choose both sets and write them out."""
+    """Choose every set and write them out.
+
+    Raises:
+        SystemExit: If no routes were found, or the calibration pool cannot
+            supply a disjoint set of the requested size.
+    """
     args = parse_args()
     routes = read_routes(args.routes)
     if not routes:
@@ -192,19 +261,61 @@ def main() -> None:
     adverse = [route for route in routes if route.is_adverse]
     print(f"pool: {len(routes)} routes, {len(clear)} clear, {len(adverse)} adverse")
 
+    # The scored degradation set is chosen first and folded into the exclusion,
+    # rather than read back from the file it is about to overwrite. Reading the
+    # file would compare the calibration set against the *previous* run's
+    # choices, so changing --degradation-count would silently let the two
+    # overlap.
+    degradation = stratify(clear, args.degradation_count)
+
+    print("\nexcluding the scored sets from the calibration pool:")
+    scored = read_route_names(args.exclude)
+    scored.update(route.path.name for route in degradation)
+    print(f"  {len(scored)} route(s) already spoken for")
+    calibration_pool = [route for route in clear if route.path.name not in scored]
+    if len(calibration_pool) < args.calibration_count:
+        raise SystemExit(
+            f"only {len(calibration_pool)} clear routes are free of the scored "
+            f"sets, but {args.calibration_count} were asked for; lower "
+            f"--calibration-count rather than overlapping them.",
+        )
+
+    def town_count(pool_routes: list[Route]) -> int:
+        return len({route.town for route in pool_routes})
+
     sets = {
-        "degradation": (stratify(clear, args.degradation_count), len(clear)),
-        "weather": (stratify(adverse, args.weather_count), len(adverse)),
+        "degradation": (degradation, len(clear), town_count(clear)),
+        "weather": (
+            stratify(adverse, args.weather_count),
+            len(adverse),
+            town_count(adverse),
+        ),
+        "calibration": (
+            stratify(calibration_pool, args.calibration_count),
+            len(calibration_pool),
+            town_count(clear),
+        ),
     }
     args.out.mkdir(parents=True, exist_ok=True)
-    for name, (chosen, pool) in sets.items():
-        report(name, chosen, pool)
+    for name, (chosen, pool, pool_towns) in sets.items():
+        report(name, chosen, pool, pool_towns)
         target = args.out / f"{name}.txt"
         target.write_text(
             "\n".join(str(route.path.name) for route in chosen) + "\n",
             encoding="utf-8",
         )
         print(f"  wrote {target}")
+
+    # Checked rather than trusted: the exclusion above is the only thing
+    # standing between a calibrated mechanism and one fitted to its own test.
+    calibrated = {route.path.name for route in sets["calibration"][0]}  # noqa: PD011
+    overlap = calibrated & scored
+    if overlap:
+        raise SystemExit(
+            f"calibration set overlaps the scored sets on {sorted(overlap)}; "
+            f"this is a bug in the selector, not a configuration problem.",
+        )
+    print(f"\nverified: calibration set is disjoint from {len(scored)} scored routes")
 
 
 if __name__ == "__main__":

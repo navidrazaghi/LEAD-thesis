@@ -56,6 +56,14 @@ class InferenceConfig(ConfigNode):
     caution_target_risk: float = 0.05
     caution_step_size: float = 0.05
     caution_ceiling: float = 1.0
+    # Where the scalar starts each route. Zero means the governor begins inert
+    # and adapts from scratch, which leaves the opening stretch of every scored
+    # route un-governed. To avoid that, run the governor over the calibration
+    # route set -- routes the scored sets do not use, so nothing is fitted to
+    # its own test -- and set this to the scalar it converged to. It is a
+    # starting point rather than a commitment: the calibrator keeps adapting
+    # during the scored route, so a warm start that was wrong is corrected.
+    caution_initial_lambda: float = 0.0
     # If true be strict when load weight
     # --- Sensor degradation at inference ---
     # Which modality to damage while driving: "camera", "lidar" or "none".

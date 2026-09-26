@@ -55,6 +55,7 @@ class TransfuserAgent(AbstractDrivingAgent):
             target_risk=inference.caution_target_risk,
             step_size=inference.caution_step_size,
             ceiling=inference.caution_ceiling,
+            value=inference.caution_initial_lambda,
         )
         self.caution = 0.0
 

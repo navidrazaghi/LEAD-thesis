@@ -143,3 +143,28 @@ class TestContract:
     def test_a_start_outside_the_range_is_clamped_not_carried(self) -> None:
         assert ConformalCautionCalibrator(value=5.0, ceiling=1.0).value == 1.0
         assert ConformalCautionCalibrator(value=-5.0).value == 0.0
+
+
+class TestWarmStart:
+    """Starting from a calibrated value rather than from scratch."""
+
+    def test_a_warm_start_is_honoured(self) -> None:
+        assert ConformalCautionCalibrator(value=0.4).value == pytest.approx(0.4)
+
+    def test_a_wrong_warm_start_is_corrected_rather_than_kept(self) -> None:
+        """The calibration set informs the start; it does not commit to it."""
+        generator = np.random.default_rng(3)
+        calibrator = ConformalCautionCalibrator(
+            target_risk=0.1, step_size=0.02, value=1.0,
+        )
+
+        def risk_of(tick: int, value: float) -> bool:
+            del tick, value
+            return bool(generator.random() < 0.02)
+
+        _drive(calibrator, risk_of, 20000)
+        assert calibrator.value < 0.2
+
+    def test_the_default_start_leaves_the_governor_inert(self) -> None:
+        """With no calibration run, the frozen policy drives as it always did."""
+        assert ConformalCautionCalibrator().value == 0.0
