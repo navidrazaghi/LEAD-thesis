@@ -48,3 +48,19 @@ degradation. Read them in this order.
   gate that consumes it, and the degradation curriculum.
 - [Running on the lab A100](server_setup_notes.md): environment facts and the
   traps that cost real time — several of them fail quietly rather than loudly.
+
+## Robustness beyond the appearance families
+
+Work in progress on the `robust-deployment` branch, built against what the
+ladder measured rather than alongside it. Both documents say plainly what has
+not been evaluated yet; neither describes a result.
+
+- [Deployment perturbations](deployment_perturbations.md): occlusion, ego-state
+  noise, execution latency and frame freeze — why latency is implemented as a
+  planning-label re-anchor rather than a delayed observation, and the joint
+  degradation condition.
+- [The caution governor](caution_governor.md): the same observability signal
+  actuated in the controller instead of the attention logits, three ways to
+  measure caution, and an online calibrator in place of a tuned threshold.
+  Includes the measurement showing the default signal is inert under every
+  condition run so far, and why that is the intended behaviour.
