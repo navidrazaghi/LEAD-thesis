@@ -67,6 +67,57 @@ warnings.filterwarnings(
 torch.set_float32_matmul_precision("high")
 
 
+def _freeze_all_but(
+    model: torch.nn.Module,
+    keep_trainable: tuple[str, ...],
+) -> None:
+    """Freeze every parameter whose name does not start with a kept prefix.
+
+    Args:
+        model: The policy, already built and loaded.
+        keep_trainable: Parameter-name prefixes to leave trainable. Empty
+            leaves the whole model trainable, which is the default.
+
+    Raises:
+        ValueError: If a prefix matches no parameter. A typo there would freeze
+            the entire model and the run would train nothing while looking
+            healthy: the loss is still computed, the steps still tick by, and
+            only the parameter count in the log would have given it away.
+    """
+    if not keep_trainable:
+        return
+
+    def names_a_module(name: str, prefix: str) -> bool:
+        """Whether a parameter belongs to the module a prefix names.
+
+        Matched at the dot rather than by raw string prefix: "waypoint_ensembl"
+        is a string prefix of "waypoint_ensemble.weight", so a truncated name
+        would match the module it was a typo for and the mismatch check below
+        would never fire.
+        """
+        return name == prefix or name.startswith(prefix + ".")
+
+    names = [name for name, _ in model.named_parameters()]
+    unmatched = [
+        prefix
+        for prefix in keep_trainable
+        if not any(names_a_module(name, prefix) for name in names)
+    ]
+    if unmatched:
+        raise ValueError(
+            f"freeze_except entries {unmatched} match no parameter; the model "
+            f"would train nothing. Its top-level modules are "
+            f"{sorted({name.split('.')[0] for name in names})}.",
+        )
+
+    frozen = 0
+    for name, parameter in model.named_parameters():
+        if not any(names_a_module(name, prefix) for prefix in keep_trainable):
+            parameter.requires_grad_(False)
+            frozen += parameter.numel()
+    LOG.info(f"Froze {frozen:,} parameters, keeping {keep_trainable} trainable")
+
+
 class LeadLightningModule(pl.LightningModule):
     """Training wrapper around the configured :class:`~lead.api.abstract_policy.AbstractPolicy`.
 
@@ -96,6 +147,8 @@ class LeadLightningModule(pl.LightningModule):
                 ),
                 strict=config.training.experiment.resume_from_last_checkpoint,
             )
+
+        _freeze_all_but(model, config.training.experiment.freeze_except)
 
         LOG.info(
             f"Model has {sum(p.numel() for p in model.parameters() if p.requires_grad):,} trainable parameters",

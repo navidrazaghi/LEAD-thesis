@@ -16,6 +16,20 @@ class ExperimentConfig(ConfigNode):
     # If true continue the training from a failed training checkpoint.
     resume_from_last_checkpoint: bool = False
 
+    # Parameter-name prefixes to keep trainable; everything else is frozen.
+    # Empty trains the whole model, which is what every rung does.
+    #
+    # This exists for heads that are fitted on top of an already-trained policy
+    # rather than alongside it, where the point is that the features do not
+    # move: a readout whose inputs shifted while it was learning them is
+    # measuring the shift as much as the scene. Freezing rather than using a
+    # small learning rate is the difference between features that are fixed and
+    # features that move slowly.
+    #
+    # A name that matches nothing would silently freeze the entire model, so it
+    # is rejected instead.
+    freeze_except: tuple[str, ...] = ()
+
     # The one directory a run writes to: checkpoints, configs, logs, visualizations.
     output_dir: str | None = None
 
