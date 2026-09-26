@@ -5,27 +5,43 @@ This reports the distribution of the per-token targets and, more to the point,
 of the log ratio between the two modalities -- because that ratio is the whole
 signal the gate is asked to reproduce.
 """
-import pathlib, sys, torch
+
+import pathlib
+import sys
+
+import torch
 from torch.amp.autocast_mode import autocast
 from torch.utils.data import DataLoader
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "src")); sys.path.insert(0, str(ROOT / "scripts" / "common"))
-from analyze_gate import load_model, to_device
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts" / "common"))
+from analyze_gate import load_model, to_device  # noqa: E402
 
 device = torch.device("cuda:0")
 cfg, model = load_model(pathlib.Path("outputs/rung4_light_auxiliary_post"), device)
 model.eval()
 tm = next(m for m in model.modules() if type(m).__name__ == "ObservabilityTokenTargets")
 ds = model.build_dataset()
-loader = DataLoader(ds, batch_size=8, shuffle=False, drop_last=True,
-                    collate_fn=getattr(ds, "collate_fn", None), num_workers=4)
+loader = DataLoader(
+    ds,
+    batch_size=8,
+    shuffle=False,
+    drop_last=True,
+    collate_fn=getattr(ds, "collate_fn", None),
+    num_workers=4,
+)
 vals, ratios, both = [], [], 0
 with torch.inference_mode():
     for i, batch in enumerate(loader):
-        if i >= 60: break
+        if i >= 60:
+            break
         batch = to_device(batch, device)
-        with autocast(device_type="cuda", dtype=cfg.training.optimization.torch_dtype,
-                      enabled=cfg.training.optimization.use_mixed_precision_training):
+        with autocast(
+            device_type="cuda",
+            dtype=cfg.training.optimization.torch_dtype,
+            enabled=cfg.training.optimization.use_mixed_precision_training,
+        ):
             model(batch)
         t, m = tm(batch["observability"].float(), batch["observability_mask"].float())
         t, m = t.float(), m.float()
@@ -37,7 +53,8 @@ with torch.inference_mode():
         ok = (vc > 1e-6) & (vl > 1e-6)
         ratios.append((vc[ok].log() - vl[ok].log()).cpu())
 
-v = torch.cat(vals); r = torch.cat(ratios)
+v = torch.cat(vals)
+r = torch.cat(ratios)
 print("supervised token/modality entries :", v.numel())
 print("tokens supervised in BOTH modalities:", both)
 print()

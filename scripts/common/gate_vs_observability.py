@@ -37,6 +37,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts" / "common"))
 
 from analyze_gate import FusionProbe, load_model, to_device  # noqa: E402
+
 from lead.policy.transfuser.utils.sensor_degradation import degrade_batch  # noqa: E402
 
 _DAMAGE_SEED = 20260820

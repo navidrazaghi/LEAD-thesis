@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """The three experiments the defence review asked for that need no simulator.
 
 Each answers a question the thesis currently has to leave open.
@@ -46,6 +45,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 # The probe already knows how to rebuild a trained policy and move a batch, and
 # duplicating either would be a second place for them to drift.
 from analyze_gate import load_model, to_device  # noqa: E402
+
 from lead.policy.transfuser.utils.sensor_degradation import (  # noqa: E402
     degrade_batch,
 )

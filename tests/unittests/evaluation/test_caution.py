@@ -13,7 +13,6 @@ import pytest
 import torch
 
 from lead.config import LeadConfig
-from lead.policy.transfuser.encoder.fusion_geometry import bev_cell_centres
 from lead.evaluation.inference.caution import (
     cell_camera_geometry,
     corridor_mask,
@@ -22,6 +21,7 @@ from lead.evaluation.inference.caution import (
     surrogate_risk_event,
     target_speed_multiplier,
 )
+from lead.policy.transfuser.encoder.fusion_geometry import bev_cell_centres
 
 _CELL_HEIGHT = 16
 _CELL_WIDTH = 16

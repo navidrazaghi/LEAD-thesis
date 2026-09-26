@@ -38,7 +38,7 @@ sys.path.insert(0, str(ROOT / "scripts" / "common"))
 from analyze_gate import FusionProbe, load_model, to_device  # noqa: E402
 
 _MIN_OBSERVABILITY = 0.05
-_MAX_OBSERVABILITY = 0.95   # logit blows up as V approaches one
+_MAX_OBSERVABILITY = 0.95  # logit blows up as V approaches one
 _CAMERA, _LIDAR = 0, 1
 
 
@@ -77,11 +77,15 @@ def main() -> None:
             continue
 
         dataset = model.build_dataset()
-        loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False,
-                            drop_last=True,
-                            collate_fn=getattr(dataset, "collate_fn", None),
-                            num_workers=args.workers,
-                            persistent_workers=args.workers > 0)
+        loader = DataLoader(
+            dataset,
+            batch_size=args.batch_size,
+            shuffle=False,
+            drop_last=True,
+            collate_fn=getattr(dataset, "collate_fn", None),
+            num_workers=args.workers,
+            persistent_workers=args.workers > 0,
+        )
         probe = FusionProbe(model)
         raw, logv, logitv, logsig = [], [], [], []
         seen = 0
@@ -94,8 +98,9 @@ def main() -> None:
                     with autocast(
                         device_type="cuda",
                         dtype=lead_config.training.optimization.torch_dtype,
-                        enabled=(lead_config.training.optimization
-                                 .use_mixed_precision_training),
+                        enabled=(
+                            lead_config.training.optimization.use_mixed_precision_training
+                        ),
                     ):
                         model(batch)
                     gate = probe._gate_logits  # noqa: SLF001
@@ -103,14 +108,19 @@ def main() -> None:
                         print("  no gate")
                         break
                     bias = torch.stack([v.float() for v in gate.values()]).mean(0)
-                    t, m = targets_module(batch["observability"].float(),
-                                          batch["observability_mask"].float())
+                    t, m = targets_module(
+                        batch["observability"].float(),
+                        batch["observability_mask"].float(),
+                    )
                     t, m = t.float(), m.float()
-                    usable = ((m[..., _CAMERA] > 0) & (m[..., _LIDAR] > 0)
-                              & (t[..., _CAMERA] > _MIN_OBSERVABILITY)
-                              & (t[..., _LIDAR] > _MIN_OBSERVABILITY)
-                              & (t[..., _CAMERA] < _MAX_OBSERVABILITY)
-                              & (t[..., _LIDAR] < _MAX_OBSERVABILITY))
+                    usable = (
+                        (m[..., _CAMERA] > 0)
+                        & (m[..., _LIDAR] > 0)
+                        & (t[..., _CAMERA] > _MIN_OBSERVABILITY)
+                        & (t[..., _LIDAR] > _MIN_OBSERVABILITY)
+                        & (t[..., _CAMERA] < _MAX_OBSERVABILITY)
+                        & (t[..., _LIDAR] < _MAX_OBSERVABILITY)
+                    )
                     if not bool(usable.any()):
                         seen += 1
                         continue
@@ -118,10 +128,13 @@ def main() -> None:
                     bc, bl = bias[..., _CAMERA][usable], bias[..., _LIDAR][usable]
                     raw.append((bc - bl).cpu())
                     logv.append((vc.log() - vl.log()).cpu())
-                    logitv.append(((vc / (1 - vc)).log()
-                                   - (vl / (1 - vl)).log()).cpu())
-                    logsig.append((torch.nn.functional.logsigmoid(bc)
-                                   - torch.nn.functional.logsigmoid(bl)).cpu())
+                    logitv.append(((vc / (1 - vc)).log() - (vl / (1 - vl)).log()).cpu())
+                    logsig.append(
+                        (
+                            torch.nn.functional.logsigmoid(bc)
+                            - torch.nn.functional.logsigmoid(bl)
+                        ).cpu()
+                    )
                     seen += 1
         finally:
             probe.close()
@@ -129,8 +142,10 @@ def main() -> None:
         if not raw:
             print("  nothing usable")
             continue
-        raw = torch.cat(raw); logv = torch.cat(logv)
-        logitv = torch.cat(logitv); logsig = torch.cat(logsig)
+        raw = torch.cat(raw)
+        logv = torch.cat(logv)
+        logitv = torch.cat(logitv)
+        logsig = torch.cat(logsig)
         print(f"  tokens: {raw.numel()}")
         for label, x, y in (
             ("A  raw bias      vs  log V ratio    ", logv, raw),

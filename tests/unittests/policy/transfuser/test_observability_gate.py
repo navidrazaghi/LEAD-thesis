@@ -521,8 +521,11 @@ def test_one_seed_reproduces_one_sequence_of_damage(modality, key) -> None:
 
     first, again, other = sequence(7), sequence(7), sequence(8)
 
-    assert all(torch.equal(a, b) for a, b in zip(first, again))
-    assert any(not torch.equal(a, b) for a, b in zip(first, other))
+    assert all(torch.equal(a, b) for a, b in zip(first, again, strict=True))
+    # Not strict, and the mismatch is the point: a run of eight ticks draws a
+    # different stream from a run of seven, so only the frames both runs have
+    # are comparable.
+    assert any(not torch.equal(a, b) for a, b in zip(first, other, strict=False))
     # A generator rebuilt per tick would freeze one pattern onto every frame,
     # which is not what a failing sensor does.
     assert not torch.equal(first[0], first[1])

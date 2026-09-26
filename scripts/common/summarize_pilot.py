@@ -8,7 +8,6 @@ dropped from that comparison rather than averaged around.
 """
 
 import argparse
-import collections
 import csv
 import pathlib
 import statistics
