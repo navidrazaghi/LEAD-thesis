@@ -313,6 +313,33 @@ class TestInferenceSweep:
         with pytest.raises(ValueError, match="degrade modality must be"):
             degrade_batch(_batch(), "weather", severity=1.0)
 
+    def test_joint_degradation_damages_both_modalities(self) -> None:
+        """The one regime redundancy cannot cover, and the governor's target."""
+        batch = _batch()
+        before_rgb = batch["rgb"].clone()
+        before_lidar = batch["rasterized_lidar"].clone()
+        degrade_batch(batch, "both", severity=1.0)
+        assert not torch.equal(batch["rgb"], before_rgb)
+        assert not torch.equal(batch["rasterized_lidar"], before_lidar)
+
+    def test_joint_degradation_matches_the_single_families_it_composes(self) -> None:
+        """Not a third kind of damage: the same two, applied together."""
+        joint = _batch()
+        degrade_batch(joint, "both", 0.6, torch.Generator().manual_seed(4))
+
+        separate = _batch()
+        generator = torch.Generator().manual_seed(4)
+        separate["rgb"] = degrade_camera(
+            separate["rgb"], torch.full((4,), 0.6), generator,
+        )
+        separate["rasterized_lidar"] = degrade_lidar(
+            separate["rasterized_lidar"], torch.full((4,), 0.6), generator,
+        )
+        assert torch.equal(joint["rgb"], separate["rgb"])
+        assert torch.equal(
+            joint["rasterized_lidar"], separate["rasterized_lidar"],
+        )
+
 
 @pytest.mark.parametrize("severity_value", [0.0, 0.25, 0.5, 0.75, 1.0])
 def test_dose_response_is_monotone_in_brightness(severity_value: float) -> None:

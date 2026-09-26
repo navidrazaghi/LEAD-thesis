@@ -409,7 +409,7 @@ def degrade_batch(
     """
     if modality == "none" or severity <= 0.0:
         return batch
-    accepted = ("camera", "lidar", *_BATCH_LEVEL_FAMILIES)
+    accepted = ("camera", "lidar", "both", *_BATCH_LEVEL_FAMILIES)
     if modality not in accepted:
         raise ValueError(
             f"degrade modality must be one of {(*accepted, 'none')}, "
@@ -437,4 +437,20 @@ def degrade_batch(
         batch["rgb"], _ = degrade_occlusion(batch["rgb"], amount, generator)
     elif modality == "ego_state":
         batch = degrade_ego_state(batch, amount, generator)
+    elif modality == "both":
+        # The one regime redundancy cannot cover, and the only one where an
+        # estimate of what is still resolved has anything to say: with one
+        # modality down the other carries the scene, which is measurable here --
+        # the trained rungs score no worse under full camera destruction than
+        # intact. Training never produces this, by design, because the gate it
+        # was built for needs somewhere to shift to. It is an evaluation
+        # condition, and a deliberately out-of-family one.
+        if "rgb" in batch:
+            batch["rgb"] = degrade_camera(batch["rgb"], amount, generator)
+        if "rasterized_lidar" in batch:
+            batch["rasterized_lidar"] = degrade_lidar(
+                batch["rasterized_lidar"],
+                amount,
+                generator,
+            )
     return batch

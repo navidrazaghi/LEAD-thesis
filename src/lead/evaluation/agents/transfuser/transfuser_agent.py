@@ -8,6 +8,8 @@ import torch
 
 from lead.api.abstract_driving_agent import AbstractDrivingAgent
 from lead.common.logging_setup import setup_logging
+from lead.evaluation.inference import caution as caution_signals
+from lead.evaluation.inference.conformal import ConformalCautionCalibrator
 from lead.evaluation.inference.trackers import PathSpeedTracker, WaypointTracker
 from lead.policy.transfuser.transfuser import AgentPrediction, Prediction
 from lead.policy.transfuser.visualization.agent_prediction_visualizer import (
@@ -45,6 +47,16 @@ class TransfuserAgent(AbstractDrivingAgent):
         """
         self.waypoint_tracker = WaypointTracker(self.lead_config)
         self.path_speed_tracker = PathSpeedTracker(self.lead_config)
+        inference = self.lead_config.evaluation.inference
+        # Carried across the whole route rather than rebuilt per tick: what it
+        # adapts is a long-run rate, so restarting it every frame would leave it
+        # permanently at its initial value and the governor permanently inert.
+        self.caution_calibrator = ConformalCautionCalibrator(
+            target_risk=inference.caution_target_risk,
+            step_size=inference.caution_step_size,
+            ceiling=inference.caution_ceiling,
+        )
+        self.caution = 0.0
 
     def compute_control(
         self,
@@ -102,6 +114,47 @@ class TransfuserAgent(AbstractDrivingAgent):
             )
         return target_speed
 
+    def _apply_caution_governor(
+        self,
+        prediction: Prediction,
+        target_speed: torch.Tensor,
+        ego_speed_mps: float,
+    ) -> torch.Tensor:
+        """Scale the target speed by how well the model resolves the road ahead.
+
+        Args:
+            prediction: Raw predictions of the model, read for its observability
+                head; the head is not recomputed and the model is not touched.
+            target_speed: The post-processed target speed.
+            ego_speed_mps: Current speed, which decides whether an unresolved
+                corridor counts as a risk this tick.
+
+        Returns:
+            The target speed, scaled.
+        """
+        if prediction.observability is None:
+            return target_speed
+
+        self.caution = caution_signals.observability_caution(
+            prediction.observability,
+            self.lead_config,
+        )
+        # Update before acting, so the scalar applied this tick already reflects
+        # this tick's risk rather than lagging it by one frame.
+        self.caution_calibrator.update(
+            caution_signals.surrogate_risk_event(
+                self.caution,
+                ego_speed_mps,
+                self.lead_config,
+            ),
+        )
+        multiplier = caution_signals.target_speed_multiplier(
+            self.caution,
+            self.caution_calibrator.value,
+            self.lead_config,
+        )
+        return target_speed * multiplier
+
     def _build_agent_prediction(
         self,
         prediction: Prediction,
@@ -118,6 +171,15 @@ class TransfuserAgent(AbstractDrivingAgent):
         """
         ego_speed = features["speed"].unsqueeze(1)
         target_speed = self._post_process_target_speed(prediction)
+        if (
+            self.lead_config.evaluation.inference.use_caution_governor
+            and target_speed is not None
+        ):
+            target_speed = self._apply_caution_governor(
+                prediction,
+                target_speed,
+                float(features["speed"].reshape(-1)[0]),
+            )
 
         steer = throttle = brake = waypoints_steer = waypoints_throttle = (
             waypoints_brake
