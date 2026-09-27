@@ -1,0 +1,12 @@
+# Line endings are normalised on commit and checked out as LF everywhere.
+#
+# This is here because 33 files on this branch reached the repository with CRLF,
+# carried in one at a time by copies from a Windows machine. Python, git and
+# markdown all tolerate it, so it accumulated silently for months. Two things
+# do not tolerate it: bash refuses a script outright at its first function
+# definition, and Python's csv module treats a lone CR as a record separator --
+# which had silently split results/governor_joint_degradation.csv into seven
+# rows and hidden its last column from every reader.
+#
+# text=auto lets git detect binaries rather than listing them.
+* text=auto eol=lf
