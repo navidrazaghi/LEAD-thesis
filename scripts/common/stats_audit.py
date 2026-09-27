@@ -8,14 +8,22 @@ having looked six times, and what the exact p-values are.
 
 import csv
 import math
+import pathlib
 import random
 import statistics
+import sys
 
 random.seed(20260820)
 ROUNDS = 20000
-PATH = "/home/razzaghi/LEAD/lead/results/closed_loop.csv"
+# Relative to the repository, not to one machine's home directory: an absolute
+# path here published the account name it was written on.
+DEFAULT = pathlib.Path(__file__).resolve().parents[2] / "results" / "closed_loop.csv"
+PATH = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT
 
-rows = [r for r in csv.DictReader(open(PATH)) if (r.get("driving_score") or "").strip()]
+with PATH.open(encoding="utf-8") as handle:
+    rows = [
+        r for r in csv.DictReader(handle) if (r.get("driving_score") or "").strip()
+    ]
 by = {}
 for r in rows:
     by[(r["model"], r["modality"] + ":" + r["severity"], r["route"])] = float(
