@@ -26,9 +26,9 @@ untouched, and the only thing read is a head the model already computes.
 
 | signal          | reads                                          | blind to |
 | :-------------- | :--------------------------------------------- | :------- |
-| `observability` | the trained head, best modality per cell        | single-modality failure |
+| `observability` | the trained head, best modality per cell        | LiDAR failure (see the sweep) |
 | `cross_modal`   | camera depth against the LiDAR returns          | both modalities wrong the same way |
-| `ensemble`      | disagreement between four waypoint readouts     | — |
+| `ensemble`      | disagreement between four waypoint readouts     | single-modality failure |
 
 `observability` costs no training at all. `cross_modal` needs no label either:
 two sensors looking at one world have to agree about what is there, and a broken
@@ -36,7 +36,90 @@ one stops agreeing. `ensemble` needs a short fine-tune on frozen features and is
 the only one that says anything about a scene that is perfectly visible and
 simply unlike anything in training.
 
-### The default signal is inert under every condition run so far
+Two of those blind spots were claimed from the design and then measured. One
+claim held and one did not.
+
+### What each signal actually does, measured
+
+Swept over cached frames, identical damage and identical frames for each, by
+`caution_forward_sweep.py` and `ensemble_spread_range.py`. Swing is against the
+same signal's own intact reading, because the three do not share a scale.
+
+| condition       | `observability` | `ensemble` | `cross_modal` |
+| :-------------- | --------------: | ---------: | ------------: |
+| camera 0.5      |          +0.155 |     +0.005 |        +0.050 |
+| **camera 1.0**  |      **+0.175** |     +0.048 |    **+0.225** |
+| lidar 0.5       |          -0.074 |     -0.017 |        -0.008 |
+| lidar 1.0       |          -0.186 |     -0.055 |        -0.042 |
+| both 0.5        |          +0.206 |     -0.039 |        +0.058 |
+| **both 1.0**    |          +0.431 |     +0.323 |    **+0.267** |
+
+Intact baselines, which the swings sit on top of and which are not evidence of
+anything: 0.390, 0.267 and 0.608.
+
+**This corrects an earlier claim in this document.** The section below reported
+`observability` as inert under every single-modality condition, swinging 0.017.
+That number came from `caution_signal_range.py`, which reads the recorded
+per-modality means over the whole BEV grid — not the quantity the governor
+computes, which takes the better modality *per cell* and then averages over the
+driving corridor alone. Measured properly, on the same frames as the others,
+the swing under full camera destruction is 0.175. The proxy was off by an order
+of magnitude and the conclusion drawn from it was wrong.
+
+What survives that correction, and what does not:
+
+- `cross_modal` does react to a single failed sensor, and most strongly of the
+  three. The claim behind it holds — a signal that *compares* two sensors sees
+  one of them break.
+- `observability` reacts too, which the design said it would not. Taking the
+  better modality per cell does not hide a failed camera as completely as the
+  grid-wide proxy suggested.
+- The `ensemble` claim did not hold. It was built to cover single-modality
+  failure and is nearly silent there, waking only under joint degradation. That
+  makes it an out-of-distribution detector whose notion of "out" is set by the
+  training curriculum: since the curriculum only ever damaged one modality,
+  single-modality damage is *inside* the distribution and the members agree.
+
+One pattern is shared by all three and none of them was designed for it: every
+signal reports LiDAR degradation as a *negative* swing. Thinning the sweep
+removes evidence rather than adding contradiction, so each of these gets
+quieter as the LiDAR gets worse. None of them is a LiDAR-fault detector.
+
+Three more things about `cross_modal` have to be said next to the good number.
+
+**It is asymmetric, and one direction is backwards.** It sees the camera fail
+(+0.225) and reports LiDAR failure as a small *improvement* (-0.042). The
+definition explains it: with the sweep thinned, occupied cells disappear, so the
+contradiction it counts most readily — LiDAR says occupied, camera sees through
+— fires less often. It is a camera-fault detector more than a cross-modal one.
+
+**Its intact baseline is 0.61.** On a clean scene it calls three fifths of the
+corridor contradictory, which means most of what it counts is modelling error
+rather than sensor fault: the 2.5 m tolerance, the single reference height every
+cell is projected at, and the depth head's own error. The swing rides on top of
+a large offset, and the offset is not evidence of anything.
+
+**Its noise is still comparable to its signal.** Per-batch standard deviation is
+about 0.11 against a swing of 0.225 — better than the ensemble managed, and
+still not enough for a per-tick decision. It needs the same smoothing.
+
+The rows are in `results/cross_modal_sweep.csv` and
+`results/ensemble_spread.csv`.
+
+### Why this does not simply rescue the governor
+
+The result below is that joint degradation is undrivable, and `cross_modal` is
+the one signal that speaks outside it. That is worth stating, and so is the
+tension it runs into: the condition it detects best, full camera destruction, is
+one the curriculum rung already drives *better* in than intact — 46.0 against
+41.8. A governor that slows down there spends route completion to buy nothing.
+
+So the open question this signal inherits is not whether it can see a fault. It
+can. It is whether any condition exists where the model both still drives and is
+genuinely hurt. The deployment perturbation families are the place to look,
+which is why the next rung trains on them rather than on more governor.
+
+### A whole-grid proxy, and why it misled
 
 This is the finding that decides how the governor can be evaluated, so it
 belongs here rather than in a commit message.
@@ -56,14 +139,22 @@ Measured on the recorded per-modality means, `scripts/common/caution_signal_rang
 | `mean`  |  0.060 |            0.474 | +0.413 |
 | `worst` |  0.086 |            0.895 | +0.810 |
 
-So the governor on its default rule does nothing under any of the five
-conditions this project has run. Its regime is joint degradation — the `both`
-condition — where redundancy has nothing left to fall back on. `mean` and
-`worst` are configurable so that choice is measured rather than argued.
+Read on a whole-grid mean this looks like a governor that does nothing on its
+default rule. **That reading is wrong**, and the table in the section above
+supersedes it: measured as the governor actually computes it — better modality
+per cell, averaged over the driving corridor rather than the grid — the swing
+under full camera destruction is 0.175, not 0.017. The grid-wide mean is
+dominated by cells the corridor never touches.
 
-That regime turned out not to be drivable at all. See
-[the result](#the-governor-has-no-leverage-in-this-stack) below before building
-on any of this.
+The table is kept because the *comparison between rules* it makes is still
+informative, and because the mistake is worth leaving visible: a proxy that is
+cheap and nearly right in form can be an order of magnitude wrong in size, and
+nothing about it announces that.
+
+The conclusion this section originally drew — that the governor's only regime is
+joint degradation — did not survive. What did survive is that joint degradation
+is undrivable; see
+[the result](#the-governor-has-no-leverage-in-this-stack) below.
 
 ### The governor has no leverage in this stack
 
@@ -87,20 +178,26 @@ points. What the three runs establish is categorical rather than quantitative:
 every checkpoint available, with and without the governor, fails to complete the
 route.
 
-The chain of reasoning is closed and every link is measured:
+The chain of reasoning, with the correction above folded in:
 
-- under **single-modality** damage the signal is correctly quiet — one working
-  sensor is enough, and `rung2a` scores better under full camera destruction
-  than intact;
-- under **joint** damage the signal is loud, caution 0.99;
+- under **joint** damage every signal is loud;
 - but no checkpoint drives there, ours at 28% completion or the reference at 3%;
 - and slowing a vehicle that is already stuck only lengthens how long it stays
   stuck — 1093 s to a wedge became 2700 s to a timeout.
 
-**The only regime where this signal is informative is the regime where driving
-itself collapses.** That is a property of the condition, not of the mechanism:
-the governor, its three signals and the calibrator all work as specified and are
-tested. They have no lever here.
+Under **single-modality** damage two of the three signals do speak, which is not
+what this document said before the sweep. That does not rescue the governor, for
+a different reason and one the ablation already supplies: `rung2a` scores 46.0
+under full camera destruction against 41.8 intact. The model is not hurt there,
+so slowing it spends route completion to buy nothing. A signal that correctly
+detects a fault the policy is already handling is not a reason to act.
+
+**So there is no condition in this project's matrix where the governor both has
+a signal and has something to gain from it.** Where the signal is loud and the
+fault is real, nothing drives; where the fault is detectable and driving
+continues, the policy is already coping. That is a property of the conditions,
+not of the mechanism: the governor, its three signals and the calibrator all
+work as specified and are tested.
 
 This is consistent with what the ablation already reported from the other side.
 Robustness did not generalise outside the training corruption family, and the
@@ -230,18 +327,20 @@ right.
 
 ## Status, and what has not been measured
 
-The governor has run closed-loop, once, and the result is the section above: in
-the only condition where its signal says anything, no checkpoint drives. The
-headline ablation the design was aimed at — the same signal actuated at
-attention level against behaviour level, all else equal — cannot be run, because
-the behaviour-level arm has no regime to act in.
+The governor has run closed-loop, once. The headline ablation the design was
+aimed at — the same signal actuated at attention level against behaviour level,
+all else equal — has not been run, because no condition in this project's matrix
+gives the behaviour-level arm both a signal and something to gain from it.
 
 What that leaves standing, and what it does not:
 
-- The three signals, the actuator and the calibrator are implemented and tested,
-  and the ensemble's spread is measured across seven conditions. None of it has
-  a driving score attached, and on the evidence here none will without a
-  checkpoint that drives under joint degradation.
+- All three signals are now swept across seven conditions on cached frames, and
+  the sweep corrected a claim this document previously made from a cheaper
+  proxy. The actuator and the calibrator are implemented and tested. None of it
+  has a driving score attached.
+- What is missing is a condition, not a mechanism: one where the policy still
+  drives and is genuinely hurt. Full camera destruction is detectable and not
+  harmful; joint degradation is harmful and not drivable.
 - The **calibration route set** is built and verified disjoint from the scored
   sets. It has never been run, because a calibration pass over a condition
   nothing drives in would record twenty routes of nothing.

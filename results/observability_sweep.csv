@@ -1,0 +1,8 @@
+model,signal,condition,caution,sd,batches
+rung4,observability,none:0.0,0.390329,0.176334,25
+rung4,observability,camera:0.5,0.545786,0.200785,25
+rung4,observability,camera:1.0,0.565581,0.213815,25
+rung4,observability,lidar:0.5,0.316265,0.153173,25
+rung4,observability,lidar:1.0,0.204232,0.072677,25
+rung4,observability,both:0.5,0.596266,0.153763,25
+rung4,observability,both:1.0,0.821770,0.044944,25

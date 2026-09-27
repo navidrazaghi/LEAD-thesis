@@ -38,17 +38,20 @@ class InferenceConfig(ConfigNode):
     # "best" is the default because it is what the evidence supports: the
     # trained rungs score no worse under full camera destruction than intact,
     # so one working sensor is enough and slowing down for a single failed one
-    # would cost route completion to buy nothing. The consequence has to be
-    # stated, because it decides what this can be evaluated on -- measured on
-    # the recorded per-modality means, "best" moves caution by only about 0.02
-    # between intact and full single-modality destruction, so under every
-    # condition this project has run so far the governor is deliberately
-    # inert. Its regime is joint degradation, the "both" condition, where
-    # redundancy has nothing left to fall back on.
+    # would cost route completion to buy nothing.
     #
-    # "mean" and "worst" trade that away for a signal that moves under
-    # single-modality damage (about 0.41 and 0.81 respectively). They are here
-    # so the choice is measured rather than argued.
+    # How much "best" actually hides a failed camera was misjudged once and is
+    # worth recording. Read off the recorded per-modality means over the whole
+    # BEV grid it looks inert, moving about 0.02 between intact and full camera
+    # destruction. Measured as the governor computes it -- better modality per
+    # cell, then averaged over the driving corridor rather than the grid -- the
+    # swing is 0.175. The grid mean is dominated by cells the corridor never
+    # touches, and nothing about the proxy announced that it was an order of
+    # magnitude out.
+    #
+    # "mean" and "worst" react harder still to a single failed sensor. They are
+    # here so the choice is measured rather than argued; see
+    # docs/caution_governor.md for the sweep across all three signals.
     caution_modality_rule: str = "best"
     # The corridor the caution is measured over: the road the ego is about to
     # drive through, rather than the whole grid, where cells behind the car
@@ -97,10 +100,16 @@ class InferenceConfig(ConfigNode):
     # projected at one reference height rather than as a volume; narrow enough
     # that a sensor which has stopped seeing a surface still shows up.
     caution_depth_tolerance_meter: float = 2.5
-    # Which caution signal drives the governor. "observability" reads the
-    # trained head and is blind to single-modality failure by construction;
-    # "cross_modal" compares the depth head against the LiDAR returns, needs no
-    # label at all, and is informative exactly where the other is not.
+    # Which caution signal drives the governor. Swept over cached frames, their
+    # swings from intact under full camera destruction are 0.175, 0.048 and
+    # 0.225 for observability, ensemble and cross_modal; under joint
+    # degradation 0.431, 0.323 and 0.267. So "cross_modal" is the most
+    # responsive to a single failed sensor and needs no label at all, while
+    # "ensemble" is nearly silent there and wakes only out of distribution.
+    #
+    # All three report LiDAR degradation as a negative swing: thinning the
+    # sweep removes evidence rather than adding contradiction. None of them is
+    # a LiDAR-fault detector.
     caution_signal: str = "observability"
     # Ensemble spread under intact sensors, in meters. Members never agree
     # exactly, so a trained ensemble has an irreducible floor -- measured at

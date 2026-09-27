@@ -63,7 +63,10 @@ and it is negative.
 - [The caution governor](caution_governor.md): the same observability signal
   actuated in the controller instead of the attention logits, three ways to
   measure caution, and an online calibrator in place of a tuned threshold.
-  **Result: no leverage in this stack.** The mechanism works as specified, but
-  the only regime where its signal is informative — both sensors destroyed — is
-  one where no checkpoint drives, the published reference included at 3% route
-  completion. The document carries the three runs that establish it.
+  **Result: no leverage in this stack.** The mechanism works as specified and
+  all three signals are swept across seven conditions, but no condition gives it
+  both a signal and something to gain: where the fault is real nothing drives —
+  the published reference completes 3% of a route with both sensors destroyed —
+  and where the fault is detectable the policy already copes. The document
+  carries the runs and the sweep, including a correction to a claim it made
+  earlier from a cheaper proxy that was an order of magnitude out.
