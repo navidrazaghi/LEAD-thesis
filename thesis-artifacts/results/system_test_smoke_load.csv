@@ -1,0 +1,5 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds,ticks,distance_m,stationary_frac
+smoke,none,0,25968.xml,0.0,0.0,1.0,Failed - Agent crashed,Town07,0,72.8,,,
+smoke,none,0,26956.xml,0.0,0.0,1.0,Failed - Agent crashed,Town05,0,65.0,,,
+smoke_post,none,0,25968.xml,24.102,37.08,0.65,Failed - Agent got blocked,Town07,8,410.2,1338,26.6,0.906
+smoke_post,none,0,26956.xml,14.716617,30.83,0.477347,Failed - TickRuntime,Town05,7,1136.2,3999,25.9,0.97

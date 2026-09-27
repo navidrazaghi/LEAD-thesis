@@ -1,0 +1,56 @@
+[09-24 20:47:17] link is up
+[09-24 20:48:37] link is down
+[09-24 20:48:38]   ping gateway: ok
+[09-24 20:48:38]   dns: resolves
+[09-24 20:48:39]   plain http: 200 redirect=
+[09-24 20:48:39]   portal probe: 200 redirect=
+[09-24 20:48:39]   gateway page: 200
+[09-24 20:48:54]   https: 000
+[09-24 21:01:55] link is up
+[09-24 22:15:37] link is down
+[09-24 22:15:38]   ping gateway: ok
+[09-24 22:15:39]   dns: resolves
+[09-24 22:15:39]   plain http: 200 redirect=
+[09-24 22:15:39]   portal probe: 200 redirect=
+[09-24 22:15:39]   gateway page: 200
+[09-24 22:15:54]   https: 000
+[09-25 01:46:19] link is up
+[09-25 09:47:01] link is down
+[09-25 09:47:02]   ping gateway: ok
+[09-25 09:47:02]   dns: resolves
+[09-25 09:47:02]   plain http: 200 redirect=
+[09-25 09:47:02]   portal probe: 200 redirect=
+[09-25 09:47:02]   gateway page: 200
+[09-25 09:47:17]   https: 000
+[09-26 05:36:47] link is up
+[09-26 05:42:13] link is down
+[09-26 05:42:14]   ping gateway: ok
+[09-26 05:42:14]   dns: resolves
+[09-26 05:42:26]   plain http: 200 redirect=
+[09-26 05:42:26]   portal probe: 200 redirect=
+[09-26 05:42:26]   gateway page: 200
+[09-26 05:42:41]   https: 000
+[09-26 05:49:02] link is up
+[09-26 05:57:33] link is down
+[09-26 05:57:34]   ping gateway: ok
+[09-26 05:57:34]   dns: resolves
+[09-26 05:57:34]   plain http: 200 redirect=
+[09-26 05:57:34]   portal probe: 200 redirect=
+[09-26 05:57:34]   gateway page: 200
+[09-26 05:57:49]   https: 000
+[09-26 06:21:30] link is up
+[09-26 13:40:19] link is down
+[09-26 13:40:20]   ping gateway: ok
+[09-26 13:40:20]   dns: resolves
+[09-26 13:40:35]   plain http: 000 redirect=
+[09-26 13:40:50]   portal probe: 000 redirect=
+[09-26 13:40:50]   gateway page: 200
+[09-26 13:41:05]   https: 000
+[09-26 13:42:08] link is up
+[09-26 14:21:14] link is down
+[09-26 14:21:15]   ping gateway: ok
+[09-26 14:21:15]   dns: resolves
+[09-26 14:21:15]   plain http: 200 redirect=
+[09-26 14:21:15]   portal probe: 200 redirect=
+[09-26 14:21:15]   gateway page: 200
+[09-26 14:21:30]   https: 000

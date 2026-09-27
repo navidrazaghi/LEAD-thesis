@@ -1,0 +1,21 @@
+skipped 8800 logs the release published incomplete
+selected 585 logs, 9960 files
+585 log directories
+   1/14   0.024 GB  17 files  Town01_Rep0_route_002525_route0_08_02_03_11_
+   2/14   0.021 GB  17 files  Town07_Rep0_route_002422_route0_08_01_16_39_
+   3/14   0.034 GB  17 files  Town13_Rep0_1016_1_route0_08_01_15_39_48
+   4/14   0.017 GB  17 files  Town12_Rep0_route_000905_route0_08_02_12_57_
+   5/14   0.033 GB  17 files  Town12_Rep0_1645_0_route0_08_02_03_17_06
+   6/14   0.029 GB  17 files  Town12_Rep0_1003_0_route0_08_02_14_10_50
+   7/14   0.026 GB  17 files  Town04_Rep0_route_002489_route0_08_02_12_01_
+   8/14   0.020 GB  17 files  Town12_Rep0_route_001017_route0_08_02_09_34_
+   9/14   0.014 GB  17 files  Town04_Rep0_Town04_Scenario9_0_route0_08_01_
+  10/14   0.021 GB  17 files  Town13_Rep0_0_10_route0_08_02_03_12_00
+  11/14   0.060 GB  17 files  Town12_Rep0_968_11_route0_08_01_22_50_27
+  12/14   0.025 GB  17 files  Town13_Rep0_route_000008_route0_08_02_01_09_
+  13/14   0.044 GB  17 files  Town12_Rep0_2448_0_route0_08_01_20_06_34
+  14/14   0.017 GB  17 files  Town07_Rep0_route_001031_route0_08_02_14_27_
+
+mean log:  0.027 GB   (sd 0.012 GB over 14 logs)
+smallest:  0.014 GB    largest: 0.060 GB
+PROJECTED TOTAL for 585 logs: 16.1 GB  +/- 1.9 GB

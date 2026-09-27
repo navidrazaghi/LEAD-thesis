@@ -1,0 +1,67 @@
+  read 546 page(s) of the repository tree
+skipped 8800 logs the release published incomplete
+release: 8800 logs, 528015 files
+selected: 585 logs, 9960 files
+  weather known for 585 of them
+  adverse kept: 313
+
+scenarios:
+      56  noScenarios
+      49  SignalizedJunctionLeftTurn
+      48  NonSignalizedJunctionLeftTurnEnterFlow
+      46  SignalizedJunctionLeftTurnEnterFlow
+      42  NonSignalizedJunctionLeftTurn
+      36  ConstructionObstacleTwoWays
+      28  CrossJunctionDefectTrafficLight
+      27  AccidentTwoWays
+      15  HighwayExit
+      14  SignalizedJunctionRightTurn
+       9  MergerIntoSlowTraffic
+       9  MergerIntoSlowTrafficV2
+       9  ParkingExit
+       9  VehicleOpensDoorTwoWays
+       8  Accident
+       8  ConstructionObstacle
+       7  BlockedIntersection
+       7  ControlLoss
+       7  CrossingBicycleFlow
+       7  DynamicObjectCrossing
+       7  EnterActorFlow
+       7  EnterActorFlowV2
+       7  HardBreakRoute
+       7  HazardAtSideLane
+       7  HazardAtSideLaneTwoWays
+       7  ParkedObstacle
+       6  HighwayCutIn
+       6  InterurbanActorFlow
+       6  InterurbanAdvancedActorFlow
+       6  InvadingTurn
+       6  NonSignalizedJunctionRightTurn
+       6  OppositeVehicleRunningRedLight
+       6  OppositeVehicleTakingPriority
+       6  ParkedObstacleTwoWays
+       6  ParkingCrossingPedestrian
+       6  ParkingCutIn
+       6  PedestrianCrossing
+       6  PriorityAtJunction
+       6  RedLightWithoutLeadVehicle
+       6  StaticCutIn
+       6  T_Junction
+       6  VehicleTurningRoute
+       6  VehicleTurningRoutePedestrian
+
+towns:
+     149  Town12
+     124  Town07
+     112  Town04
+     100  Town13
+      24  Town01
+      19  Town03
+      18  Town05
+      16  Town06
+       6  Town10HD
+       6  Town11
+       6  Town15
+       5  Town02
+
+dry run; nothing fetched

@@ -1,0 +1,86 @@
+[09-24 21:10:41] waiting for the dataset download
+[09-24 22:01:13] waiting for the dataset download and the reference evaluation
+[09-24 22:57:16] download reports complete
+[09-24 22:57:16] verified: all 585 logs present in normal_view
+[09-24 22:57:16] building the cache, 16 workers; this is CPU-bound and takes hours
+[09-24 23:10:21] cache built
+[09-24 23:10:21] smoke training: 2 epochs x 30 batches
+[09-24 23:11:27] FATAL: smoke training wrote no checkpoint; last lines of /home/new_drive/razaghi/after_download.log:
+    scene_data = self._scene_loader.read(
+  File "/home/new_drive/razaghi/lead/src/lead/log_reader/scene_loader.py", line 213, in read
+    cameras = self._read_camera_stream(
+  File "/home/new_drive/razaghi/lead/src/lead/log_reader/scene_loader.py", line 680, in _read_camera_stream
+    return [
+  File "/home/new_drive/razaghi/lead/src/lead/log_reader/scene_loader.py", line 681, in <listcomp>
+    _require_not_none(read_camera(0, camera_id))
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/py123d/api/scene/scene_api.py", line 442, in get_camera_at_iteration
+    camera = self.get_modality_at_iteration(
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/py123d/api/scene/arrow/arrow_scene_api.py", line 279, in get_modality_at_iteration
+    modality = MODALITY_READERS[_modality_type].read_at_index(
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/py123d/api/scene/arrow/modalities/arrow_camera.py", line 274, in read_at_index
+    return _deserialize_camera(table, index, metadata, dataset, scale=scale, log_dir=log_dir)
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/py123d/api/scene/arrow/modalities/arrow_camera.py", line 447, in _deserialize_camera
+    image = _deserialize_data_column(
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/py123d/api/scene/arrow/modalities/arrow_camera.py", line 499, in _deserialize_data_column
+    image = decode_image_from_jpeg_binary(data, scale=scale)
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/py123d/common/io/camera/jpeg_camera_io.py", line 64, in decode_image_from_jpeg_binary
+    return _jpeg_decoder(jpeg_binary)
+  File "/home/new_drive/razaghi/lead/src/lead/common/image_decoders.py", line 35, in decode_jpeg
+    return _turbojpeg_decoder()(jpeg_bytes)
+  File "/home/new_drive/razaghi/lead/src/lead/common/image_decoders.py", line 22, in _turbojpeg_decoder
+    turbo = TurboJPEG()
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/turbojpeg.py", line 442, in __init__
+    self.__find_turbojpeg() if lib_path is None else lib_path)
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/turbojpeg.py", line 2268, in __find_turbojpeg
+    raise RuntimeError(
+RuntimeError: Unable to locate turbojpeg library automatically. You may specify the turbojpeg library path manually.
+e.g. jpeg = TurboJPEG(lib_path)
+
+=== rerun Fri Sep 25 01:49:59 AM UTC 2026 ===
+[09-25 01:49:59] waiting for the dataset download and the reference evaluation
+[09-25 01:50:00] download reports complete
+[09-25 01:50:00] verified: all 585 logs present in normal_view
+[09-25 01:50:00] building the cache, 16 workers; this is CPU-bound and takes hours
+[09-25 01:50:25] cache built
+[09-25 01:50:25] smoke training: 2 epochs x 30 batches
+[09-25 01:50:48] FATAL: smoke training wrote no checkpoint; last lines of /home/new_drive/razaghi/after_download.log:
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 734, in __next__
+    data = self._next_data()
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1516, in _next_data
+    return self._process_data(data, worker_id)
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1551, in _process_data
+    data.reraise()
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/torch/_utils.py", line 769, in reraise
+    raise exception
+AssertionError: Caught AssertionError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 349, in _worker_loop
+    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/new_drive/razaghi/miniforge3/envs/lead/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/new_drive/razaghi/lead/src/lead/api/abstract_dataset.py", line 167, in __getitem__
+    outputs = cached_part_outputs | self._assemble(
+  File "/home/new_drive/razaghi/lead/src/lead/api/abstract_dataset.py", line 197, in _assemble
+    scene_data = self._scene_loader.read(
+  File "/home/new_drive/razaghi/lead/src/lead/log_reader/scene_loader.py", line 239, in read
+    depth_cameras = self._read_camera_stream(
+  File "/home/new_drive/razaghi/lead/src/lead/log_reader/scene_loader.py", line 680, in _read_camera_stream
+    return [
+  File "/home/new_drive/razaghi/lead/src/lead/log_reader/scene_loader.py", line 681, in <listcomp>
+    _require_not_none(read_camera(0, camera_id))
+  File "/home/new_drive/razaghi/lead/src/lead/log_reader/scene_loader.py", line 691, in _require_not_none
+    assert optional_read is not None
+AssertionError
+
+=== v4 Fri Sep 25 02:00:51 AM UTC 2026 ===
+[09-25 02:00:51] waiting for the completing download (depth and perturbated view)
+[09-26 05:47:47] download reports complete
+[09-26 05:47:57] verified: all 585 logs in both views, 19 + 15 files each
+[09-26 05:47:58] building the cache from scratch, 16 workers
+[09-26 06:11:32] cache built
+[09-26 06:11:32] smoke training: 2 epochs x 30 batches
+[09-26 06:20:21] smoke training passed; checkpoints written:
+[09-26 06:20:21]   -rw-rw-r-- 1 razaghi razaghi 236875953 Sep 26 06:20 /home/new_drive/razaghi/lead/outputs/smoke/model_0001.pth
+[09-26 06:20:21] the pipeline runs on this machine. Nothing further starts without approval.

@@ -1,0 +1,91 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds,ticks,distance_m,stationary_frac
+reference_v150,none,0,10857.xml,100.0,100,1.0,Completed,Town12,20,309.6,349,76.6,0.302
+reference_v150,none,0,14194.xml,100.0,100,1.0,Completed,Town12,20,315.8,689,75.8,0.507
+reference_v150,none,0,24092.xml,100.0,100,1.0,Completed,Town13,20,268.3,330,151.4,0.03
+reference_v150,none,0,24294.xml,100.0,100,1.0,Completed,Town02,19,309.8,929,102.6,0.668
+reference_v150,none,0,24841.xml,100.0,100,1.0,Completed,Town01,20,220.9,442,130.6,0.023
+reference_v150,none,0,25845.xml,100.0,100,1.0,Completed,Town15,19,256.3,595,105.9,0.377
+reference_v150,none,0,25928.xml,100.0,100,1.0,Completed,Town11,18,206.3,388,101.8,0.137
+reference_v150,none,0,26405.xml,100.0,100,1.0,Completed,Town15,18,200.5,394,134.2,0.079
+reference_v150,none,0,26956.xml,100.0,100,1.0,Completed,Town05,20,182.2,326,74.0,0.265
+reference_v150,none,0,27582.xml,60.0,100,0.6,Completed,Town11,20,209.9,409,68.2,0.434
+reference_v150,none,0,11715.xml,100.0,100,1.0,Completed,Town12,19,350.9,742,86.7,0.65
+reference_v150,none,0,23901.xml,100.0,100,1.0,Completed,Town13,20,305.6,436,158.5,0.023
+reference_v150,none,0,24224.xml,100.0,100,1.0,Completed,Town02,20,177.9,377,133.0,0.194
+reference_v150,none,0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,205.9,350,100.7,0.034
+reference_v150,none,0,25300.xml,100.0,100,1.0,Completed,Town04,19,236.2,493,153.7,0.138
+reference_v150,none,0,25854.xml,100.0,100,1.0,Completed,Town03,20,229.1,441,132.0,0.023
+reference_v150,none,0,25951.xml,100.0,100,1.0,Completed,Town04,20,210.4,420,136.6,0.026
+reference_v150,none,0,26406.xml,100.0,100,1.0,Completed,Town04,20,256.4,631,144.3,0.314
+reference_v150,none,0,27515.xml,72.946137,100,0.729461,Completed,Town03,19,245.9,623,80.6,0.502
+reference_v150,none,0,28035.xml,100.0,100,1.0,Completed,Town01,19,346.0,1056,120.8,0.6
+reference_v150,none,0,11755.xml,60.0,100,0.6,Completed,Town12,18,282.6,449,82.2,0.404
+reference_v150,none,0,24071.xml,100.0,100,1.0,Completed,Town13,20,275.1,289,154.3,0.035
+reference_v150,none,0,24258.xml,100.0,100,1.0,Completed,Town07,19,179.0,424,132.0,0.026
+reference_v150,none,0,24795.xml,100.0,100,1.0,Completed,Town04,20,171.6,487,140.6,0.093
+reference_v150,none,0,25439.xml,100.0,100,1.0,Completed,Town15,18,201.1,453,131.2,0.148
+reference_v150,none,0,25857.xml,51.76,51.76,1.0,Failed - TickRuntime,Town05,8,1037.8,3999,69.9,0.933
+reference_v150,none,0,25968.xml,100.0,100,1.0,Completed,Town07,19,149.3,206,56.0,0.054
+reference_v150,none,0,26456.xml,100.0,100,1.0,Completed,Town03,20,463.2,1555,130.5,0.703
+reference_v150,none,0,27532.xml,100.0,100,1.0,Completed,Town11,19,203.2,425,70.3,0.439
+reference_v150,none,0,28154.xml,100.0,100,1.0,Completed,Town10HD,20,297.2,639,153.7,0.188
+reference_v150,lidar,1.0,10857.xml,100.0,100,1.0,Completed,Town12,20,293.2,331,77.6,0.236
+reference_v150,lidar,1.0,14194.xml,100.0,100,1.0,Completed,Town12,20,258.2,489,75.7,0.426
+reference_v150,lidar,1.0,24092.xml,60.0,100,0.6,Completed,Town13,21,268.0,255,150.6,0.051
+reference_v150,lidar,1.0,24294.xml,100.0,100,1.0,Completed,Town02,19,280.5,933,102.7,0.637
+reference_v150,lidar,1.0,24841.xml,100.0,100,1.0,Completed,Town01,20,187.8,446,130.5,0.022
+reference_v150,lidar,1.0,25845.xml,60.0,100,0.6,Completed,Town15,20,541.2,1733,113.5,0.723
+reference_v150,lidar,1.0,25928.xml,36.018,60.03,0.6,Failed - TickRuntime,Town11,11,858.9,3999,60.7,0.949
+reference_v150,lidar,1.0,26405.xml,34.82,34.82,1.0,Failed - Agent got blocked,Town15,6,353.2,1364,46.5,0.9
+reference_v150,lidar,1.0,26956.xml,60.0,100,0.6,Completed,Town05,21,151.7,349,75.6,0.253
+reference_v150,lidar,1.0,27582.xml,100.0,100,1.0,Completed,Town11,19,168.1,432,68.7,0.459
+reference_v150,camera,1.0,10857.xml,100.0,100,1.0,Completed,Town12,20,295.0,380,76.2,0.201
+reference_v150,camera,1.0,14194.xml,12.98808,60.13,0.216,Failed - Agent got blocked,Town12,15,756.5,2026,47.6,0.813
+reference_v150,camera,1.0,24092.xml,95.356325,100,0.953563,Completed,Town13,21,280.6,426,151.5,0.031
+reference_v150,camera,1.0,24294.xml,50.0,100,0.5,Completed,Town02,20,148.7,336,102.4,0.03
+reference_v150,camera,1.0,24841.xml,100.0,100,1.0,Completed,Town01,20,182.3,457,130.7,0.022
+reference_v150,camera,1.0,25845.xml,36.0,100,0.36,Completed,Town15,21,729.8,2730,112.0,0.837
+reference_v150,camera,1.0,25928.xml,60.0,100,0.6,Completed,Town11,19,159.7,367,100.8,0.194
+reference_v150,camera,1.0,26405.xml,58.180941,100,0.581809,Completed,Town15,20,203.3,626,136.0,0.232
+reference_v150,camera,1.0,26956.xml,60.0,100,0.6,Completed,Town05,21,136.0,299,74.9,0.215
+reference_v150,camera,1.0,27582.xml,56.634436,100,0.566344,Completed,Town11,21,160.7,361,70.4,0.336
+reference_v150,lidar,1.0,11715.xml,100.0,100,1.0,Completed,Town12,19,350.8,764,86.6,0.619
+reference_v150,lidar,1.0,23901.xml,100.0,100.0,1.0,Completed,Town13,21,296.4,477,175.7,0.021
+reference_v150,lidar,1.0,24224.xml,100.0,100,1.0,Completed,Town02,20,188.7,437,132.4,0.179
+reference_v150,lidar,1.0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,158.6,302,100.8,0.033
+reference_v150,lidar,1.0,25300.xml,85.12,85.12,1.0,Failed - TickRuntime,Town04,15,1017.4,3999,132.1,0.895
+reference_v150,lidar,1.0,25854.xml,100.0,100,1.0,Completed,Town03,20,475.7,1613,130.5,0.644
+reference_v150,lidar,1.0,25951.xml,100.0,100,1.0,Completed,Town04,20,228.9,645,135.2,0.18
+reference_v150,lidar,1.0,26406.xml,100.0,100,1.0,Completed,Town04,20,219.2,637,144.2,0.281
+reference_v150,lidar,1.0,27515.xml,70.0,100,0.7,Completed,Town03,19,260.6,868,79.5,0.669
+reference_v150,lidar,1.0,28035.xml,62.92335,100,0.629234,Completed,Town01,21,157.8,409,117.5,0.025
+reference_v150,camera,1.0,11715.xml,42.0,100,0.42,Completed,Town12,21,211.5,233,87.2,0.043
+reference_v150,camera,1.0,23901.xml,100.0,100,1.0,Completed,Town13,20,330.8,493,159.7,0.02
+reference_v150,camera,1.0,24224.xml,25.710295,69.71,0.368818,Failed - Agent got blocked,Town02,16,801.8,3346,95.5,0.9
+reference_v150,camera,1.0,24340.xml,53.18036,100,0.531804,Completed,Town10HD,21,184.4,430,98.8,0.124
+reference_v150,camera,1.0,25300.xml,21.6,100,0.216,Completed,Town04,23,191.8,497,158.2,0.024
+reference_v150,camera,1.0,25854.xml,31.255737,100,0.312557,Completed,Town03,23,214.1,560,133.7,0.145
+reference_v150,camera,1.0,25951.xml,26.416,40.64,0.65,Failed - TickRuntime,Town04,8,944.4,3999,57.8,0.948
+reference_v150,camera,1.0,26406.xml,36.0,100,0.36,Completed,Town04,22,215.0,730,145.4,0.211
+reference_v150,camera,1.0,27515.xml,56.574145,100,0.565741,Completed,Town03,20,178.7,539,82.1,0.42
+reference_v150,camera,1.0,28035.xml,36.386104,100,0.363861,Completed,Town01,22,157.7,417,121.3,0.024
+reference_v150,lidar,1.0,11755.xml,100.0,100,1.0,Completed,Town12,17,282.1,474,81.9,0.446
+reference_v150,lidar,1.0,24071.xml,100.0,100,1.0,Completed,Town13,21,274.3,345,154.8,0.029
+reference_v150,lidar,1.0,24258.xml,60.0,100,0.6,Completed,Town07,20,184.0,445,131.1,0.137
+reference_v150,lidar,1.0,24795.xml,60.0,100,0.6,Completed,Town04,21,160.1,404,140.5,0.025
+reference_v150,lidar,1.0,25439.xml,100.0,100,1.0,Completed,Town15,18,178.6,509,130.5,0.15
+reference_v150,lidar,1.0,25857.xml,33.83,33.83,1.0,Failed - TickRuntime,Town05,5,1098.2,3999,45.2,0.962
+reference_v150,lidar,1.0,25968.xml,100.0,100,1.0,Completed,Town07,19,107.3,194,55.3,0.057
+reference_v150,lidar,1.0,26456.xml,100.0,100,1.0,Completed,Town03,20,442.1,1557,130.6,0.699
+reference_v150,lidar,1.0,27532.xml,100.0,100,1.0,Completed,Town11,19,172.1,418,71.1,0.456
+reference_v150,lidar,1.0,28154.xml,100.0,100,1.0,Completed,Town10HD,20,262.4,655,153.9,0.199
+reference_v150,camera,1.0,11755.xml,,,,NoResult,,,2700.2,1800,62.9,0.779
+reference_v150,camera,1.0,24071.xml,100.0,100,1.0,Completed,Town13,21,247.1,247,155.6,0.041
+reference_v150,camera,1.0,24258.xml,84.971595,100,0.849716,Completed,Town07,20,173.9,386,133.2,0.026
+reference_v150,camera,1.0,24795.xml,60.0,100,0.6,Completed,Town04,21,161.1,471,139.9,0.03
+reference_v150,camera,1.0,25439.xml,94.020235,100,0.940202,Completed,Town15,19,194.5,631,132.3,0.181
+reference_v150,camera,1.0,25857.xml,15.9516,44.31,0.36,Failed - TickRuntime,Town05,9,1044.1,3999,64.2,0.869
+reference_v150,camera,1.0,25968.xml,45.945888,100,0.459459,Completed,Town07,21,109.0,212,60.9,0.047
+reference_v150,camera,1.0,26456.xml,33.514611,100,0.335146,Completed,Town03,23,221.2,623,131.2,0.288
+reference_v150,camera,1.0,27532.xml,52.325509,100,0.523255,Completed,Town11,21,158.3,378,71.6,0.225
+reference_v150,camera,1.0,28154.xml,36.0,100,0.36,Completed,Town10HD,22,293.8,759,153.0,0.231

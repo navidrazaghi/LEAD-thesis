@@ -1,0 +1,18 @@
+[09-26 09:31:06] waiting for the speed test
+[09-26 11:05:13] camera:1.0 again, 30 routes, 3 shards, same tool as test B
+shard 0: 10 routes on port 4000
+shard 1: 10 routes on port 4400
+shard 2: 10 routes on port 4800
+shards finished, failed: none
+merged 30 rows into /home/razaghi/LEAD/lead/results/closed_loop_reference_v150_camera_rep2.csv (matrix is 30)
+[09-26 12:12:18] run finished
+old   30 rows, 26 scored, mean DS  63.95
+new1  30 rows, 29 scored, mean DS  54.52
+new2  30 rows, 30 scored, mean DS  60.60
+
+new1  vs new2   n=29  mean diff  +5.76  SE  3.76  t  1.53  identical  8/29  mean |diff| 12.46
+old   vs new1   n=25  mean diff  -8.23  SE  5.50  t -1.50  identical  6/25  mean |diff| 18.00
+old   vs new2   n=26  mean diff  -3.65  SE  4.93  t -0.74  identical 11/26  mean |diff| 13.66
+
+Read: if 'new1 vs new2' looks like the other two rows, the old-vs-new gap is run-to-run noise; if it is much tighter, the machines differ in the camera path.
+[09-26 12:12:18] camera replicate finished

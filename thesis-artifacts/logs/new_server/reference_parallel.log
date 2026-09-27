@@ -1,0 +1,5 @@
+shard 0: 10 routes on port 4000
+shard 1: 10 routes on port 4400
+shard 2: 10 routes on port 4800
+shards finished, failed: none
+merged 30 rows into /home/razaghi/LEAD/lead/results/closed_loop_reference_v150.csv (matrix is 30)

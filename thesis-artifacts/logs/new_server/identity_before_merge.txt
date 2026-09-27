@@ -1,0 +1,7 @@
+lead imported from /home/new_drive/razaghi/lead/src/lead/__init__.py
+eval camera:1.0                    255ce49d78429389
+eval lidar:1.0                     9e0d1ebb162b6bb1
+eval family occlusion:1.0          38460278b9866b03
+eval family ego_state:1.0          3e7d1e2e18c20dd5
+train curriculum v1 (p 0.5)        dc718445c8f03a68
+train curriculum v2 (campaign)     a3d7ae4b73e752d8

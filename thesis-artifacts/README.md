@@ -179,3 +179,15 @@ Lost with the machine: the trained weights of all models, the seed-1 results
 CSV (transcribed above), and the unfinished seed-2 run. Every result reported in
 the thesis is in `results/`; the configs here define each run exactly, so any of
 them can be reproduced on other hardware at 11.5 to 16.7 hours per model.
+
+## The replacement server
+
+`NEW_SERVER.md` records how the replacement machine was brought to the same
+state -- same 585 logs at the pinned dataset revision, same 30 routes -- the
+checks that show it (the published checkpoint driven on both machines, the
+same checkpoint driven twice), its training speed, and what was queued on it.
+Its scripts are in `scripts/new_server_setup/` and `scripts/server_home/`, its
+logs in `logs/new_server/` (force-added; `*.log` is ignored), its results in
+`results/closed_loop_reference_v150*.csv`, `results/system_test_smoke_load.csv`
+and `results/seed2_loss.csv`. The fault catalogue is on branch
+`stage0-fault-catalog`.

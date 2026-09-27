@@ -1,0 +1,20 @@
+[09-26 07:19:29] waiting for test A2 (and through it, test B)
+[09-26 09:38:38] loader alone, 8 and 16 workers
+    self.scenes: Sequence[SceneAPI] = get_scenes(
+  File "/home/new_drive/razaghi/lead/src/lead/log_reader/scene_index.py", line 69, in get_scenes
+    raise FileNotFoundError(
+FileNotFoundError: logs root None/logs does not exist; check PY123D_DATA_ROOT
+[09-26 09:38:52] training: pretrain_default
+[09-26 09:45:15]   exit 0 after 383 s wall
+pretrain_default             steady   81.8 samples/s | first step after   88 s | GPU util median  87% | GPU mem peak 17.9 GB | CPU idle median  75%
+[09-26 09:45:16] training: pretrain_autotune
+[09-26 10:20:59]   exit 0 after 2143 s wall
+pretrain_autotune            steady   84.7 samples/s | first step after 1287 s | GPU util median  10% | GPU mem peak 33.7 GB | CPU idle median  93%
+[09-26 10:21:00] training: posttrain_default
+[09-26 10:27:36]   exit 0 after 396 s wall
+posttrain_default            steady   77.0 samples/s | first step after   88 s | GPU util median  80% | GPU mem peak 16.9 GB | CPU idle median  73%
+[09-26 10:27:37] training: posttrain_autotune
+[09-26 11:04:47]   exit 0 after 2230 s wall
+posttrain_autotune           steady   80.4 samples/s | first step after 1249 s | GPU util median   8% | GPU mem peak 38.6 GB | CPU idle median  93%
+[09-26 11:04:48] reference: the campaign's pretrain ran at about 87 samples/s, post-train about 85, on the old server
+[09-26 11:04:48] speed test finished

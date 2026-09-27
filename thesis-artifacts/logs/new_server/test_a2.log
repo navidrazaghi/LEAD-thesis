@@ -1,0 +1,19 @@
+[09-26 06:39:38] waiting for test B to finish
+[09-26 09:02:48] post-train: 2 epochs x 30 batches from /home/new_drive/razaghi/lead/outputs/smoke/model_0001.pth, planning decoder on
+[09-26 09:12:18] post-train wrote model_0001.pth 
+876:    use_planning_decoder: true
+[09-26 09:12:18] driving the post-trained smoke checkpoint on 2 routes
+2 runs in the matrix, 2 already done, 2 to go
+  first pending: smoke_post at none:0
+CARLA on 3100, traffic manager on 3200
+[1/2] smoke_post none:0 25968.xml -> DS 24.102 (Failed - Agent got blocked, 410.2s)
+[2/2] smoke_post none:0 26956.xml -> DS 14.716617 (Failed - TickRuntime, 1136.2s)
+results in results/system_test_smoke_load.csv
+=== test A: our own checkpoints ===
+  smoke      25968.xml   status Failed - Agent crashed           DS   0.00  distance ? m  ticks ?
+  smoke      26956.xml   status Failed - Agent crashed           DS   0.00  distance ? m  ticks ?
+  smoke_post 25968.xml   status Failed - Agent got blocked       DS  24.10  distance 26.6 m  ticks 1338
+  smoke_post 26956.xml   status Failed - TickRuntime             DS  14.72  distance 25.9 m  ticks 3999
+
+=== test B: same checkpoint, old server vs new ===
+[09-26 09:38:21] test A2 finished

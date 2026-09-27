@@ -1,0 +1,32 @@
+[09-26 06:35:54] test A: the smoke checkpoint on 2 routes, intact
+2 runs in the matrix, 0 already done, 2 to go
+  first pending: smoke at none:0
+CARLA on 3100, traffic manager on 3200
+[1/2] smoke none:0 25968.xml -> DS 0.0 (Failed - Agent crashed, 72.8s)
+[2/2] smoke none:0 26956.xml -> DS 0.0 (Failed - Agent crashed, 65.0s)
+results in results/system_test_smoke_load.csv
+[09-26 06:38:29] test A done
+[09-26 06:38:29] test B: reference_v150 on 30 routes x {lidar:1.0, camera:1.0}, 3 shards
+shard 0: 10 routes on port 4000
+shard 1: 10 routes on port 4400
+shard 2: 10 routes on port 4800
+shards finished, failed: none
+merged 90 rows into /home/razaghi/LEAD/lead/results/closed_loop_reference_v150.csv (matrix is 60)
+[09-26 09:02:42] test B done
+=== test A: our own checkpoints ===
+  smoke      25968.xml   status Failed - Agent crashed           DS   0.00  distance ? m  ticks ?
+  smoke      26956.xml   status Failed - Agent crashed           DS   0.00  distance ? m  ticks ?
+
+=== test B: same checkpoint, old server vs new ===
+none:0.0   n=30  old  90.71  new  94.82  diff  +4.11  SE  4.23  t  0.97  identical 24/30
+      14194.xml   old  27.64 (Failed - Agent got blocked)  new 100.00 (Completed)
+      25968.xml   old  40.68 (Failed - Agent got blocked)  new 100.00 (Completed)
+      24224.xml   old  50.00 (Completed)  new 100.00 (Completed)
+      25857.xml   old 100.00 (Completed)  new  51.76 (Failed - TickRuntime)
+Traceback (most recent call last):
+  File "/home/new_drive/razaghi/old_vs_new.py", line 42, in <module>
+    o = [float(old[k]["driving_score"]) for k in pairs]
+  File "/home/new_drive/razaghi/old_vs_new.py", line 42, in <listcomp>
+    o = [float(old[k]["driving_score"]) for k in pairs]
+ValueError: could not convert string to float: ''
+[09-26 09:02:42] all tests finished

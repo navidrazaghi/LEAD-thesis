@@ -1,0 +1,107 @@
+#!/bin/bash
+#
+# Seed replicate of dense + curriculum v2 + consistency 0.1, seed 2, the whole pipeline.
+#
+# run_diverse_dense_consistency_seed1.sh with SEED=1 -> SEED=2 and seed1 -> seed2,
+# which is exactly how seed_replicates_record.md describes the lost seed-2
+# launcher on the old server. The recipe is untouched: pl.seed_everything takes
+# the seed, so head initialisation, data order, dropout and the training-time
+# damage draws change; evaluation's damage is seeded per route, so the model is
+# scored under the same damage as seeds 0 and 1.
+#
+# Three changes belong to this machine, not to the experiment:
+#   * the 585-log list is read from the repo's provenance copy (verified
+#     identical, name for name, to the list pinned in rung0_diverse.yaml);
+#   * libjpeg-turbo 3 goes first on LD_LIBRARY_PATH (pyturbojpeg==2.5 needs it;
+#     Ubuntu 24.04 ships 2.1.5);
+#   * scoring uses eval_parallel_v2.py with four shards. It changes which shard
+#     drives which route, not how any route is driven; CARLA runs synchronous.
+#
+# Read against results/closed_loop_diverse_dense_consistency.csv (seed 0) and the
+# seed-1 means in results/seed_replicates_record.md.
+#
+# Body in a function called on the last line.
+
+main() {
+	set -u
+	cd ~/LEAD/lead || exit 1
+
+	PY=~/miniconda3/envs/lead/bin/python
+	SEL=thesis-artifacts/provenance/new_subset/selected_frames_town.txt
+	PRE=$HOME/LEAD/lead/outputs/rung2a_diverse_curriculum2_seed2
+	POST=$HOME/LEAD/lead/outputs/rung2a_diverse_consistency_seed2_post31
+	CSV=results/closed_loop_diverse_dense_consistency_seed2.csv
+	LOG=/home/new_drive/razaghi/diverse_dense_consistency_seed2.log
+	SHARDS=${SHARDS:-4}
+	SEED=2
+
+	say() { echo "[$(date '+%m-%d %H:%M:%S')] $*"; }
+
+	if pgrep -f '[l]ead.training.train' > /dev/null || pgrep -f '[e]val_parallel' > /dev/null; then
+		say "FATAL: a training or evaluation is already running; not sharing the GPU"
+		exit 1
+	fi
+
+	export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+	export NUMBA_NUM_THREADS=1 NUMBA_THREADING_LAYER=workqueue
+	export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+	export LEAD_RUNTIME_TYPE_CHECKING=false TIMM_USE_OLD_CACHE=1 WANDB_MODE=offline
+	export LIBRARY_PATH="$HOME/.local/cuda-stubs:${LIBRARY_PATH:-}"
+	export LD_LIBRARY_PATH="/home/new_drive/razaghi/lib/turbojpeg3:${LD_LIBRARY_PATH:-}"
+	export SLURM_JOB_ID=1 SLURM_CPUS_PER_TASK=16
+	ulimit -n 65536
+
+	NAMES=$(awk -F/ '{print $2}' "$SEL" | sort)
+	N=$(echo "$NAMES" | wc -l)
+	[ "$N" -eq 585 ] || { say "FATAL: $N logs in the selection, expected 585"; exit 1; }
+	LOG_NAMES=$(echo "$NAMES" | paste -sd, -)
+
+	COMMON=(
+		training.experiment.seed=$SEED
+		training.data.use_sensor_degradation=true
+		training.data.sensor_degradation_probability=0.30
+		training.data.sensor_degradation_independent_modalities=true
+		training.data.sensor_degradation_full_failure_probability=0.25
+		training.data.sensor_degradation_misalignment_probability=0.10
+		training.data.read_from_cache_store=true
+		"training.data.py123d_log_names=[$LOG_NAMES]"
+		training.optimization.batch_size=32
+		training.lightning.accumulate_grad_batches=2
+		training.optimization.num_epochs=31
+	)
+
+	if [ ! -f "$PRE/model_0030.pth" ]; then
+		say "pretrain starting: 31 epochs, dense + curriculum v2, seed $SEED"
+		$PY -m lead.training.train "${COMMON[@]}" \
+			training.experiment.resume_from_last_checkpoint=true \
+			training.experiment.output_dir="$PRE" \
+			>> "$LOG" 2>&1
+		[ -f "$PRE/model_0030.pth" ] || { say "FATAL: pretrain ended without model_0030.pth"; tail -20 "$LOG"; exit 1; }
+	fi
+	say "pretrain done"
+
+	if [ ! -f "$POST/model_0030.pth" ]; then
+		say "post-train starting: 31 epochs, curriculum v2 + consistency 0.1, seed $SEED"
+		$PY -m lead.training.train "${COMMON[@]}" \
+			training.data.degradation_consistency_weight=0.1 \
+			policy.transfuser.use_planning_decoder=true \
+			training.experiment.resume_from_last_checkpoint=false \
+			training.experiment.initial_weights_file="$PRE/model_0030.pth" \
+			training.experiment.output_dir="$POST" \
+			>> "$LOG" 2>&1
+		[ -f "$POST/model_0030.pth" ] || { say "FATAL: post-train ended without model_0030.pth"; tail -20 "$LOG"; exit 1; }
+	fi
+	say "post-train done"
+
+	say "scoring dense_consistency_seed2, 30 routes x 3 conditions, $SHARDS instance(s)"
+	$PY thesis-artifacts/scripts/server_home/eval_parallel_v2.py \
+		--models dense_consistency_seed2="$POST" \
+		--routes src/lead/routes/eval_sets/degradation_30.txt \
+		--conditions none:0 lidar:1.0 camera:1.0 \
+		--out "$CSV" --shards "$SHARDS" \
+		|| say "WARNING: dense_consistency_seed2 scoring reported missing rows; see outputs/eval_shards"
+	say "done: $(( $(wc -l < "$CSV") - 1 )) rows in $CSV"
+	$PY /home/new_drive/razaghi/seed_compare.py
+}
+
+main "$@"

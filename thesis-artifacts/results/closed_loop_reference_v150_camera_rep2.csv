@@ -1,0 +1,31 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds,ticks,distance_m,stationary_frac
+reference_v150_rep2,camera,1.0,10857.xml,100.0,100,1.0,Completed,Town12,20,316.5,412,76.5,0.287
+reference_v150_rep2,camera,1.0,14194.xml,12.96,100,0.1296,Completed,Town12,24,268.3,526,76.5,0.32
+reference_v150_rep2,camera,1.0,24092.xml,96.683321,100,0.966833,Completed,Town13,21,281.5,428,151.2,0.054
+reference_v150_rep2,camera,1.0,24294.xml,50.0,100,0.5,Completed,Town02,20,157.6,337,102.4,0.03
+reference_v150_rep2,camera,1.0,24841.xml,100.0,100,1.0,Completed,Town01,20,193.1,449,130.8,0.022
+reference_v150_rep2,camera,1.0,25845.xml,20.0538,85.7,0.234,Failed - TickRuntime,Town15,18,1048.9,3999,92.3,0.917
+reference_v150_rep2,camera,1.0,25928.xml,60.0,100,0.6,Completed,Town11,19,184.7,489,100.3,0.332
+reference_v150_rep2,camera,1.0,26405.xml,59.09049,100,0.590905,Completed,Town15,20,197.0,598,135.1,0.191
+reference_v150_rep2,camera,1.0,26956.xml,60.0,100,0.6,Completed,Town05,21,134.7,314,74.3,0.22
+reference_v150_rep2,camera,1.0,27582.xml,50.465269,100,0.504653,Completed,Town11,21,164.5,381,74.2,0.292
+reference_v150_rep2,camera,1.0,11715.xml,70.0,100,0.7,Completed,Town12,20,225.2,302,87.1,0.123
+reference_v150_rep2,camera,1.0,23901.xml,92.337697,100,0.923377,Completed,Town13,21,303.3,455,161.0,0.022
+reference_v150_rep2,camera,1.0,24224.xml,50.0,100,0.5,Completed,Town02,21,168.1,354,132.8,0.028
+reference_v150_rep2,camera,1.0,24340.xml,33.144556,79.58,0.416494,Failed - TickRuntime,Town10HD,16,1202.8,3999,83.5,0.898
+reference_v150_rep2,camera,1.0,25300.xml,60.0,100,0.6,Completed,Town04,20,224.9,579,152.5,0.149
+reference_v150_rep2,camera,1.0,25854.xml,60.0,100,0.6,Completed,Town03,21,231.4,651,128.8,0.246
+reference_v150_rep2,camera,1.0,25951.xml,60.0,100,0.6,Completed,Town04,21,180.3,455,137.4,0.031
+reference_v150_rep2,camera,1.0,26406.xml,36.0,100,0.36,Completed,Town04,22,228.7,733,145.8,0.216
+reference_v150_rep2,camera,1.0,27515.xml,55.175773,100,0.551758,Completed,Town03,20,175.0,513,81.6,0.422
+reference_v150_rep2,camera,1.0,28035.xml,30.396968,83.45,0.364254,Failed - TickRuntime,Town01,17,991.8,3999,102.7,0.911
+reference_v150_rep2,camera,1.0,11755.xml,70.0,100,0.7,Completed,Town12,18,265.7,416,83.9,0.198
+reference_v150_rep2,camera,1.0,24071.xml,60.0,100,0.6,Completed,Town13,21,252.1,265,154.1,0.038
+reference_v150_rep2,camera,1.0,24258.xml,87.978883,100,0.879789,Completed,Town07,20,185.5,430,132.5,0.037
+reference_v150_rep2,camera,1.0,24795.xml,60.0,100,0.6,Completed,Town04,21,176.4,495,140.2,0.03
+reference_v150_rep2,camera,1.0,25439.xml,100.0,100,1.0,Completed,Town15,18,189.3,538,129.5,0.142
+reference_v150_rep2,camera,1.0,25857.xml,21.6,100,0.216,Completed,Town05,21,404.1,1292,133.1,0.548
+reference_v150_rep2,camera,1.0,25968.xml,72.972861,100,0.729729,Completed,Town07,20,116.9,216,64.4,0.047
+reference_v150_rep2,camera,1.0,26456.xml,100.0,100,1.0,Completed,Town03,20,189.6,416,129.6,0.024
+reference_v150_rep2,camera,1.0,27532.xml,53.178223,100,0.531782,Completed,Town11,21,150.0,283,70.5,0.053
+reference_v150_rep2,camera,1.0,28154.xml,36.0,100,0.36,Completed,Town10HD,22,261.4,660,152.7,0.127
