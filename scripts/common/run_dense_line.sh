@@ -58,12 +58,49 @@ ulimit -n 65536
 OUT="$HOME/LEAD/lead/outputs"
 FINAL_CHECKPOINT="model_0009.pth"
 
-# Wait out whatever holds the GPU, rung2d included. Bracketed so the pattern
-# does not match this script's own pgrep, and does not match the shell running
-# it -- an unbracketed pattern here once matched the session that launched it.
-while pgrep -f "[l]ead.training.train" > /dev/null 2>&1; do
-  sleep 300
+# WAITING FOR THE GPU IS HARDER THAN IT LOOKS
+#
+# Polling for a trainer process and starting as soon as none is found is wrong,
+# and the bug is a race rather than a mistake in the pattern. A rung is two
+# stages, and between them there is a gap of seconds where the pretrain has
+# exited and the posttrain has not yet started. A poll that lands in that gap
+# sees an idle GPU and launches, and now two trainings share the card -- or,
+# when the sleeping process is a second copy of the same driver script, two
+# posttrains write to one output directory. That second copy existed while this
+# was written; it was removed rather than tolerated.
+#
+# So: require several consecutive clear polls, which no gap of seconds can
+# survive, and watch the driver scripts as well as the trainers, because a
+# driver that is between stages is exactly the state a trainer poll misses.
+#
+# The flock is for the scripts that come after this one. It serialises anything
+# that takes the same lock, which is the mechanism the polling above only
+# approximates -- the polling is needed solely because rung2d started before the
+# lock existed and holds nothing.
+LOCK="$HOME/.lead_training.lock"
+CLEAR_POLLS_REQUIRED=3
+POLL_SECONDS=120
+
+busy() {
+  pgrep -f "[l]ead.training.train" > /dev/null 2>&1 && return 0
+  pgrep -f "common/run_rung2d\.sh" > /dev/null 2>&1 && return 0
+  return 1
+}
+
+clear_count=0
+while [ "$clear_count" -lt "$CLEAR_POLLS_REQUIRED" ]; do
+  if busy; then
+    clear_count=0
+  else
+    clear_count=$((clear_count + 1))
+  fi
+  [ "$clear_count" -lt "$CLEAR_POLLS_REQUIRED" ] && sleep "$POLL_SECONDS"
 done
+
+# 200 is this script's own exit code for "someone else holds the lock", chosen
+# so it cannot be confused with a training failure.
+exec 9>"$LOCK"
+flock -n 9 || { echo "another training pipeline holds $LOCK; not starting"; exit 200; }
 
 stage() {
   local name=$1; shift
