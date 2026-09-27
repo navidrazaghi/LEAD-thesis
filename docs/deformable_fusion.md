@@ -145,6 +145,37 @@ in `results/cost.csv`; the shares are what the measurement is for. And
 architecture explains, which is likely the same contention and wants a clean
 re-run. Raw output is in `results/forward_profile.txt`.
 
+### What follows from this
+
+The operator is not used by work after the thesis. `scripts/common/run_dense_line.sh`
+trains on the dense path, and the reasoning is the two measurements above: there
+was nothing to reclaim at 552 tokens, and the sparse operator costs 13% to find
+that out.
+
+That switch is not free, and the price is a control. Every rung of the thesis
+ladder except rung0 is deformable, and rung0 has no degradation curriculum, so a
+dense rung has nothing to be compared against on equal terms. The dense line
+therefore opens with `rung2a_dense_curriculum` — dense plus the curriculum,
+nothing else — before any rung that asks a new question.
+
+It is worth more than its overhead. Against rung2a it isolates the operator
+under the curriculum, and against rung0 it re-measures the curriculum on the
+dense path, which says whether the thesis's one solid positive result ever
+depended on the operator at all.
+
+Two things do not carry across. The observability head does: it hangs off the
+top-down pyramid rather than the fusion operator, and the dense backbone builds
+that pyramid whenever `use_observability` is set. The gate does not, and says so
+rather than failing quietly — `Transfuser.__init__` raises, because the gate
+biases a softmax over a modality axis that only the deformable operator has.
+Since the gate is the thesis's negative result, that closes nothing that was
+open.
+
+Nothing here retracts the operator itself. The stride-16 and stride-8 rows above
+stand, and they are what would make it worth returning to: a finer token grid is
+the condition under which sparsity pays, and it is the direction the operator
+was built for.
+
 Reproduce the sweep on the training GPU with
 
 ```console
