@@ -75,6 +75,12 @@ calibration.
 
 ## Where the cost actually falls
 
+Two separate questions live here and they have different answers: which operator
+is faster, and whether either matters. The short version is that dense wins at
+this size, and that dense fusion attention is 2.2% of the forward pass anyway —
+so there was never much to win. The second half is measured under
+[How much of the model the operator even is](#how-much-of-the-model-the-operator-even-is).
+
 The score-count ratio is not the wall-clock ratio. At `T=552` the dense path
 runs as a single fused SDPA kernel while the sparse path is a sequence of small
 gather-shaped ops, so the dense operator is the faster of the two despite doing
@@ -97,6 +103,47 @@ already there. It pays by letting the grid get finer — the stride-32 pooling
 exists because dense attention is quadratic, and relaxing it is what sparsity
 buys. Eager numbers differ (deformable is mildly ahead at stride 32, behind at
 24), so quote compiled numbers or say which you mean.
+
+### How much of the model the operator even is
+
+The table above compares the two operators against each other. It does not say
+what either is worth against the rest of the forward pass, and that is the
+number which bounds every attempt at making fusion cheaper: optimising a tenth
+of the model cannot return more than a tenth.
+
+`scripts/common/forward_profile.py` times each module with CUDA events around
+it. Shares of the whole forward pass, batch 8:
+
+| part                | rung0 (dense) | rung4 (deformable) |
+| :------------------ | ------------: | -----------------: |
+| **all fusion blocks** |     **2.2%** |          **36.6%** |
+| all encoder stages  |         15.9% |              10.9% |
+| `radar_detector`    |         33.5% |              29.0% |
+| `planning_decoder`  |         24.7% |               6.1% |
+
+Three things follow, and the first is the answer to the question this section
+opened with.
+
+**Dense fusion attention is 2.2% of the forward pass.** The premise that
+attention imposes a significant computational cost does not hold in this
+architecture at this token count. Removing it entirely would return two percent.
+There is nothing there to reclaim.
+
+**The deformable operator turns that 2.2% into 36.6%** — sixteen times larger,
+and the largest single part of the model. That is the whole of the 13% slowdown
+in `results/cost.csv`, explained: a negligible part became a third of the work.
+
+**The largest consumer of the baseline is the radar detector, at 33.5%** — a
+module no claim in this thesis depends on, evaluated nowhere and part of no rung.
+If reducing cost were the goal, that is the obvious target, and it has nothing
+to do with attention.
+
+Two caveats. The absolute milliseconds were taken while a training run held the
+same GPU, so they are inflated roughly fourfold against the idle-device figure
+in `results/cost.csv`; the shares are what the measurement is for. And
+`planning_decoder`'s share differs between the two models far more than the
+architecture explains, which is likely the same contention and wants a clean
+re-run. Raw output is in `results/forward_profile.txt`.
 
 Reproduce the sweep on the training GPU with
 
