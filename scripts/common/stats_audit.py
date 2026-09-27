@@ -5,11 +5,14 @@ and each is answered here rather than asserted: whether the conclusions survive
 a test that does not assume normality, whether they survive a correction for
 having looked six times, and what the exact p-values are.
 """
-import csv, collections, math, random, statistics
+import csv, collections, math, pathlib, random, statistics, sys
 
 random.seed(20260820)
 ROUNDS = 20000
-PATH = "/home/razzaghi/LEAD/lead/results/closed_loop.csv"
+# Relative to the repository, not to one machine home directory: an absolute
+# path here published the account name it was written on.
+DEFAULT = pathlib.Path(__file__).resolve().parents[2] / "results" / "closed_loop.csv"
+PATH = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT
 
 rows = [r for r in csv.DictReader(open(PATH)) if (r.get("driving_score") or "").strip()]
 by = {}
