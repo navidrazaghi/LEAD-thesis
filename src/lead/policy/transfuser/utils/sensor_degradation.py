@@ -25,6 +25,7 @@ import torch
 from torch.nn import functional as F
 
 from lead.policy.transfuser.dataloader.observability import ObservabilityChannel
+from lead.policy.transfuser.utils.fault_catalog import FAULT_CATALOG, FaultGeometry, apply_fault
 
 # Severity 1 leaves this much of the image: not fully black, so the encoder
 # still sees an input rather than a constant it can special-case.
@@ -533,6 +534,8 @@ def degrade_batch_family(
     family: str,
     severity: float,
     generator: torch.Generator | None = None,
+    persistent_seed: int | None = None,
+    geometry: FaultGeometry | None = None,
 ) -> dict:
     """Apply one deployment family to a whole inference batch at a fixed severity.
 
@@ -552,6 +555,10 @@ def degrade_batch_family(
         family: ``"occlusion"``, ``"ego_state"``, or ``"none"``.
         severity: How much to damage it, in ``[0, 1]``, applied to every sample.
         generator: Draws the damage, so a run can repeat itself.
+        persistent_seed: For the structured fault catalogue only: seeds each
+            fault's geometry so it holds still across the ticks of a route.
+            Ignored by the occlusion and ego-state families.
+        geometry: For the fault catalogue only: the input layout.
 
     Returns:
         The batch.
@@ -562,10 +569,11 @@ def degrade_batch_family(
     """
     if family == "none" or severity <= 0.0:
         return batch
-    if family not in _BATCH_LEVEL_FAMILIES:
+    if family not in _BATCH_LEVEL_FAMILIES and family not in FAULT_CATALOG:
         raise ValueError(
             f"unknown deployment family '{family}'; this applies "
-            f"{sorted(_BATCH_LEVEL_FAMILIES)}.",
+            f"{sorted(_BATCH_LEVEL_FAMILIES)} and the fault catalogue "
+            f"{list(FAULT_CATALOG)}.",
         )
 
     reference = batch.get("rgb")
@@ -580,6 +588,8 @@ def degrade_batch_family(
         dtype=torch.float32,
     )
 
+    if family in FAULT_CATALOG:
+        return apply_fault(batch, family, per_sample, generator, persistent_seed, geometry)
     if family == "occlusion":
         if "rgb" not in batch:
             return batch

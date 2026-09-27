@@ -52,6 +52,7 @@ from lead.policy.transfuser.utils.sensor_degradation import (
     degrade_batch,
     degrade_batch_family,
 )
+from lead.policy.transfuser.utils.fault_catalog import FaultGeometry
 
 if typing.TYPE_CHECKING:
     from lead.policy.transfuser.visualization.feature_map_visualizer import (
@@ -271,6 +272,21 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
             inference.degrade_family,
             inference.degrade_severity,
             generator,
+            # Only the structured fault catalogue reads these: the seed holds a
+            # fault's geometry still across a route's ticks, the layout tells it
+            # where the camera seams and the LiDAR sensor are.
+            persistent_seed=inference.degrade_seed,
+            geometry=self._fault_geometry(),
+        )
+
+    def _fault_geometry(self) -> FaultGeometry:
+        """The input layout the structured fault catalogue needs."""
+        transfuser = self.lead_config.policy.transfuser
+        return FaultGeometry(
+            num_cameras=len(transfuser.input_cameras),
+            bev_pixels_per_meter=float(transfuser.bev_pixels_per_meter),
+            bev_min_x_meter=float(transfuser.bev_min_x_meter),
+            bev_min_y_meter=float(transfuser.bev_min_y_meter),
         )
 
     def _degradation_generator(self, device: torch.device) -> torch.Generator:

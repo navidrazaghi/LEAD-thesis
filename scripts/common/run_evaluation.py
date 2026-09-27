@@ -68,7 +68,16 @@ _SCORE_FIELDS = (
 # Condition names that are deployment families rather than sensor modalities.
 # The column stays called "modality" so one results table holds both axes; what
 # changes is which config knob the name is routed to.
-_DEPLOYMENT_FAMILIES = ("occlusion", "ego_state")
+# The structured fault catalogue (src/lead/policy/transfuser/utils/fault_catalog.py)
+# goes through degrade_family too; tests/.../test_fault_catalog.py keeps this list
+# and the catalogue in step, since an unrouted name would score an undamaged run.
+_DEPLOYMENT_FAMILIES = (
+    "occlusion", "ego_state",
+    "cam_signal_drop", "cam_local_noise", "cam_exposure_pulse", "cam_local_occlusion",
+    "cam_night_lowlight", "cam_motion_blur", "cam_ghosting", "cam_color_shift",
+    "lid_signal_drop", "lid_range_dropout", "lid_frustum_occlusion", "lid_local_speckle",
+    "lid_feature_noise",
+)
 
 # Diagnostics, not scores: they are recorded precisely when the score fields
 # are empty, so they must not be part of _SCORE_FIELDS.
