@@ -248,6 +248,7 @@ def run_route(
     carla: Carla,
     tm_port: int,
     work_dir: pathlib.Path,
+    extra_config: str = "",
 ) -> dict | None:
     """Drive one route once and return its scores.
 
@@ -260,6 +261,8 @@ def run_route(
         tm_port: Traffic-manager port for this run.
         work_dir: Where the run writes its outputs; cleared first so a stale
             result can never be read back as this run's.
+        extra_config: Additional dotlist tokens, appended last so they win
+            over the defaults this function sets.
 
     Returns:
         The scores, or None if the run produced no finished record.
@@ -291,6 +294,7 @@ def run_route(
                 # identical damage there and the models can be compared route
                 # by route, while different routes still get different noise.
                 f"evaluation.inference.degrade_seed={route_seed(route)}"
+                + (f" {extra_config}" if extra_config else "")
             ),
         },
     )
@@ -452,6 +456,17 @@ def parse_args() -> argparse.Namespace:
         type=pathlib.Path,
         default=pathlib.Path.home() / "CARLA/standard_0916",
     )
+    parser.add_argument(
+        "--config",
+        nargs="*",
+        default=[],
+        metavar="KEY=VALUE",
+        help=(
+            "Extra config dotlist tokens for every run, appended after the "
+            "defaults so they win. This is how a sweep turns on something "
+            "the harness does not know about, such as the caution governor."
+        ),
+    )
     parser.add_argument("--port", type=int, default=3000)
     parser.add_argument(
         "--restart-every",
@@ -537,6 +552,7 @@ def main() -> None:
                 carla,
                 tm_port,
                 work_dir,
+                " ".join(args.config),
             )
             elapsed = round(time.time() - started, 1)
             row = {

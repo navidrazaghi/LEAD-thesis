@@ -1,4 +1,6 @@
+import json
 import logging
+import os
 import typing
 
 import carla
@@ -324,6 +326,40 @@ class TransfuserAgent(AbstractDrivingAgent):
             target_speed_throttle=target_speed_throttle,
             target_speed_brake=target_speed_brake,
         )
+
+    def destroy(self, results: object = None) -> None:
+        """Inherited, see superclass; records what the calibrator converged to.
+
+        A fresh agent is built per route, so the scalar starts from
+        ``caution_initial_lambda`` every time and adapts within that route
+        alone. The value it reaches is therefore a per-route measurement, and
+        it is the only output a calibration run produces -- without this the
+        run would drive twenty routes and leave nothing behind to read.
+
+        Args:
+            results: Whatever the leaderboard hands back, passed through.
+        """
+        super().destroy(results)
+        inference = self.lead_config.evaluation.inference
+        if not inference.use_caution_governor:
+            return
+        record = dict(self.caution_calibrator.state())
+        record["signal"] = inference.caution_signal
+        # No route identifier reaches the agent, so the file is read in run
+        # order rather than by name; one line lands per route and that is
+        # enough to take a central value from.
+        record["ticks"] = self.step
+
+        target = inference.caution_calibration_log
+        if not target:
+            LOG.info("caution calibrator: %s", record)
+            return
+        os.makedirs(os.path.dirname(target) or ".", exist_ok=True)
+        # Appended a line at a time rather than written whole, so a run that is
+        # interrupted still leaves every route it finished.
+        with open(target, "a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record) + "\n")
+        LOG.info("caution calibrator wrote %s", record)
 
     def save_step_visualizations(self, sensor_data: dict) -> None:
         """Save the input, demo and debug images and videos of this step.

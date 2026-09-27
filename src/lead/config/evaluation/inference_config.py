@@ -79,6 +79,18 @@ class InferenceConfig(ConfigNode):
     # starting point rather than a commitment: the calibrator keeps adapting
     # during the scored route, so a warm start that was wrong is corrected.
     caution_initial_lambda: float = 0.0
+    # File the governor appends one line to per route, recording what the
+    # calibrator converged to. None logs it instead of writing it.
+    #
+    # A field of its own rather than a reuse of evaluation.save_path, for two
+    # reasons that both bite. That path is a derived property fed by an
+    # environment variable, so passing it in a config dotlist raises before the
+    # agent is ever built -- which reads as "Agent couldn't be set up" and
+    # cost a twenty-route calibration run that failed identically every time.
+    # And it points at the harness's per-route scratch directory, which is
+    # wiped before each route, so anything written there would not survive to
+    # be read.
+    caution_calibration_log: str | None = None
     # How far the camera's predicted depth and a BEV cell's true range may
     # differ before the two modalities count as contradicting each other. Wide
     # enough to absorb the depth head's own error and the fact that a cell is
