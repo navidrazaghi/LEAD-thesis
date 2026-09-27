@@ -52,15 +52,18 @@ degradation. Read them in this order.
 ## Robustness beyond the appearance families
 
 Work in progress on the `robust-deployment` branch, built against what the
-ladder measured rather than alongside it. Both documents say plainly what has
-not been evaluated yet; neither describes a result.
+ladder measured rather than alongside it. One of the two has an answer already,
+and it is negative.
 
 - [Deployment perturbations](deployment_perturbations.md): occlusion, ego-state
   noise, execution latency and frame freeze — why latency is implemented as a
   planning-label re-anchor rather than a delayed observation, and the joint
-  degradation condition.
+  degradation condition. Not yet evaluated; a rung carrying the first two
+  families is in training.
 - [The caution governor](caution_governor.md): the same observability signal
   actuated in the controller instead of the attention logits, three ways to
   measure caution, and an online calibrator in place of a tuned threshold.
-  Includes the measurement showing the default signal is inert under every
-  condition run so far, and why that is the intended behaviour.
+  **Result: no leverage in this stack.** The mechanism works as specified, but
+  the only regime where its signal is informative — both sensors destroyed — is
+  one where no checkpoint drives, the published reference included at 3% route
+  completion. The document carries the three runs that establish it.

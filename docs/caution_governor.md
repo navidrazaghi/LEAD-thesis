@@ -61,6 +61,62 @@ conditions this project has run. Its regime is joint degradation — the `both`
 condition — where redundancy has nothing left to fall back on. `mean` and
 `worst` are configurable so that choice is measured rather than argued.
 
+That regime turned out not to be drivable at all. See
+[the result](#the-governor-has-no-leverage-in-this-stack) below before building
+on any of this.
+
+### The governor has no leverage in this stack
+
+Three single-route closed-loop runs, on route 18305 under `both:1.0`:
+
+| checkpoint            | governor | driving score | route completion | outcome                |
+| :-------------------- | :------- | ------------: | ---------------: | :--------------------- |
+| `rung4` + ensemble    | on       |             — |                — | timed out at 2700 s    |
+| `rung4` + ensemble    | off      |          5.91 |            27.9% | blocked at 1093 s      |
+| published reference   | off      |          2.01 |             3.1% | blocked at 1448 s      |
+
+The rows are in `results/governor_joint_degradation.csv`.
+
+The reference scores 90.7 intact and completes three percent of this route with
+both sensors destroyed. Nothing drives in this condition, so there is nothing
+for a speed governor to act on.
+
+One route is not a measurement of anything, and no claim here rests on the
+scores themselves — the design's minimum detectable difference is 17 to 23
+points. What the three runs establish is categorical rather than quantitative:
+every checkpoint available, with and without the governor, fails to complete the
+route.
+
+The chain of reasoning is closed and every link is measured:
+
+- under **single-modality** damage the signal is correctly quiet — one working
+  sensor is enough, and `rung2a` scores better under full camera destruction
+  than intact;
+- under **joint** damage the signal is loud, caution 0.99;
+- but no checkpoint drives there, ours at 28% completion or the reference at 3%;
+- and slowing a vehicle that is already stuck only lengthens how long it stays
+  stuck — 1093 s to a wedge became 2700 s to a timeout.
+
+**The only regime where this signal is informative is the regime where driving
+itself collapses.** That is a property of the condition, not of the mechanism:
+the governor, its three signals and the calibrator all work as specified and are
+tested. They have no lever here.
+
+This is consistent with what the ablation already reported from the other side.
+Robustness did not generalise outside the training corruption family, and the
+curriculum only ever damaged one modality at a time — by design, so the gate it
+was built for had somewhere to shift to. Joint degradation is outside that
+family for every model in this repository.
+
+One incidental observation, from a single route and therefore no basis for a
+claim: the curriculum-trained rung completed 27.9% of the route against the
+reference's 3.1%, despite the reference being three times better intact.
+
+Where this would become worth revisiting: a checkpoint that still drives under
+joint degradation, or a condition that degrades both modalities gently enough to
+leave the policy driving while still moving the signal. Measured on cached
+frames, `both:0.5` does not — its caution sits at zero.
+
 ## How much slowing: calibrated, not tuned
 
 A hand-set threshold would be one more knob tuned on the routes it is then
@@ -88,12 +144,25 @@ risk streams and checks the realised rate lands on the target from either side.
 
 ## Turning it on
 
+Config for an evaluation run travels behind `--config`, not as bare arguments:
+`python -m lead` is argparse-only and rejects `key=value`, so the harness
+forwards these into the child's config dotlist.
+
 ```console
 user@host:~/lead$ python scripts/common/run_evaluation.py \
     --models rung4=outputs/rung4_light_auxiliary_post \
     --conditions none:0 both:0.5 both:1.0 \
-    evaluation.inference.use_caution_governor=true
+    --out results/governor.csv \
+    --config evaluation.inference.use_caution_governor=true
 ```
+
+Pass only real knobs there. `evaluation.save_path` looks like one and is a
+derived property fed by an environment variable; overriding it raises while the
+child builds its config, before the driving agent exists, which the leaderboard
+reports as `Agent couldn't be set up` with no traceback in the sweep's log. A
+twenty-route run failed that way twenty times before the cause was found.
+`tests/unittests/config/test_overridable_knobs.py` now checks the keys every run
+script passes, so the same mistake fails in a second instead of an hour.
 
 | key                                                | default          | what it does                                  |
 | :------------------------------------------------- | :--------------- | :-------------------------------------------- |
@@ -159,13 +228,29 @@ everywhere and moves nowhere is a collapsed ensemble reporting confidence it has
 not earned, and to a governor that is indistinguishable from a model that is
 right.
 
-## What has not been measured
+## Status, and what has not been measured
 
-No closed-loop run has used the governor. The signals are implemented and
-tested, the calibrator is verified on synthetic streams, and the observability
-signal's range is measured from recorded runs — but no driving score has been
-attributed to any of it. The headline ablation the design is aimed at, the same
-signal actuated at attention level against behaviour level, is still ahead.
+The governor has run closed-loop, once, and the result is the section above: in
+the only condition where its signal says anything, no checkpoint drives. The
+headline ablation the design was aimed at — the same signal actuated at
+attention level against behaviour level, all else equal — cannot be run, because
+the behaviour-level arm has no regime to act in.
+
+What that leaves standing, and what it does not:
+
+- The three signals, the actuator and the calibrator are implemented and tested,
+  and the ensemble's spread is measured across seven conditions. None of it has
+  a driving score attached, and on the evidence here none will without a
+  checkpoint that drives under joint degradation.
+- The **calibration route set** is built and verified disjoint from the scored
+  sets. It has never been run, because a calibration pass over a condition
+  nothing drives in would record twenty routes of nothing.
+- The **conformal loop** was corrected before any of this: with the original
+  risk speed, slowing to the floor could not reach the threshold at any realistic
+  driving speed, so the scalar pinned at its ceiling and the calibration was a
+  slow switch. The loop-closure test now guards that.
+
+One practical constraint on getting anywhere near a driving score:
 
 One practical constraint on getting there: the open-loop pre-screen does not
 work on this stack. Ranking checkpoints by waypoint error agrees with the
