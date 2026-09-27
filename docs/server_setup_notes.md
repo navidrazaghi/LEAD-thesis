@@ -1,6 +1,6 @@
 # Running on the lab A100
 
-Environment facts found on `razzaghi@213.233.184.253`, and what each one costs
+Environment facts found on `<user>@<lab-host>`, and what each one costs
 if it is missed. Nothing here is a LEAD bug; it is all local machine state.
 
 ## Launching a training run
@@ -94,7 +94,7 @@ training will run. It exercises a strict subset of the data path.
 
 ## Disk
 
-`/` is 1.1 T with **97 G free** (91% full); `/home/razzaghi` is already 351 G, of
+`/` is 1.1 T with **97 G free** (91% full); `/home/<user>` is already 351 G, of
 which CARLA is 44 G. There is no scratch volume. The full dataset does not fit
 even if it could be downloaded, and Fail2Drive wants a second 44 G CARLA build.
 Plan on a subset from the start.
@@ -106,7 +106,7 @@ Two separate faults, both now repaired. CARLA runs on the A100.
 **Fault 1 — the account could not open the render node.**
 
 ```bash
-sudo usermod -aG video,render razzaghi     # then log out and back in
+sudo usermod -aG video,render <user>     # then log out and back in
 ```
 
 `/dev/dri/card1` and `/dev/dri/renderD129` opened afterwards, but Vulkan still
