@@ -52,99 +52,94 @@
 # and training crawls at a fiftieth of the speed without ever failing outright.
 
 set -u
-cd "$HOME/LEAD/lead" || exit 1
-ulimit -n 65536
 
 OUT="$HOME/LEAD/lead/outputs"
 FINAL_CHECKPOINT="model_0009.pth"
 
 # WAITING FOR THE GPU IS HARDER THAN IT LOOKS
 #
-# Polling for a trainer process and starting as soon as none is found is wrong,
-# and the bug is a race rather than a mistake in the pattern. A rung is two
-# stages, and between them there is a gap of seconds where the pretrain has
-# exited and the posttrain has not yet started. A poll that lands in that gap
-# sees an idle GPU and launches, and now two trainings share the card -- or,
-# when the sleeping process is a second copy of the same driver script, two
-# posttrains write to one output directory. That second copy existed while this
-# was written; it was removed rather than tolerated.
+# This waited by polling for trainer processes and starting when none was found.
+# That is a race: a rung is two stages, and between them there are seconds where
+# the pretrain has exited and the posttrain has not begun. A poll landing there
+# sees an idle card and launches onto one about to be busy again. Requiring
+# several consecutive clear polls narrowed the window without closing it, and it
+# still had to name every driver script it might be waiting for -- which meant a
+# driver under a new name was invisible to it.
 #
-# So: require several consecutive clear polls, which no gap of seconds can
-# survive, and watch the driver scripts as well as the trainers, because a
-# driver that is between stages is exactly the state a trainer poll misses.
+# A lock has neither problem. Whoever trains holds it; whoever waits blocks on
+# it; nothing has to recognise anything by name. The poll is gone.
 #
-# The flock is for the scripts that come after this one. It serialises anything
-# that takes the same lock, which is the mechanism the polling above only
-# approximates -- the polling is needed solely because rung2d started before the
-# lock existed and holds nothing.
-LOCK="$HOME/.lead_training.lock"
-CLEAR_POLLS_REQUIRED=3
-POLL_SECONDS=120
+# There is one thing a lock cannot do, and it is worth being honest about: it
+# only serialises against processes that take it. Anything launched by hand
+# without the lock is still invisible, which is why every driver in this
+# directory takes it.
+#
+# EDITING A RUNNING SCRIPT
+#
+# Everything below runs inside a function. Bash reads a script incrementally,
+# remembering a byte offset, so editing a file while it runs makes the offset
+# point into the wrong line and the next command it reads is garbage. That is
+# how rung2d lost its posttrain: the file was corrected thirteen minutes after
+# it started, and fourteen hours later bash came back to the file and failed on
+# a line that was valid. Bash must parse a function through to its closing brace
+# before executing any of it, so the whole file is in memory before anything
+# runs, and a later edit cannot reach it.
 
-busy() {
-  pgrep -f "[l]ead.training.train" > /dev/null 2>&1 && return 0
-  pgrep -f "common/run_rung2d\.sh" > /dev/null 2>&1 && return 0
-  return 1
-}
+main() {
+  cd "$HOME/LEAD/lead" || exit 1
+  ulimit -n 65536
 
-clear_count=0
-while [ "$clear_count" -lt "$CLEAR_POLLS_REQUIRED" ]; do
-  if busy; then
-    clear_count=0
-  else
-    clear_count=$((clear_count + 1))
-  fi
-  [ "$clear_count" -lt "$CLEAR_POLLS_REQUIRED" ] && sleep "$POLL_SECONDS"
-done
+  exec 9>"$HOME/.lead_training.lock"
+  echo "[$(date +%H:%M:%S)] waiting for the training lock"
+  flock -w 172800 9 || { echo "timed out waiting for the training lock"; exit 200; }
+  echo "[$(date +%H:%M:%S)] lock acquired"
 
-# 200 is this script's own exit code for "someone else holds the lock", chosen
-# so it cannot be confused with a training failure.
-exec 9>"$LOCK"
-flock -n 9 || { echo "another training pipeline holds $LOCK; not starting"; exit 200; }
-
-stage() {
-  local name=$1; shift
-  if [ -f "$OUT/$name/$FINAL_CHECKPOINT" ]; then
-    echo "[$(date +%H:%M:%S)] SKIP $name (already finished)"
-    return 0
-  fi
-  echo "[$(date +%H:%M:%S)] START $name"
-  bash scripts/common/run_rung.sh "$name" "$@" || return 1
-  [ -f "$OUT/$name/$FINAL_CHECKPOINT" ] || {
-    echo "[$(date +%H:%M:%S)] $name ended without $FINAL_CHECKPOINT"
-    return 1
+  stage() {
+    local name=$1; shift
+    if [ -f "$OUT/$name/$FINAL_CHECKPOINT" ]; then
+      echo "[$(date +%H:%M:%S)] SKIP $name (already finished)"
+      return 0
+    fi
+    echo "[$(date +%H:%M:%S)] START $name"
+    bash scripts/common/run_rung.sh "$name" "$@" || return 1
+    [ -f "$OUT/$name/$FINAL_CHECKPOINT" ] || {
+      echo "[$(date +%H:%M:%S)] $name ended without $FINAL_CHECKPOINT"
+      return 1
+    }
+    echo "[$(date +%H:%M:%S)] DONE $name"
   }
-  echo "[$(date +%H:%M:%S)] DONE $name"
+
+  rung() {
+    local name=$1; shift
+    stage "$name" "$@" || return 1
+    # resume_from_last_checkpoint also decides whether the state-dict load is
+    # strict, and it must be false here: the pretrain has no planning decoder, so
+    # a strict load would refuse the weights this stage exists to extend.
+    stage "${name}_post" "$@" \
+      policy.transfuser.use_planning_decoder=true \
+      training.experiment.resume_from_last_checkpoint=false \
+      training.experiment.initial_weights_file="$OUT/$name/$FINAL_CHECKPOINT" \
+      || return 1
+  }
+
+  # The control. One change against rung0: the curriculum.
+  rung rung2a_dense_curriculum \
+    training.data.use_sensor_degradation=true \
+    || { echo "dense control failed"; exit 1; }
+
+  # Later dense rungs go here, one change each against the control above. The
+  # obvious next one is the deployment families, which is rung2d's question asked
+  # on this operator:
+  #
+  #   rung rung2d_dense_deployment \
+  #     training.data.use_sensor_degradation=true \
+  #     training.data.deployment_perturbation_families="[occlusion,ego_state]"
+  #
+  # It is left commented rather than queued, because rung2d is answering that
+  # question on the deformable line first and its answer decides whether asking it
+  # again here is worth thirty-five hours.
+
+  echo "[$(date +%H:%M:%S)] dense line complete; evaluate rung2a_dense_curriculum_post"
 }
 
-rung() {
-  local name=$1; shift
-  stage "$name" "$@" || return 1
-  # resume_from_last_checkpoint also decides whether the state-dict load is
-  # strict, and it must be false here: the pretrain has no planning decoder, so
-  # a strict load would refuse the weights this stage exists to extend.
-  stage "${name}_post" "$@" \
-    policy.transfuser.use_planning_decoder=true \
-    training.experiment.resume_from_last_checkpoint=false \
-    training.experiment.initial_weights_file="$OUT/$name/$FINAL_CHECKPOINT" \
-    || return 1
-}
-
-# The control. One change against rung0: the curriculum.
-rung rung2a_dense_curriculum \
-  training.data.use_sensor_degradation=true \
-  || { echo "dense control failed"; exit 1; }
-
-# Later dense rungs go here, one change each against the control above. The
-# obvious next one is the deployment families, which is rung2d's question asked
-# on this operator:
-#
-#   rung rung2d_dense_deployment \
-#     training.data.use_sensor_degradation=true \
-#     training.data.deployment_perturbation_families="[occlusion,ego_state]"
-#
-# It is left commented rather than queued, because rung2d is answering that
-# question on the deformable line first and its answer decides whether asking it
-# again here is worth thirty-five hours.
-
-echo "[$(date +%H:%M:%S)] dense line complete; evaluate rung2a_dense_curriculum_post"
+main "$@"
