@@ -16,8 +16,8 @@ seed-0 run's own CSV is in this directory
 | | seed 0 | seed 1 | seed 2 |
 | :--- | :--- | :--- | :--- |
 | Pretrain | shared with the dense + curriculum v2 run | its own, `training.experiment.seed=1` | its own, `training.experiment.seed=2` |
-| Post-train | 31 epochs, consistency 0.1 | 31 epochs, consistency 0.1 | never ran |
-| Closed loop | 30 routes x 3 conditions | 30 routes x 3 conditions | never ran |
+| Post-train | 31 epochs, consistency 0.1 | 31 epochs, consistency 0.1 | 31 epochs, consistency 0.1 (replacement server) |
+| Closed loop | 30 routes x 3 conditions | 30 routes x 3 conditions | 30 routes x 3 conditions, camera twice |
 
 Everything else was identical: the 585-log subset, curriculum v2 flags, 31+31
 epochs, batch 32 x accumulation 2, and `evaluation.inference.degrade_seed=0`, so
@@ -100,3 +100,34 @@ waiting behind seed 2, with every parameter as it would have run:
   curriculum narrows the 4.7x generalisation gap the baseline has;
 - an 850-log subset at the same 60,672 scenes per epoch, to move log diversity
   with compute held fixed.
+
+## Seed 2, on the replacement server (2026-09-28)
+
+Trained and scored on the replacement machine (`../NEW_SERVER.md`) with the same
+585 logs at the pinned dataset revision, the same recipe and the same 30 routes.
+Results: `closed_loop_diverse_dense_consistency_seed2.csv`, and a second
+camera-destroyed evaluation of the same checkpoint in
+`closed_loop_diverse_dense_consistency_seed2_camera_rep2.csv`. Final training
+objective 0.1793 (pretrain) and 0.1636 (post-train). Every number below is
+printed by `../scripts/seed_three_analysis.py`, which first reproduces the
+two-seed 16.2 / 9.1 / 20.7 as a check that it uses the thesis's method.
+
+| Condition | seed 0 | seed 1 | seed 2 | mean | sd | baseline |
+| :--- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Intact | 55.75 | 71.96 | 68.08 | 65.26 | 8.46 | 66.44 |
+| LiDAR destroyed | 60.38 | 69.59 | 73.14 | 67.70 | 6.59 | 50.17 |
+| Camera destroyed | 57.62 | 43.24 | 41.94 | 47.60 | 8.70 | 45.27 |
+
+- Seed 2 minus seed 0, paired: +12.32 (SE 6.60), +12.12 (SE 7.47), -15.26 (SE 7.92).
+  Seeds 1 and 2 agree; seed 0 is the outlier in all three conditions.
+- LiDAR destroyed against the baseline: seed 0 +10.21 (t 1.33), seed 1 +19.42
+  (t 3.33), seed 2 +22.03 (t 4.03). The camera-destroyed gain of seed 0 did not
+  replicate (3-seed mean +2.33 over the baseline).
+- The consistency term against dense + curriculum v2, camera destroyed: +13.14
+  (seed 0), -1.51 (seed 1), -2.32 (seed 2, SE 6.89).
+- The same checkpoint driven twice, camera destroyed: the reference +5.76 (SE
+  3.76, 12.46 per route, 8/29 identical), seed 2 +1.47 (SE 4.24, 17.25 per
+  route, 3/29 identical). Implied sd of one evaluation's mean: 2.97, about 14% of
+  the seed-to-seed variance.
+- Seed-aware minimum detectable difference: per-run sd 8.0, threshold 19.7
+  (two-seed estimate 9.1 and 20.7). Three seeds is itself a noisy estimate.
