@@ -174,7 +174,8 @@ open.
 Nothing here retracts the operator itself. The stride-16 and stride-8 rows above
 stand, and they are what would make it worth returning to: a finer token grid is
 the condition under which sparsity pays, and it is the direction the operator
-was built for.
+was built for. That direction is planned in [The finer token grid](finer_grid.md),
+with a pre-flight that can refuse it before a GPU is booked.
 
 Reproduce the sweep on the training GPU with
 
