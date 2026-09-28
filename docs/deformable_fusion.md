@@ -77,8 +77,11 @@ calibration.
 
 Two separate questions live here and they have different answers: which operator
 is faster, and whether either matters. The short version is that dense wins at
-this size, and that dense fusion attention is 2.2% of the forward pass anyway —
-so there was never much to win. The second half is measured under
+this size, and that how much fusion is worth against the rest of the model
+turned out not to be reliably measurable here — the same profile repeated gives
+2.2%, 6.9% and 12.9%. What does reproduce is that the sparse operator makes the
+fusion blocks a much larger part of the model, and that it costs 12–13% end to
+end. Both are under
 [How much of the model the operator even is](#how-much-of-the-model-the-operator-even-is).
 
 The score-count ratio is not the wall-clock ratio. At `T=552` the dense path
@@ -108,42 +111,64 @@ buys. Eager numbers differ (deformable is mildly ahead at stride 32, behind at
 
 The table above compares the two operators against each other. It does not say
 what either is worth against the rest of the forward pass, and that is the
-number which bounds every attempt at making fusion cheaper: optimising a tenth
-of the model cannot return more than a tenth.
+number which would bound every attempt at making fusion cheaper: optimising a
+tenth of the model cannot return more than a tenth.
+
+That is the question. The answer this section used to give was a set of point
+estimates, and they did not survive being measured again.
 
 `scripts/common/forward_profile.py` times each module with CUDA events around
-it. Shares of the whole forward pass, batch 8:
+it. Run three times on the same two checkpoints, the share of the forward pass
+attributed to the fusion blocks came out as:
 
-| part                | rung0 (dense) | rung4 (deformable) |
-| :------------------ | ------------: | -----------------: |
-| **all fusion blocks** |     **2.2%** |          **36.6%** |
-| all encoder stages  |         15.9% |              10.9% |
-| `radar_detector`    |         33.5% |              29.0% |
-| `planning_decoder`  |         24.7% |               6.1% |
+| run | conditions | rung0 (dense) | rung4 (deformable) |
+| :-- | :--------- | ------------: | -----------------: |
+| 1 | a training run held the same GPU | 2.2% | 36.6% |
+| 2 | after stopping our training | 12.9% | not taken |
+| 3 | after stopping our training | 6.9% | 29.3% |
 
-Three things follow, and the first is the answer to the question this section
-opened with.
+The whole forward pass is stable across those runs -- 123.54 ms and 122.57 ms
+for rung0 in runs 2 and 3 -- while the parts move by a factor of two. The
+denominator holds and the numerators do not, which points at the instrument
+rather than at the machine's load. `radar_detector` moved from 33.5% to 44.0%
+between runs and `planning_decoder` from 24.7% to 13.5%. The likely cause is
+that these models run compiled: with `torch.compile` the module boundaries the
+hooks are attached to are not necessarily where the work happens, so events can
+bracket regions that do not correspond to the module they are named after.
 
-**Dense fusion attention is 2.2% of the forward pass.** The premise that
-attention imposes a significant computational cost does not hold in this
-architecture at this token count. Removing it entirely would return two percent.
-There is nothing there to reclaim.
+**The point estimates this section used to publish are withdrawn.** "Dense
+fusion attention is 2.2% of the forward pass" was quoted in three places in this
+repository, and the same measurement repeated gives 6.9% and 12.9%. None of the
+three is trustworthy enough to build on, and the claim that followed from it --
+that there is nothing to reclaim there -- is not supported by an instrument that
+disagrees with itself twofold.
 
-**The deformable operator turns that 2.2% into 36.6%** — sixteen times larger,
-and the largest single part of the model. That is the whole of the 13% slowdown
-in `results/cost.csv`, explained: a negligible part became a third of the work.
+What does reproduce is worth separating out and keeping.
 
-**The largest consumer of the baseline is the radar detector, at 33.5%** — a
-module no claim in this thesis depends on, evaluated nowhere and part of no rung.
-If reducing cost were the goal, that is the obvious target, and it has nothing
-to do with attention.
+**The direction is stable.** The fusion blocks take a far larger share under the
+deformable operator than under the dense one, in every run: 2.2% against 36.6%,
+and 6.9% against 29.3%. The operator moves fusion from a small part of the model
+to something between a quarter and a third of it.
 
-Two caveats. The absolute milliseconds were taken while a training run held the
-same GPU, so they are inflated roughly fourfold against the idle-device figure
-in `results/cost.csv`; the shares are what the measurement is for. And
-`planning_decoder`'s share differs between the two models far more than the
-architecture explains, which is likely the same contention and wants a clean
-re-run. Raw output is in `results/forward_profile.txt`.
+**The end-to-end cost reproduces independently.** rung4's whole forward pass is
+137.19 ms against rung0's 122.57 ms, a 12% slowdown, which agrees with the 13%
+recorded in `results/cost.csv` from an entirely separate measurement. That is
+the number to quote, because two instruments agree on it.
+
+**The radar detector is large in every run.** It is the biggest single consumer
+of the dense baseline at 33.5% and again at 44.0%. The share is not reliable but
+the ordering is, and the observation that follows does not need a precise
+number: no claim in this thesis depends on that module, it is evaluated nowhere,
+and it is part of no rung. If reducing cost were the goal, it is a better target
+than attention.
+
+**The card is shared.** `nvidia-smi` shows another user's process resident
+throughout, and utilisation was 34% at the start of a window taken immediately
+after stopping our own training. There is no idle A100 here to retreat to, which
+is why the fix for this measurement is a method robust to contention rather than
+better scheduling.
+
+Raw output from the most recent run is in `results/forward_profile.txt`.
 
 ### What follows from this
 

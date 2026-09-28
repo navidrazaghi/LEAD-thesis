@@ -61,10 +61,10 @@ and it is negative.
   degradation condition. Not yet evaluated; a rung carrying the first two
   families is in training.
 - [The finer token grid](finer_grid.md): the one direction the sparse operator
-  was never fairly tested in. Profiling showed dense fusion attention is 2.2% of
-  the forward pass, so there was nothing to reclaim at the shipped geometry --
-  but the same operator wins by 3x at four times the tokens, and the stride-32
-  pooling exists because dense attention is quadratic. Two rungs, dense first so
+  was never fairly tested in. The fusion blocks are a small part of the dense
+  model, so there was little to reclaim at the shipped geometry -- but the same
+  operator wins by 3x at four times the tokens, and the stride-32 pooling exists
+  because dense attention is quadratic. Two rungs, dense first so
   the geometry question is answered without the operator confounded into it, and
   a pre-flight that can refuse them before a GPU is booked.
 - [The caution governor](caution_governor.md): the same observability signal

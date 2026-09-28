@@ -1,0 +1,23 @@
+
+model=outputs/rung0_baseline_post  batch=8  compiled
+today: image (12, 36) + bev (10, 12) = 552 tokens, the same at all 4 fusion blocks
+asked: stride 16 -> image (24, 72) + bev (20, 24)
+
+  stage    image map   bev map  chans  image grid  bev grid  tokens  cap
+  ----------------------------------------------------------------------
+  0        (96, 288)  (80, 96)     64    (24, 72)  (20, 24)    2208  
+  1        (48, 144)  (40, 48)    128    (24, 72)  (20, 24)    2208  
+  2         (24, 72)  (20, 24)    256    (24, 72)  (20, 24)    2208  
+  3         (12, 36)  (10, 12)    512    (12, 36)  (10, 12)     552  capped
+
+  operator cost per block, at each stage's own tokens and width
+  stage   tokens now    dense   deform  tokens finer    dense   deform   speedup
+  ------------------------------------------------------------------------------
+  0              552     7.17     0.35          2208     7.26     0.76     9.53x
+  1              552     0.40     0.58          2208     2.84     1.12     2.54x
+  2              552     0.75     8.30          2208     4.23     2.86     1.48x
+  3              552     1.13     1.38           552     9.44     1.75     5.38x
+
+  discarded first runs sat up to 10.3x from the kept ones; a large factor here is
+  the compilation and autotuning that would otherwise have been reported as operator cost.
+deformable at 552 tokens: 256 channels measured 8.30 ms and 512 channels measured 1.38 ms. A wider operator cannot be cheaper, so these timings are noise and nothing computed from them would mean anything. Re-run on an idle device; if it persists, the timing method is wrong. Full series: [(64, 0.34705174155533314), (128, 0.5792048387229443), (256, 8.304832922294736), (512, 1.3785931468009949), (512, 1.7541064973920584)]

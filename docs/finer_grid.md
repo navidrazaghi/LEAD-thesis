@@ -10,12 +10,20 @@ and the two measurements behind it. The operator computes 69x fewer scores than
 dense attention and is 13% slower end to end, because at 552 tokens the dense
 path is one fused SDPA kernel and the sparse path is a sequence of small
 gather-shaped ops. Profiling then showed there was never much at stake either
-way: dense fusion attention is 2.2% of the forward pass.
+way: the fusion blocks are a small part of the dense model's forward pass, and a
+large part of the sparse one's.
 
 Both facts are about one geometry. The same benchmark says the operator wins by
 3.07x at 2208 tokens and 6.29x at 8832. The stride-32 pooling that produces 552
 tokens exists *because* dense attention is quadratic, so the operator is being
 judged on a grid shaped by the constraint it removes.
+
+One correction since this was written. The 2.2% is withdrawn: repeating the
+profile gives 6.9% and 12.9% for the same quantity, and the point estimate is
+not something to build on. It does not change the case for this rung — the
+argument needs only that fusion is a small part of the dense model and a large
+part of the sparse one, which every run agrees on — but nothing here should be
+read as resting on a specific percentage.
 
 The question this document plans is therefore not how to make fusion cheaper.
 It is:
@@ -29,8 +37,8 @@ Three things had to be read out of the code before the rung could be designed,
 and each changed its shape.
 
 **Fusion happens four times, not once.** `fuse_features` is called at the end of
-every encoder stage and the backbone builds four separate `GPT` blocks. The 2.2%
-already measured is the sum of all four.
+every encoder stage and the backbone builds four separate `GPT` blocks. Whatever
+share is attributed to fusion is the sum of all four.
 
 **The anchor grid is a deliberate discard, not an interpolation.** Each stage
 hands `fuse_features` its own feature map, and `avgpool_img` flattens it to the
@@ -49,9 +57,10 @@ grid therefore has to be capped at that stage's own resolution. An
 implementation that ignored the cap would pay the cost at stage 3 and get none
 of the benefit, and a prediction that ignored it would overstate both.
 
-These resolutions follow from ResNet34's geometry rather than from a
-measurement. `scripts/common/finer_grid_preflight.py` prints the real ones,
-which is the first thing to check.
+These resolutions were derived from ResNet34's geometry when this was written
+and have since been measured: the pre-flight reports image maps of 96x288,
+48x144, 24x72 and 12x36 and BEV maps of 80x96, 40x48, 20x24 and 10x12, which is
+exactly the table above. The cap bites at stage 3 and nowhere else, as designed.
 
 **The cache is not involved.** `_CACHE_FINGER_PRINT_FIELDS` covers raster
 geometry and label construction — pixels per metre, extents, box and semantic
@@ -156,6 +165,34 @@ Run it on an idle GPU. It prints a verdict against one bar: if dense fusion at
 the finer grid is still under 15% of the forward pass, a three-times-cheaper
 operator returns almost nothing end to end and F2 is not worth its hours. F1 may
 still be, because it answers the geometry question rather than the cost one.
+
+### What it found, which was not a verdict
+
+The geometry it confirmed. The timings it refused to conclude from, and the
+refusal is the useful part.
+
+Its first run reported a stage with 64 channels as twenty-five times more
+expensive than the next stage with 128, which no attention operator does. That
+was the first module timed paying for compilation and autotuning, so each
+configuration is now timed twice with the first run discarded. The discarded run
+sat up to **10.3x** from the kept one, so the discipline was load-bearing.
+
+It was also not sufficient. With it in place, the deformable operator at 552
+tokens measured 0.35, 0.58, **8.30** and 1.38 ms at 64, 128, 256 and 512
+channels, and one configuration timed twice within a single process came out at
+1.13 ms and 9.44 ms. A sanity check now refuses to publish a verdict computed
+from timings that invert against channel width, because a script that concludes
+confidently from noise is worse than one that stops.
+
+The cause is not our own contention. `nvidia-smi` shows another user's process
+resident on the card throughout, and utilisation read 34% at the start of a
+window taken immediately after stopping our own training. There is no idle A100
+to wait for on this machine.
+
+**So the pre-flight cannot yet answer the cost question, and no hours should be
+booked for F1 or F2 on the strength of anything above.** What it needs is a
+method robust to a shared card -- interleaved rounds with medians rather than one
+mean per configuration -- rather than a better moment to run in.
 
 ## The risks, stated before the result
 

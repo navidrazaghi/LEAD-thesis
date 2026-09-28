@@ -2,9 +2,10 @@
 
 The deformable operator loses at this architecture's 552 tokens and wins at
 2208; the operator benchmark says so and results/cost.csv confirms the loss end
-to end. So the question worth asking is not how to make fusion cheaper -- at 2.2%
-of the forward pass there is nothing to reclaim -- but whether the finer token
-grid the sparse operator makes affordable is worth having at all.
+to end. So the question worth asking is not how to make fusion cheaper -- the
+fusion blocks are a small part of the dense model's forward pass, too small for
+a cheaper operator to return much -- but whether the finer token grid the sparse
+operator makes affordable is worth having at all.
 
 Answering that by training costs forty hours a rung. Answering this much of it
 costs minutes, and it can refuse the rung before the GPU is booked.
@@ -52,6 +53,7 @@ import pathlib
 import sys
 
 import torch
+from torch.amp.autocast_mode import autocast
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
@@ -75,7 +77,7 @@ from lead.policy.transfuser.encoder.transfuser_backbone import (  # noqa: E402
 _SHARE_WORTH_A_RUNG = 0.15
 
 
-def stage_geometry(model, loader, device):
+def stage_geometry(model, lead_config, loader, device):
     """The feature map each fusion block actually receives, per stage.
 
     The two pooling modules are shared across the four stages and called once
@@ -84,6 +86,9 @@ def stage_geometry(model, loader, device):
 
     Args:
         model: The loaded policy.
+        lead_config: Its config, for the autocast dtype. The weights are fp32
+            and the batch arrives in the training dtype, so a forward pass
+            outside autocast fails on the first convolution.
         loader: Loader over the probe frames.
         device: Device to run on.
 
@@ -122,7 +127,12 @@ def stage_geometry(model, loader, device):
     ]
     batch = to_device(next(iter(loader)), device)
     model.eval()
-    with torch.inference_mode():
+    optimization = lead_config.training.optimization
+    with torch.inference_mode(), autocast(
+        device_type=device.type,
+        dtype=optimization.torch_dtype,
+        enabled=optimization.use_mixed_precision_training,
+    ):
         model(batch)
     for handle in handles:
         handle.remove()
@@ -155,6 +165,14 @@ def capped_grid(requested, native):
 def time_operators(tokens, channels, spatial_shapes, config, arguments, device):
     """Both operators at one stage's own token count and channel width.
 
+    Each module is timed twice and only the second run is kept. The first
+    carries costs that belong to the process rather than the operator --
+    compilation for these shapes, cuBLAS autotuning, the CUDA context settling
+    -- and ``benchmark``'s warmup does not absorb all of it. The first version
+    of this script kept the first run and reported the stage timed earliest as
+    twenty-five times slower than the next one despite having a quarter of its
+    channels, which is not a property any attention operator has.
+
     Args:
         tokens: Total tokens entering the block.
         channels: The stage's channel width.
@@ -165,7 +183,10 @@ def time_operators(tokens, channels, spatial_shapes, config, arguments, device):
         device: Device to run on.
 
     Returns:
-        ``(dense_ms, deformable_ms)``.
+        ``(dense_ms, deformable_ms, dense_drift, deformable_drift)``, the drifts
+        being how far the discarded first run sat from the kept one, as a
+        ratio. A drift near 1 means the discipline was unnecessary here; a large
+        one means it was load-bearing.
     """
     x = torch.randn(arguments.batch_size, tokens, channels, device=device)
     dense = SelfAttention(channels, config.n_head, 0.0, 0.0).to(device).eval()
@@ -184,10 +205,55 @@ def time_operators(tokens, channels, spatial_shapes, config, arguments, device):
     if arguments.compile:
         dense = torch.compile(dense)
         deformable = torch.compile(deformable)
+
+    dense_first = benchmark(dense, x, arguments.iterations, arguments.warmup)
+    dense_ms = benchmark(dense, x, arguments.iterations, arguments.warmup)
+    deform_first = benchmark(deformable, x, arguments.iterations, arguments.warmup)
+    deformable_ms = benchmark(deformable, x, arguments.iterations, arguments.warmup)
     return (
-        benchmark(dense, x, arguments.iterations, arguments.warmup),
-        benchmark(deformable, x, arguments.iterations, arguments.warmup),
+        dense_ms,
+        deformable_ms,
+        dense_first / max(dense_ms, 1e-9),
+        deform_first / max(deformable_ms, 1e-9),
     )
+
+
+def check_monotonic(label, series, tolerance=1.25):
+    """Refuse timings that cannot be right, instead of concluding from them.
+
+    Within one token count, an attention operator cannot get cheaper as its
+    channel width grows. When it does, the measurement is noise and every
+    number downstream of it -- the totals, the shares, the verdict -- is noise
+    wearing a decimal point. This is the check the first version of this script
+    did not have: it printed a confident verdict computed from timings that were
+    not monotonic in channels and disagreed with an independent benchmark of the
+    same configuration by a factor of four.
+
+    Args:
+        label: What is being checked, for the message.
+        series: ``[(channels, milliseconds)]`` at one fixed token count.
+        tolerance: How much of an inversion to forgive, as a ratio. Timing noise
+            of a few percent is expected; a wider channel measuring 25% cheaper
+            than a narrower one is not noise.
+
+    Raises:
+        SystemExit: If the series inverts by more than the tolerance.
+    """
+    ordered = sorted(series)
+    if len(ordered) < 3:
+        return
+    for (narrow_c, narrow_ms), (wide_c, wide_ms) in zip(
+        ordered, ordered[1:], strict=False,
+    ):
+        if narrow_ms > wide_ms * tolerance:
+            raise SystemExit(
+                f"{label}: {narrow_c} channels measured {narrow_ms:.2f} ms and "
+                f"{wide_c} channels measured {wide_ms:.2f} ms. A wider operator "
+                f"cannot be cheaper, so these timings are noise and nothing "
+                f"computed from them would mean anything. Re-run on an idle "
+                f"device; if it persists, the timing method is wrong. "
+                f"Full series: {ordered}",
+            )
 
 
 def plan_grids(stages, wanted_image, wanted_bev):
@@ -254,7 +320,7 @@ def main() -> int:
         num_workers=arguments.workers,
     )
 
-    stages = stage_geometry(model, loader, device)
+    stages = stage_geometry(model, lead_config, loader, device)
     per_module, whole_ms = profile(
         model,
         lead_config,
@@ -320,24 +386,49 @@ def main() -> int:
     print("  " + "-" * (len(header) - 2))
 
     now_dense = now_deformable = finer_dense = finer_deformable = 0.0
+    worst_drift = 1.0
+    # Collected per token count, because monotonicity in channels only means
+    # anything between blocks doing the same amount of work.
+    by_tokens: dict[int, dict[str, list[tuple[int, float]]]] = {}
+
+    def note(tokens, operator, channels, milliseconds):
+        by_tokens.setdefault(tokens, {}).setdefault(operator, []).append(
+            (channels, milliseconds),
+        )
+
     for now, finer in zip(today_plan, finer_plan, strict=True):
         index, tokens_a, channels, shapes_a, _ = now
         _, tokens_b, _, shapes_b, _ = finer
-        dense_a, deform_a = time_operators(
+        dense_a, deform_a, drift_da, drift_fa = time_operators(
             tokens_a, channels, shapes_a, config, arguments, device,
         )
-        dense_b, deform_b = time_operators(
+        dense_b, deform_b, drift_db, drift_fb = time_operators(
             tokens_b, channels, shapes_b, config, arguments, device,
         )
+        worst_drift = max(worst_drift, drift_da, drift_fa, drift_db, drift_fb)
         now_dense += dense_a
         now_deformable += deform_a
         finer_dense += dense_b
         finer_deformable += deform_b
+        note(tokens_a, "dense", channels, dense_a)
+        note(tokens_a, "deformable", channels, deform_a)
+        note(tokens_b, "dense", channels, dense_b)
+        note(tokens_b, "deformable", channels, deform_b)
         print(
             f"  {index:<6}{tokens_a:>12}{dense_a:>9.2f}{deform_a:>9.2f}"
             f"{tokens_b:>14}{dense_b:>9.2f}{deform_b:>9.2f}"
             f"{dense_b / deform_b:>9.2f}x",
         )
+
+    print(
+        f"\n  discarded first runs sat up to {worst_drift:.1f}x from the kept "
+        f"ones; a large factor here is\n  the compilation and autotuning that "
+        f"would otherwise have been reported as operator cost.",
+    )
+    # Refuse before concluding. Everything below is sums of these numbers.
+    for tokens, operators in sorted(by_tokens.items()):
+        for operator, series in sorted(operators.items()):
+            check_monotonic(f"{operator} at {tokens} tokens", series)
 
     # A fusion block is not only its attention: there is a feed-forward, two
     # norms and the channel projections around it. The profile timed the whole
