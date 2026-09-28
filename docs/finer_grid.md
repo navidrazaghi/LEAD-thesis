@@ -233,14 +233,65 @@ The operator half of the pre-flight is fixed. The other half is not.
 
 The prediction also needs the fusion blocks' share of the whole forward pass,
 and that comes from `forward_profile.py`, which is the instrument that gave
-2.2%, 12.9% and 6.9% for the same quantity. Hooking module boundaries in a
-compiled graph is the suspect, and interleaving does not help it -- the problem
-is not contention but attribution.
+2.2%, 12.9% and 6.9% for the same quantity.
 
-**So no hours should be booked for F1 or F2 yet.** What that half needs is a
-different measurement entirely: the cost of fusion by difference -- running the
-model with the fusion blocks and without them -- rather than by hooking modules
-inside a graph the compiler has already rearranged.
+The cause is not what this document first guessed. Compilation was the suspect,
+but `PolicyRunner` loads the policy eager, so the module boundaries the hooks
+attach to are real ones. What actually happens is that the driver time-slices
+our context away in favour of the other user's, our stream stalls, and the stall
+lands inside whichever module's event window was open. The whole forward pass
+absorbs every stall wherever it falls, which is why the total held steady while
+the parts moved.
+
+Interleaving does not fix that, because the problem is where the time is charged
+rather than how much of it there is.
+
+`scripts/common/fusion_cost_by_difference.py` measures it the way that
+diagnosis implies: run the whole model, run it again with `fuse_features`
+replaced by a pass-through, and subtract. Both measurements are of the entire
+forward pass, so nothing has to be attributed to a module at all -- the question
+being asked twice is the one that was stable in every earlier run.
+
+It refuses when it cannot resolve. The unmodified model is timed twice, and the
+gap between those two is the machine's noise floor; a difference that does not
+clear it by a factor of two is reported as unresolved rather than as a small
+number. That distinction matters here: "fusion costs less than this machine can
+measure" is not the same claim as "fusion costs almost nothing", and the earlier
+2.2% was the second dressed as the first.
+
+#### What four runs of it showed, and why none is published
+
+All four ran with our own training on the same card, which turned out to be the
+thing that decides the answer.
+
+Interleaving the ablated model against the intact one, round by round, took
+rung0's noise floor from 84 ms to 16 ms -- the first version held the
+pass-through for a whole run, which made the two measurements separate
+contiguous windows and reproduced the original problem one level up. Shortening
+the rounds helped far more: at three forwards per round a continuously busy card
+contends with nearly every one, and at one forward per round across sixty rounds
+the minimum has sixty chances at a quiet slot. That took the floor to 0.37 ms,
+and both models resolved -- fusion at 20.5% of rung0's forward pass and 25.7% of
+rung4's, at twenty-nine and twenty times the floor.
+
+The next run, identical settings, minutes later, gave 14.2% and 15.5% and
+resolved neither. The differences themselves disagree by 49% and 82% between the
+two runs.
+
+So the resolved run was luck, and its internal check could not see that: the
+intact model and its replica had both caught quiet slots, agreed with each
+other, and certified a session in which the ablated model had not. **Two
+configurations agreeing does not vouch for a third.** The script now repeats the
+whole measurement and requires the differences from the repeats to agree, which
+is a check chance cannot pass twice.
+
+`scripts/common/run_idle_measurements.sh` runs it in the handover gap between
+training jobs, which is the one condition none of these four runs had.
+
+**No hours are booked for F1 or F2 until it reads ACCEPTED there.** What can be
+said today is only that fusion is somewhere in the low tens of percent for both
+operators rather than the 2.2% once recorded -- which is enough to retire the
+claim that there was nothing to reclaim, and not enough to plan against.
 
 ## The risks, stated before the result
 

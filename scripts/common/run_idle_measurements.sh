@@ -65,6 +65,13 @@ main() {
     > "$results/forward_profile.txt" 2>&1
   echo "[$(date +%H:%M:%S)] profile exited $?"
 
+  echo "[$(date +%H:%M:%S)] fusion cost by difference, both operators"
+  env $env "$python" scripts/common/fusion_cost_by_difference.py \
+    --models rung0=outputs/rung0_baseline_post \
+             rung4=outputs/rung4_light_auxiliary_post \
+    > "$results/fusion_cost_by_difference.txt" 2>&1
+  echo "[$(date +%H:%M:%S)] difference measurement exited $?"
+
   echo "[$(date +%H:%M:%S)] finer-grid pre-flight"
   env $env "$python" scripts/common/finer_grid_preflight.py \
     --model "$model" --anchor-stride 16 --compile \

@@ -1,0 +1,29 @@
+# Run while rung2a_dense_curriculum was training on the same card:
+# 7 %, 6559 MiB, 9 trainer processes
+
+
+fusion cost by difference  batch=8  rounds=60  iterations/round=1
+the reported cost of each configuration is its cheapest round; see interleaved_timing.py
+
+  rung0
+    whole forward, with fusion      50.61 ms
+    whole forward, fusion removed   43.42 ms
+    difference                       7.18 ms   (14.2%)
+    noise floor (two runs of the same model)  11.26 ms
+    UNRESOLVED: the difference is 0.6x the noise floor, which is not enough
+    to call it. What this says is that fusion costs less than this machine can resolve,
+    not that it costs nothing.
+
+  rung4
+    whole forward, with fusion      52.81 ms
+    whole forward, fusion removed   44.61 ms
+    difference                       8.20 ms   (15.5%)
+    noise floor (two runs of the same model)  9.52 ms
+    UNRESOLVED: the difference is 0.9x the noise floor, which is not enough
+    to call it. What this says is that fusion costs less than this machine can resolve,
+    not that it costs nothing.
+
+  A difference of whole-model timings needs no attribution, which is the point: the
+  quantity that was stable across every earlier run is the whole forward pass, and this
+  asks only that question twice.
+# exit: 2
