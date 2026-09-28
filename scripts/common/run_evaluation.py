@@ -64,6 +64,7 @@ _SCORE_FIELDS = (
     "status",
     "town",
     "num_infractions",
+    "infractions",
 )
 # Condition names that are deployment families rather than sensor modalities.
 # The column stays called "modality" so one results table holds both axes; what
@@ -234,6 +235,31 @@ class Carla:
         return self.process is not None and self.process.poll() is None
 
 
+def summarize_infractions(record: dict) -> str:
+    """Count a route's infractions by kind, in one CSV-safe field.
+
+    ``num_infractions`` says how many, not which, and the checkpoint file that
+    says which is cleared before the next route runs. Whether a camera-less car
+    fails by running red lights (information only the camera carries) or by
+    stalling is exactly what the count cannot tell, so the kinds are kept.
+
+    Args:
+        record: One route record from the leaderboard's checkpoint file; its
+            ``infractions`` maps each kind to the list of events of that kind.
+
+    Returns:
+        ``kind:count`` pairs for the kinds that occurred, sorted and joined by
+        ``;`` -- for example ``collisions_vehicle:1;red_light:2`` -- or an empty
+        string for a clean route.
+    """
+    counts = {}
+    for kind, events in (record.get("infractions") or {}).items():
+        count = len(events) if isinstance(events, list) else int(events or 0)
+        if count:
+            counts[kind] = count
+    return ";".join(f"{kind}:{count}" for kind, count in sorted(counts.items()))
+
+
 def read_score(endpoint: pathlib.Path) -> dict | None:
     """Pull one route's scores out of the leaderboard's checkpoint file.
 
@@ -258,6 +284,7 @@ def read_score(endpoint: pathlib.Path) -> dict | None:
         "status": record.get("status"),
         "town": record.get("town_name"),
         "num_infractions": record.get("num_infractions"),
+        "infractions": summarize_infractions(record),
     }
 
 
