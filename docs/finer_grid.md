@@ -189,10 +189,58 @@ resident on the card throughout, and utilisation read 34% at the start of a
 window taken immediately after stopping our own training. There is no idle A100
 to wait for on this machine.
 
-**So the pre-flight cannot yet answer the cost question, and no hours should be
-booked for F1 or F2 on the strength of anything above.** What it needs is a
-method robust to a shared card -- interleaved rounds with medians rather than one
-mean per configuration -- rather than a better moment to run in.
+### The timing method that came out of it
+
+`scripts/common/interleaved_timing.py` is that method, and it is a module rather
+than a fix inside the pre-flight because the same problem will come back the
+next time anything on this machine is timed.
+
+Two changes. Configurations are **interleaved** in rotating rounds instead of
+each being measured to completion, so a burst lands across whatever is running
+rather than on whichever one it was scheduled against. And the reported cost is
+the **cheapest round**, not the mean or the median: contention only ever adds
+time, so of fifteen rounds the cheapest is the one that came nearest to having
+the card alone.
+
+The minimum was not the first choice. The module used the median until its own
+validation run argued it down -- under live training the medians sat up to 1.6x
+above the cheapest round while the minima were clean and monotonic for both
+operators.
+
+It checks itself before reporting anything. One configuration is built twice, as
+two separate modules of identical shape, and the two costs are compared; they
+are the same computation, so a disagreement is the method failing rather than a
+result. A second gate refuses if the median round sits more than 4x above the
+cheapest, which would mean almost no round ran quiet.
+
+**Validated under the worst conditions available**, with a training run on the
+same card (`results/interleaved_timing_under_load.txt`):
+
+| | |
+| :--- | ---: |
+| two independent copies of one configuration | agree to **8.9%** |
+| worst contention seen | median 1.9x the cheapest |
+| individual rounds thrown out by taking the minimum | up to **57 ms** against a 0.17 ms cost |
+
+Both operators come out monotonic in channel width, and dense beats deformable
+at 552 tokens at every width above 64 -- which is the result already on record,
+arrived at independently. The agreement is 8.9% against a 10% tolerance, so it
+passed without much room; that is worth knowing rather than rounding away.
+
+### What is still not measurable
+
+The operator half of the pre-flight is fixed. The other half is not.
+
+The prediction also needs the fusion blocks' share of the whole forward pass,
+and that comes from `forward_profile.py`, which is the instrument that gave
+2.2%, 12.9% and 6.9% for the same quantity. Hooking module boundaries in a
+compiled graph is the suspect, and interleaving does not help it -- the problem
+is not contention but attribution.
+
+**So no hours should be booked for F1 or F2 yet.** What that half needs is a
+different measurement entirely: the cost of fusion by difference -- running the
+model with the fusion blocks and without them -- rather than by hooking modules
+inside a graph the compiler has already rearranged.
 
 ## The risks, stated before the result
 

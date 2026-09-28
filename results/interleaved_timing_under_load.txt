@@ -1,0 +1,28 @@
+# Run while rung2a_dense_curriculum was training on the same card:
+# 0 %, 6577 MiB, 9 trainer processes
+
+
+device=cuda  batch=8  rounds=15  iterations/round=8  compiled
+9 configurations, interleaved and rotated
+
+  configuration              cost ms    median     worst  inflation
+  -----------------------------------------------------------------
+  dense_64                     0.219     0.222    37.816       1.0x
+  deformable_64                0.167     0.169    57.408       1.0x
+  dense_128                    0.240     0.241     0.526       1.0x
+  deformable_128               0.352     0.664     0.921       1.9x
+  dense_256                    0.428     0.732     1.019       1.7x
+  deformable_256               0.543     0.808     1.112       1.5x
+  dense_512                    0.996     1.739     2.487       1.7x
+  deformable_512               1.396     2.664     3.646       1.9x
+  dense_256_replica            0.466     0.746     1.029       1.6x
+
+  --- does the method work here? ---
+  Two separately built copies of the same configuration agree to 8.9%.
+  Most contended configuration: its median round was 1.9x its cheapest.
+  Both operators are monotonic in channel width, as they must be.
+
+  Timings taken this way, in this session, are usable. Re-run this before any
+  measurement you intend to publish -- it answers a question about the machine
+  right now, not about the code.
+# exit: 0

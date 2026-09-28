@@ -60,14 +60,11 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts" / "common"))
 
 from analyze_gate import load_model, to_device  # noqa: E402
-from bench_fusion_attention import benchmark  # noqa: E402
 from forward_profile import profile  # noqa: E402
-
-from lead.policy.transfuser.encoder.deformable_attention import (  # noqa: E402
-    MultiScaleDeformableAttention,
-)
-from lead.policy.transfuser.encoder.transfuser_backbone import (  # noqa: E402
-    SelfAttention,
+from interleaved_timing import (  # noqa: E402
+    build_probe,
+    check_replica,
+    time_interleaved,
 )
 
 # Below this share, an operator three times cheaper inside fusion still returns
@@ -162,60 +159,65 @@ def capped_grid(requested, native):
     return grid, grid != tuple(requested)
 
 
-def time_operators(tokens, channels, spatial_shapes, config, arguments, device):
-    """Both operators at one stage's own token count and channel width.
+def time_all_stages(today_plan, finer_plan, config, arguments, device):
+    """Time every stage's operators in one interleaved pass.
 
-    Each module is timed twice and only the second run is kept. The first
-    carries costs that belong to the process rather than the operator --
-    compilation for these shapes, cuBLAS autotuning, the CUDA context settling
-    -- and ``benchmark``'s warmup does not absorb all of it. The first version
-    of this script kept the first run and reported the stage timed earliest as
-    twenty-five times slower than the next one despite having a quarter of its
-    channels, which is not a property any attention operator has.
+    Timing each configuration to completion in turn is what produced the two
+    unusable runs before this: on a shared card a contiguous window inherits
+    whatever else ran during it, and the worst case was one configuration
+    measured at 1.13 ms and 9.44 ms inside a single process. Every
+    configuration in this script is therefore built up front and handed to
+    ``time_interleaved``, which visits them in rotating rounds and takes the
+    median over rounds rather than the mean within one window.
+
+    A replica of one configuration goes in alongside the real ones. It is a
+    separately constructed module of identical shape, so the two medians are
+    measuring the same computation and any disagreement is the method failing
+    rather than a result.
 
     Args:
-        tokens: Total tokens entering the block.
-        channels: The stage's channel width.
-        spatial_shapes: ``(image_grid, bev_grid)``, which the sparse operator
-            needs to know where its sampled points land.
+        today_plan: Per-stage plan at the shipped grid.
+        finer_plan: Per-stage plan at the requested grid.
         config: The transfuser config, for the head count.
         arguments: Parsed arguments.
         device: Device to run on.
 
     Returns:
-        ``(dense_ms, deformable_ms, dense_drift, deformable_drift)``, the drifts
-        being how far the discarded first run sat from the kept one, as a
-        ratio. A drift near 1 means the discipline was unnecessary here; a large
-        one means it was load-bearing.
-    """
-    x = torch.randn(arguments.batch_size, tokens, channels, device=device)
-    dense = SelfAttention(channels, config.n_head, 0.0, 0.0).to(device).eval()
-    deformable = (
-        MultiScaleDeformableAttention(
-            n_embd=channels,
-            n_head=config.n_head,
-            attn_pdrop=0.0,
-            resid_pdrop=0.0,
-            spatial_shapes=spatial_shapes,
-            num_points=arguments.num_points,
-        )
-        .to(device)
-        .eval()
-    )
-    if arguments.compile:
-        dense = torch.compile(dense)
-        deformable = torch.compile(deformable)
+        ``(results, replica_gap)`` where results maps
+        ``(when, stage, operator)`` to a :class:`Timing`.
 
-    dense_first = benchmark(dense, x, arguments.iterations, arguments.warmup)
-    dense_ms = benchmark(dense, x, arguments.iterations, arguments.warmup)
-    deform_first = benchmark(deformable, x, arguments.iterations, arguments.warmup)
-    deformable_ms = benchmark(deformable, x, arguments.iterations, arguments.warmup)
-    return (
-        dense_ms,
-        deformable_ms,
-        dense_first / max(dense_ms, 1e-9),
-        deform_first / max(deformable_ms, 1e-9),
+    Raises:
+        SystemExit: Via :func:`check_replica`, if the method is not working on
+            this machine today.
+    """
+    probes = {}
+    for when, plan in (("now", today_plan), ("finer", finer_plan)):
+        for index, tokens, channels, (image_grid, bev_grid), _ in plan:
+            for kind in ("dense", "deformable"):
+                probes[f"{when}_{index}_{kind}"] = build_probe(
+                    kind,
+                    tokens,
+                    channels,
+                    image_grid,
+                    bev_grid,
+                    config,
+                    arguments.batch_size,
+                    arguments.num_points,
+                    device,
+                    arguments.compile,
+                )
+    # The control. Same shape as stage 0 at the shipped grid, built separately.
+    index0, tokens0, channels0, (image0, bev0), _ = today_plan[0]
+    probes["replica"] = build_probe(
+        "dense", tokens0, channels0, image0, bev0, config,
+        arguments.batch_size, arguments.num_points, device, arguments.compile,
     )
+
+    results = time_interleaved(
+        probes, arguments.rounds, arguments.iterations, arguments.warmup,
+    )
+    gap = check_replica(results, f"now_{index0}_dense", "replica")
+    return results, gap
 
 
 def check_monotonic(label, series, tolerance=1.25):
@@ -295,8 +297,9 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--num-points", type=int, default=4)
-    parser.add_argument("--iterations", type=int, default=50)
-    parser.add_argument("--warmup", type=int, default=15)
+    parser.add_argument("--rounds", type=int, default=15)
+    parser.add_argument("--iterations", type=int, default=8)
+    parser.add_argument("--warmup", type=int, default=20)
     parser.add_argument("--compile", action="store_true")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--profile-warmup", type=int, default=10)
@@ -385,8 +388,12 @@ def main() -> int:
     print(header)
     print("  " + "-" * (len(header) - 2))
 
+    timings, replica_gap = time_all_stages(
+        today_plan, finer_plan, config, arguments, device,
+    )
+
     now_dense = now_deformable = finer_dense = finer_deformable = 0.0
-    worst_drift = 1.0
+    worst_inflation = 1.0
     # Collected per token count, because monotonicity in channels only means
     # anything between blocks doing the same amount of work.
     by_tokens: dict[int, dict[str, list[tuple[int, float]]]] = {}
@@ -397,33 +404,37 @@ def main() -> int:
         )
 
     for now, finer in zip(today_plan, finer_plan, strict=True):
-        index, tokens_a, channels, shapes_a, _ = now
-        _, tokens_b, _, shapes_b, _ = finer
-        dense_a, deform_a, drift_da, drift_fa = time_operators(
-            tokens_a, channels, shapes_a, config, arguments, device,
+        index, tokens_a, channels, _, _ = now
+        _, tokens_b, _, _, _ = finer
+        dense_a = timings[f"now_{index}_dense"]
+        deform_a = timings[f"now_{index}_deformable"]
+        dense_b = timings[f"finer_{index}_dense"]
+        deform_b = timings[f"finer_{index}_deformable"]
+        worst_inflation = max(
+            worst_inflation,
+            dense_a.inflation, deform_a.inflation,
+            dense_b.inflation, deform_b.inflation,
         )
-        dense_b, deform_b, drift_db, drift_fb = time_operators(
-            tokens_b, channels, shapes_b, config, arguments, device,
-        )
-        worst_drift = max(worst_drift, drift_da, drift_fa, drift_db, drift_fb)
-        now_dense += dense_a
-        now_deformable += deform_a
-        finer_dense += dense_b
-        finer_deformable += deform_b
-        note(tokens_a, "dense", channels, dense_a)
-        note(tokens_a, "deformable", channels, deform_a)
-        note(tokens_b, "dense", channels, dense_b)
-        note(tokens_b, "deformable", channels, deform_b)
+        now_dense += dense_a.best
+        now_deformable += deform_a.best
+        finer_dense += dense_b.best
+        finer_deformable += deform_b.best
+        note(tokens_a, "dense", channels, dense_a.best)
+        note(tokens_a, "deformable", channels, deform_a.best)
+        note(tokens_b, "dense", channels, dense_b.best)
+        note(tokens_b, "deformable", channels, deform_b.best)
         print(
-            f"  {index:<6}{tokens_a:>12}{dense_a:>9.2f}{deform_a:>9.2f}"
-            f"{tokens_b:>14}{dense_b:>9.2f}{deform_b:>9.2f}"
-            f"{dense_b / deform_b:>9.2f}x",
+            f"  {index:<6}{tokens_a:>12}{dense_a.best:>9.2f}"
+            f"{deform_a.best:>9.2f}{tokens_b:>14}{dense_b.best:>9.2f}"
+            f"{deform_b.best:>9.2f}{dense_b.best / deform_b.best:>9.2f}x",
         )
 
     print(
-        f"\n  discarded first runs sat up to {worst_drift:.1f}x from the kept "
-        f"ones; a large factor here is\n  the compilation and autotuning that "
-        f"would otherwise have been reported as operator cost.",
+        f"\n  cheapest of {arguments.rounds} interleaved rounds, which is the "
+        f"round that came nearest to\n  having the card alone. Two separately "
+        f"built copies of one configuration agree to\n  {100 * replica_gap:.1f}%; "
+        f"the most contended configuration had a median "
+        f"{worst_inflation:.1f}x its cheapest.",
     )
     # Refuse before concluding. Everything below is sums of these numbers.
     for tokens, operators in sorted(by_tokens.items()):
