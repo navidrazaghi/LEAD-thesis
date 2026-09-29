@@ -13,11 +13,32 @@ asked: stride 16 -> image (24, 72) + bev (20, 24)
   operator cost per block, at each stage's own tokens and width
   stage   tokens now    dense   deform  tokens finer    dense   deform   speedup
   ------------------------------------------------------------------------------
-  0              552     7.17     0.35          2208     7.26     0.76     9.53x
-  1              552     0.40     0.58          2208     2.84     1.12     2.54x
-  2              552     0.75     8.30          2208     4.23     2.86     1.48x
-  3              552     1.13     1.38           552     9.44     1.75     5.38x
+  0              552     0.22     0.17          2208     1.97     0.51     3.89x
+  1              552     0.24     0.38          2208     2.20     0.89     2.46x
+  2              552     0.38     0.53          2208     2.72     1.77     1.53x
+  3              552     0.93     1.09           552     0.93     1.09     0.86x
 
-  discarded first runs sat up to 10.3x from the kept ones; a large factor here is
-  the compilation and autotuning that would otherwise have been reported as operator cost.
-deformable at 552 tokens: 256 channels measured 8.30 ms and 512 channels measured 1.38 ms. A wider operator cannot be cheaper, so these timings are noise and nothing computed from them would mean anything. Re-run on an idle device; if it persists, the timing method is wrong. Full series: [(64, 0.34705174155533314), (128, 0.5792048387229443), (256, 8.304832922294736), (512, 1.3785931468009949), (512, 1.7541064973920584)]
+  cheapest of 15 interleaved rounds, which is the round that came nearest to
+  having the card alone. Two separately built copies of one configuration agree to
+  0.4%; the most contended configuration had a median 1.9x its cheapest.
+
+  whole forward pass now:      120.70 ms
+  fusion blocks now:            12.58 ms  (10.4%)
+    of which attention:          1.77 ms
+    of which everything else:   10.81 ms
+  outside fusion:              108.12 ms  (assumed unchanged)
+
+  configuration               fusion ms   total ms    share  vs today
+  -------------------------------------------------------------------
+  today, dense                    12.58     120.70    10.4%     1.00x
+  stride 16, dense                42.96     151.08    28.4%     1.25x
+  stride 16, deformable           39.40     147.52    26.7%     1.22x
+
+  --- verdict ---
+  Dense fusion at stride 16 would be 28.4% of the forward pass, and the sparse operator returns
+  3.56 ms of it -- 2.4% end to end.
+  Both rungs are worth training, dense first: it answers whether the grid is worth
+  anything without the operator confounded into it.
+
+  Forward-pass numbers, one batch. Training also carries the backward pass, so measure
+  a step before booking the hours.

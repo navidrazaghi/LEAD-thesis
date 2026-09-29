@@ -25,9 +25,14 @@ Measured rather than argued:
    today's grid and at the finer one. Today's timing is not redundant: it is
    what separates a fusion block's attention from everything else in it.
 
-3. The whole forward pass, so per-block numbers become a share. An operator
-   three times cheaper inside a part that is 2% of the model is worth nothing,
-   and only the share tells you which case you are in.
+3. The whole forward pass and the fusion blocks' share of it, taken by
+   running the model with those blocks and without them. Hooking module
+   boundaries was tried first and is what made three earlier runs disagree:
+   CUDA events around forty modules cost more than the thing being measured and
+   inflated the forward pass about 2.7x. A difference of two whole-model
+   timings needs no attribution, and the whole-model timing is the number every
+   instrument here agrees on -- it lands within a millisecond of
+   results/cost.csv, measured weeks apart by different code.
 
 Assumed, and worth stating because the prediction rests on it: everything
 outside the fusion blocks costs what it costs today. That holds because the
@@ -60,7 +65,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts" / "common"))
 
 from analyze_gate import load_model, to_device  # noqa: E402
-from forward_profile import profile  # noqa: E402
+from fusion_cost_by_difference import measure_one  # noqa: E402
 from interleaved_timing import (  # noqa: E402
     build_probe,
     check_replica,
@@ -302,8 +307,6 @@ def main() -> int:
     parser.add_argument("--warmup", type=int, default=20)
     parser.add_argument("--compile", action="store_true")
     parser.add_argument("--device", default="cuda")
-    parser.add_argument("--profile-warmup", type=int, default=10)
-    parser.add_argument("--profile-repeats", type=int, default=40)
     arguments = parser.parse_args()
 
     if arguments.device != "cuda":
@@ -324,20 +327,38 @@ def main() -> int:
     )
 
     stages = stage_geometry(model, lead_config, loader, device)
-    per_module, whole_ms = profile(
-        model,
-        lead_config,
-        loader,
-        arguments.profile_warmup,
-        arguments.profile_repeats,
-        device,
+
+    # The whole forward and the fusion blocks' share come from running the model
+    # with those blocks and without them, not from hooking module boundaries.
+    # The hooks were the problem: putting CUDA events around forty modules cost
+    # more than the thing being measured and inflated the forward pass about
+    # 2.7x, which is why one quantity came out as 2.2%, 6.9% and 12.9% on three
+    # occasions. A difference of two whole-model timings needs no attribution,
+    # and the whole-model timing is the one number every instrument here has
+    # agreed on -- it lands within a millisecond of results/cost.csv, measured
+    # weeks apart by different code.
+    batch = to_device(next(iter(loader)), device)
+    full, ablated, replica = measure_one(
+        "preflight", model, lead_config, batch, arguments,
     )
-    fusion_now_ms = sum(v for k, v in per_module.items() if k.startswith("fusion."))
-    if fusion_now_ms <= 0:
+    whole_ms = full.best
+    fusion_now_ms = full.best - ablated.best
+    # Two timings of the same computation. Whatever separates them is this
+    # machine right now, and the difference being claimed has to clear it.
+    noise_ms = abs(full.best - replica.best)
+    if fusion_now_ms <= 3 * noise_ms:
         raise SystemExit(
-            "the profile attributed no time to fusion blocks; the hooks did not "
-            "fire and the prediction would divide by nothing.",
+            f"fusion measured {fusion_now_ms:.2f} ms against a noise floor of "
+            f"{noise_ms:.2f} ms, which does not resolve. Every share below "
+            f"would be built on it, so nothing is printed. This says fusion "
+            f"costs less than the card can currently distinguish, not that it "
+            f"costs nothing.",
         )
+    print(
+        f"\n  fusion cost by difference: {full.best:.2f} ms with, "
+        f"{ablated.best:.2f} without, {fusion_now_ms:.2f} ms apart "
+        f"({fusion_now_ms / noise_ms:.0f}x the {noise_ms:.2f} ms noise floor)",
+    )
 
     today_image = (config.img_vert_anchors, config.img_horz_anchors)
     today_bev = (config.lidar_bev_grid_rows, config.lidar_bev_grid_cols)
@@ -442,8 +463,8 @@ def main() -> int:
             check_monotonic(f"{operator} at {tokens} tokens", series)
 
     # A fusion block is not only its attention: there is a feed-forward, two
-    # norms and the channel projections around it. The profile timed the whole
-    # block; the benchmark times the attention alone. The difference is what the
+    # norms and the channel projections around it. The difference measurement
+    # gives the whole block; the operator benchmark gives the attention alone. The difference is what the
     # rest of the block costs today, and it grows linearly with tokens where
     # attention grows quadratically -- so it is scaled by the token ratio rather
     # than held fixed, which would understate the finer grid's cost.
