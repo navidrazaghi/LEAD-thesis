@@ -43,8 +43,20 @@ class TransfuserConfig(
 
     @property
     def future_window_num_iterations(self) -> int:
-        """Ticks of future a scene must provide; none unless the planning labels are built."""
-        return self.future_ego_pose_num_iterations if self.needs_planning_targets else 0
+        """Ticks of future a scene must provide; none unless the planning labels are built.
+
+        The latency curriculum's extra ticks are part of the demand whenever
+        there is a demand at all. They are the poses a shifted label is
+        re-anchored onto, so a scene that cannot supply them cannot supply the
+        shifted label, and the shift raises rather than degrading: it is handed
+        an array shorter than the shift plus the horizon.
+
+        This overrides the base property and so has to repeat the addition; the
+        base one alone is not what the loader reads.
+        """
+        if not self.needs_planning_targets:
+            return 0
+        return self.future_ego_pose_num_iterations + self.future_ego_pose_extra_ticks
 
     @property
     def required_scene_modalities(self) -> list[str]:

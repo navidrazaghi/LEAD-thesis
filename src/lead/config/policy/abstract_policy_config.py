@@ -155,8 +155,20 @@ class AbstractPolicyConfig(ConfigNode, abc.ABC):
 
     @property
     def future_window_num_iterations(self) -> int:
-        """Ticks of future a scene must provide, the planning labels by default."""
-        return self.future_ego_pose_num_iterations
+        """Ticks of future a scene must provide, the planning labels by default.
+
+        The latency curriculum's extra ticks are included, and have to be. They
+        are what a shifted label is re-anchored onto, so a scene that cannot
+        supply them cannot supply the label either. Leaving them out here does
+        not fail quietly: the loader asks for the later iterations, the filter
+        drops every one beyond this number, and the shift raises because the
+        label it was handed is shorter than the shift plus the horizon.
+
+        This is deliberately not ``num_ego_pose_prediction``, which excludes the
+        extra ticks for the opposite reason: they widen what is read, never what
+        is predicted, so the head keeps its width and its checkpoints.
+        """
+        return self.future_ego_pose_num_iterations + self.future_ego_pose_extra_ticks
 
     @property
     def past_lidar_num_iterations(self) -> int:
