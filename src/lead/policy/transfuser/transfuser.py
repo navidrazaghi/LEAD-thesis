@@ -39,6 +39,7 @@ from lead.policy.transfuser.encoder.observability_gate import (
     ObservabilityTokenTargets,
     gate_loss,
 )
+from lead.policy.transfuser.encoder.residual_gain import ResidualGain
 from lead.policy.transfuser.encoder.transfuser_backbone import TransfuserBackbone
 from lead.policy.transfuser.utils import precision
 from lead.policy.transfuser.utils.gpu_augmentation import augment_rgb_batch
@@ -122,6 +123,23 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                     f"axis to gate; '{self.config.backbone_target}' has none.",
                 )
             self.observability_token_targets = ObservabilityTokenTargets(lead_config)
+
+        # Asked for and silently ignored is the failure mode this guards. The
+        # flag is read by each backbone that supports it, so a backbone that
+        # does not read it would accept the config, store it in the run's
+        # config.yaml, and train something identical to the control -- forty
+        # hours spent producing a null result about nothing. Rather than keep a
+        # list of which backbones honour it, which would go stale, this asks the
+        # built model whether the parameters exist.
+        if self.config.use_residual_gain and not any(
+            isinstance(module, ResidualGain) for module in self.backbone.modules()
+        ):
+            raise TypeError(
+                f"use_residual_gain is set but '{self.config.backbone_target}' "
+                f"built no ResidualGain, so the flag would do nothing. Either "
+                f"the backbone does not support it or it does not pass the flag "
+                f"through.",
+            )
 
         if self.config.use_radar_detection:
             self.radar_detector = RadarDetector(

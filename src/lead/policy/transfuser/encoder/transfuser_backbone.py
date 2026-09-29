@@ -9,6 +9,7 @@ from torch import nn
 
 from lead.config import LeadConfig
 from lead.policy.transfuser.dataloader.sample import TransfuserForwardBatch
+from lead.policy.transfuser.encoder.residual_gain import ResidualGain
 from lead.policy.transfuser.utils import ops
 
 
@@ -380,6 +381,7 @@ class GPT(nn.Module):
                     config.block_exp,
                     config.attn_pdrop,
                     config.resid_pdrop,
+                    config.use_residual_gain,
                 )
                 for layer in range(config.n_layer)
             ],
@@ -387,6 +389,12 @@ class GPT(nn.Module):
         # decoder head
         self.ln_f = nn.LayerNorm(n_embd)
         self.apply(self._init_weights)
+        # The generic init above would overwrite the zeroed projection that
+        # makes a gained model start exactly where an ungained one does, so the
+        # gain is re-zeroed after it.
+        for block in self.blocks:
+            if block.residual_gain is not None:
+                block.residual_gain.reset_parameters()
 
     def _init_weights(self, module: nn.Module) -> None:
         """Initialize weights for linear and layer norm modules.
@@ -470,6 +478,7 @@ class Block(nn.Module):
         block_exp: int,
         attn_pdrop: float,
         resid_pdrop: float,
+        gained: bool = False,
     ) -> None:
         """Initialize a transformer block.
 
@@ -479,11 +488,20 @@ class Block(nn.Module):
             block_exp: Expansion factor for MLP hidden dimension.
             attn_pdrop: Dropout probability for attention weights.
             resid_pdrop: Dropout probability for residual connections.
+            gained: Whether to scale the attention output by a learned
+                per-token gain before it joins the residual stream.
         """
         super().__init__()
         self.ln1 = nn.LayerNorm(n_embd)
         self.ln2 = nn.LayerNorm(n_embd)
         self.attn = SelfAttention(n_embd, n_head, attn_pdrop, resid_pdrop)
+        # Scales how much of the attention output reaches the token. The gate
+        # the thesis measured could only move which modality a query reads
+        # from; the reliance it actually achieved was that share times the
+        # attention's authority over the block output, and only the first
+        # factor was reachable. This is the second, and it needs no modality
+        # axis, so it works on dense attention exactly as on sparse.
+        self.residual_gain = ResidualGain(n_embd) if gained else None
         self.mlp = nn.Sequential(
             nn.Linear(n_embd, block_exp * n_embd),
             nn.ReLU(True),  # changed from GELU
@@ -505,7 +523,11 @@ class Block(nn.Module):
         Returns:
             Output tensor of same shape as input with attention and MLP applied.
         """
-        x = x + self.attn(self.ln1(x))
+        normalized = self.ln1(x)
+        attended = self.attn(normalized)
+        if self.residual_gain is not None:
+            attended = attended * self.residual_gain(normalized)
+        x = x + attended
         return x + self.mlp(self.ln2(x))
 
 
