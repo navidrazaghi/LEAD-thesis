@@ -46,6 +46,7 @@ from lead.policy.transfuser.utils.gpu_augmentation import augment_rgb_batch
 from lead.policy.transfuser.utils.sensor_degradation import (
     apply_sensor_degradation,
     degrade_batch,
+    degrade_batch_family,
 )
 
 if typing.TYPE_CHECKING:
@@ -202,9 +203,18 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
         generator = (
             None if reference is None else self._degradation_generator(reference.device)
         )
-        return degrade_batch(
+        # Both axes, in this order, so a condition can be one or the other and
+        # a future one could be both. The modality damage is a no-op when the
+        # modality is "none", and so is the family.
+        batch = degrade_batch(
             batch,
             inference.degrade_modality,
+            inference.degrade_severity,
+            generator,
+        )
+        return degrade_batch_family(
+            batch,
+            inference.degrade_family,
             inference.degrade_severity,
             generator,
         )

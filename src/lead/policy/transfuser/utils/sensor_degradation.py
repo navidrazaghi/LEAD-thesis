@@ -379,6 +379,66 @@ def apply_sensor_degradation(
     return batch
 
 
+def degrade_batch_family(
+    batch: dict,
+    family: str,
+    severity: float,
+    generator: torch.Generator | None = None,
+) -> dict:
+    """Apply one deployment family to a whole inference batch at a fixed severity.
+
+    The deployment families were reachable only from the training curriculum,
+    which draws them per sample. Evaluation needs the opposite: the same fault
+    on every sample, so a run is one point on a curve rather than an average
+    over random ones -- the same reason :func:`degrade_batch` exists beside the
+    curriculum for the appearance families.
+
+    Without this, a rung trained on occlusion and ego-state noise could only be
+    scored under camera and lidar destruction, which answers whether the extra
+    families cost anything elsewhere and not whether they bought anything where
+    they were aimed.
+
+    Args:
+        batch: The collated model inputs, modified in place.
+        family: ``"occlusion"``, ``"ego_state"``, or ``"none"``.
+        severity: How much to damage it, in ``[0, 1]``, applied to every sample.
+        generator: Draws the damage, so a run can repeat itself.
+
+    Returns:
+        The batch.
+
+    Raises:
+        ValueError: If the family is not one this applies. Silently ignoring an
+            unknown name would score an undamaged run under a condition's label.
+    """
+    if family == "none" or severity <= 0.0:
+        return batch
+    if family not in _BATCH_LEVEL_FAMILIES:
+        raise ValueError(
+            f"unknown deployment family '{family}'; this applies "
+            f"{sorted(_BATCH_LEVEL_FAMILIES)}.",
+        )
+
+    reference = batch.get("rgb")
+    if reference is None:
+        reference = batch.get("rasterized_lidar")
+    if reference is None:
+        return batch
+    per_sample = torch.full(
+        (reference.shape[0],),
+        float(severity),
+        device=reference.device,
+        dtype=torch.float32,
+    )
+
+    if family == "occlusion":
+        if "rgb" not in batch:
+            return batch
+        batch["rgb"], _ = degrade_occlusion(batch["rgb"], per_sample, generator)
+        return batch
+    return degrade_ego_state(batch, per_sample, generator)
+
+
 def degrade_batch(
     batch: dict,
     modality: str,

@@ -64,6 +64,11 @@ _SCORE_FIELDS = (
     "town",
     "num_infractions",
 )
+# Condition names that are deployment families rather than sensor modalities.
+# The column stays called "modality" so one results table holds both axes; what
+# changes is which config knob the name is routed to.
+_DEPLOYMENT_FAMILIES = ("occlusion", "ego_state")
+
 _FIELDS = ("model", "modality", "severity", "route", *_SCORE_FIELDS, "seconds")
 # Statuses that describe the simulator giving up rather than the agent driving
 # badly. A row carrying one of these is not a measurement, so it is neither
@@ -288,7 +293,10 @@ def run_route(
                 # nothing in the results table is read off a video, and each
                 # one is deleted with the scratch directory on the next run.
                 "evaluation.produce_demo_video=false "
-                f"evaluation.inference.degrade_modality={modality} "
+                f"evaluation.inference.degrade_modality="
+                f"{'none' if modality in _DEPLOYMENT_FAMILIES else modality} "
+                f"evaluation.inference.degrade_family="
+                f"{modality if modality in _DEPLOYMENT_FAMILIES else 'none'} "
                 f"evaluation.inference.degrade_severity={severity} "
                 # Keyed on the route alone, so every checkpoint meets the
                 # identical damage there and the models can be compared route

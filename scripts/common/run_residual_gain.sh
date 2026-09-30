@@ -63,6 +63,27 @@ main() {
     training.data.use_sensor_degradation=true
   )
 
+  # rung2d's evaluation is ahead of this in the queue and flock promises
+  # exclusion rather than order, so waiting on the lock alone would be a coin
+  # toss with it. Wait for its results file to be complete first; that is
+  # deterministic. If it is neither running nor started, go ahead.
+  local ahead="$HOME/LEAD/lead/results/closed_loop_rung2d.csv"
+  echo "[$(date +%H:%M:%S)] waiting for the rung2d evaluation to finish"
+  rows_ahead() {
+    # The file does not exist until the evaluation writes its first row, and a
+    # redirect from a missing file is an error rather than an empty read, so it
+    # is checked before it is read.
+    [ -f "$ahead" ] || { echo 0; return; }
+    echo "$(( $(wc -l < "$ahead") - 1 ))"
+  }
+  while [ "$(rows_ahead)" -lt 150 ]; do
+    ps -eo args --no-headers | grep -qx "bash scripts/common/run_rung2d_eval.sh" || {
+      echo "[$(date +%H:%M:%S)] the rung2d evaluation is not running; going ahead"
+      break
+    }
+    sleep 600
+  done
+
   echo "[$(date +%H:%M:%S)] waiting for the training lock"
   exec 9>"$HOME/.lead_training.lock"
   flock -w 259200 9 || { echo "timed out waiting for the lock"; exit 200; }

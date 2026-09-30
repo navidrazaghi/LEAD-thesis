@@ -154,6 +154,11 @@ class InferenceConfig(ConfigNode):
     # This is how the robustness claim is measured: a sweep of severities at a
     # fixed modality traces the degradation curve, where the training-time
     # curriculum instead randomises both per sample.
+    # Which deployment family to apply at inference, or "none". Separate from
+    # degrade_modality because these are not modality faults: a blocked lens is
+    # locally total and globally invisible, and a drifting fix damages the ego
+    # state rather than either sensor. Shares degrade_severity.
+    degrade_family: str = "none"
     degrade_modality: str = "none"
     # How badly to damage it, in [0, 1]. Zero is a no-op whatever the modality.
     degrade_severity: float = 0.0

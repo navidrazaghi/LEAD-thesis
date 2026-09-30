@@ -69,7 +69,13 @@ main() {
 
   echo "[$(date +%H:%M:%S)] waiting for rung6 to finish before joining the lock queue"
   while [ ! -f "$out/rung6_residual_gain_post/$final" ]; do
-    if ! ps -eo args --no-headers | grep -qx "bash scripts/common/run_residual_gain.sh" \
+    # Anchored at both ends and tolerant of an absolute path: how a driver is
+    # launched is not something this should depend on. Matching the exact
+    # relative command line meant that starting rung6 by absolute path -- which
+    # is how it had to be started, after a shell precedence bug ate the relative
+    # one -- made it invisible here, and this went ahead without it.
+    if ! ps -eo args --no-headers \
+         | grep -qE "^bash (.*/)?scripts/common/run_residual_gain[.]sh$" \
        && [ ! -d "$out/rung6_residual_gain" ]; then
       echo "[$(date +%H:%M:%S)] rung6 is neither queued nor started; going ahead without it"
       break
