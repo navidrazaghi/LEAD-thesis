@@ -13,9 +13,18 @@ semantic  0.103  0.067  0.051  0.071  0.150  0.117  0.110  0.114  0.184  0.151
                         ^ floor  ^ leaves it and does not come back
 ```
 
-Seven of the nine trained rungs converge monotonically on the same data and the
-same epoch budget. Two do not, and the second, `rung2a_dense_curriculum`, is the
-only other dense run — so it is not one unlucky seed.
+Seven of the nine trained rungs converge on the same data and the same epoch
+budget. Two do not: this one and `rung2b_observability_ungated`. Measured from
+the offline W&B logs, final over best is 3.36x and 2.14x on the training
+objective, and 2.95x and 2.83x on the unscaled semantic head, against
+1.00-1.04x for every other rung — so it is not one unlucky seed.
+
+An earlier version of this note named `rung2a_dense_curriculum` as the second,
+reasoning that it is the only other dense run. That reasoning explained a
+pairing instead of measuring it, and the measurement does not support it: the
+dense curriculum run ends at 1.20x, elevated but far from the two above.
+`scripts/common/training_curves.py` extracts the series, and the thesis plots
+them.
 
 ### The cause was the recipe, not the architecture
 
