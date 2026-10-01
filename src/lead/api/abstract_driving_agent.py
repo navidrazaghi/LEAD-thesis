@@ -4,6 +4,7 @@ import abc
 import json
 import logging
 import os
+import pathlib
 import shutil
 import typing
 from collections import deque
@@ -48,6 +49,13 @@ from lead.evaluation.recorder.infraction_recorder import InfractionRecorder
 from lead.evaluation.recorder.video_recorder import VideoRecorder
 
 LOG = logging.getLogger(__name__)
+
+# Ticks between flushes of the Bench2Drive tick log. The log is rewritten whole
+# each time it is written, so writing every tick makes a route cost O(N^2); this
+# divides that by the interval. It is not written only at the end because a
+# route killed at the wall-clock cap never reaches ``destroy``, and its log is
+# the only record of whether the car was stuck or the machine was slow.
+_METRIC_FLUSH_EVERY = 200
 
 
 class AbstractDrivingAgent(BaseAgent, autonomous_agent.AutonomousAgent, abc.ABC):
@@ -623,15 +631,35 @@ class AbstractDrivingAgent(BaseAgent, autonomous_agent.AutonomousAgent, abc.ABC)
         ):
             metric = self.get_metric_info()
             self.metric_info[self.step] = metric
-            with open(
-                f"{self.lead_config.evaluation.save_path}/metric_info.json",
-                "w",
-            ) as outfile:
-                json.dump(self.metric_info, outfile, indent=4)
+            if self.step % _METRIC_FLUSH_EVERY == 0:
+                self.write_metric_info()
         return self.control
+
+    def write_metric_info(self) -> None:
+        """Write the Bench2Drive tick log, replacing whatever is there.
+
+        The whole log is rewritten rather than appended to, because it is a JSON
+        object and the format has readers outside this repository. That is why
+        it is called on an interval rather than every tick.
+        """
+        if not self.metric_info:
+            return
+        destination = pathlib.Path(
+            f"{self.lead_config.evaluation.save_path}/metric_info.json",
+        )
+        with destination.open("w") as outfile:
+            json.dump(self.metric_info, outfile, indent=4)
 
     def destroy(self, results: object = None) -> None:
         LOG.info(results)
+
+        # The interval leaves up to _METRIC_FLUSH_EVERY ticks unwritten; a route
+        # that ends normally should carry every tick it ran.
+        if self.lead_config.evaluation.is_bench2drive and hasattr(
+            self,
+            "get_metric_info",
+        ):
+            self.write_metric_info()
 
         # Clean up video recorder
         if hasattr(self, "video_recorder"):
