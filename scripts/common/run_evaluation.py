@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 import os
 import pathlib
 import shutil
@@ -69,7 +70,13 @@ _SCORE_FIELDS = (
 # changes is which config knob the name is routed to.
 _DEPLOYMENT_FAMILIES = ("occlusion", "ego_state")
 
-_FIELDS = ("model", "modality", "severity", "route", *_SCORE_FIELDS, "seconds")
+# Diagnostics, not scores: they are recorded precisely when the score fields
+# are empty, so they must not be part of _SCORE_FIELDS.
+_MOTION_FIELDS = ("ticks", "distance_m", "stationary_frac")
+_FIELDS = (
+    "model", "modality", "severity", "route",
+    *_SCORE_FIELDS, "seconds", *_MOTION_FIELDS,
+)
 # Statuses that describe the simulator giving up rather than the agent driving
 # badly. A row carrying one of these is not a measurement, so it is neither
 # treated as done on resume nor left to poison the next few runs: CARLA is
@@ -245,6 +252,57 @@ def read_score(endpoint: pathlib.Path) -> dict | None:
     }
 
 
+def motion_summary(work_dir: pathlib.Path) -> dict:
+    """How far the simulation and the car actually got, from the tick log.
+
+    Read after the run is killed, so the file is no longer being appended to.
+    A kill can still land mid-write, so a truncated tail is trimmed rather than
+    treated as a failure: a partial log still answers the question being asked.
+
+    Args:
+        work_dir: The scratch directory the leaderboard wrote into.
+
+    Returns:
+        Ticks, metres travelled and the stationary share, or empty values when
+        no usable tick log exists.
+    """
+    blank = dict.fromkeys(_MOTION_FIELDS, "")
+    source = work_dir / "metric_info.json"
+    if not source.exists():
+        return blank
+    raw = source.read_text(encoding="utf-8", errors="replace")
+    try:
+        ticks = json.loads(raw)
+    except json.JSONDecodeError:
+        # The tail is trimmed back to the last complete entry, whose closing
+        # brace is kept; only the outer object still needs closing.
+        cut = raw.rfind("},")
+        if cut < 0:
+            return blank
+        try:
+            ticks = json.loads(raw[:cut + 1] + "}")
+        except json.JSONDecodeError:
+            return blank
+    if not isinstance(ticks, dict) or len(ticks) < 2:
+        return blank
+
+    places = []
+    for key in sorted(ticks, key=lambda k: int(k) if k.isdigit() else 0):
+        spot = ticks[key].get("location") if isinstance(ticks[key], dict) else None
+        if isinstance(spot, (list, tuple)) and len(spot) >= 3:
+            places.append(tuple(float(v) for v in spot[:3]))
+    if len(places) < 2:
+        return blank
+
+    steps = [math.dist(places[i - 1], places[i]) for i in range(1, len(places))]
+    still = sum(1 for step in steps if step < 0.01)
+    return {
+        "ticks": len(places),
+        "distance_m": round(sum(steps), 1),
+        "stationary_frac": round(still / len(steps), 3),
+    }
+
+
 def run_route(
     model: pathlib.Path,
     route: pathlib.Path,
@@ -254,8 +312,8 @@ def run_route(
     tm_port: int,
     work_dir: pathlib.Path,
     extra_config: str = "",
-) -> dict | None:
-    """Drive one route once and return its scores.
+) -> tuple[dict | None, dict]:
+    """Drive one route once and return its scores and how far it got.
 
     Args:
         model: Checkpoint directory, holding ``config.yaml`` and one weights file.
@@ -350,17 +408,24 @@ def run_route(
                     break
                 except subprocess.TimeoutExpired:
                     continue
-            return None
+            # Read after the kill, not before: the log is frozen now.
+            motion = motion_summary(work_dir)
+            if motion["ticks"] != "":
+                print(
+                    f"      | {motion['ticks']} ticks, {motion['distance_m']} m, "
+                    f"{motion['stationary_frac']:.0%} of ticks stationary"
+                )
+            return None, motion
 
     for endpoint in sorted(work_dir.rglob("checkpoint_endpoint.json")):
         scores = read_score(endpoint)
         if scores is not None:
-            return scores
+            return scores, motion_summary(work_dir)
     if transcript.exists():
         tail = transcript.read_text(encoding="utf-8", errors="replace").splitlines()
         for line in tail[-4:]:
             print(f"      | {line}")
-    return None
+    return None, motion_summary(work_dir)
 
 
 def is_measurement(status: str | None) -> bool:
@@ -530,8 +595,16 @@ def main() -> None:
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     is_new = not args.out.exists()
+    # Appending a wider row to a narrower header would shift every field, so an
+    # existing file keeps its own schema and the extra keys are dropped.
+    fields = _FIELDS
+    if not is_new:
+        with args.out.open(encoding="utf-8") as probe:
+            header = probe.readline().strip()
+        if header:
+            fields = tuple(header.split(","))
     handle = args.out.open("a", newline="", encoding="utf-8")
-    writer = csv.DictWriter(handle, fieldnames=_FIELDS)
+    writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
     if is_new:
         writer.writeheader()
         handle.flush()
@@ -552,7 +625,7 @@ def main() -> None:
                 carla.start()
                 restart_next = False
             started = time.time()
-            scores = run_route(
+            scores, motion = run_route(
                 model,
                 args.route_dir / route,
                 modality,
@@ -570,6 +643,7 @@ def main() -> None:
                 "route": route,
                 "seconds": elapsed,
                 **(scores or dict.fromkeys(_SCORE_FIELDS)),
+                **motion,
             }
             if scores is None:
                 # Recorded rather than dropped: a route that never scored is a
