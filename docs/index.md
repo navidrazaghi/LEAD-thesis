@@ -60,6 +60,16 @@ and it is negative.
   planning-label re-anchor rather than a delayed observation, and the joint
   degradation condition. Not yet evaluated; a rung carrying the first two
   families is in training.
+- [The baseline that never converged](baseline_convergence.md): the baseline
+  every comparison in the thesis is measured against had a training loss that
+  bottomed at epoch two and rose from there. The cause was the recipe, not the
+  architecture -- batch 8 against LEAD's 64 with the learning rate left where it
+  was -- and restoring the effective batch through accumulation fixed it without
+  a byte of extra data. Then the fixed model drove *worse*: better on four
+  open-loop measures and timing out on 36% of routes against 3%. Three
+  explanations for that were measured and refused.
+- [What the thesis has to reread](thesis_revisions.md): the passages the
+  diverged baseline touches, and the order to fix them in.
 - [The finer token grid](finer_grid.md): the one direction the sparse operator
   was never fairly tested in. The fusion blocks are a small part of the dense
   model, so there was little to reclaim at the shipped geometry -- but the same
