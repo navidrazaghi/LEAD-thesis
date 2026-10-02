@@ -216,6 +216,13 @@ def main() -> int:
         help="file of held-out log names, one per line; without it the run is "
              "in-sample and is labelled as such",
     )
+    parser.add_argument(
+        "--keep-cache",
+        action="store_true",
+        help="read cached labels even when --log-names is given; only valid "
+             "for logs the cache holds, and only useful for isolating the "
+             "effect of caching from the effect of frame selection",
+    )
     parser.add_argument("--json", metavar="FILE", help="also write the scores here")
     arguments = parser.parse_args()
 
@@ -240,6 +247,19 @@ def main() -> int:
                 f"could not restrict the logs on this config ({error}); the "
                 "held-out run cannot be guaranteed, so it is refused rather "
                 "than run in-sample under a held-out label",
+            ) from error
+        # Held-out logs are not in the training cache and never will be, so
+        # the cached path would either miss them or serve the wrong sample.
+        # Computing live is slower and is the only correct option there.
+        # --keep-cache exists for one job: restricting to logs that ARE cached,
+        # so that caching can be varied while the frames stay fixed. Without it
+        # a held-out run differs from an in-sample run in two ways at once.
+        try:
+            lead_config.training.data.read_from_cache_store = arguments.keep_cache
+        except Exception as error:  # noqa: BLE001
+            raise SystemExit(
+                f"could not disable the cache store ({error}); held-out logs "
+                "are not cached, so a cached read would not be a held-out read",
             ) from error
         held_out = names
 
