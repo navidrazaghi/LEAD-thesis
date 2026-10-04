@@ -59,8 +59,13 @@ the last one:
 
 ```
 semantic  0.136  0.063  0.045  0.039  0.035  0.031  0.028
-final/best = 1.00x     (the old run: 2.52x)
+final/best = 1.00x     (the old run: 2.95x)
 ```
+
+Both ratios here are on the semantic head, matching the top of this note.
+The figure 2.52x that stood here until 2026-10-04 predates
+`training_curves.py`: with the curves extracted, no combination of the
+logged heads reproduces it, and the measured value is 2.95x.
 
 The final semantic loss is **5.4x lower** than the run it replaces, and lower
 than `rung2a`'s 0.043 -- the best sparse rung. No extra data was needed; the
