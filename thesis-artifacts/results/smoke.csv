@@ -1,0 +1,2 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds
+rung0,camera,0.5,10857.xml,23.72,23.72,1.0,Failed - Agent got blocked,Town12,5,514.2

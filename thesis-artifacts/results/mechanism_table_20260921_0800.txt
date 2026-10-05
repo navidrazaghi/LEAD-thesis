@@ -1,0 +1,67 @@
+==============================================================================
+1. MECHANISM -- shift in camera attention share vs that model's clean row
+   Expected: negative when the camera is damaged, positive when the
+   LiDAR is. A model with no gate has no way to shift and should sit
+   near zero.
+==============================================================================
+model   gate    camera:0.5  camera:1.0   lidar:0.5   lidar:1.0
+rung0   no              --          --          --          --
+rung1   no          -0.008      -0.006      -0.002      -0.006
+rung2   no          +0.001      +0.007      +0.002      +0.004
+rung2a  no          -0.012      -0.028      +0.002      +0.009
+rung2b  no          -0.008      -0.004      +0.002      +0.004
+rung3   yes         -0.171      -0.254      +0.105      +0.151
+rung4   yes         -0.159      -0.253      +0.051      +0.108
+
+   direction and size, over the four damaged conditions:
+   model     mean |shift|   correct direction
+   rung0               --                  --
+   rung1           0.0056                 2/4
+   rung2           0.0035                 2/4
+   rung2a          0.0127                 4/4
+   rung2b          0.0044                 4/4
+   rung3           0.1700                 4/4
+   rung4           0.1428                 4/4
+
+==============================================================================
+2. ROBUSTNESS -- open-loop waypoint L2. Lower is better; * marks the
+   best model in each column.
+==============================================================================
+model          none:0   camera:0.5   camera:1.0    lidar:0.5    lidar:1.0
+rung0          0.691        0.731        0.818        0.758        1.288 
+rung1          0.492        0.537        0.675        0.576        1.005 
+rung2          0.555        0.667        1.093        0.719        1.643 
+rung2a         0.442        0.465        0.568        0.472        0.689 
+rung2b         0.557        0.601        0.694        0.571        0.667 
+rung3          0.581        0.585        0.635        0.598        0.800 
+rung4          0.441*       0.458*       0.516*       0.456*       0.618*
+
+   The same numbers as a percentage of each model's own clean row.
+   Read this second and read it carefully: a model that starts worse
+   has less room to fall, so a small percentage here can mean a large
+   absolute error above. The table above is the one that decides.
+   model      camera:0.5   camera:1.0    lidar:0.5    lidar:1.0
+   rung0             +6%         +18%         +10%         +86%
+   rung1             +9%         +37%         +17%        +104%
+   rung2            +20%         +97%         +30%        +196%
+   rung2a            +5%         +28%          +7%         +56%
+   rung2b            +8%         +25%          +3%         +20%
+   rung3             +1%          +9%          +3%         +38%
+   rung4             +4%         +17%          +3%         +40%
+
+==============================================================================
+3. THE CONTRAST
+==============================================================================
+   gated   ['rung3', 'rung4']: mean |shift| 0.1564
+   ungated ['rung1', 'rung2', 'rung2a', 'rung2b']: mean |shift| 0.0066
+   ratio: the gated models reallocate 24x more
+
+   The ungated models are deformable too, so the operator is not what
+   reallocates attention -- they simply have no modality axis to
+   shift. That is what makes this attributable to the gate rather
+   than to the backbone or to the degradation curriculum.
+
+   Note what this does NOT settle: every model carrying the gate also
+   trained with the degradation curriculum, so the robustness table
+   above still confounds the two. rung2a (curriculum, no gate) is the
+   row that separates them.

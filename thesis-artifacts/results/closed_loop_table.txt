@@ -1,0 +1,58 @@
+270 runs | models ['rung0', 'rung2a', 'rung4'] | 30 routes
+
+============================================================================
+1. COVERAGE -- usable runs per cell, and what the rest were
+============================================================================
+model            none:0     lidar:1.0    camera:1.0
+rung0             29/30         28/30         29/30
+rung2a            30/30         30/30         30/30
+rung4             29/30         28/30         28/30
+
+   statuses across every run:
+      142  Completed
+       57  Failed - TickRuntime
+       49  Failed - Agent got blocked
+       13  Failed - Agent deviated from the route
+        9  NoResult
+
+============================================================================
+2. DRIVING SCORE, paired on the routes every model completed
+============================================================================
+
+  none:0   (n = 28 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        25.8    57.0        9       10
+    rung2a       41.8    83.0        5        5
+    rung4        37.1    85.6        2        4
+
+  lidar:1.0   (n = 28 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        34.6    80.0        4        8
+    rung2a       51.6    81.0        2        6
+    rung4        39.6    85.7        4        3
+
+  camera:1.0   (n = 28 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        32.9    61.3        9        9
+    rung2a       46.0    78.5        5        6
+    rung4        30.9    71.1        8        6
+
+============================================================================
+3. THE COMPARISON -- each model minus rung2a, paired route by route
+============================================================================
+
+  none:0   (n = 28)
+    rung0     vs rung2a    mean  -15.9  sd  38.5  se   7.3  95% [ -30.5,   -1.4]  better on 11/28  resolved
+    rung4     vs rung2a    mean   -4.7  sd  43.2  se   8.2  95% [ -21.0,  +11.7]  better on 11/28  NOT resolved (interval spans 0)
+
+  lidar:1.0   (n = 28)
+    rung0     vs rung2a    mean  -17.0  sd  40.4  se   7.6  95% [ -32.3,   -1.7]  better on 7/28  resolved
+    rung4     vs rung2a    mean  -12.0  sd  38.8  se   7.3  95% [ -26.7,   +2.6]  better on 11/28  NOT resolved (interval spans 0)
+
+  camera:1.0   (n = 28)
+    rung0     vs rung2a    mean  -13.2  sd  33.0  se   6.2  95% [ -25.6,   -0.7]  better on 11/28  resolved
+    rung4     vs rung2a    mean  -15.1  sd  34.5  se   6.5  95% [ -28.1,   -2.1]  better on 9/28  resolved
+
+  A positive mean favours the first model. Read the interval before the
+  mean: with a per-route spread this wide, only an interval clear of zero
+  supports a claim.

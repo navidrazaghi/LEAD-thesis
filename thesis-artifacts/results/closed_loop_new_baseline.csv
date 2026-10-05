@@ -1,0 +1,91 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds
+rung0_lead,none,0,10857.xml,,,,NoResult,,,422.9
+rung0_lead,none,0,11715.xml,,,,NoResult,,,2700.1
+rung0_lead,none,0,11755.xml,20.068046,44.45,0.451475,Failed - Agent deviated from the route,Town12,10,416.3
+rung0_lead,none,0,14194.xml,13.541125,32.05,0.4225,Failed - Agent got blocked,Town12,9,2597.7
+rung0_lead,none,0,23901.xml,6.29754,54.56,0.115424,Failed - Agent got blocked,Town13,14,1562.8
+rung0_lead,none,0,24071.xml,92.948205,100,0.929482,Completed,Town13,22,335.9
+rung0_lead,none,0,24092.xml,,,,NoResult,,,2700.1
+rung0_lead,none,0,24224.xml,15.77655,27.3,0.577896,Failed - Agent got blocked,Town02,7,1024.2
+rung0_lead,none,0,24258.xml,,,,NoResult,,,2700.1
+rung0_lead,none,0,24294.xml,19.611138,33.08,0.59284,Failed - Agent got blocked,Town02,8,981.7
+rung0_lead,none,0,24340.xml,13.674055,100,0.136741,Completed,Town10HD,22,654.1
+rung0_lead,none,0,24795.xml,0.186664,95.06,0.001964,Failed - Agent got blocked,Town04,35,1717.9
+rung0_lead,none,0,24841.xml,13.442,20.68,0.65,Failed - Agent got blocked,Town01,5,1695.0
+rung0_lead,none,0,25300.xml,,,,NoResult,,,2700.5
+rung0_lead,none,0,25439.xml,33.687713,100,0.336877,Completed,Town15,20,488.7
+rung0_lead,none,0,25845.xml,,,,NoResult,,,2700.1
+rung0_lead,none,0,25854.xml,,,,NoResult,,,2700.3
+rung0_lead,none,0,25857.xml,,,,NoResult,,,2700.3
+rung0_lead,none,0,25928.xml,30.056294,100.0,0.300563,Completed,Town11,20,387.5
+rung0_lead,none,0,25951.xml,,,,NoResult,,,2700.3
+rung0_lead,none,0,25968.xml,5.62,5.62,1.0,Failed - Agent got blocked,Town07,2,917.4
+rung0_lead,none,0,26405.xml,22.69,22.69,1.0,Failed - Agent got blocked,Town15,4,1313.5
+rung0_lead,none,0,26406.xml,2.127269,100,0.021273,Completed,Town04,28,478.7
+rung0_lead,none,0,26456.xml,16.091958,26.21,0.613963,Failed - Agent got blocked,Town03,7,1577.3
+rung0_lead,none,0,26956.xml,26.207092,100,0.262071,Completed,Town05,23,371.0
+rung0_lead,none,0,27515.xml,17.5595,50.17,0.35,Failed - Agent deviated from the route,Town03,11,305.3
+rung0_lead,none,0,27532.xml,21.478472,100,0.214785,Completed,Town11,21,360.5
+rung0_lead,none,0,27582.xml,18.541443,54.13,0.342535,Failed - Agent deviated from the route,Town11,13,258.0
+rung0_lead,none,0,28035.xml,,,,NoResult,,,2700.2
+rung0_lead,none,0,28154.xml,,,,NoResult,,,2700.1
+rung0_lead,lidar,1.0,10857.xml,11.129713,38.44,0.289535,Failed - Agent got blocked,Town12,11,1597.0
+rung0_lead,lidar,1.0,11715.xml,28.953301,100,0.289533,Completed,Town12,22,622.3
+rung0_lead,lidar,1.0,11755.xml,14.079988,100,0.1408,Completed,Town12,21,324.7
+rung0_lead,lidar,1.0,14194.xml,3.135049,86.71,0.036156,Failed - Agent got blocked,Town12,24,1910.4
+rung0_lead,lidar,1.0,23901.xml,8.995369,23.55,0.381969,Failed - Agent got blocked,Town13,7,1086.0
+rung0_lead,lidar,1.0,24071.xml,,,,NoResult,,,2700.1
+rung0_lead,lidar,1.0,24092.xml,6.062836,11.98,0.50608,Failed - TickRuntime,Town13,4,2248.9
+rung0_lead,lidar,1.0,24224.xml,19.733013,28.82,0.684699,Failed - Agent got blocked,Town02,7,655.1
+rung0_lead,lidar,1.0,24258.xml,6.801238,45.09,0.150837,Failed - TickRuntime,Town07,9,1957.0
+rung0_lead,lidar,1.0,24294.xml,28.858517,100,0.288585,Completed,Town02,21,353.3
+rung0_lead,lidar,1.0,24340.xml,42.393,65.22,0.65,Failed - Agent got blocked,Town10HD,13,647.9
+rung0_lead,lidar,1.0,24795.xml,7.822973,30.04,0.260419,Failed - TickRuntime,Town04,8,1980.2
+rung0_lead,lidar,1.0,24841.xml,12.948,19.92,0.65,Failed - Agent got blocked,Town01,5,1609.3
+rung0_lead,lidar,1.0,25300.xml,10.742196,21.23,0.505991,Failed - TickRuntime,Town04,5,1999.1
+rung0_lead,lidar,1.0,25439.xml,11.206493,44.69,0.250761,Failed - TickRuntime,Town15,9,1896.0
+rung0_lead,lidar,1.0,25845.xml,13.0455,20.07,0.65,Failed - TickRuntime,Town15,4,1980.7
+rung0_lead,lidar,1.0,25854.xml,6.64645,21.85,0.304185,Failed - TickRuntime,Town03,5,2206.7
+rung0_lead,lidar,1.0,25857.xml,15.230674,33.83,0.450212,Failed - TickRuntime,Town05,7,2155.6
+rung0_lead,lidar,1.0,25928.xml,32.056448,92.01,0.348402,Failed - Agent deviated from the route,Town11,17,280.1
+rung0_lead,lidar,1.0,25951.xml,8.808726,15.81,0.557162,Failed - TickRuntime,Town04,5,1924.3
+rung0_lead,lidar,1.0,25968.xml,22.1715,34.11,0.65,Failed - Agent got blocked,Town07,8,858.0
+rung0_lead,lidar,1.0,26405.xml,21.798,36.33,0.6,Failed - Agent got blocked,Town15,8,1784.6
+rung0_lead,lidar,1.0,26406.xml,18.1251,48.91,0.370581,Failed - Agent got blocked,Town04,13,1455.1
+rung0_lead,lidar,1.0,26456.xml,0.861402,26.21,0.032865,Failed - TickRuntime,Town03,10,2097.2
+rung0_lead,lidar,1.0,26956.xml,20.039558,39.05,0.513177,Failed - TickRuntime,Town05,9,1983.2
+rung0_lead,lidar,1.0,27515.xml,35.813517,45.25,0.791459,Failed - Agent deviated from the route,Town03,9,213.1
+rung0_lead,lidar,1.0,27532.xml,20.499219,38.94,0.526431,Failed - Agent got blocked,Town11,9,696.6
+rung0_lead,lidar,1.0,27582.xml,9.473362,100.0,0.094734,Completed,Town11,24,275.3
+rung0_lead,lidar,1.0,28035.xml,16.2045,24.93,0.65,Failed - TickRuntime,Town01,5,2007.3
+rung0_lead,lidar,1.0,28154.xml,42.086218,69.93,0.601834,Failed - TickRuntime,Town10HD,15,2373.7
+rung0_lead,camera,1.0,10857.xml,5.052678,46.2,0.109365,Failed - Agent got blocked,Town12,15,1294.2
+rung0_lead,camera,1.0,11715.xml,23.783637,62.65,0.379627,Failed - Agent deviated from the route,Town12,14,286.2
+rung0_lead,camera,1.0,11755.xml,,,,NoResult,,,2700.1
+rung0_lead,camera,1.0,14194.xml,15.286788,36.76,0.415854,Failed - Agent got blocked,Town12,10,1415.0
+rung0_lead,camera,1.0,23901.xml,13.268391,76.76,0.172856,Failed - Agent got blocked,Town13,17,1236.0
+rung0_lead,camera,1.0,24071.xml,,,,NoResult,,,2700.1
+rung0_lead,camera,1.0,24092.xml,9.101182,50.48,0.180293,Failed - TickRuntime,Town13,13,2186.5
+rung0_lead,camera,1.0,24224.xml,18.239,28.06,0.65,Failed - Agent got blocked,Town02,7,753.3
+rung0_lead,camera,1.0,24258.xml,10.3896,48.1,0.216,Failed - Agent deviated from the route,Town07,12,1031.6
+rung0_lead,camera,1.0,24294.xml,16.845075,39.87,0.4225,Failed - Agent got blocked,Town02,9,756.6
+rung0_lead,camera,1.0,24340.xml,19.55283,57.47,0.340227,Failed - Agent got blocked,Town10HD,13,904.5
+rung0_lead,camera,1.0,24795.xml,10.09369,40.79,0.247455,Failed - TickRuntime,Town04,10,1955.8
+rung0_lead,camera,1.0,24841.xml,18.896369,34.41,0.549153,Failed - Agent got blocked,Town01,9,1092.2
+rung0_lead,camera,1.0,25300.xml,6.984353,22.02,0.317182,Failed - TickRuntime,Town04,6,2028.0
+rung0_lead,camera,1.0,25439.xml,16.219724,31.09,0.521702,Failed - TickRuntime,Town15,7,1849.3
+rung0_lead,camera,1.0,25845.xml,25.734,42.89,0.6,Failed - TickRuntime,Town15,8,2135.4
+rung0_lead,camera,1.0,25854.xml,25.52745,60.42,0.4225,Failed - TickRuntime,Town03,13,2229.1
+rung0_lead,camera,1.0,25857.xml,23.01,38.35,0.6,Failed - TickRuntime,Town05,7,2168.4
+rung0_lead,camera,1.0,25928.xml,29.056872,100.0,0.290569,Completed,Town11,20,314.2
+rung0_lead,camera,1.0,25951.xml,0.987091,95.5,0.010336,Failed - TickRuntime,Town04,29,1958.1
+rung0_lead,camera,1.0,25968.xml,22.1715,34.11,0.65,Failed - Agent got blocked,Town07,8,1080.1
+rung0_lead,camera,1.0,26405.xml,11.21199,31.78,0.3528,Failed - Agent got blocked,Town15,9,762.1
+rung0_lead,camera,1.0,26406.xml,4.559718,32.38,0.140819,Failed - Agent got blocked,Town04,11,790.7
+rung0_lead,camera,1.0,26456.xml,3.784896,50.52,0.074919,Failed - TickRuntime,Town03,14,2130.2
+rung0_lead,camera,1.0,26956.xml,8.391041,72.88,0.115135,Failed - Agent got blocked,Town05,19,1150.0
+rung0_lead,camera,1.0,27515.xml,17.561256,51.16,0.343261,Failed - Agent deviated from the route,Town03,12,209.6
+rung0_lead,camera,1.0,27532.xml,17.830685,43.59,0.409054,Failed - Agent got blocked,Town11,11,708.1
+rung0_lead,camera,1.0,27582.xml,6.026475,52.98,0.11375,Failed - Agent got blocked,Town11,14,673.8
+rung0_lead,camera,1.0,28035.xml,14.5925,22.45,0.65,Failed - TickRuntime,Town01,5,2021.7
+rung0_lead,camera,1.0,28154.xml,3.741833,100,0.037418,Completed,Town10HD,27,1421.3

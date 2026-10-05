@@ -1,0 +1,8 @@
+model,signal,condition,caution,sd,batches
+rung4,cross_modal,none:0.0,0.608333,0.114741,25
+rung4,cross_modal,camera:0.5,0.658333,0.086736,25
+rung4,cross_modal,camera:1.0,0.833333,0.114109,25
+rung4,cross_modal,lidar:0.5,0.600000,0.112834,25
+rung4,cross_modal,lidar:1.0,0.566667,0.115995,25
+rung4,cross_modal,both:0.5,0.666667,0.058926,25
+rung4,cross_modal,both:1.0,0.875000,0.081579,25

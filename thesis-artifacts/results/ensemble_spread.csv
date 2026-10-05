@@ -1,0 +1,8 @@
+model,condition,spread_m,caution,frames
+rung4_ens,none:0.0,0.124191,0.267285,240
+rung4_ens,camera:0.5,0.126058,0.272621,240
+rung4_ens,camera:1.0,0.135126,0.315206,240
+rung4_ens,lidar:0.5,0.121741,0.249787,240
+rung4_ens,lidar:1.0,0.126142,0.211985,240
+rung4_ens,both:0.5,0.121825,0.227939,240
+rung4_ens,both:1.0,0.198457,0.590241,240

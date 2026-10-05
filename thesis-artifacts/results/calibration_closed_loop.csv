@@ -1,0 +1,21 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds
+rung4_ens,both,1.0,18305.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,188.1
+rung4_ens,both,1.0,18311.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,101.6
+rung4_ens,both,1.0,1833.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,94.2
+rung4_ens,both,1.0,1852.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,98.4
+rung4_ens,both,1.0,1956.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,103.3
+rung4_ens,both,1.0,2086.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,97.9
+rung4_ens,both,1.0,2091.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,96.7
+rung4_ens,both,1.0,2143.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,182.7
+rung4_ens,both,1.0,2144.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,108.6
+rung4_ens,both,1.0,2164.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,97.8
+rung4_ens,both,1.0,2273.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,94.9
+rung4_ens,both,1.0,2286.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,95.7
+rung4_ens,both,1.0,23708.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,94.3
+rung4_ens,both,1.0,2373.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,98.5
+rung4_ens,both,1.0,23771.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town12,0,93.0
+rung4_ens,both,1.0,3572.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town13,0,242.1
+rung4_ens,both,1.0,3676.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town13,0,134.1
+rung4_ens,both,1.0,3697.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town13,0,133.9
+rung4_ens,both,1.0,3749.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town13,0,126.9
+rung4_ens,both,1.0,3905.xml,0.0,0,1.0,Failed - Agent couldn't be set up,Town13,0,136.3

@@ -1,0 +1,44 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds
+rung2a_dense,none,0,10857.xml,23.72,23.72,1.0,Failed - Agent got blocked,Town12,5,1645.7
+rung2a_dense,none,0,11715.xml,,,,NoResult,,,2700.1
+rung2a_dense,none,0,11755.xml,,,,NoResult,,,2700.1
+rung2a_dense,none,0,14194.xml,19.5552,40.74,0.48,Failed - Agent got blocked,Town12,10,1518.0
+rung2a_dense,none,0,23901.xml,3.8,3.8,1.0,Failed - Agent got blocked,Town13,1,1216.6
+rung2a_dense,none,0,24071.xml,96.773489,100,0.967735,Completed,Town13,21,555.4
+rung2a_dense,none,0,24092.xml,100.0,100,1.0,Completed,Town13,20,544.9
+rung2a_dense,none,0,24224.xml,0.0,0,1.0,Failed - Agent got blocked,Town02,1,866.3
+rung2a_dense,none,0,24258.xml,31.14125,100,0.311412,Completed,Town07,22,498.5
+rung2a_dense,none,0,24294.xml,,,,NoResult,,,444.8
+rung2a_dense,none,0,24340.xml,43.78,43.78,1.0,Failed - Agent got blocked,Town10HD,8,1216.3
+rung2a_dense,none,0,24795.xml,100.0,100,1.0,Completed,Town04,20,431.4
+rung2a_dense,none,0,24841.xml,49.9324,91.61,0.545054,Failed - Agent got blocked,Town01,20,1979.6
+rung2a_dense,none,0,25300.xml,36.0,100,0.36,Completed,Town04,21,494.6
+rung2a_dense,none,0,25439.xml,36.0,100,0.36,Completed,Town15,20,1518.2
+rung2a_dense,none,0,25845.xml,,,,NoResult,,,2700.1
+rung2a_dense,none,0,25854.xml,,,,NoResult,,,2700.1
+rung2a_dense,none,0,25857.xml,,,,NoResult,,,2700.3
+rung2a_dense,none,0,25928.xml,32.05,32.05,1.0,Failed - TickRuntime,Town11,5,2619.6
+rung2a_dense,none,0,25951.xml,0.0,0.0,1.0,Failed - Agent got blocked,Town04,1,937.2
+rung2a_dense,none,0,25968.xml,0.0,0.0,1.0,Failed - Agent got blocked,Town07,1,822.0
+rung2a_dense,none,0,26405.xml,30.264359,31.78,0.952308,Failed - Agent got blocked,Town15,7,950.4
+rung2a_dense,none,0,26406.xml,21.6,100,0.216,Completed,Town04,23,664.1
+rung2a_dense,none,0,26456.xml,7.32,7.32,1.0,Failed - Agent got blocked,Town03,2,1017.8
+rung2a_dense,none,0,26956.xml,,,,NoResult,,,2700.1
+rung2a_dense,none,0,27515.xml,0.0,0.0,1.0,Failed - Agent got blocked,Town03,1,900.6
+rung2a_dense,none,0,27532.xml,14.43,14.43,1.0,Failed - TickRuntime,Town11,2,2684.4
+rung2a_dense,none,0,27582.xml,20.66,20.66,1.0,Failed - Agent got blocked,Town11,4,803.7
+rung2a_dense,none,0,28035.xml,,,,NoResult,,,2700.1
+rung2a_dense,none,0,28154.xml,70.0,100,0.7,Completed,Town10HD,21,790.6
+rung2a_dense,lidar,1.0,10857.xml,10.63,10.63,1.0,Failed - Agent got blocked,Town12,3,1528.4
+rung2a_dense,lidar,1.0,11715.xml,0.0,0,1.0,Failed - Agent got blocked,Town12,1,1119.5
+rung2a_dense,lidar,1.0,11755.xml,0.0,0,1.0,Failed - Agent got blocked,Town12,1,1101.3
+rung2a_dense,lidar,1.0,14194.xml,17.44,17.44,1.0,Failed - Agent got blocked,Town12,4,1323.5
+rung2a_dense,lidar,1.0,23901.xml,0.0,0,1.0,Failed - Agent got blocked,Town13,1,1180.7
+rung2a_dense,lidar,1.0,24071.xml,36.0,100,0.36,Completed,Town13,22,698.3
+rung2a_dense,lidar,1.0,24092.xml,0.0,0.0,1.0,Failed - Agent got blocked,Town13,1,1000.9
+rung2a_dense,lidar,1.0,24224.xml,0.0,0,1.0,Failed - Agent got blocked,Town02,1,902.5
+rung2a_dense,lidar,1.0,24258.xml,5.96,5.96,1.0,Failed - Agent got blocked,Town07,2,942.4
+rung2a_dense,lidar,1.0,24294.xml,0.0,0,1.0,Failed - Agent got blocked,Town02,1,871.9
+rung2a_dense,lidar,1.0,24340.xml,14.628,24.38,0.6,Failed - Agent got blocked,Town10HD,6,1220.7
+rung2a_dense,lidar,1.0,24795.xml,,,,NoResult,,,2700.4
+rung2a_dense,lidar,1.0,24841.xml,0.0,0.0,1.0,Failed - Agent got blocked,Town01,1,941.5

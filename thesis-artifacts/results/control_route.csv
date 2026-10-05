@@ -1,0 +1,2 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds
+rung4_ens,both,1.0,18305.xml,5.911385,27.88,0.21203,Failed - Agent got blocked,Town12,8,1092.8

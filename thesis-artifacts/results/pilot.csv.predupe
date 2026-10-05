@@ -1,0 +1,31 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds
+rung0,none,0,10857.xml,18.49,18.49,1.0,Failed - Agent got blocked,Town12,4,499.8
+rung0,none,0,23901.xml,8.09703,87.3,0.092749,Failed - Agent got blocked,Town13,23,609.3
+rung0,none,0,24224.xml,5.409233,86.37,0.062629,Failed - Agent got blocked,Town02,22,438.0
+rung0,none,0,24258.xml,100.0,100,1.0,Completed,Town07,19,154.5
+rung0,none,0,24340.xml,38.07,38.07,1.0,Failed - Agent got blocked,Town10HD,7,646.3
+rung0,none,0,24795.xml,60.0,100,0.6,Completed,Town04,21,146.0
+rung0,none,0,24841.xml,0.0,0.0,1.0,Failed - Agent got blocked,Town01,1,307.0
+rung0,none,0,25854.xml,7.592,11.68,0.65,Failed - TickRuntime,Town03,3,1220.9
+rung0,none,0,25857.xml,16.488,45.8,0.36,Failed - TickRuntime,Town05,9,1176.5
+rung0,none,0,25928.xml,21.06,21.06,1.0,Failed - TickRuntime,Town11,3,903.9
+rung0,camera,0.5,10857.xml,21.1,21.1,1.0,Failed - Agent got blocked,Town12,5,521.7
+rung0,camera,0.5,23901.xml,4.542,7.57,0.6,Failed - Agent got blocked,Town13,3,419.5
+rung0,camera,0.5,24224.xml,22.743804,56.08,0.40556,Failed - Agent got blocked,Town02,13,384.4
+rung0,camera,0.5,24258.xml,100.0,100,1.0,Completed,Town07,19,160.1
+rung0,camera,0.5,24340.xml,21.094788,86.21,0.244691,Failed - TickRuntime,Town10HD,18,1268.9
+rung0,camera,0.5,24795.xml,82.34,82.34,1.0,Failed - Agent got blocked,Town04,16,404.1
+rung0,camera,0.5,24841.xml,33.65,33.65,1.0,Failed - Agent got blocked,Town01,7,370.3
+rung0,camera,0.5,25854.xml,8.5345,13.13,0.65,Failed - TickRuntime,Town03,3,1234.8
+rung0,none,0,25854.xml,7.592,11.68,0.65,Failed - TickRuntime,Town03,3,1287.5
+rung0,none,0,25857.xml,24.62,24.62,1.0,Failed - TickRuntime,Town05,4,1138.1
+rung0,none,0,25928.xml,34.05,34.05,1.0,Failed - TickRuntime,Town11,5,893.2
+rung0,camera,0.5,24340.xml,21.6,100,0.216,Completed,Town10HD,22,460.8
+rung0,camera,0.5,25854.xml,21.7971,93.15,0.234,Failed - TickRuntime,Town03,20,1183.7
+rung0,camera,0.5,25857.xml,9.8928,45.8,0.216,Failed - TickRuntime,Town05,10,1171.6
+rung0,camera,0.5,25928.xml,100.0,100,1.0,Completed,Town11,18,315.8
+rung0,camera,1.0,10857.xml,25.03,25.03,1.0,Failed - Agent got blocked,Town12,5,1295.2
+rung0,camera,1.0,23901.xml,4.933786,100,0.049338,Completed,Town13,27,721.7
+rung0,camera,1.0,24224.xml,1.836247,86.37,0.02126,Failed - Agent got blocked,Town02,24,918.9
+rung0,camera,1.0,24258.xml,60.0,100,0.6,Completed,Town07,20,177.8
+rung0,camera,1.0,24340.xml,19.691381,100,0.196914,Completed,Town10HD,23,349.8

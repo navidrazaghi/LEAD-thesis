@@ -1,0 +1,44 @@
+
+model=outputs/rung0_baseline_post  batch=8  compiled
+today: image (12, 36) + bev (10, 12) = 552 tokens, the same at all 4 fusion blocks
+asked: stride 16 -> image (24, 72) + bev (20, 24)
+
+  stage    image map   bev map  chans  image grid  bev grid  tokens  cap
+  ----------------------------------------------------------------------
+  0        (96, 288)  (80, 96)     64    (24, 72)  (20, 24)    2208  
+  1        (48, 144)  (40, 48)    128    (24, 72)  (20, 24)    2208  
+  2         (24, 72)  (20, 24)    256    (24, 72)  (20, 24)    2208  
+  3         (12, 36)  (10, 12)    512    (12, 36)  (10, 12)     552  capped
+
+  operator cost per block, at each stage's own tokens and width
+  stage   tokens now    dense   deform  tokens finer    dense   deform   speedup
+  ------------------------------------------------------------------------------
+  0              552     0.22     0.17          2208     1.97     0.51     3.89x
+  1              552     0.24     0.38          2208     2.20     0.89     2.46x
+  2              552     0.38     0.53          2208     2.72     1.77     1.53x
+  3              552     0.93     1.09           552     0.93     1.09     0.86x
+
+  cheapest of 15 interleaved rounds, which is the round that came nearest to
+  having the card alone. Two separately built copies of one configuration agree to
+  0.4%; the most contended configuration had a median 1.9x its cheapest.
+
+  whole forward pass now:      120.70 ms
+  fusion blocks now:            12.58 ms  (10.4%)
+    of which attention:          1.77 ms
+    of which everything else:   10.81 ms
+  outside fusion:              108.12 ms  (assumed unchanged)
+
+  configuration               fusion ms   total ms    share  vs today
+  -------------------------------------------------------------------
+  today, dense                    12.58     120.70    10.4%     1.00x
+  stride 16, dense                42.96     151.08    28.4%     1.25x
+  stride 16, deformable           39.40     147.52    26.7%     1.22x
+
+  --- verdict ---
+  Dense fusion at stride 16 would be 28.4% of the forward pass, and the sparse operator returns
+  3.56 ms of it -- 2.4% end to end.
+  Both rungs are worth training, dense first: it answers whether the grid is worth
+  anything without the operator confounded into it.
+
+  Forward-pass numbers, one batch. Training also carries the backward pass, so measure
+  a step before booking the hours.

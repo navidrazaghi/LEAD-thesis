@@ -1,0 +1,17 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds
+rung0,none,0,11381.xml,28.970266,46.72,0.620083,Failed - Agent got blocked,Town12,10,2609.5
+rung2a,none,0,11381.xml,15.894543,38.93,0.408285,Failed - Agent got blocked,Town12,11,2600.0
+rung4,none,0,11381.xml,1.438744,100,0.014387,Completed,Town12,28,1501.0
+ref0,none,0,11381.xml,34.21,34.21,1.0,Failed - Agent got blocked,Town12,7,2531.1
+rung0,none,0,14842.xml,12.233335,22.28,0.549073,Failed - Agent got blocked,Town12,7,1691.7
+rung2a,none,0,14842.xml,8.90779,100,0.089078,Completed,Town12,24,565.2
+rung4,none,0,14842.xml,32.525337,38.25,0.850336,Failed - Agent deviated from the route,Town12,8,327.0
+ref0,none,0,14842.xml,100.0,100,1.0,Completed,Town12,20,770.4
+rung0,none,0,14862.xml,10.200628,20.73,0.492071,Failed - Agent got blocked,Town12,6,1543.2
+rung2a,none,0,14862.xml,44.768297,51.47,0.869794,Failed - Agent got blocked,Town12,11,1398.6
+rung4,none,0,14862.xml,40.99,40.99,1.0,Failed - Agent deviated from the route,Town12,8,318.5
+ref0,none,0,14862.xml,100.0,100,1.0,Completed,Town12,18,348.6
+rung0,none,0,14909.xml,5.545727,20.12,0.275633,Failed - Agent got blocked,Town12,6,1585.8
+rung2a,none,0,14909.xml,5.665308,100,0.056653,Completed,Town12,25,1813.6
+rung4,none,0,14909.xml,41.63,41.63,1.0,Failed - Agent deviated from the route,Town12,8,297.4
+ref0,none,0,14909.xml,100.0,100,1.0,Completed,Town12,20,918.2

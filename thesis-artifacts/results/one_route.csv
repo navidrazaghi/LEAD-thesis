@@ -1,0 +1,2 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds
+rung4_ens,both,1.0,18305.xml,,,,NoResult,,,2700.3

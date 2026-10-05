@@ -1,0 +1,1080 @@
+debug_mode: false
+expert:
+  simulation:
+    carla_fps: 20
+    inital_frames_delay: 1
+    points_per_meter: 10
+    num_route_points_saved: 50
+    route_planner_min_distance: 7.5
+    route_planner_max_distance: 50.0
+    dense_route_planner_min_distance: 2.4
+    tp_distances:
+    - 3.0
+    - 3.25
+    - 3.5
+    - 3.75
+    - 4.0
+    - 4.25
+    - 4.5
+    - 4.75
+    - 5.0
+    - 5.25
+    - 5.5
+    - 5.75
+    - 6.0
+    - 6.25
+    - 6.5
+    - 6.75
+    - 7.0
+    - 7.25
+    - 7.5
+    - 7.75
+    - 8.0
+    - 8.25
+    - 8.5
+    - 8.75
+    - 9.0
+    - 9.25
+    - 9.5
+    - 9.75
+    - 10.0
+    use_kalman_filter: true
+    ego_extent_x: 2.4508416652679443
+    ego_extent_y: 1.0641621351242065
+    ego_extent_z: 0.7553732395172119
+    carla_frame_rate: 0.05
+  sensor_rig:
+    lidar_pos_1:
+    - 1.0
+    - 0.0
+    - 2.5
+    lidar_rot_1:
+    - 0.0
+    - 0.0
+    - -90.0
+    lidar_pos_2:
+    - -1.0
+    - 0.0
+    - 2.5
+    lidar_rot_2:
+    - 0.0
+    - 0.0
+    - -270.0
+    cameras:
+    - pos:
+      - 0.0
+      - -0.3
+      - 2.25
+      rot:
+      - 0.0
+      - 0.0
+      - -57.5
+      width: 384
+      height: 384
+      fov: 60
+    - pos:
+      - 0.25
+      - 0.0
+      - 2.25
+      rot:
+      - 0.0
+      - 0.0
+      - 0.0
+      width: 384
+      height: 384
+      fov: 60
+    - pos:
+      - 0.0
+      - 0.3
+      - 2.25
+      rot:
+      - 0.0
+      - 0.0
+      - 57.5
+      width: 384
+      height: 384
+      fov: 60
+    - pos:
+      - -0.3
+      - 0.3
+      - 2.25
+      rot:
+      - 0.0
+      - 0.0
+      - 122.5
+      width: 384
+      height: 384
+      fov: 60
+    - pos:
+      - -0.55
+      - 0.0
+      - 2.25
+      rot:
+      - 0.0
+      - 0.0
+      - 180.0
+      width: 384
+      height: 384
+      fov: 60
+    - pos:
+      - -0.3
+      - -0.3
+      - 2.25
+      rot:
+      - 0.0
+      - 0.0
+      - -122.5
+      width: 384
+      height: 384
+      fov: 60
+    num_cameras: 6
+    camera_width: 384
+    camera_height: 384
+    image_width: 2304
+    image_height: 384
+    radars:
+    - pos:
+      - 2.6
+      - 0.0
+      - 0.6
+      rot:
+      - 0.0
+      - 0.0
+      - -45.0
+      horz_fov: 90
+      vert_fov: 0.1
+    - pos:
+      - 2.6
+      - 0.0
+      - 0.6
+      rot:
+      - 0.0
+      - 0.0
+      - 45.0
+      horz_fov: 90
+      vert_fov: 0.1
+    - pos:
+      - -2.6
+      - 0.0
+      - 0.6
+      rot:
+      - 0.0
+      - 0.0
+      - 135.0
+      horz_fov: 90
+      vert_fov: 0.1
+    - pos:
+      - -2.6
+      - 0.0
+      - 0.6
+      rot:
+      - 0.0
+      - 0.0
+      - 225.0
+      horz_fov: 90
+      vert_fov: 0.1
+    num_radar_sensors: 4
+    use_radars: true
+  bicycle_model:
+    bicycle_frame_rate: 20
+    time_step: 0.05
+    front_wheel_base: -0.090769015
+    rear_wheel_base: 1.4178275
+    steering_gain: 0.36848336
+    brake_acceleration: -4.952399
+    throttle_acceleration: 0.5633837
+    throttle_threshold_during_forecasting: 0.3
+  perturbation:
+    perturbate_sensors: true
+    default_safety_translation_perturbation_penalty: 0.25
+    urban_safety_translation_perturbation_penalty: 0.4
+    camera_translation_perturbation_min: 0.1
+    camera_translation_perturbation_max: 1.0
+    camera_rotation_perturbation_min: 5.0
+    camera_rotation_perturbation_max: 12.5
+    camera_rotation_epsilon: 0.5
+  storage:
+    point_format: 0
+    point_precision_x: 0.1
+    point_precision_y: 0.1
+    point_precision_z: 0.1
+    save_depth_bits: 8
+    save_depth_max_meters: 50.0
+  driving:
+    min_target_speed_limit: 6.75
+    steer_noise: 0.001
+    detection_radius: 50.0
+    light_radius: 64.0
+    bb_save_radius: 96.0
+    ratio_target_speed_limit: 0.72
+    max_blocked_ticks: 170
+    min_walker_speed: 0.5
+    fps: 20.0
+    fps_inv: 0.05
+    unclearing_distance_to_stop_sign: 10
+    clearing_distance_to_stop_sign: 3.0
+    idm_stop_sign_minimum_distance: 2.0
+    idm_stop_sign_desired_time_headway: 0.5
+    idm_red_light_desired_time_headway: 0.5
+    idm_red_light_minimum_distance: 3.0
+    idm_overhead_red_light_minimum_distance: 9.0
+    idm_europe_red_light_minimum_distance: 6.0
+    idm_pedestrian_minimum_distance: 4.5
+    idm_pedestrian_desired_time_headway: 0.125
+    idm_bicycle_minimum_distance: 6.0
+    idm_bicycle_desired_time_headway: 0.5
+    idm_leading_vehicle_minimum_distance: 4.0
+    idm_leading_vehicle_time_headway: 0.25
+    idm_two_way_scenarios_minimum_distance: 2.0
+    idm_two_way_scenarios_time_headway: 0.1
+    idm_t_bound: 0.05
+    idm_maximum_acceleration: 24.0
+    idm_comfortable_braking_deceleration_low_speed: 8.7
+    idm_comfortable_braking_deceleration_high_speed: 3.72
+    idm_comfortable_braking_deceleration_threshold: 6.02
+    idm_acceleration_exponent: 4.0
+    pedestrian_minimum_extent: 1.5
+    high_speed_extent_factor_ego_x: 1.3
+    high_speed_extent_factor_ego_y: 1.2
+    extent_ego_bbs_speed_threshold: 5
+    forecast_length_lane_change: 1.1
+    default_forecast_length: 2.0
+    slow_speed_extent_factor_ego: 1.0
+    extent_other_vehicles_bbs_speed_threshold: 1.0
+    high_speed_min_extent_y_other_vehicle: 1.0
+    high_speed_extent_y_factor_other_vehicle: 1.3
+    high_speed_extent_x_factor_other_vehicle: 1.5
+    high_speed_min_extent_x_other_vehicle: 1.2
+    high_speed_min_extent_x_other_vehicle_lane_change: 2.0
+    braking_distance_calculation_safety_distance: 10
+    minimum_speed_to_prevent_rolling_back: 0.5
+    max_speed_in_junction_urban: 6.944444444444445
+    max_lookahead_to_check_for_junction: 300
+    tf_first_checkpoint_distance: 25
+    previous_road_lane_retrieve_distance: 100
+    next_road_lane_retrieve_distance: 100
+    check_path_free_safety_distance: 10
+    check_path_free_safety_time: 0.2
+    transition_smoothness_factor_construction_obstacle: 105.0
+    minimum_lookahead_distance_to_compute_near_lane_change: 200
+    check_previous_distance_for_lane_change: 150
+    draw_future_route_till_distance: 5000
+    default_max_distance_to_process_scenario: 50
+    hazard_at_side_lane_smooth_merging: true
+    max_distance_to_process_hazard_at_side_lane: 25
+    max_distance_to_process_hazard_at_side_lane_two_ways: 10
+    max_distance_to_overtake_two_way_scnearios: 80
+    default_overtake_speed: 11.11111111111111
+    distance_to_delete_scenario_in_two_ways: 20
+    transition_length_construction_obstacle_two_ways: 50
+    add_before_construction_obstacle_two_ways: 15
+    add_after_construction_obstacle_two_ways: 10
+    factor_construction_obstacle_two_ways: 1.08
+    add_after_accident_two_ways: -10
+    transition_length_accident_two_ways: 45
+    add_before_accident_two_ways: -10
+    factor_accident_two_ways: 1.0
+    transition_length_parked_obstacle_two_ways: 40
+    add_after_parked_obstacle_two_ways: 5
+    factor_parked_obstacle_two_ways: 1.0
+    add_before_parked_obstacle_two_ways: -5
+    factor_vehicle_opens_door_two_ways: 0.7
+    overtake_speed_vehicle_opens_door_two_ways: 8.75
+    add_before_vehicle_opens_door_two_ways: -10
+    add_after_vehicle_opens_door_two_ways: -10
+    transition_length_vehicle_opens_door_two_ways: 50
+    add_before_accident: 15
+    add_after_accident: 12
+    transition_smoothness_distance_accident: 100
+    add_before_parked_obstacle: 10
+    add_after_parked_obstacle: 10
+    transition_smoothness_distance_parked_obstacle: 100
+    add_before_construction_obstacle: 15
+    add_after_construction_obstacle: 15
+    transition_smoothness_distance_construction_obstacle: 100
+    ego_vehicles_route_point_search_distance: 40
+    lane_shift_extension_length_for_yield_to_emergency_vehicle: 200
+    transition_smoothness_distance: 80
+    route_shift_start_distance_invading_turn: 150
+    route_shift_end_distance_invading_turn: 100
+    fence_avoidance_margin_invading_turn: 0.3
+    minimum_lane_width_threshold: 2.5
+    speed_limit_waypoints_spacing_check: 50
+    leading_vehicles_max_route_distance: 2.5
+    leading_vehicles_max_route_angle_distance: 35.0
+    leading_vehicles_maximum_detection_radius: 800
+    trailing_vehicles_max_route_distance: 3.0
+    trailing_vehicles_max_route_distance_lane_change: 6.0
+    tailing_vehicles_maximum_detection_radius: 800
+    max_distance_lane_change_trailing_vehicles: 150
+    extra_route_length: 50
+    max_distance_between_future_route_points: 0.25
+    discontinuous_road_max_future_points: 0.5
+    discontinuous_road_max_speed: 12.5
+    discontinuous_road_max_future_check: 100
+    high_road_curvature_max_future_points: 200
+    high_road_curvature_max_speed: 12.5
+  pid:
+    longitudinal_linear_regression_minimum_target_speed: 0.278
+    longitudinal_linear_regression_maximum_acceleration: 1.89
+    longitudinal_linear_regression_maximum_deceleration: -4.82
+    lateral_pid_kp: 3.118357247806046
+    lateral_pid_kd: 1.3782508892109167
+    lateral_pid_ki: 0.6406067986034124
+    lateral_pid_speed_scale: 0.9755321901954155
+    lateral_pid_speed_offset: 1.9152884533402488
+    lateral_pid_window_size: 6
+    lateral_pid_minimum_lookahead_distance: 24.0
+    lateral_pid_maximum_lookahead_distance: 105.0
+  occlusion:
+    vehicle_min_num_lidar_points: 3
+    vehicle_min_num_visible_pixels: 5
+    pedestrian_min_num_lidar_points: 5
+    pedestrian_min_num_visible_pixels: 15
+    static_prop_min_num_lidar_points: 1
+    static_prop_min_num_visible_pixels: 1
+    pedestrian_occlusion_check_min_visible_pixels: 10
+    bikers_occlusion_check: true
+    bikers_occlusion_check_min_visible_pixels: 10
+    vehicle_occlusion_check: true
+    vehicle_occlusion_check_min_visible_pixels: 1
+    vehicle_occlusion_check_min_num_points: 1
+  data_collection:
+    py123d_dataset: carla
+    py123d_split: normal_view
+    py123d_perturbated_split: perturbated_view
+    profile_expert: false
+    profile_expert_freq: 0
+    log_info_freq: 1
+    data_save_freq: 5
+    lidar_store_freq: 1
+    radar_store_freq: 1
+    box_detections_store_freq: 1
+    traffic_light_store_freq: 1
+    camera_store_freq: 5
+    depth_store_freq: 5
+    instance_store_freq: 5
+    min_x_meter: -32
+    max_x_meter: 64
+    min_y_meter: -40
+    max_y_meter: 40
+    shuffle_weather: true
+    nice_weather: false
+    jpeg_compression: true
+    datagen: true
+    traffic_warning_bb_size:
+    - 1.186714768409729
+    - 1.4352929592132568
+    construction_cone_bb_size:
+    - 0.1720348298549652
+    - 0.1720348298549652
+    eval_expert: false
+    save_sensors: true
+    save_depth: true
+    png_storage_compression_level: 6
+    weather_jpeg_compression_quality:
+      ClearNight:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      ClearNoon:
+        30: 0.2777777777777778
+        40: 0.38888888888888884
+        50: 0.16666666666666666
+        90: 0.16666666666666666
+      ClearSunset:
+        30: 0.2777777777777778
+        40: 0.38888888888888884
+        50: 0.16666666666666666
+        90: 0.16666666666666666
+      ClearSunrise:
+        30: 0.2777777777777778
+        40: 0.38888888888888884
+        50: 0.16666666666666666
+        90: 0.16666666666666666
+      CloudyNight:
+        70: 0.15789473684210525
+        75: 0.2631578947368421
+        80: 0.42105263157894735
+        90: 0.15789473684210525
+      CloudyNoon:
+        30: 0.2777777777777778
+        40: 0.38888888888888884
+        50: 0.16666666666666666
+        90: 0.16666666666666666
+      CloudySunset:
+        30: 0.2777777777777778
+        40: 0.38888888888888884
+        50: 0.16666666666666666
+        90: 0.16666666666666666
+      CloudySunrise:
+        30: 0.2777777777777778
+        40: 0.38888888888888884
+        50: 0.16666666666666666
+        90: 0.16666666666666666
+      DustStorm:
+        55: 0.2222222222222222
+        65: 0.4444444444444444
+        75: 0.16666666666666663
+        90: 0.16666666666666663
+      HardRainNight:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+      HardRainNoon:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      HardRainSunset:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      HardRainSunrise:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      MidRainyNight:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+      MidRainyNoon:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      MidRainSunset:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      MidRainSunrise:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      SoftRainNight:
+        70: 0.15789473684210525
+        75: 0.2631578947368421
+        80: 0.42105263157894735
+        90: 0.15789473684210525
+      SoftRainNoon:
+        55: 0.2222222222222222
+        65: 0.4444444444444444
+        75: 0.16666666666666663
+        90: 0.16666666666666663
+      SoftRainSunset:
+        55: 0.2222222222222222
+        65: 0.4444444444444444
+        75: 0.16666666666666663
+        90: 0.16666666666666663
+      SoftRainSunrise:
+        55: 0.2222222222222222
+        65: 0.4444444444444444
+        75: 0.16666666666666663
+        90: 0.16666666666666663
+      WetCloudyNight:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+      WetCloudyNoon:
+        55: 0.2222222222222222
+        65: 0.4444444444444444
+        75: 0.16666666666666663
+        90: 0.16666666666666663
+      WetCloudySunset:
+        55: 0.2222222222222222
+        65: 0.4444444444444444
+        75: 0.16666666666666663
+        90: 0.16666666666666663
+      WetCloudySunrise:
+        55: 0.2222222222222222
+        65: 0.4444444444444444
+        75: 0.16666666666666663
+        90: 0.16666666666666663
+      WetNight:
+        70: 0.15789473684210525
+        75: 0.2631578947368421
+        80: 0.42105263157894735
+        90: 0.15789473684210525
+      WetNoon:
+        55: 0.2222222222222222
+        65: 0.4444444444444444
+        75: 0.16666666666666663
+        90: 0.16666666666666663
+      FoggyCloudyNight:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyCloudyNoon:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyCloudySunset:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyCloudySunrise:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyWetCloudyNight:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyWetCloudyNoon:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyWetCloudySunset:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyWetCloudySunrise:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyWetNoon:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggySoftRainNight:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggySoftRainNoon:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggySoftRainSunset:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggySoftRainSunrise:
+        70: 0.3333333333333333
+        75: 0.26666666666666666
+        80: 0.19999999999999998
+        90: 0.19999999999999998
+      FoggyHardRainNight:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+      Custom0:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      Custom9:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      Custom10:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+      Custom11:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      Custom12:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      Custom13:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+      Custom14:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      Custom15:
+        60: 0.13333333333333333
+        65: 0.13333333333333333
+        70: 0.13333333333333333
+        75: 0.26666666666666666
+        80: 0.13333333333333333
+        90: 0.19999999999999998
+      Custom19:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+      Custom20:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+      Custom21:
+        80: 0.3
+        85: 0.5
+        90: 0.2
+  visualization:
+    draw_life_time: 0.051
+    future_route_color:
+    - 0
+    - 255
+    - 0
+    other_vehicles_forecasted_bbs_color:
+    - 0
+    - 0
+    - 255
+    leading_vehicle_color:
+    - 255
+    - 0
+    - 0
+    trailing_vehicle_color:
+    - 255
+    - 255
+    - 255
+    ego_vehicle_bb_color:
+    - 0
+    - 0
+    - 0
+    pedestrian_forecasted_bbs_color:
+    - 0
+    - 0
+    - 255
+    red_traffic_light_color:
+    - 0
+    - 255
+    - 0
+    yellow_traffic_light_color:
+    - 255
+    - 255
+    - 0
+    green_traffic_light_color:
+    - 255
+    - 0
+    - 0
+    off_traffic_light_color:
+    - 0
+    - 0
+    - 0
+    unknown_traffic_light_color:
+    - 0
+    - 0
+    - 0
+    cleared_stop_sign_color:
+    - 0
+    - 255
+    - 0
+    uncleared_stop_sign_color:
+    - 255
+    - 0
+    - 0
+    ego_vehicle_forecasted_bbs_hazard_color:
+    - 255
+    - 0
+    - 0
+    ego_vehicle_forecasted_bbs_normal_color:
+    - 0
+    - 255
+    - 0
+    highlight_route_segment_color:
+    - 255
+    - 0
+    - 0
+    source_lane_color:
+    - 0
+    - 255
+    - 0
+    target_lane_color:
+    - 255
+    - 0
+    - 0
+    opponent_traffic_route_color:
+    - 255
+    - 0
+    - 0
+    intersection_point_color:
+    - 0
+    - 0
+    - 255
+    adversarial_color:
+    - 255
+    - 0
+    - 0
+    visualize_source_lane: false
+    visualize_target_lane: false
+    visualize_adversarial: false
+    visualize_planning_area: false
+    visualize_radar: false
+    visualize_target_points: false
+    visualize_route: false
+    visualize_original_route: false
+    visualize_bb_ids: false
+    visualize_internal_data: false
+    visualize_bounding_boxes: false
+    visualize_traffic_lights_bounding_boxes: false
+policy:
+  target: lead.policy.transfuser.transfuser:Transfuser
+  transfuser:
+    cache_store_dir_name: transfuser_training_cache
+    future_window_num_iterations: 0
+    required_scene_modalities:
+    - ego_state_se3
+    - box_detections_se3@initial
+    - custom.driving_meta@initial
+    - camera:all@initial
+    final_image_width: 1152
+    final_image_height: 384
+    img_vert_anchors: 12
+    img_horz_anchors: 36
+    backbone_target: lead.policy.transfuser.encoder.backbone_deformable_fusion:DeformableFusionBackbone
+    freeze_backbone: false
+    norm_layers_in_fp32: true
+    image_architecture: resnet34
+    lidar_architecture: resnet34
+    LTF: false
+    block_exp: 4
+    n_layer: 2
+    n_head: 4
+    embd_pdrop: 0.1
+    resid_pdrop: 0.1
+    attn_pdrop: 0.1
+    deformable_num_points: 4
+    deformable_learn_cross_reference: true
+    deformable_calibrated_reference: true
+    deformable_reference_height_meter: 0.8
+    gpt_linear_layer_init_mean: 0.0
+    gpt_linear_layer_init_std: 0.02
+    gpt_layer_norm_init_weight: 1.0
+    bev_pixels_per_meter: 4.0
+    bev_min_x_meter: -32
+    bev_max_x_meter: 64
+    bev_min_y_meter: -40
+    bev_max_y_meter: 40
+    lidar_width_pixel: 384
+    lidar_height_pixel: 320
+    lidar_bev_grid_rows: 10
+    lidar_bev_grid_cols: 12
+    max_lidar_points_per_bev_pixel: 5
+    lidar_max_height_meter: 10.0
+    lidar_min_height_meter: -4.0
+    accumulate_lidar_sweeps: true
+    remove_lidar_ground_points: true
+    merge_radar_into_lidar: true
+    duplicate_radar_near_ego: true
+    duplicate_radar_radius_meter: 32
+    duplicate_radar_repeat_count: 5
+    use_radar_detection: true
+    num_radar_points_per_sensor: 75
+    num_radar_queries: 20
+    radar_hidden_dim_tokenizer: 1024
+    radar_token_dim: 256
+    radar_tf_dim_ff: 1024
+    radar_dropout: 0.1
+    radar_num_heads: 8
+    radar_num_layers: 4
+    radar_hidden_dim_decoder: 1024
+    radar_classification_loss_weight: 1.0
+    radar_regression_loss_weight: 5.0
+    use_semantic: true
+    num_semantic_classes: 10
+    deconv_channel_num_0: 128
+    deconv_channel_num_1: 64
+    deconv_channel_num_2: 32
+    deconv_scale_factor_0: 4
+    deconv_scale_factor_1: 8
+    use_depth: true
+    use_bev_semantic: true
+    num_bev_semantic_classes: 12
+    pedestrian_bev_extent_scale: 2.5
+    pedestrian_bev_min_half_extent_meter: 0.4
+    lane_marker_width_meter: 0.25
+    lane_marker_thickness_pixel: 1
+    bev_feature_channels: 64
+    bev_downsample_factor: 4
+    bev_upsample_factor: 2
+    detect_boxes: true
+    predict_box_velocity: true
+    min_box_center_z_meter: -4
+    max_box_center_z_meter: 4
+    detected_static_prop_type_ids:
+    - static.prop.constructioncone
+    - static.prop.trafficwarning
+    - static.prop.warningconstruction
+    - static.prop.warningaccident
+    box_confidence_threshold: 0.3
+    max_num_boxes: 90
+    num_yaw_bins: 12
+    max_center_net_detections: 100
+    center_net_max_pooling_kernel_size: 3
+    box_head_input_channels: 64
+    open_door_extra_width_meter: 1.2
+    num_box_classes: 7
+    use_velocity: true
+    max_speed_mps: 25.0
+    use_previous_target_point: true
+    use_next_target_point: true
+    use_target_point: true
+    target_point_normalization_xy:
+    - - 200.0
+      - 50.0
+    target_point_pop_distance: 3.25
+    use_observability: false
+    observability_soft_targets: true
+    observability_head_channels: 64
+    use_observability_gate: false
+    observability_gate_loss_weight: 1.0
+    use_planning_decoder: false
+    is_pretraining: true
+    needs_planning_targets: false
+    transfuser_num_bev_cross_attention_layers: 6
+    transfuser_num_bev_cross_attention_heads: 8
+    transfuser_token_dim: 256
+    predict_target_speed: true
+    predict_spatial_path: true
+    predict_temporal_spatial_waypoints: true
+    target_speed_classes:
+    - 0.0
+    - 4.0
+    - 8.0
+    - 10.0
+    - 13.88888888
+    - 16.0
+    - 17.77777777
+    - 20.0
+    smooth_route: true
+    num_route_points_smoothing: 20
+    num_route_points_prediction: 10
+    cache_store_root: /home/razzaghi/LEAD/lead/data/lead/123D/transfuser_training_cache
+    past_ego_pose_length_s: 0.0
+    past_ego_pose_frequency: 20
+    past_lidar_length_s: 0.2
+    past_lidar_frequency: 20
+    past_radar_length_s: 0.2
+    past_radar_frequency: 20
+    past_rgb_length_s: 0.0
+    past_rgb_frequency: 4
+    future_ego_pose_length_s: 2.0
+    future_ego_pose_frequency: 4
+    past_window_num_iterations: 4
+    required_history_num_iterations: 0
+    past_lidar_num_iterations: 4
+    past_radar_num_iterations: 4
+    past_ego_pose_tick_ages:
+    - 0
+    past_lidar_tick_ages:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    past_radar_tick_ages:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    past_rgb_tick_ages:
+    - 0
+    future_ego_pose_num_iterations: 40
+    future_ego_pose_iterations:
+    - 5
+    - 10
+    - 15
+    - 20
+    - 25
+    - 30
+    - 35
+    - 40
+    num_ego_pose_prediction: 8
+  ego_status:
+    cache_store_dir_name: ego_status_training_cache
+    input_cameras: []
+    past_ego_pose_length_s: 0.0
+    past_lidar_length_s: 0.0
+    past_radar_length_s: 0.0
+    past_rgb_length_s: 0.0
+    hidden_dim: 256
+    num_hidden_layers: 2
+    cache_store_root: /home/razzaghi/LEAD/lead/data/lead/123D/ego_status_training_cache
+    required_scene_modalities:
+    - ego_state_se3
+    - custom.driving_meta@initial
+    past_ego_pose_frequency: 20
+    past_lidar_frequency: 20
+    past_radar_frequency: 20
+    past_rgb_frequency: 4
+    future_ego_pose_length_s: 2.0
+    future_ego_pose_frequency: 4
+    past_window_num_iterations: 0
+    required_history_num_iterations: 0
+    future_window_num_iterations: 40
+    past_lidar_num_iterations: 0
+    past_radar_num_iterations: 0
+    past_ego_pose_tick_ages:
+    - 0
+    past_lidar_tick_ages:
+    - 0
+    past_radar_tick_ages:
+    - 0
+    past_rgb_tick_ages:
+    - 0
+    future_ego_pose_num_iterations: 40
+    future_ego_pose_iterations:
+    - 5
+    - 10
+    - 15
+    - 20
+    - 25
+    - 30
+    - 35
+    - 40
+    num_ego_pose_prediction: 8
+training:
+  experiment:
+    seed: 0
+    wandb_run_name: An example experiment description.
+    initial_weights_file: null
+    resume_from_last_checkpoint: true
+    output_dir: /home/razzaghi/LEAD/lead/outputs/rung2_deformable_calibrated
+    wandb_id: null
+    wandb_resume_mode: never
+    wandb_project_name: lead
+    log_wandb: true
+    visualize_training: true
+    visualize_dataset: false
+    log_scalars_every_n_steps: 50
+    log_images_every_n_steps: 5000
+  optimization:
+    learning_rate: 0.0003
+    weight_decay: 0.01
+    num_epochs: 10
+    batch_size: 8
+    use_mixed_precision_training: true
+    sync_batchnorm: false
+    use_torch_compile: true
+    torch_compile_mode: default
+    torch_compile_fullgraph: false
+    use_channels_last_memory_format: true
+    save_model_checkpoint: true
+    epochs_to_keep_checkpoints_for: []
+  lightning:
+    accelerator: auto
+    devices: auto
+    num_nodes: 1
+    strategy: auto
+    ddp_broadcast_buffers: false
+    ddp_static_graph: true
+    ddp_gradient_as_bucket_view: true
+    ddp_timeout_seconds: 1800
+    max_steps: -1
+    limit_train_batches: 1.0
+    accumulate_grad_batches: 1
+    num_sanity_val_steps: 0
+    gradient_clip_val: 0.0
+    gradient_clip_algorithm: norm
+    benchmark: true
+    deterministic: false
+    enable_progress_bar: true
+    enable_model_summary: true
+    profiler: ''
+    fast_dev_run: 0
+    overfit_batches: 0.0
+    detect_anomaly: false
+  data:
+    py123d_split: normal_view
+    py123d_log_names: []
+    towns: []
+    max_num_scenes: 0
+    num_chunks: 1
+    chunk_index: 0
+    shuffle_scenes: false
+    prefetch_batches_per_worker: 2
+    workers_per_cpu_core: 1
+    loader_in_order: true
+    pin_memory: true
+    copy_batch_on_side_stream: true
+    use_sensor_perturbation: true
+    sensor_perturbation_probability: 0.5
+    use_color_augmentation: true
+    color_augmentation_probability: 0.2
+    use_sensor_degradation: false
+    sensor_degradation_probability: 0.5
+    sensor_degradation_max_severity: 1.0
+    read_from_cache_store: true
+    force_cache_rebuild: false
+    cache_build_shard_index: 0
+    cache_build_shard_count: 1
+evaluation:
+  inference:
+    lower_target_speed: false
+    lower_target_speed_factor: 0.8
+    brake_threshold: 0.9
+    degrade_modality: none
+    degrade_severity: 0.0
+    strict_weight_load: true
+    jpeg_quality: 90
+    steer_modality: route
+    throttle_modality: target_speed
+    brake_modality: target_speed
+  controller:
+    route_planner_min_distance: 5.0
+    route_planner_max_distance: 50
+    sensor_agent_skip_distant_target_point: true
+    sensor_agent_skip_distant_target_point_threshold: 50
+    sensor_agent_pop_distance_adaptive: true
+    waypoint_speed_delta_clip: 0.99
+    aim_distance_fast: 3.0
+    aim_distance_slow: 2.25
+    aim_distance_threshold: 5.5
+    turn_kp: 1.25
+    turn_ki: 0.75
+    turn_kd: 0.3
+    turn_error_window: 20
+    speed_kp: 1.75
+    speed_ki: 1.0
+    speed_kd: 2.0
+    speed_error_window: 20
+    brake_speed: 0.4
+    brake_ratio: 1.1
+    tuned_aim_distance: false
+  produce_frame_frequency: 1
+  produce_demo_image: false
+  produce_demo_video: true
+  produce_debug_image: false
+  produce_debug_video: false
+  produce_input_image: false
+  produce_input_video: false
+  produce_grid_image: false
+  produce_grid_video: false
+  produce_input_log: false
+  save_path: null
+  is_bench2drive: false
+  video_fps: 20.0
