@@ -188,6 +188,30 @@ class InferenceConfig(ConfigNode):
     # JPEG quality used in inference (0-100)
     jpeg_quality: int = 90
 
+    # --- Escape from a stalled state ---
+    # The controller derives its demand from the predicted plan, and zero
+    # demand means zero throttle. A stopped car then sees a scene in which it
+    # is stopped and predicts stopping again, so the state is self-
+    # reinforcing: nothing in the control path can restore motion, and a route
+    # ends with the vehicle motionless and no fault recorded anywhere.
+    #
+    # With this on, a small throttle is applied once the vehicle has been
+    # continuously stationary for ``creep_after_seconds``, for
+    # ``creep_seconds`` at a time, and then the wait starts again.
+    #
+    # Off by default, and it must stay off to reproduce this project's
+    # results: every closed-loop number was collected without it, so a run
+    # with it on is not comparable with those tables.
+    creep_when_stuck: bool = False
+    # How long the vehicle must be continuously stationary before it creeps.
+    creep_after_seconds: float = 30.0
+    # Speed below which the vehicle counts as stationary, in m/s.
+    creep_speed_threshold: float = 0.1
+    # Throttle applied while creeping, in [0, 1].
+    creep_throttle: float = 0.4
+    # How long one creep lasts, in seconds.
+    creep_seconds: float = 1.0
+
     # --- Control which output is used for controlling ---
     # Modality used for steering control
     steer_modality: str = "route"

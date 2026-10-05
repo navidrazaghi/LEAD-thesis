@@ -66,6 +66,11 @@ class TransfuserAgent(AbstractDrivingAgent):
             inference.caution_smoothing_ticks,
         )
         self.caution = 0.0
+        # Ticks the vehicle has been continuously stationary, and ticks left
+        # in the creep now running. A fresh agent is built per route, so both
+        # start at zero for every route rather than carrying across the sweep.
+        self.stationary_ticks = 0
+        self.creep_ticks_left = 0
 
     def compute_control(
         self,
@@ -87,6 +92,61 @@ class TransfuserAgent(AbstractDrivingAgent):
             throttle=float(self.agent_prediction.throttle),
             brake=float(self.agent_prediction.brake),
         )
+
+    def _creep_if_stuck(
+        self,
+        throttle: float,
+        brake: float,
+        ego_speed: float,
+    ) -> tuple[float, float]:
+        """Nudge the vehicle forward when it has been stationary too long.
+
+        Throttle is ignored while the brake is held, so a creep has to release
+        the brake as well as raise the throttle or the vehicle does not move.
+
+        Steering is deliberately left as it is. By the time a creep triggers
+        the vehicle is braking and stationary, and the caller has already
+        zeroed the steering for that case, so the nudge is straight ahead. It
+        is meant to break the loop, not to follow the route.
+
+        Args:
+            throttle: The throttle the trackers asked for.
+            brake: The brake the trackers asked for.
+            ego_speed: Current speed of the vehicle in m/s.
+
+        Returns:
+            The throttle and brake to apply this tick.
+        """
+        inference = self.lead_config.evaluation.inference
+        if not inference.creep_when_stuck:
+            return throttle, brake
+
+        ticks_per_second = self.lead_config.expert.simulation.carla_fps
+        if ego_speed < inference.creep_speed_threshold:
+            self.stationary_ticks += 1
+        else:
+            self.stationary_ticks = 0
+            self.creep_ticks_left = 0
+
+        if self.creep_ticks_left == 0 and self.stationary_ticks >= (
+            inference.creep_after_seconds * ticks_per_second
+        ):
+            self.creep_ticks_left = max(
+                1,
+                round(inference.creep_seconds * ticks_per_second),
+            )
+
+        if self.creep_ticks_left > 0:
+            self.creep_ticks_left -= 1
+            if self.creep_ticks_left == 0:
+                # Wait a full interval before trying again. Without this the
+                # trigger condition is still true on the next tick, and a
+                # nudge that failed to free the car becomes a throttle held
+                # down for the rest of the route.
+                self.stationary_ticks = 0
+            return inference.creep_throttle, 0.0
+
+        return throttle, brake
 
     def _post_process_target_speed(
         self,
@@ -312,6 +372,8 @@ class TransfuserAgent(AbstractDrivingAgent):
                 ego_speed < 0.01
             ):  # When we don't move we don't want the angle error to accumulate in the integral
                 steer = 0.0
+
+        throttle, brake = self._creep_if_stuck(throttle, brake, float(ego_speed))
 
         return AgentPrediction(
             prediction=prediction,
