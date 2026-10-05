@@ -8,6 +8,10 @@ import torch.nn.functional as F
 from torch import nn
 
 from lead.config import LeadConfig
+from lead.policy.transfuser.encoder import cross_modal_hallucination
+from lead.policy.transfuser.encoder.cross_modal_hallucination import (
+    CrossModalHallucination,
+)
 from lead.policy.transfuser.dataloader.sample import TransfuserForwardBatch
 from lead.policy.transfuser.encoder.residual_gain import ResidualGain
 from lead.policy.transfuser.utils import ops
@@ -65,6 +69,26 @@ class TransfuserBackbone(nn.Module):
         self.num_lidar_features = self.lidar_encoder.feature_info.info[
             lidar_start_index + 3
         ]["num_chs"]
+        # Reads the camera at the first fusion level and predicts the LiDAR
+        # grid there, so a destroyed LiDAR has something to be replaced with.
+        # Level 0 because the later levels have already been fused: by then the
+        # damage has crossed into the camera stream and there is no clean
+        # source left.
+        self.cross_modal_hallucination = None
+        if config.use_cross_modal_hallucination:
+            self.cross_modal_hallucination = CrossModalHallucination(
+                lead_config,
+                self.image_encoder.feature_info.info[image_start_index]["num_chs"],
+                self.lidar_encoder.feature_info.info[lidar_start_index]["num_chs"],
+            )
+        # (prediction, target, mask) of the last forward, for the loss. Read it
+        # straight after the backbone runs, the way gate_logits is read.
+        self.hallucination: tuple[
+            torch.Tensor,
+            torch.Tensor,
+            torch.Tensor,
+        ] | None = None
+
         self.lidar_channel_to_img = nn.ModuleList(
             [
                 nn.Conv2d(
@@ -267,6 +291,21 @@ class TransfuserBackbone(nn.Module):
                 self.lidar_encoder.return_layers,
                 lidar_features,
             )
+            if i == 0 and self.cross_modal_hallucination is not None:
+                predicted, mask = self.cross_modal_hallucination(
+                    image_features,
+                    lidar_features.shape[2],
+                    lidar_features.shape[3],
+                )
+                self.hallucination = (predicted, lidar_features, mask)
+                if self.lead_config.evaluation.inference.hallucinate_missing_lidar:
+                    lidar_features = cross_modal_hallucination.blend(
+                        lidar_features,
+                        predicted,
+                        mask,
+                        cross_modal_hallucination.lidar_reliability(self.lead_config),
+                    )
+
             image_features, lidar_features = self.fuse_features(
                 image_features,
                 lidar_features,

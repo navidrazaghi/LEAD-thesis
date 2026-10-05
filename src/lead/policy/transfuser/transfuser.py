@@ -35,6 +35,9 @@ from lead.policy.transfuser.decoder.waypoint_ensemble import (
     bootstrap_weights,
     ensemble_loss,
 )
+from lead.policy.transfuser.encoder.cross_modal_hallucination import (
+    hallucination_loss,
+)
 from lead.policy.transfuser.encoder.observability_gate import (
     ObservabilityTokenTargets,
     gate_loss,
@@ -417,6 +420,12 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 token_target,
                 token_mask,
             )
+
+        # Cross-modal hallucination loss, on the cells a camera can see
+        if self.backbone.cross_modal_hallucination is not None:
+            assert self.backbone.hallucination is not None
+            predicted, target, mask = self.backbone.hallucination
+            loss["loss_hallucination"] = hallucination_loss(predicted, target, mask)
 
         # Bounding box detection loss
         if self.config.detect_boxes:

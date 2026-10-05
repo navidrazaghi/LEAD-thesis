@@ -168,8 +168,12 @@ def stitched_camera_specs(lead_config: LeadConfig) -> list[CameraSpec]:
     return specs
 
 
-def bev_cell_centres(lead_config: LeadConfig) -> jt.Float[npt.NDArray, "n 2"]:
-    """Ego-frame ``(x, y)`` centre of every BEV token, in token order.
+def bev_cell_centres(
+    lead_config: LeadConfig,
+    rows: int | None = None,
+    cols: int | None = None,
+) -> jt.Float[npt.NDArray, "n 2"]:
+    """Ego-frame ``(x, y)`` centre of every BEV cell, in raster order.
 
     The BEV raster runs its columns along x, back to front, and its rows along
     y, left to right; the tokens flatten row-major, as
@@ -178,13 +182,17 @@ def bev_cell_centres(lead_config: LeadConfig) -> jt.Float[npt.NDArray, "n 2"]:
 
     Args:
         lead_config: Root config tree.
+        rows: Rows to divide the extent into; the token grid when None. The
+            fusion levels carry the same extent at coarser resolutions, and
+            they need the same correspondence over their own cells.
+        cols: Columns to divide the extent into; the token grid when None.
 
     Returns:
         The cell centres in metres.
     """
     config = lead_config.policy.transfuser
-    rows = config.lidar_bev_grid_rows
-    cols = config.lidar_bev_grid_cols
+    rows = config.lidar_bev_grid_rows if rows is None else rows
+    cols = config.lidar_bev_grid_cols if cols is None else cols
     x_span = config.bev_max_x_meter - config.bev_min_x_meter
     y_span = config.bev_max_y_meter - config.bev_min_y_meter
 
@@ -217,6 +225,8 @@ def image_token_pixels(
 def bev_cells_in_image(
     lead_config: LeadConfig,
     reference_height_meter: float,
+    rows: int | None = None,
+    cols: int | None = None,
 ) -> tuple[jt.Float[npt.NDArray, "n 2"], jt.Bool[npt.NDArray, " n"]]:
     """Where each BEV token lands in the stitched image, normalized to [0, 1].
 
@@ -228,6 +238,8 @@ def bev_cells_in_image(
         lead_config: Root config tree.
         reference_height_meter: Height above the ego's ground plane at which
             the cell is projected.
+        rows: Rows of the grid to describe; the token grid when None.
+        cols: Columns of the grid to describe; the token grid when None.
 
     Returns:
         The normalized ``(x, y)`` image positions, and whether each cell is
@@ -235,7 +247,7 @@ def bev_cells_in_image(
     """
     config = lead_config.policy.transfuser
     specs = stitched_camera_specs(lead_config)
-    centres = bev_cell_centres(lead_config)
+    centres = bev_cell_centres(lead_config, rows, cols)
     points = np.concatenate(
         [centres, np.full((centres.shape[0], 1), reference_height_meter)],
         axis=1,

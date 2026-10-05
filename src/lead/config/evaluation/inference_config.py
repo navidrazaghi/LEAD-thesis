@@ -171,6 +171,10 @@ class InferenceConfig(ConfigNode):
     # does not drive better, the estimator is not what failed. Only meaningful
     # alongside degrade_modality, whose severity is uniform over the modality;
     # a degrade_family is spatial and has no scalar truth to substitute.
+    # Substitute the camera prediction for the LiDAR grid, in proportion to
+    # the damage the harness applied. Needs a checkpoint trained with
+    # use_cross_modal_hallucination; without one the head is untrained noise.
+    hallucinate_missing_lidar: bool = False
     oracle_gate: bool = False
     # Logit subtracted from the destroyed modality at severity 1. The exact
     # form is log(1 - severity), which diverges at 1, so a finite stand-in is

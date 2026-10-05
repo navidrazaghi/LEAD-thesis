@@ -58,6 +58,15 @@ class TransfuserBackboneConfig(ConfigNode):
     # the middle of whatever occupies it rather than at its footprint.
     deformable_reference_height_meter: float = 0.8
 
+    # If true the camera branch is trained to predict the BEV grid the LiDAR
+    # branch produces, so a damaged LiDAR can be stood in for rather than only
+    # weighted down. The gate moves attention between what the encoders made;
+    # this rebuilds what one of them stopped making. Adds a head and one
+    # auxiliary loss, and changes nothing at inference on its own.
+    use_cross_modal_hallucination: bool = False
+    # Weight of that auxiliary loss relative to the other tasks.
+    hallucination_loss_weight: float = 1.0
+
     # Mean of the normal distribution initialization for linear layers in the GPT.
     gpt_linear_layer_init_mean: float = 0.0
     # Std of the normal distribution initialization for linear layers in the GPT.
