@@ -59,6 +59,7 @@ class DeformableBlock(nn.Module):
         base_reference_points: torch.Tensor | None,
         gated: bool,
         gained: bool,
+        lead_config: LeadConfig,
     ) -> None:
         """Initialize a transformer block with deformable attention.
 
@@ -76,11 +77,16 @@ class DeformableBlock(nn.Module):
             gated: Whether an observability gate shifts the modality weights.
             gained: Whether a residual gain scales how much of the attention
                 output enters the token.
+            lead_config: Root config tree, forwarded to the gate.
         """
         super().__init__()
         self.ln1 = nn.LayerNorm(n_embd)
         self.ln2 = nn.LayerNorm(n_embd)
-        self.gate = ObservabilityGate(n_embd, len(spatial_shapes)) if gated else None
+        self.gate = (
+            ObservabilityGate(n_embd, len(spatial_shapes), lead_config)
+            if gated
+            else None
+        )
         self.residual_gain = ResidualGain(n_embd) if gained else None
         self.attn = MultiScaleDeformableAttention(
             n_embd=n_embd,
@@ -217,6 +223,7 @@ class DeformableGPT(GPT):
                     base_reference_points,
                     config.use_observability_gate,
                     config.use_residual_gain,
+                    lead_config,
                 )
                 for _ in range(config.n_layer)
             ],

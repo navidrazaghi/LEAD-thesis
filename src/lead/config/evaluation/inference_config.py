@@ -166,6 +166,17 @@ class InferenceConfig(ConfigNode):
     # seed meet the same noise and the same dropped returns, so the difference
     # between them is the model rather than two draws from one distribution.
     degrade_seed: int = 0
+    # Replace the gate's prediction with the reliability this harness knows to
+    # be true. It bounds the mechanism: if a gate handed the right answer still
+    # does not drive better, the estimator is not what failed. Only meaningful
+    # alongside degrade_modality, whose severity is uniform over the modality;
+    # a degrade_family is spatial and has no scalar truth to substitute.
+    oracle_gate: bool = False
+    # Logit subtracted from the destroyed modality at severity 1. The exact
+    # form is log(1 - severity), which diverges at 1, so a finite stand-in is
+    # used: at 10 the modality keeps 5e-5 of its weight, which is a mask in
+    # every practical sense and stays differentiable.
+    oracle_gate_strength: float = 10.0
 
     strict_weight_load: bool = True
 

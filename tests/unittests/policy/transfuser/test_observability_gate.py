@@ -54,7 +54,7 @@ class TestGateInitialization:
     """Tests that a gated model starts where the ungated one does."""
 
     def test_projection_starts_at_zero(self) -> None:
-        gate = ObservabilityGate(64, 2)
+        gate = ObservabilityGate(64, 2, load_lead_config())
         assert (gate.head.weight == 0.0).all()
         assert (gate.head.bias == 0.0).all()
 
@@ -62,13 +62,13 @@ class TestGateInitialization:
         self,
         attention: MultiScaleDeformableAttention,
     ) -> None:
-        gate = ObservabilityGate(64, 2)
+        gate = ObservabilityGate(64, 2, load_lead_config())
         x = torch.randn(2, NUM_TOKENS, 64)
 
         torch.testing.assert_close(attention(x, gate(x)), attention(x))
 
     def test_predicts_one_logit_per_token_per_modality(self) -> None:
-        gate = ObservabilityGate(64, 2)
+        gate = ObservabilityGate(64, 2, load_lead_config())
         assert gate(torch.randn(2, NUM_TOKENS, 64)).shape == (2, NUM_TOKENS, 2)
 
 

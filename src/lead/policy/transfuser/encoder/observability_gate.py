@@ -32,19 +32,34 @@ from lead.policy.transfuser.encoder import fusion_geometry
 # Coverage below this leaves a token unsupervised rather than dividing by it.
 _MIN_COVERAGE = 1e-6
 
+# DeformableFusionBackbone builds spatial_shapes camera-first, then LiDAR,
+# and the gate's modality axis is that tuple's order. Reading these two the
+# wrong way round would silently mask the intact sensor, so they are named
+# here rather than written as literals at the point of use.
+_MODALITY_INDEX = {"camera": 0, "lidar": 1}
+
 
 class ObservabilityGate(nn.Module):
     """Per-token, per-modality bias on the deformable operator's modality logits."""
 
-    def __init__(self, n_embd: int, num_levels: int) -> None:
+    def __init__(
+        self,
+        n_embd: int,
+        num_levels: int,
+        lead_config: LeadConfig,
+    ) -> None:
         """Initialize the gate as a no-op.
 
         Args:
             n_embd: Embedding dimension of the fusion tokens.
             num_levels: Number of modalities the operator samples from.
+            lead_config: Root config tree, read at forward time for the oracle
+                substitution. Held as a plain attribute: it is not a module or
+                a tensor, so it stays out of the state dict.
         """
         super().__init__()
         self.head = nn.Linear(n_embd, num_levels)
+        self.lead_config = lead_config
         self.reset_parameters()
 
     def reset_parameters(self) -> None:
@@ -69,7 +84,53 @@ class ObservabilityGate(nn.Module):
             One logit per token per modality, added to the operator's own
             modality logits before it normalizes them.
         """
-        return self.head(x)
+        if not self.lead_config.evaluation.inference.oracle_gate:
+            return self.head(x)
+        return self._oracle_logits(x)
+
+    def _oracle_logits(
+        self,
+        x: jt.Float[torch.Tensor, "B T C"],
+    ) -> jt.Float[torch.Tensor, "B T L"]:
+        """The bias a gate with perfect knowledge of the damage would produce.
+
+        The harness applies one modality fault at a known severity, uniform over
+        that modality, so the truth is a scalar per modality and the same bias
+        applies to every token.
+
+        Args:
+            x: The fusion tokens, for shape, device and dtype only.
+
+        Returns:
+            Zero for the intact modality, and a negative bias scaled by severity
+            for the damaged one.
+
+        Raises:
+            ValueError: If a spatial degrade_family is active. Its severity
+                varies over the image, so no scalar stands in for it, and
+                returning a uniform bias would quietly measure the wrong thing.
+        """
+        inference = self.lead_config.evaluation.inference
+        if inference.degrade_family != "none":
+            raise ValueError(
+                f"oracle_gate has no ground truth for the spatial family "
+                f"'{inference.degrade_family}'; it is defined for "
+                f"degrade_modality only.",
+            )
+        logits = torch.zeros(
+            x.shape[0],
+            x.shape[1],
+            self.head.out_features,
+            device=x.device,
+            dtype=x.dtype,
+        )
+        index = _MODALITY_INDEX.get(inference.degrade_modality)
+        if index is None:
+            # Nothing is damaged, so the truth is that both are reliable and a
+            # neutral bias is the honest oracle rather than a special case.
+            return logits
+        logits[..., index] = -inference.oracle_gate_strength * inference.degrade_severity
+        return logits
 
 
 class ObservabilityTokenTargets(nn.Module):
