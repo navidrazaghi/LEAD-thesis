@@ -8,11 +8,11 @@ import torch.nn.functional as F
 from torch import nn
 
 from lead.config import LeadConfig
+from lead.policy.transfuser.dataloader.sample import TransfuserForwardBatch
 from lead.policy.transfuser.encoder import cross_modal_hallucination
 from lead.policy.transfuser.encoder.cross_modal_hallucination import (
     CrossModalHallucination,
 )
-from lead.policy.transfuser.dataloader.sample import TransfuserForwardBatch
 from lead.policy.transfuser.encoder.residual_gain import ResidualGain
 from lead.policy.transfuser.utils import ops
 
