@@ -419,6 +419,7 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 predictions.observability_gate,
                 token_target,
                 token_mask,
+                self.lead_config.policy.transfuser.observability_gate_target,
             )
 
         # Cross-modal hallucination loss, on the cells a camera can see

@@ -231,24 +231,86 @@ class ObservabilityTokenTargets(nn.Module):
         )
 
 
+# Observability of exactly zero is reachable -- a modality that resolves
+# nothing -- and its log is not. The floor caps the target at -9.2, which is
+# already far past the point where a modality has been shut out of the softmax.
+_LOG_TARGET_FLOOR = 1e-4
+
+
+def _centred_log_gate_loss(
+    logits: jt.Float[torch.Tensor, "B T L"],
+    target: jt.Float[torch.Tensor, "B T L"],
+    mask: jt.Float[torch.Tensor, "B T L"],
+) -> jt.Float[torch.Tensor, ""]:
+    """Pull the gate towards the log of observability, up to a constant.
+
+    The softmax ignores a bias added equally to every modality, so only the
+    difference across the modality axis is defined. Both sides are therefore
+    centred on the supervised modalities of each token before they are
+    compared, which makes the objective invariant to that constant exactly
+    rather than approximately. A token with fewer than two supervised
+    modalities has no defined difference and is dropped.
+
+    Args:
+        logits: One block's gate output.
+        target: Per-token observability targets, in [0, 1].
+        mask: Which token/modality pairs carry a measurement.
+
+    Returns:
+        The masked mean loss for this block.
+    """
+    per_token = mask.sum(dim=-1, keepdim=True)
+    pairs = mask * (per_token >= 2.0)
+    count = pairs.sum(dim=-1, keepdim=True).clamp(min=1.0)
+
+    wanted = torch.log(target.clamp(min=_LOG_TARGET_FLOOR))
+    predicted = logits.float()
+    centred = (predicted - (predicted * pairs).sum(-1, keepdim=True) / count) - (
+        wanted - (wanted * pairs).sum(-1, keepdim=True) / count
+    )
+    # Huber rather than squared error: the floor puts legitimate targets nine
+    # nats from the mean, and a squared penalty there would swamp every token
+    # where both modalities still see something.
+    elementwise = F.huber_loss(
+        centred,
+        torch.zeros_like(centred),
+        reduction="none",
+    )
+    return (elementwise * pairs).sum() / pairs.sum().clamp(min=1.0)
+
+
 def gate_loss(
     gate_logits: list[jt.Float[torch.Tensor, "B T L"]],
     target: jt.Float[torch.Tensor, "B T L"],
     mask: jt.Float[torch.Tensor, "B T L"],
+    objective: str = "logit",
 ) -> jt.Float[torch.Tensor, ""]:
-    """Masked binary cross entropy of every fusion block's gate.
+    """Masked supervision of every fusion block's gate.
 
     Args:
         gate_logits: The gate logits of each block, in forward order.
         target: Per-token observability targets.
         mask: Which token/modality pairs carry a measurement.
+        objective: ``"logit"`` for the binary cross entropy every result so far
+            was trained under, or ``"log"`` for the quantity the
+            inverse-variance derivation prescribes.
 
     Returns:
         The mean loss over the blocks; zero when nothing is supervised.
+
+    Raises:
+        ValueError: If the objective is not one this function implements.
     """
+    if objective not in ("logit", "log"):
+        raise ValueError(
+            f"Unknown gate objective {objective!r}; expected 'logit' or 'log'.",
+        )
     supervised = mask.sum().clamp(min=1.0)
     total = torch.zeros((), device=target.device, dtype=torch.float32)
     for logits in gate_logits:
+        if objective == "log":
+            total = total + _centred_log_gate_loss(logits, target, mask)
+            continue
         elementwise = F.binary_cross_entropy_with_logits(
             logits.float(),
             target,

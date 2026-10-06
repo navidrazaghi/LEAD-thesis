@@ -40,6 +40,16 @@ class TransfuserObservabilityConfig(ConfigNode):
     # gate also receives gradient through the driving losses, so this only sets
     # how hard it is pulled towards the expert's measured visibility.
     observability_gate_loss_weight: float = 1.0
+    # Which quantity the gate is pulled towards. "logit" is what every result
+    # in this project was trained under: sigmoid on the gate output, binary
+    # cross entropy against observability, which converges on the log odds.
+    # "log" is what the inverse-variance derivation actually prescribes, the
+    # log of observability, and differs from the log odds by -log(1 - v) --
+    # negligible for a blind modality, 2.3 nats for one at 0.9. Only the
+    # difference between the two modalities of a token can matter, since the
+    # softmax is shift invariant, so the "log" objective compares centred
+    # values and a token with one supervised modality contributes nothing.
+    observability_gate_target: str = "logit"
     # Scales how much of the attention output enters the residual stream, per
     # token. The gate decides which modality a query reads from; this decides
     # how much of that read survives into the token, which the gate cannot
