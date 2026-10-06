@@ -43,6 +43,21 @@ others' ~28,410, and it does not record `backbone_target` at all, where the
 other two name `TransfuserBackbone` explicitly. Reading a config from
 `reference/seed0` and expecting today's keys will not work.
 
+## `checkpoints/transfuser` is the same model again
+
+The README drives its four example commands against
+`--checkpoint checkpoints/transfuser`, which is a separate 264 MB directory
+outside `reference/`. It is not a separate model. Its config records the same
+upstream run as `reference/seed0` --
+`001_training/posttrain/260807_133603` -- so the two directories hold one
+checkpoint, fetched twice: into `checkpoints/transfuser` on 2026-09-15 and into
+`reference/seed0` on 2026-09-25.
+
+That matters on a fresh clone. The README's commands do not work until those
+264 MB are back, and nothing in the repository fetches them; whoever restores
+this project has to obtain the checkpoint and can then satisfy both paths from
+one download.
+
 ## What reads them
 
 `ref0` rows appear in four result files:
