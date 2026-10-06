@@ -50,6 +50,19 @@ class TransfuserObservabilityConfig(ConfigNode):
     # softmax is shift invariant, so the "log" objective compares centred
     # values and a token with one supervised modality contributes nothing.
     observability_gate_target: str = "logit"
+    # Predict the weather visibility class the expert conditions on. The label
+    # is in every batch already and no run has read it; the expert changes its
+    # lane-change transition and its target speed under LIMITED and
+    # VERY_LIMITED, so the student currently imitates those decisions without
+    # seeing what caused them. Off by default: no result here was trained with
+    # it.
+    use_weather_visibility: bool = False
+    # Weight of that head relative to the other tasks. The per-task weights are
+    # normalized by their sum, so this quietly shrinks the driving losses like
+    # every other auxiliary task does.
+    weather_visibility_loss_weight: float = 1.0
+    # Width of the head's single hidden layer.
+    weather_visibility_head_channels: int = 64
     # Scales how much of the attention output enters the residual stream, per
     # token. The gate decides which modality a query reads from; this decides
     # how much of that read survives into the token, which the gate cannot

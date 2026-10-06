@@ -30,6 +30,7 @@ from lead.policy.transfuser.decoder.observability_decoder import ObservabilityDe
 from lead.policy.transfuser.decoder.perspective_decoder import PerspectiveDecoder
 from lead.policy.transfuser.decoder.planning_decoder import PlanningDecoder
 from lead.policy.transfuser.decoder.radar_detector import RadarDetector
+from lead.policy.transfuser.decoder.visibility_decoder import VisibilityDecoder
 from lead.policy.transfuser.decoder.waypoint_ensemble import (
     WaypointEnsemble,
     bootstrap_weights,
@@ -116,6 +117,10 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
 
         if self.config.use_observability:
             self.observability_decoder = ObservabilityDecoder(lead_config)
+
+        self.visibility_decoder = None
+        if self.config.use_weather_visibility:
+            self.visibility_decoder = VisibilityDecoder(lead_config)
 
         self.gates_fusion = (
             self.config.use_observability and self.config.use_observability_gate
@@ -250,6 +255,7 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
         ) = None
         pred_semantic = pred_depth = pred_bounding_box = pred_bev_semantic = None
         pred_observability = None
+        pred_weather_visibility = None
         pred_waypoint_ensemble = None
 
         # Backbone
@@ -320,6 +326,9 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
             if self.config.use_observability:
                 pred_observability = self.observability_decoder(bev_feature_grid)
 
+            if self.visibility_decoder is not None:
+                pred_weather_visibility = self.visibility_decoder(bev_feature_grid)
+
         # Collect predictions
         return Prediction(
             # Planning prediction
@@ -333,6 +342,7 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
             bounding_box=pred_bounding_box,
             bev_semantic=pred_bev_semantic,
             observability=pred_observability,
+            weather_visibility=pred_weather_visibility,
             observability_gate=gate_logits,
             waypoint_ensemble=pred_waypoint_ensemble,
             radar_features=radar_features,
@@ -372,6 +382,16 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
             assert predictions.bev_semantic is not None
             self.bev_semantic_decoder.compute_loss(
                 predictions.bev_semantic,
+                batch,
+                loss,
+                log=auxiliary_log,
+            )
+
+        # Weather visibility loss
+        if self.visibility_decoder is not None:
+            assert predictions.weather_visibility is not None
+            self.visibility_decoder.compute_loss(
+                predictions.weather_visibility,
                 batch,
                 loss,
                 log=auxiliary_log,
@@ -625,6 +645,8 @@ class Prediction:
     bounding_box: CenterNetBoundingBoxPrediction | None
     # Per-modality observability logits over the BEV cell grid.
     observability: jt.Float[torch.Tensor, "bs n_modalities cell_h cell_w"] | None
+    # Scores over the four weather visibility classes, for the whole frame.
+    weather_visibility: jt.Float[torch.Tensor, "bs 4"] | None
     # The fusion gate's logits, one tensor per gated block.
     observability_gate: list[jt.Float[torch.Tensor, "bs n_tokens n_modalities"]] | None
     # Every ensemble member's plan, for the caution governor to take a spread of.

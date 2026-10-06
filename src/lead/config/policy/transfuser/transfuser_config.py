@@ -84,6 +84,7 @@ class TransfuserConfig(
             "radar_loss": 1.0,
             "loss_observability": self.observability_loss_weight,
             "loss_observability_gate": self.observability_gate_loss_weight,
+            "loss_weather_visibility": self.weather_visibility_loss_weight,
             "loss_waypoint_ensemble": self.waypoint_ensemble_loss_weight,
         }
 
@@ -92,6 +93,9 @@ class TransfuserConfig(
 
         if not self.use_observability:
             weights["loss_observability"] = 0.0
+
+        if not self.use_weather_visibility:
+            weights["loss_weather_visibility"] = 0.0
 
         # The gate is supervised by the same targets, so it needs them built.
         if not (self.use_observability and self.use_observability_gate):
