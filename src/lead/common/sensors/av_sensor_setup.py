@@ -159,6 +159,25 @@ def lidar_sensor_setup(config: ExpertConfig) -> list[SensorSpec]:
                 "pitch": rot[1],
                 "yaw": rot[2],
                 "id": lidar_id,
+                # Sensor attributes travel with the spec so the harness can
+                # honour them; see agent_wrapper._preprocess_sensor_spec.
+                "range": config.sensor_rig.lidar_range_meter,
+                "rotation_frequency": config.sensor_rig.lidar_rotation_frequency,
+                "channels": config.sensor_rig.lidar_channels,
+                "upper_fov": config.sensor_rig.lidar_upper_fov,
+                "lower_fov": config.sensor_rig.lidar_lower_fov,
+                "points_per_second": config.sensor_rig.lidar_points_per_second,
+                "atmosphere_attenuation_rate": (
+                    config.sensor_rig.lidar_atmosphere_attenuation_rate
+                ),
+                "dropoff_general_rate": config.sensor_rig.lidar_dropoff_general_rate,
+                "dropoff_intensity_limit": (
+                    config.sensor_rig.lidar_dropoff_intensity_limit
+                ),
+                "dropoff_zero_intensity": (
+                    config.sensor_rig.lidar_dropoff_zero_intensity
+                ),
+                "noise_stddev": config.sensor_rig.lidar_noise_stddev,
             },
         )
         LOG.info(

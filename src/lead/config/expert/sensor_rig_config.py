@@ -39,6 +39,42 @@ class SensorRigConfig(ConfigNode):
     # Roll, pitch, yaw rotation of second LiDAR (degrees)
     lidar_rot_2: list[float] = [0.0, 0.0, -270.0]
 
+    # --- LiDAR sensor attributes ---
+    # What the sensor itself does to the sweep, as opposed to what the
+    # degradation curriculum does to the rasterised grid afterwards. Every
+    # default here is the value the evaluation harness used to hardcode, so a
+    # run that overrides none of them is unchanged. Overriding one is how a
+    # sensor-level corruption suite is built: one override per axis,
+    # through the same config path every other setting uses, rather than
+    # a code fork.
+    #
+    # Note that CARLA's own defaults are already a corruption: 45 per cent of
+    # returns are dropped before anything in this project touches them.
+
+    # Range in metres.
+    lidar_range_meter: float = 85.0
+    # Sweeps per second.
+    lidar_rotation_frequency: float = 10.0
+    # Beam count. Halving it is the cheapest sensor a rig could ship.
+    lidar_channels: int = 64
+    # Vertical field of view, in degrees above and below the horizon. The
+    # lower bound sets how close to the vehicle the ground is first seen.
+    lidar_upper_fov: float = 10.0
+    lidar_lower_fov: float = -30.0
+    # Points emitted per second, over all beams.
+    lidar_points_per_second: int = 600000
+    # Atmospheric attenuation per metre. Rain and fog raise this in reality;
+    # CARLA holds it fixed whatever the weather preset says.
+    lidar_atmosphere_attenuation_rate: float = 0.004
+    # Fraction of returns dropped regardless of intensity.
+    lidar_dropoff_general_rate: float = 0.45
+    # Intensity below which the dropoff applies at all.
+    lidar_dropoff_intensity_limit: float = 0.8
+    # Probability of dropping a zero-intensity return.
+    lidar_dropoff_zero_intensity: float = 0.4
+    # Gaussian noise on the measured distance, in metres.
+    lidar_noise_stddev: float = 0.0
+
     # --- Camera Configuration ---
     # Calibration of the RGB/depth/semantic cameras; camera ``i`` (1-based) in
     # sensor specs corresponds to ``cameras[i - 1]``. Defaults to the six-camera

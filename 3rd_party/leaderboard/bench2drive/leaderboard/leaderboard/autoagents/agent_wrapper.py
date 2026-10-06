@@ -182,16 +182,27 @@ class AgentWrapper(object):
             )
 
         elif type_ == 'sensor.lidar.ray_cast':
-            attributes['range'] = str(85)
-            attributes['rotation_frequency'] = str(10)
-            attributes['channels'] = str(64)
-            attributes['upper_fov'] = str(10)
-            attributes['lower_fov'] = str(-30)
-            attributes['points_per_second'] = str(600000)
-            attributes['atmosphere_attenuation_rate'] = str(0.004)
-            attributes['dropoff_general_rate'] = str(0.45)
-            attributes['dropoff_intensity_limit'] = str(0.8)
-            attributes['dropoff_zero_intensity'] = str(0.4)
+            # Read what the agent asked for and fall back to the value this
+            # branch used to hardcode. Without this the sensor attributes are
+            # unreachable from config and every LiDAR corruption has to be
+            # applied to the raster after the sweep is already taken.
+            attributes['range'] = str(sensor_spec.get('range', 85))
+            attributes['rotation_frequency'] = str(
+                sensor_spec.get('rotation_frequency', 10))
+            attributes['channels'] = str(sensor_spec.get('channels', 64))
+            attributes['upper_fov'] = str(sensor_spec.get('upper_fov', 10))
+            attributes['lower_fov'] = str(sensor_spec.get('lower_fov', -30))
+            attributes['points_per_second'] = str(
+                sensor_spec.get('points_per_second', 600000))
+            attributes['atmosphere_attenuation_rate'] = str(
+                sensor_spec.get('atmosphere_attenuation_rate', 0.004))
+            attributes['dropoff_general_rate'] = str(
+                sensor_spec.get('dropoff_general_rate', 0.45))
+            attributes['dropoff_intensity_limit'] = str(
+                sensor_spec.get('dropoff_intensity_limit', 0.8))
+            attributes['dropoff_zero_intensity'] = str(
+                sensor_spec.get('dropoff_zero_intensity', 0.4))
+            attributes['noise_stddev'] = str(sensor_spec.get('noise_stddev', 0.0))
 
             sensor_location = carla.Location(
                 x=sensor_spec['x'], y=sensor_spec['y'],
