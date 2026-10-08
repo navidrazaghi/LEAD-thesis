@@ -30,7 +30,9 @@ import csv
 import glob
 import json
 import pathlib
+import re
 import sys
+from collections.abc import Iterator
 
 from wandb.proto import wandb_internal_pb2 as pb
 from wandb.sdk.internal import datastore
@@ -45,7 +47,7 @@ _SCALED = "losses/scaled_"
 _SEMANTIC = "losses/unscaled_semantic"
 
 
-def read_history(path):
+def read_history(path: pathlib.Path) -> Iterator[dict]:
     """Every history record in one offline run, as dictionaries.
 
     Args:
@@ -74,7 +76,7 @@ def read_history(path):
         yield row
 
 
-def per_epoch(path):
+def per_epoch(path: pathlib.Path) -> dict[int, tuple[float, float, int]]:
     """Mean objective and mean semantic loss for each epoch of one run.
 
     Args:
@@ -88,8 +90,11 @@ def per_epoch(path):
         epoch = row.get("epoch")
         if epoch is None:
             continue
-        terms = [v for k, v in row.items()
-                 if k.startswith(_SCALED) and isinstance(v, (int, float))]
+        terms = [
+            v
+            for k, v in row.items()
+            if k.startswith(_SCALED) and isinstance(v, (int, float))
+        ]
         if not terms:
             continue
         semantic = row.get(_SEMANTIC)
@@ -110,32 +115,49 @@ def main():
     for directory in sorted((ROOT / "outputs").iterdir()):
         if not directory.is_dir():
             continue
-        logs = sorted(glob.glob(str(directory / "wandb" / "offline-run-*" / "run-*.wandb")))
+        logs = sorted(
+            glob.glob(str(directory / "wandb" / "offline-run-*" / "run-*.wandb")),
+        )
         if not logs:
             continue
         name = directory.name
-        stage = "post" if name.endswith("_post") else "pre"
-        rung = name[:-5] if stage == "post" else name
+        # A post-train may carry a suffix after "_post" -- the epoch budget,
+        # for instance, which is what separates rung0_lead_recipe_post31 from
+        # the ten-epoch post-train beside it. Matching only the bare "_post"
+        # filed that run as a pretrain of a rung of its own.
+        suffix = re.search(r"_post\d*$", name)
+        stage = "post" if suffix else "pre"
+        rung = name[: suffix.start()] if suffix else name
         for log in logs:
             curve = per_epoch(pathlib.Path(log))
             for epoch in sorted(curve):
                 objective, semantic, count = curve[epoch]
-                rows.append({
-                    "run": name,
-                    "rung": rung,
-                    "stage": stage,
-                    "epoch": epoch,
-                    "objective": round(objective, 6),
-                    "semantic": round(semantic, 6),
-                    "steps": count,
-                })
+                rows.append(
+                    {
+                        "run": name,
+                        "rung": rung,
+                        "stage": stage,
+                        "epoch": epoch,
+                        "objective": round(objective, 6),
+                        "semantic": round(semantic, 6),
+                        "steps": count,
+                    },
+                )
         print(f"  {name:<36} {len(curve):2d} epochs")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(
             handle,
-            fieldnames=("run", "rung", "stage", "epoch", "objective", "semantic", "steps"),
+            fieldnames=(
+                "run",
+                "rung",
+                "stage",
+                "epoch",
+                "objective",
+                "semantic",
+                "steps",
+            ),
         )
         writer.writeheader()
         writer.writerows(rows)
