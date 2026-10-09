@@ -30,10 +30,15 @@ import re
 import subprocess
 import sys
 import urllib.request
+from collections.abc import Iterator
 from xml.etree import ElementTree
 
 REPO = "ln2697/lead-123d"
 API = f"https://huggingface.co/api/datasets/{REPO}"
+# The repository listing. Unlike the dataset endpoint, whose "siblings"
+# array is capped, this one pages and reports the next page in a Link
+# header.
+TREE = f"{API}/tree/main?recursive=true"
 # huggingface.co redirects anything large to us.aws.cdn.hf.co, which some
 # networks cannot reach: the transfer then burns a 130 s timeout per file
 # before failing. The mirror bounces back to the same origin over a route that
@@ -60,20 +65,69 @@ _USED_CAMERAS = ("pcam_l0", "pcam_f0", "pcam_r0")
 _REQUIRED_FILES = ("sync.arrow", "ego_state_se3.arrow", "lidar.lidar_top.arrow")
 
 
+def next_page(header: str) -> str | None:
+    """The URL of the next page of a tree listing, if the header names one.
+
+    Args:
+        header: The response's Link header, which may be empty.
+
+    Returns:
+        The next page's URL, or None at the end of the listing.
+    """
+    for part in header.split(","):
+        match = re.search(r'<([^>]+)>;\s*rel="next"', part)
+        if match:
+            return match.group(1)
+    return None
+
+
+def walk_tree(url: str) -> Iterator[str]:
+    """Every file path in the repository, following the listing's pages.
+
+    Args:
+        url: The first page of the tree listing.
+
+    Yields:
+        One repository file path per entry, directories skipped.
+    """
+    page_number = 0
+    while url:
+        page_number += 1
+        request = urllib.request.Request(url, headers={"User-Agent": "lead-fetch"})  # noqa: S310
+        with urllib.request.urlopen(request, timeout=120) as response:  # noqa: S310
+            entries = json.loads(response.read())
+            link = response.headers.get("Link", "")
+        for entry in entries:
+            if entry.get("type") == "file":
+                yield str(entry["path"])
+        url = next_page(link) or ""
+    print(f"  read {page_number} page(s) of the repository tree")
+
+
 def fetch_listing(cache: pathlib.Path) -> list[str]:
     """The repo's file list, downloaded once and cached on disk.
 
     Args:
-        cache: Where to keep the API response.
+        cache: Where to keep the listing.
 
     Returns:
         Every file path in the repo.
     """
-    if not cache.exists():
-        with urllib.request.urlopen(API, timeout=120) as response:  # noqa: S310
-            cache.write_bytes(response.read())
-    payload = json.loads(cache.read_text(encoding="utf-8"))
-    return [s["rfilename"] for s in payload.get("siblings", [])]
+    if cache.exists():
+        payload = json.loads(cache.read_text(encoding="utf-8"))
+        if isinstance(payload, dict):
+            # A response from the dataset endpoint, kept from before this
+            # function paged. Its file list is capped, so a selection made on
+            # it sees only the alphabetically first part of the repository.
+            print(
+                "  WARNING: the cached listing is a dataset-endpoint response, "
+                "whose file list is capped. Delete it to fetch the full tree.",
+            )
+            return [s["rfilename"] for s in payload.get("siblings", [])]
+        return [str(path) for path in payload]
+    paths = list(walk_tree(TREE))
+    cache.write_text(json.dumps(paths), encoding="utf-8")
+    return paths
 
 
 def route_weather(route_roots: list[pathlib.Path]) -> dict[str, dict]:
