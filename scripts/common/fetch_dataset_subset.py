@@ -183,6 +183,35 @@ def build_logs(files: list[str], weather: dict[str, dict]) -> list[Log]:
     return logs
 
 
+def by_town_position(
+    group: list[Log],
+    chosen: dict[str, Log],
+) -> list[tuple[int, Log]]:
+    """Number each unchosen log by its position within its own town.
+
+    The index is what turns the town into a rotation axis: sorting on it first
+    puts every town's first log ahead of any town's second, so a round-robin
+    that pops from the front visits the towns in turn instead of draining the
+    highest-ranked one.
+
+    Args:
+        group: One scenario type's logs.
+        chosen: Logs already taken by an earlier tier, keyed by path.
+
+    Returns:
+        Pairs of within-town position and log, for the logs not yet chosen.
+    """
+    seen: dict[str, int] = {}
+    numbered = []
+    for log in sorted(group, key=lambda log: log.path):
+        if log.path in chosen:
+            continue
+        position = seen.get(log.town, 0)
+        seen[log.town] = position + 1
+        numbered.append((position, log))
+    return numbered
+
+
 def select(logs: list[Log], budget: int, town_order: list[str]) -> list[Log]:
     """Choose ``budget`` logs, adverse weather and rare scenarios first.
 
@@ -208,12 +237,15 @@ def select(logs: list[Log], budget: int, town_order: list[str]) -> list[Log]:
             for log in group:
                 chosen[log.path] = log
 
-    queues = {
+    ordered = {
         scenario: sorted(
-            (log for log in group if log.path not in chosen),
-            key=lambda log: (rank.get(log.town, len(rank)), log.path),
+            by_town_position(group, chosen),
+            key=lambda pair: (pair[0], rank.get(pair[1].town, len(rank)), pair[1].path),
         )
         for scenario, group in per_scenario.items()
+    }
+    queues = {
+        scenario: [log for _, log in pairs] for scenario, pairs in ordered.items()
     }
     while len(chosen) < budget and any(queues.values()):
         for scenario in sorted(queues):
