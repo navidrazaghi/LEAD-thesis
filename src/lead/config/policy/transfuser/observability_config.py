@@ -69,6 +69,13 @@ class TransfuserObservabilityConfig(ConfigNode):
     # touch. Zero-initialized, so turning it on does not move the starting
     # point. Needs a deformable backbone for the same reason the gate does.
     use_residual_gain: bool = False
+    # Use the gate's own signal to replace unreliable tokens with a
+    # learned per-modality prior, instead of biasing the modality logits
+    # with it. Same head, same targets, same loss; only the intervention
+    # differs, so a masked run is one change against a gated one. Needs
+    # use_observability_gate for the head that produces the signal, and a
+    # deformable backbone for the same reason the gate does.
+    use_observability_mask: bool = False
     # Carry several independent readouts of the planning context, so their
     # disagreement can be read as a caution signal. Unlike the observability
     # head this needs no label, and unlike the cross-modal check it says

@@ -36,6 +36,7 @@ from lead.policy.transfuser.encoder.deformable_attention import (
     default_reference_points,
 )
 from lead.policy.transfuser.encoder.observability_gate import ObservabilityGate
+from lead.policy.transfuser.encoder.observability_mask import ObservabilityMask
 from lead.policy.transfuser.encoder.residual_gain import ResidualGain
 from lead.policy.transfuser.encoder.transfuser_backbone import (
     GPT,
@@ -59,6 +60,7 @@ class DeformableBlock(nn.Module):
         base_reference_points: torch.Tensor | None,
         gated: bool,
         gained: bool,
+        masked: bool,
         lead_config: LeadConfig,
     ) -> None:
         """Initialize a transformer block with deformable attention.
@@ -77,8 +79,21 @@ class DeformableBlock(nn.Module):
             gated: Whether an observability gate shifts the modality weights.
             gained: Whether a residual gain scales how much of the attention
                 output enters the token.
+            masked: Whether the gate's signal replaces unreliable tokens with a
+                learned prior instead of biasing the modality logits.
             lead_config: Root config tree, forwarded to the gate.
+
+        Raises:
+            ValueError: If ``masked`` is set without ``gated``. The mask reads
+                the gate head's logits, so without the head there is nothing to
+                read and the block would silently train the control.
         """
+        if masked and not gated:
+            raise ValueError(
+                "use_observability_mask needs use_observability_gate: the mask "
+                "consumes the gate head's logits, and without that head it "
+                "would train a model identical to the ungated control.",
+            )
         super().__init__()
         self.ln1 = nn.LayerNorm(n_embd)
         self.ln2 = nn.LayerNorm(n_embd)
@@ -88,6 +103,9 @@ class DeformableBlock(nn.Module):
             else None
         )
         self.residual_gain = ResidualGain(n_embd) if gained else None
+        self.observability_mask = (
+            ObservabilityMask(n_embd, spatial_shapes) if masked else None
+        )
         self.attn = MultiScaleDeformableAttention(
             n_embd=n_embd,
             n_head=n_head,
@@ -123,7 +141,15 @@ class DeformableBlock(nn.Module):
         """
         normalized = self.ln1(x)
         gate_logits = self.gate(normalized) if self.gate is not None else None
-        attended = self.attn(normalized, gate_logits)
+        # Two ways to spend the same signal, and never both: the bias moves
+        # where a query reads, the mask changes what is there to be read. A
+        # block doing both would leave neither attributable.
+        attention_bias = gate_logits
+        if self.observability_mask is not None:
+            assert gate_logits is not None
+            normalized = self.observability_mask(normalized, gate_logits)
+            attention_bias = None
+        attended = self.attn(normalized, attention_bias)
         if self.residual_gain is not None:
             attended = attended * self.residual_gain(normalized)
         x = x + attended
@@ -223,6 +249,7 @@ class DeformableGPT(GPT):
                     base_reference_points,
                     config.use_observability_gate,
                     config.use_residual_gain,
+                    config.use_observability_mask,
                     lead_config,
                 )
                 for _ in range(config.n_layer)
