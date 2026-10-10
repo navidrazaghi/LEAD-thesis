@@ -1,0 +1,201 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds,ticks,distance_m,stationary_frac
+post31,none,0,11381.xml,51.4,51.4,1.0,Failed - Agent deviated from the route,Town12,10,463.2,1086,65.8,0.786
+rung2a_recipe,none,0,11381.xml,51.4,51.4,1.0,Failed - Agent deviated from the route,Town12,10,403.6,1076,65.6,0.779
+rung2ad_recipe,none,0,11381.xml,51.4,51.4,1.0,Failed - Agent deviated from the route,Town12,10,408.0,1096,65.7,0.775
+rung3_recipe,none,0,11381.xml,51.4,51.4,1.0,Failed - Agent deviated from the route,Town12,10,401.8,1082,65.7,0.775
+ref0,none,0,11381.xml,100.0,100,1.0,Completed,Town12,20,446.8,1221,76.3,0.768
+post31,none,0,14842.xml,22.28,22.28,1.0,Failed - Agent deviated from the route,Town12,5,122.6,155,42.1,0.065
+rung2a_recipe,none,0,14842.xml,23.621,36.34,0.65,Failed - Agent deviated from the route,Town12,8,141.9,178,46.8,0.056
+rung2ad_recipe,none,0,14842.xml,20.2,20.2,1.0,Failed - Agent deviated from the route,Town12,4,158.6,148,41.3,0.068
+rung3_recipe,none,0,14842.xml,22.28,22.28,1.0,Failed - Agent deviated from the route,Town12,5,118.6,145,41.6,0.069
+ref0,none,0,14842.xml,100.0,100,1.0,Completed,Town12,20,244.1,459,58.0,0.531
+post31,none,0,14862.xml,40.99,40.99,1.0,Failed - Agent deviated from the route,Town12,8,127.5,184,51.1,0.055
+rung2a_recipe,none,0,14862.xml,39.1,39.1,1.0,Failed - Agent got blocked,Town12,8,522.3,1360,44.9,0.89
+rung2ad_recipe,none,0,14862.xml,26.14,26.14,1.0,Failed - Agent deviated from the route,Town12,5,103.8,161,44.8,0.062
+rung3_recipe,none,0,14862.xml,40.99,40.99,1.0,Failed - Agent deviated from the route,Town12,8,111.1,178,51.5,0.056
+ref0,none,0,14862.xml,100.0,100,1.0,Completed,Town12,18,124.4,230,62.5,0.07
+post31,none,0,14909.xml,41.63,41.63,1.0,Failed - Agent deviated from the route,Town12,8,136.0,163,51.1,0.062
+rung2a_recipe,none,0,14909.xml,41.63,41.63,1.0,Failed - Agent deviated from the route,Town12,8,102.6,165,51.1,0.061
+rung2ad_recipe,none,0,14909.xml,27.42,27.42,1.0,Failed - Agent deviated from the route,Town12,5,96.9,139,44.6,0.072
+rung3_recipe,none,0,14909.xml,41.63,41.63,1.0,Failed - Agent deviated from the route,Town12,8,113.5,164,51.4,0.061
+ref0,none,0,14909.xml,100.0,100,1.0,Completed,Town12,20,336.6,893,60.4,0.788
+post31,none,0,23670.xml,53.136916,96.96,0.548029,Failed - Agent got blocked,Town13,22,472.2,1639,162.6,0.739
+rung2a_recipe,none,0,23670.xml,57.880898,100.0,0.578809,Completed,Town13,23,443.7,1695,193.0,0.714
+rung2ad_recipe,none,0,23670.xml,100.0,100.0,1.0,Completed,Town13,21,184.8,492,184.1,0.02
+rung3_recipe,none,0,23670.xml,60.0,100.0,0.6,Completed,Town13,22,203.2,477,184.0,0.021
+ref0,none,0,23670.xml,100.0,100,1.0,Completed,Town13,19,173.6,439,164.5,0.023
+post31,none,0,23695.xml,100.0,100,1.0,Completed,Town13,21,128.1,203,154.5,0.05
+rung2a_recipe,none,0,23695.xml,100.0,100,1.0,Completed,Town13,21,121.7,210,154.5,0.048
+rung2ad_recipe,none,0,23695.xml,100.0,100,1.0,Completed,Town13,21,138.1,263,155.1,0.149
+rung3_recipe,none,0,23695.xml,100.0,100,1.0,Completed,Town13,21,127.9,211,154.6,0.048
+ref0,none,0,23695.xml,100.0,100,1.0,Completed,Town13,21,138.5,255,154.8,0.039
+post31,none,0,23918.xml,93.36,93.36,1.0,Failed - Agent deviated from the route,Town13,18,181.9,354,131.8,0.028
+rung2a_recipe,none,0,23918.xml,48.211833,76.28,0.632038,Failed - Agent got blocked,Town13,17,525.3,1526,105.2,0.793
+rung2ad_recipe,none,0,23918.xml,91.88,91.88,1.0,Failed - Agent deviated from the route,Town13,18,155.1,360,130.5,0.028
+rung3_recipe,none,0,23918.xml,56.016,93.36,0.6,Failed - Agent deviated from the route,Town13,19,161.6,380,132.4,0.026
+ref0,none,0,23918.xml,100.0,100,1.0,Completed,Town13,20,169.8,427,133.3,0.023
+post31,none,0,24041.xml,19.850789,97.49,0.203619,Failed - Agent got blocked,Town13,25,439.8,1763,159.4,0.716
+rung2a_recipe,none,0,24041.xml,50.084773,91.22,0.549055,Failed - Agent got blocked,Town13,20,489.8,1675,149.4,0.722
+rung2ad_recipe,none,0,24041.xml,99.372726,100.0,0.993727,Completed,Town13,23,249.3,557,174.4,0.018
+rung3_recipe,none,0,24041.xml,50.084775,97.49,0.513743,Failed - Agent got blocked,Town13,23,890.8,2975,159.4,0.824
+ref0,none,0,24041.xml,100.0,100,1.0,Completed,Town13,21,285.0,456,160.5,0.022
+post31,none,0,24206.xml,5.597868,100,0.055979,Completed,Town03,26,661.6,1912,134.7,0.565
+rung2a_recipe,none,0,24206.xml,10.646668,95.49,0.111495,Failed - Agent got blocked,Town03,24,506.3,1602,126.9,0.755
+rung2ad_recipe,none,0,24206.xml,9.420035,28.18,0.334281,Failed - Agent got blocked,Town03,8,629.4,1751,37.9,0.847
+rung3_recipe,none,0,24206.xml,0.623368,60.91,0.010234,Failed - TickRuntime,Town03,18,1457.4,3999,92.7,0.802
+ref0,none,0,24206.xml,100.0,100,1.0,Completed,Town03,20,291.8,756,132.2,0.289
+post31,none,0,24211.xml,50.0,100,0.5,Completed,Town01,19,172.1,417,132.5,0.026
+rung2a_recipe,none,0,24211.xml,50.0,100,0.5,Completed,Town01,19,171.8,416,132.4,0.024
+rung2ad_recipe,none,0,24211.xml,50.0,100,0.5,Completed,Town01,19,171.0,407,132.6,0.025
+rung3_recipe,none,0,24211.xml,50.0,100,0.5,Completed,Town01,19,166.4,385,132.8,0.026
+ref0,none,0,24211.xml,100.0,100,1.0,Completed,Town01,18,178.8,440,132.9,0.178
+post31,none,0,24240.xml,34.649199,52.91,0.654871,Failed - Agent deviated from the route,Town10HD,11,158.5,239,75.0,0.042
+rung2a_recipe,none,0,24240.xml,23.264752,42.64,0.545609,Failed - TickRuntime,Town10HD,9,1743.9,3999,45.5,0.963
+rung2ad_recipe,none,0,24240.xml,91.731871,100,0.917319,Completed,Town10HD,20,198.2,329,100.1,0.03
+rung3_recipe,none,0,24240.xml,60.0,100,0.6,Completed,Town10HD,20,195.9,322,100.5,0.031
+ref0,none,0,24240.xml,100.0,100,1.0,Completed,Town10HD,19,212.8,366,98.9,0.033
+post31,none,0,24252.xml,21.703661,100,0.217037,Completed,Town11,22,200.1,522,134.2,0.165
+rung2a_recipe,none,0,24252.xml,46.971822,100,0.469718,Completed,Town11,22,147.4,475,133.0,0.03
+rung2ad_recipe,none,0,24252.xml,41.71538,100,0.417154,Completed,Town11,21,141.8,524,133.7,0.101
+rung3_recipe,none,0,24252.xml,54.584036,100,0.54584,Completed,Town11,21,136.7,513,134.0,0.168
+ref0,none,0,24252.xml,100.0,100,1.0,Completed,Town11,20,131.2,510,133.0,0.157
+post31,none,0,24330.xml,17.067031,100,0.17067,Completed,Town10HD,23,215.0,560,96.9,0.379
+rung2a_recipe,none,0,24330.xml,60.0,100,0.6,Completed,Town10HD,20,199.3,554,98.0,0.396
+rung2ad_recipe,none,0,24330.xml,36.0,100,0.36,Completed,Town10HD,21,213.7,592,96.9,0.382
+rung3_recipe,none,0,24330.xml,2.042457,100,0.020425,Completed,Town10HD,26,677.8,1527,96.8,0.619
+ref0,none,0,24330.xml,100.0,100,1.0,Completed,Town10HD,19,287.8,566,100.9,0.358
+post31,none,0,24333.xml,50.0,100,0.5,Completed,Town15,19,213.3,419,132.1,0.024
+rung2a_recipe,none,0,24333.xml,50.0,100,0.5,Completed,Town15,19,191.5,425,132.0,0.024
+rung2ad_recipe,none,0,24333.xml,50.0,100,0.5,Completed,Town15,19,193.1,419,132.3,0.024
+rung3_recipe,none,0,24333.xml,38.489464,71.3,0.539824,Failed - Agent got blocked,Town15,14,558.9,1498,96.7,0.81
+ref0,none,0,24333.xml,100.0,100,1.0,Completed,Town15,18,218.8,499,132.3,0.145
+post31,none,0,24367.xml,26.892899,93.94,0.286277,Failed - Agent got blocked,Town06,19,712.6,1730,127.1,0.756
+rung2a_recipe,none,0,24367.xml,100.0,100,1.0,Completed,Town06,18,226.8,450,134.1,0.022
+rung2ad_recipe,none,0,24367.xml,100.0,100,1.0,Completed,Town06,18,220.6,439,135.2,0.027
+rung3_recipe,none,0,24367.xml,100.0,100,1.0,Completed,Town06,18,211.5,406,134.0,0.027
+ref0,none,0,24367.xml,100.0,100,1.0,Completed,Town06,18,262.8,573,133.5,0.108
+post31,none,0,24757.xml,23.058,38.43,0.6,Failed - TickRuntime,Town06,8,1482.0,3999,53.2,0.961
+rung2a_recipe,none,0,24757.xml,33.93,33.93,1.0,Failed - TickRuntime,Town06,6,1441.4,3999,45.5,0.965
+rung2ad_recipe,none,0,24757.xml,100.0,100,1.0,Completed,Town06,21,157.5,299,133.9,0.034
+rung3_recipe,none,0,24757.xml,60.0,100,0.6,Completed,Town06,22,158.2,304,133.8,0.033
+ref0,none,0,24757.xml,100.0,100,1.0,Completed,Town06,21,172.1,352,135.0,0.066
+post31,none,0,24759.xml,55.394219,100,0.553942,Completed,Town05,22,174.1,385,134.6,0.026
+rung2a_recipe,none,0,24759.xml,100.0,100,1.0,Completed,Town05,20,180.0,425,134.6,0.045
+rung2ad_recipe,none,0,24759.xml,32.983106,100,0.329831,Completed,Town05,23,167.7,367,134.2,0.027
+rung3_recipe,none,0,24759.xml,54.933636,100,0.549336,Completed,Town05,22,167.7,365,134.8,0.027
+ref0,none,0,24759.xml,100.0,100,1.0,Completed,Town05,20,183.6,435,135.3,0.035
+post31,none,0,24781.xml,100.0,100,1.0,Completed,Town01,18,458.9,1060,128.4,0.503
+rung2a_recipe,none,0,24781.xml,21.6,100,0.216,Completed,Town01,21,456.6,1016,129.4,0.469
+rung2ad_recipe,none,0,24781.xml,65.0,100,0.65,Completed,Town01,19,642.5,1548,128.5,0.679
+rung3_recipe,none,0,24781.xml,81.259012,100,0.81259,Completed,Town01,19,324.0,672,129.8,0.356
+ref0,none,0,24781.xml,100.0,100,1.0,Completed,Town01,18,467.0,1058,128.6,0.504
+post31,none,0,24784.xml,29.068,44.72,0.65,Failed - Agent got blocked,Town02,9,418.6,1366,47.2,0.886
+rung2a_recipe,none,0,24784.xml,29.068,44.72,0.65,Failed - Agent got blocked,Town02,9,437.7,1362,47.8,0.89
+rung2ad_recipe,none,0,24784.xml,11.337292,100,0.113373,Completed,Town02,24,332.0,978,108.2,0.54
+rung3_recipe,none,0,24784.xml,50.4985,77.69,0.65,Failed - Agent got blocked,Town02,15,416.2,1470,80.8,0.84
+ref0,none,0,24784.xml,100.0,100,1.0,Completed,Town02,19,77.6,215,102.5,0.047
+post31,none,0,24785.xml,65.0,100,0.65,Completed,Town04,21,143.2,432,145.6,0.06
+rung2a_recipe,none,0,24785.xml,100.0,100,1.0,Completed,Town04,20,137.9,408,144.4,0.049
+rung2ad_recipe,none,0,24785.xml,100.0,100,1.0,Completed,Town04,20,143.0,418,143.0,0.041
+rung3_recipe,none,0,24785.xml,65.0,100,0.65,Completed,Town04,21,129.1,366,143.9,0.027
+ref0,none,0,24785.xml,100.0,100,1.0,Completed,Town04,20,138.8,417,145.0,0.036
+post31,none,0,24816.xml,28.746021,93.61,0.307083,Failed - TickRuntime,Town03,19,1133.3,3999,122.7,0.891
+rung2a_recipe,none,0,24816.xml,50.45655,82.42,0.612188,Failed - TickRuntime,Town03,16,1404.1,3999,105.9,0.902
+rung2ad_recipe,none,0,24816.xml,39.26,39.26,1.0,Failed - TickRuntime,Town03,7,1461.3,3999,49.4,0.955
+rung3_recipe,none,0,24816.xml,46.301584,100,0.463016,Completed,Town03,21,230.8,500,128.1,0.118
+ref0,none,0,24816.xml,60.0,100,0.6,Completed,Town03,20,263.5,612,127.3,0.205
+post31,none,0,25318.xml,31.86,31.86,1.0,Failed - TickRuntime,Town05,5,1488.5,3999,46.1,0.96
+rung2a_recipe,none,0,25318.xml,31.86,31.86,1.0,Failed - TickRuntime,Town05,5,1496.4,3999,45.4,0.96
+rung2ad_recipe,none,0,25318.xml,16.815404,34.15,0.492398,Failed - TickRuntime,Town05,8,1553.0,3999,50.6,0.958
+rung3_recipe,none,0,25318.xml,20.49,34.15,0.6,Failed - TickRuntime,Town05,7,1639.5,3999,49.7,0.951
+ref0,none,0,25318.xml,100.0,100,1.0,Completed,Town05,18,241.3,549,142.5,0.08
+post31,none,0,25358.xml,6.660643,54.83,0.121478,Failed - Agent deviated from the route,Town06,13,122.3,198,60.7,0.051
+rung2a_recipe,none,0,25358.xml,5.056522,42.75,0.118281,Failed - Agent deviated from the route,Town06,12,188.1,386,63.8,0.286
+rung2ad_recipe,none,0,25358.xml,25.69708,100,0.256971,Completed,Town06,22,425.4,988,135.7,0.597
+rung3_recipe,none,0,25358.xml,19.308,32.18,0.6,Failed - Agent got blocked,Town06,7,580.7,1406,45.9,0.87
+ref0,none,0,25358.xml,100.0,100,1.0,Completed,Town06,19,184.8,465,138.3,0.034
+post31,none,0,25378.xml,100.0,100,1.0,Completed,Town03,19,113.1,248,95.7,0.04
+rung2a_recipe,none,0,25378.xml,70.0,100,0.7,Completed,Town03,20,114.6,256,95.5,0.039
+rung2ad_recipe,none,0,25378.xml,70.0,100,0.7,Completed,Town03,20,112.0,239,95.7,0.042
+rung3_recipe,none,0,25378.xml,70.0,100,0.7,Completed,Town03,20,117.1,254,95.5,0.04
+ref0,none,0,25378.xml,70.0,100,0.7,Completed,Town03,20,123.6,292,95.3,0.113
+post31,none,0,25381.xml,100.0,100,1.0,Completed,Town05,20,163.2,387,136.5,0.026
+rung2a_recipe,none,0,25381.xml,36.0,100,0.36,Completed,Town05,22,168.2,396,134.5,0.025
+rung2ad_recipe,none,0,25381.xml,34.380373,100,0.343804,Completed,Town05,23,172.1,374,134.5,0.027
+rung3_recipe,none,0,25381.xml,100.0,100,1.0,Completed,Town05,20,213.8,365,135.2,0.027
+ref0,none,0,25381.xml,100.0,100,1.0,Completed,Town05,20,243.6,442,135.6,0.107
+post31,none,0,25383.xml,100.0,100,1.0,Completed,Town15,18,208.1,368,138.4,0.027
+rung2a_recipe,none,0,25383.xml,21.756,36.26,0.6,Failed - TickRuntime,Town15,7,1773.7,3999,51.7,0.964
+rung2ad_recipe,none,0,25383.xml,60.0,100,0.6,Completed,Town15,19,229.2,368,138.5,0.027
+rung3_recipe,none,0,25383.xml,100.0,100,1.0,Completed,Town15,18,189.5,370,138.4,0.027
+ref0,none,0,25383.xml,100.0,100,1.0,Completed,Town15,18,270.2,495,139.4,0.136
+post31,none,0,25424.xml,42.25,100,0.4225,Completed,Town11,21,171.7,340,107.5,0.133
+rung2a_recipe,none,0,25424.xml,100.0,100,1.0,Completed,Town11,19,171.6,395,107.5,0.102
+rung2ad_recipe,none,0,25424.xml,100.0,100,1.0,Completed,Town11,19,172.5,397,108.0,0.104
+rung3_recipe,none,0,25424.xml,100.0,100,1.0,Completed,Town11,19,172.8,398,107.9,0.091
+ref0,none,0,25424.xml,100.0,100,1.0,Completed,Town11,19,177.2,436,108.6,0.124
+post31,none,0,25863.xml,35.0,100,0.35,Completed,Town07,19,156.5,323,84.5,0.053
+rung2a_recipe,none,0,25863.xml,35.0,100,0.35,Completed,Town07,19,150.4,324,84.4,0.046
+rung2ad_recipe,none,0,25863.xml,70.0,100,0.7,Completed,Town07,18,200.4,465,84.2,0.254
+rung3_recipe,none,0,25863.xml,70.0,100,0.7,Completed,Town07,18,182.1,399,84.4,0.274
+ref0,none,0,25863.xml,100.0,100,1.0,Completed,Town07,17,298.8,796,84.2,0.597
+post31,none,0,25865.xml,25.181712,100,0.251817,Completed,Town11,21,972.7,3677,115.1,0.854
+rung2a_recipe,none,0,25865.xml,100.0,100,1.0,Completed,Town11,18,211.9,547,102.1,0.388
+rung2ad_recipe,none,0,25865.xml,100.0,100,1.0,Completed,Town11,18,181.4,423,102.1,0.111
+rung3_recipe,none,0,25865.xml,81.969607,100,0.819696,Completed,Town11,19,166.8,315,102.2,0.032
+ref0,none,0,25865.xml,100.0,100,1.0,Completed,Town11,18,176.2,431,102.5,0.065
+post31,none,0,25896.xml,17.0365,26.21,0.65,Failed - TickRuntime,Town03,5,1563.9,3999,41.1,0.967
+rung2a_recipe,none,0,25896.xml,10.426051,24.76,0.421084,Failed - TickRuntime,Town03,6,1675.1,3999,31.8,0.974
+rung2ad_recipe,none,0,25896.xml,14.202863,26.21,0.541887,Failed - TickRuntime,Town03,6,1463.2,3999,34.7,0.969
+rung3_recipe,none,0,25896.xml,6.776073,26.21,0.25853,Failed - TickRuntime,Town03,7,1141.1,3999,34.5,0.967
+ref0,none,0,25896.xml,100.0,100,1.0,Completed,Town03,20,394.0,1562,132.5,0.693
+post31,none,0,25955.xml,100.0,100,1.0,Completed,Town05,20,126.3,384,133.8,0.026
+rung2a_recipe,none,0,25955.xml,36.0,100,0.36,Completed,Town05,22,133.9,386,135.0,0.026
+rung2ad_recipe,none,0,25955.xml,100.0,100,1.0,Completed,Town05,20,172.2,374,133.9,0.027
+rung3_recipe,none,0,25955.xml,12.96,100,0.1296,Completed,Town05,24,345.8,878,132.5,0.261
+ref0,none,0,25955.xml,100.0,100,1.0,Completed,Town05,20,286.2,730,135.4,0.225
+post31,none,0,25975.xml,37.45,37.45,1.0,Failed - Agent deviated from the route,Town07,7,106.8,152,45.8,0.066
+rung2a_recipe,none,0,25975.xml,37.45,37.45,1.0,Failed - Agent deviated from the route,Town07,7,101.9,159,45.9,0.063
+rung2ad_recipe,none,0,25975.xml,34.133804,37.45,0.91145,Failed - Agent deviated from the route,Town07,8,180.4,392,46.2,0.586
+rung3_recipe,none,0,25975.xml,37.45,37.45,1.0,Failed - Agent deviated from the route,Town07,7,159.7,327,45.8,0.491
+ref0,none,0,25975.xml,100.0,100,1.0,Completed,Town07,19,115.1,185,53.1,0.054
+post31,none,0,26394.xml,46.13,46.13,1.0,Failed - Agent deviated from the route,Town06,8,115.6,178,56.0,0.056
+rung2a_recipe,none,0,26394.xml,46.13,46.13,1.0,Failed - Agent deviated from the route,Town06,8,108.4,172,55.9,0.058
+rung2ad_recipe,none,0,26394.xml,46.13,46.13,1.0,Failed - Agent deviated from the route,Town06,8,90.5,113,56.3,0.089
+rung3_recipe,none,0,26394.xml,46.13,46.13,1.0,Failed - Agent deviated from the route,Town06,8,104.2,154,56.4,0.065
+ref0,none,0,26394.xml,54.52574,100,0.545257,Completed,Town06,21,154.0,326,150.2,0.031
+post31,none,0,26418.xml,84.856943,100,0.848569,Completed,Town11,21,170.5,353,132.4,0.028
+rung2a_recipe,none,0,26418.xml,90.844892,100,0.908449,Completed,Town11,21,160.5,374,131.8,0.027
+rung2ad_recipe,none,0,26418.xml,100.0,100,1.0,Completed,Town11,20,173.1,360,131.7,0.028
+rung3_recipe,none,0,26418.xml,6.227294,47.0,0.132496,Failed - Agent got blocked,Town11,14,490.0,1884,84.9,0.752
+ref0,none,0,26418.xml,100.0,100,1.0,Completed,Town11,20,162.7,376,131.4,0.027
+post31,none,0,26458.xml,52.2,52.2,1.0,Failed - Agent deviated from the route,Town07,10,135.5,236,68.2,0.043
+rung2a_recipe,none,0,26458.xml,52.2,52.2,1.0,Failed - Agent deviated from the route,Town07,10,142.7,296,67.7,0.18
+rung2ad_recipe,none,0,26458.xml,52.2,52.2,1.0,Failed - Agent deviated from the route,Town07,10,142.2,287,67.5,0.185
+rung3_recipe,none,0,26458.xml,52.2,52.2,1.0,Failed - Agent deviated from the route,Town07,10,141.6,281,67.7,0.189
+ref0,none,0,26458.xml,100.0,100,1.0,Completed,Town07,20,169.4,374,77.3,0.172
+post31,none,0,26944.xml,26.113705,56.72,0.460397,Failed - Agent got blocked,Town04,13,548.0,1497,74.0,0.809
+rung2a_recipe,none,0,26944.xml,11.734272,50.93,0.2304,Failed - Agent deviated from the route,Town04,13,178.4,356,92.9,0.042
+rung2ad_recipe,none,0,26944.xml,25.0032,52.09,0.48,Failed - Agent deviated from the route,Town04,11,169.1,324,94.9,0.034
+rung3_recipe,none,0,26944.xml,30.558,50.93,0.6,Failed - Agent deviated from the route,Town04,10,198.2,402,97.4,0.142
+ref0,none,0,26944.xml,100.0,100,1.0,Completed,Town04,17,477.8,1278,86.8,0.71
+post31,none,0,27494.xml,53.07,53.07,1.0,Failed - Agent deviated from the route,Town04,9,163.2,308,71.1,0.065
+rung2a_recipe,none,0,27494.xml,53.07,53.07,1.0,Failed - Agent deviated from the route,Town04,9,142.8,244,71.3,0.041
+rung2ad_recipe,none,0,27494.xml,51.7,51.7,1.0,Failed - Agent deviated from the route,Town04,9,151.7,260,70.9,0.039
+rung3_recipe,none,0,27494.xml,60.0,100,0.6,Completed,Town04,18,198.1,494,84.7,0.377
+ref0,none,0,27494.xml,100.0,100,1.0,Completed,Town04,17,233.1,524,86.1,0.379
+post31,none,0,27529.xml,8.12825,50.02,0.1625,Failed - Agent got blocked,Town04,12,554.9,1403,44.5,0.863
+rung2a_recipe,none,0,27529.xml,12.7088,48.88,0.26,Failed - Agent got blocked,Town04,12,532.0,1372,42.5,0.882
+rung2ad_recipe,none,0,27529.xml,40.0,100,0.4,Completed,Town04,21,172.0,341,69.0,0.2
+rung3_recipe,none,0,27529.xml,20.008,50.02,0.4,Failed - Agent deviated from the route,Town04,11,130.5,238,61.8,0.051
+ref0,none,0,27529.xml,100.0,100,1.0,Completed,Town04,19,209.2,486,69.8,0.416
+post31,none,0,28048.xml,37.485,53.55,0.7,Failed - Agent deviated from the route,Town02,10,123.1,232,69.0,0.043
+rung2a_recipe,none,0,28048.xml,37.485,53.55,0.7,Failed - Agent deviated from the route,Town02,10,113.5,233,68.9,0.043
+rung2ad_recipe,none,0,28048.xml,37.485,53.55,0.7,Failed - Agent deviated from the route,Town02,10,119.2,227,68.8,0.044
+rung3_recipe,none,0,28048.xml,45.5,100,0.455,Completed,Town02,20,142.4,299,82.9,0.117
+ref0,none,0,28048.xml,100.0,100,1.0,Completed,Town02,18,288.1,772,83.7,0.663
+post31,none,0,28198.xml,22.724,34.96,0.65,Failed - TickRuntime,Town15,6,1023.7,3999,32.2,0.972
+rung2a_recipe,none,0,28198.xml,14.2025,21.85,0.65,Failed - TickRuntime,Town15,4,1001.3,3999,20.5,0.983
+rung2ad_recipe,none,0,28198.xml,24.4855,37.67,0.65,Failed - TickRuntime,Town15,7,802.4,3999,34.9,0.973
+rung3_recipe,none,0,28198.xml,21.243507,34.96,0.607652,Failed - TickRuntime,Town15,7,735.1,3999,32.9,0.973
+ref0,none,0,28198.xml,100.0,100,1.0,Completed,Town15,19,91.4,310,83.8,0.175
