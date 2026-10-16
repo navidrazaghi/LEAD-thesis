@@ -542,6 +542,16 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--port", type=int, default=3000)
     parser.add_argument(
+        "--work-dir",
+        type=pathlib.Path,
+        default=None,
+        help=(
+            "Scratch directory for route outputs. Every route clears it first, so "
+            "two sweeps running at once must not share one; default is "
+            "outputs/eval_scratch."
+        ),
+    )
+    parser.add_argument(
         "--restart-every",
         type=int,
         default=8,
@@ -612,7 +622,7 @@ def main() -> None:
     port = free_port(args.port)
     tm_port = free_port(port + 100)
     carla = Carla(args.carla_root, port)
-    work_dir = ROOT / "outputs" / "eval_scratch"
+    work_dir = args.work_dir or ROOT / "outputs" / "eval_scratch"
     print(f"CARLA on {port}, traffic manager on {tm_port}")
     restart_next = False
     carla.start()
