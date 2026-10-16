@@ -199,8 +199,54 @@ class Transfuser(AbstractPolicy[TransfuserForwardBatch, "Prediction"]):
                 data_config.sensor_degradation_probability,
                 data_config.sensor_degradation_max_severity,
                 data_config.deployment_perturbation_families,
+                data_config.sensor_degradation_independent_modalities,
+                data_config.sensor_degradation_full_failure_probability,
+                data_config.sensor_degradation_misalignment_probability,
+                float(self.get_policy_config().bev_pixels_per_meter),
             )
         return batch
+
+    def augment_batch_with_clean(
+        self,
+        batch: TransfuserForwardBatch,
+    ) -> tuple[TransfuserForwardBatch, TransfuserForwardBatch]:
+        """The augmented batch as the student sees it, and its undamaged copy.
+
+        The colour augmentation is shared, so the two differ only in the sensor
+        damage. The copy is taken between the two augmentations and consumes no
+        random draw, so the student's batch is exactly what augment_batch would
+        have returned for the same random state.
+
+        Args:
+            batch: The collated batch, modified in place.
+
+        Returns:
+            The damaged batch, and the intact copy the teacher reads.
+        """
+        data_config = self.lead_config.training.data
+        if not self.training:
+            return batch, batch
+        if data_config.use_color_augmentation and "rgb" in batch:
+            batch["rgb"] = augment_rgb_batch(
+                batch["rgb"],
+                data_config.color_augmentation_probability,
+            )
+        clean = {
+            key: value.clone() if isinstance(value, torch.Tensor) else value
+            for key, value in batch.items()
+        }
+        if data_config.use_sensor_degradation:
+            batch = apply_sensor_degradation(
+                batch,
+                data_config.sensor_degradation_probability,
+                data_config.sensor_degradation_max_severity,
+                data_config.deployment_perturbation_families,
+                data_config.sensor_degradation_independent_modalities,
+                data_config.sensor_degradation_full_failure_probability,
+                data_config.sensor_degradation_misalignment_probability,
+                float(self.get_policy_config().bev_pixels_per_meter),
+            )
+        return batch, clean
 
     def degrade_batch(self, batch: TransfuserForwardBatch) -> TransfuserForwardBatch:
         """Inherited, see superclass."""

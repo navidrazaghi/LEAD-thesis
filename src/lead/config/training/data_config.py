@@ -78,6 +78,13 @@ class TrainingDataConfig(ConfigNode):
     sensor_degradation_probability: float = 0.5
     # Upper bound of the per-sample severity; 1.0 allows a fully lost modality.
     sensor_degradation_max_severity: float = 1.0
+    # Curriculum v2, all off by default: see apply_sensor_degradation.
+    sensor_degradation_independent_modalities: bool = False
+    sensor_degradation_full_failure_probability: float = 0.0
+    sensor_degradation_misalignment_probability: float = 0.0
+    # Degradation-consistency self-distillation: weight of the L1 pull of the
+    # damaged sample's plan towards the plan from its intact copy. 0 is off.
+    degradation_consistency_weight: float = 0.0
     # Deployment-perturbation families sampled alongside the two appearance
     # ones, each equally likely. Empty reproduces the appearance-only
     # curriculum draw for draw, which is what keeps the rung that established

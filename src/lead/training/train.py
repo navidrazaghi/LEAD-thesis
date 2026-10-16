@@ -371,6 +371,56 @@ class LeadLightningModule(pl.LightningModule):
                 f"without contributing to the loss.",
             )
 
+    def _degradation_consistency(
+        self,
+        predictions: typing.Any,
+        batch: dict,
+        clean_batch: dict,
+    ) -> torch.Tensor | None:
+        """L1 distance from the damaged sample's plan to its intact copy's plan.
+
+        The teacher is the same network on the intact input, without gradient;
+        its outputs are cloned at once so no compiled graph can hand back a
+        buffer the student's pass reuses. Only samples whose camera or LiDAR
+        tensor actually differs from the intact copy count, so undamaged samples
+        neither add signal nor dilute it.
+
+        Args:
+            predictions: The student's predictions on the damaged batch.
+            batch: The damaged batch.
+            clean_batch: The intact copy.
+
+        Returns:
+            The mean per-sample distance over damaged samples, or None when the
+            policy predicts no plan (pretraining) or nothing was damaged.
+        """
+        student_waypoints = getattr(predictions, "future_waypoints", None)
+        if student_waypoints is None:
+            return None
+        damaged = torch.zeros(
+            student_waypoints.shape[0],
+            dtype=torch.bool,
+            device=student_waypoints.device,
+        )
+        for key in ("rgb", "rasterized_lidar"):
+            if key in batch and key in clean_batch:
+                difference = (batch[key].float() - clean_batch[key].float()).flatten(1)
+                damaged |= difference.abs().amax(dim=1) > 0
+        if not bool(damaged.any()):
+            return None
+        with torch.no_grad():
+            teacher = self.model(clean_batch)
+        teacher_waypoints = teacher.future_waypoints.detach().float().clone()
+        per_sample = (student_waypoints.float() - teacher_waypoints).abs().mean(dim=(1, 2))
+        student_route = getattr(predictions, "route", None)
+        teacher_route = getattr(teacher, "route", None)
+        if student_route is not None and teacher_route is not None:
+            per_sample = per_sample + (
+                student_route.float() - teacher_route.detach().float().clone()
+            ).abs().mean(dim=(1, 2))
+        weight = damaged.to(per_sample.dtype)
+        return (per_sample * weight).sum() / weight.sum()
+
     def transfer_batch_to_device(
         self,
         batch: dict,
@@ -442,7 +492,12 @@ class LeadLightningModule(pl.LightningModule):
 
         # Through the uncompiled module: augmentation is RNG-driven and must
         # stay outside the compiled graph.
-        batch = self._raw_model.augment_batch(batch)
+        consistency_weight = self.config.training.data.degradation_consistency_weight
+        clean_batch = None
+        if consistency_weight > 0.0:
+            batch, clean_batch = self._raw_model.augment_batch_with_clean(batch)
+        else:
+            batch = self._raw_model.augment_batch(batch)
         predictions = self.model(batch)
         losses, extra_metrics = self.model.compute_loss(predictions, batch)
 
@@ -452,6 +507,12 @@ class LeadLightningModule(pl.LightningModule):
             total_loss = total_loss + self.normalized_loss_weights[
                 key
             ] * value.float().reshape(1)
+
+        if clean_batch is not None:
+            consistency = self._degradation_consistency(predictions, batch, clean_batch)
+            if consistency is not None:
+                total_loss = total_loss + consistency_weight * consistency.reshape(1)
+                extra_metrics["losses/degradation_consistency"] = consistency.detach()
 
         self._log_scalars(losses, extra_metrics, batch)
         self._visualize(predictions, batch, batch_idx)
