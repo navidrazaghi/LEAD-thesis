@@ -1,0 +1,3 @@
+[10-05 09:16:23] training set pinned to the 450 cached logs
+[10-05 09:16:23] post-train starting: 31 epochs from the 31-epoch pretrain
+[10-05 09:16:23]   the 10-epoch run is outputs/rung0_lead_recipe_post, kept intact

@@ -1,0 +1,10 @@
+[10-12 14:57:16] download verified: 585 logs, both views
+[10-12 14:57:16] building the cache, 16 workers
+[10-12 15:16:46] cache built
+[10-12 15:16:46] pretrain starting: 31 epochs
+[10-12 21:17:15] pretrain done
+[10-12 21:17:15] post-train starting: 31 epochs from the pretrain
+[10-13 02:58:52] post-train done
+[10-13 02:58:52] scoring 30 routes x 3 conditions
+[10-13 10:11:38] done: 90 rows in results/closed_loop_diverse_baseline.csv
+[10-13 10:11:38] compare with results/closed_loop_post31.csv: same model and recipe, different data

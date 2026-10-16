@@ -1,0 +1,24 @@
+[09:49:04] waiting for the reference degradation run to finish
+[02:04:25] it finished; settling before taking the GPU
+[02:09:25] starting the weather evaluation
+160 runs in the matrix, 0 already done, 160 to go
+  first pending: rung0 at none:0
+CARLA on 3000, traffic manager on 3100
+[1/160] rung0 none:0 11381.xml -> DS 28.970266 (Failed - Agent got blocked, 2609.5s)
+[2/160] rung2a none:0 11381.xml -> DS 15.894543 (Failed - Agent got blocked, 2600.0s)
+[3/160] rung4 none:0 11381.xml -> DS 1.438744 (Completed, 1501.0s)
+[4/160] ref0 none:0 11381.xml -> DS 34.21 (Failed - Agent got blocked, 2531.1s)
+[5/160] rung0 none:0 14842.xml -> DS 12.233335 (Failed - Agent got blocked, 1691.7s)
+[6/160] rung2a none:0 14842.xml -> DS 8.90779 (Completed, 565.2s)
+[7/160] rung4 none:0 14842.xml -> DS 32.525337 (Failed - Agent deviated from the route, 327.0s)
+  restarting CARLA
+[8/160] ref0 none:0 14842.xml -> DS 100.0 (Completed, 770.4s)
+[9/160] rung0 none:0 14862.xml -> DS 10.200628 (Failed - Agent got blocked, 1543.2s)
+[10/160] rung2a none:0 14862.xml -> DS 44.768297 (Failed - Agent got blocked, 1398.6s)
+[11/160] rung4 none:0 14862.xml -> DS 40.99 (Failed - Agent deviated from the route, 318.5s)
+[12/160] ref0 none:0 14862.xml -> DS 100.0 (Completed, 348.6s)
+[13/160] rung0 none:0 14909.xml -> DS 5.545727 (Failed - Agent got blocked, 1585.8s)
+[14/160] rung2a none:0 14909.xml -> DS 5.665308 (Completed, 1813.6s)
+[15/160] rung4 none:0 14909.xml -> DS 41.63 (Failed - Agent deviated from the route, 297.4s)
+  restarting CARLA
+[16/160] ref0 none:0 14909.xml -> DS 100.0 (Completed, 918.2s)

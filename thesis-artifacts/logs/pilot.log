@@ -1,0 +1,4 @@
+100 runs in the matrix, 26 already done, 74 to go
+  first pending: rung0 at camera:1.0
+CARLA on 3000, traffic manager on 3100
+[1/74] rung0 camera:1.0 24841.xml -> DS 48.9 (Failed - Agent got blocked, 420.4s)

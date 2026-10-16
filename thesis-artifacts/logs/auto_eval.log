@@ -1,0 +1,17 @@
+[2026-09-15 13:44:35] === watcher started; waiting for training PID 4189943 to exit ===
+[2026-09-15 19:06:36] training PID 4189943 exited
+[2026-09-15 19:08:06] GPU state after training exit:
+1540 MiB, 0 %
+[2026-09-15 19:08:06] starting CARLA
+[2026-09-15 19:08:36] CARLA port open after 45s
+[2026-09-15 19:09:02] starting evaluation on src/lead/routes/benchmark_routes/bench2drive/23687.xml
+[2026-09-16 08:29:45] evaluation finished with exit code 247
+[2026-09-16 08:29:45] === results ===
+total 4876
+drwxrwxr-x 2 razzaghi razzaghi    4096 Sep 15 19:29 .
+drwxrwxr-x 3 razzaghi razzaghi    4096 Sep 15 19:09 ..
+-rw-rw-r-- 1 razzaghi razzaghi 4876287 Sep 16 08:27 23687_demo.mp4
+-rw-rw-r-- 1 razzaghi razzaghi     610 Sep 15 19:12 checkpoint_endpoint.json
+-rw-rw-r-- 1 razzaghi razzaghi    1234 Sep 16 08:22 infractions.json
+-rw-rw-r-- 1 razzaghi razzaghi   95963 Sep 16 08:22 metric_info.json
+[2026-09-16 08:29:45] AUTO_EVAL_DONE

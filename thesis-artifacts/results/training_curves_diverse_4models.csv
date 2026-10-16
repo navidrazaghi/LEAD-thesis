@@ -1,0 +1,249 @@
+model,stage,epoch,train_objective
+"baseline, diverse data",pretrain,0,0.9253972202105969
+"baseline, diverse data",pretrain,1,0.651627375932764
+"baseline, diverse data",pretrain,2,0.4648983819346732
+"baseline, diverse data",pretrain,3,0.4766124338714355
+"baseline, diverse data",pretrain,4,0.3952887130412819
+"baseline, diverse data",pretrain,5,0.3470309405813743
+"baseline, diverse data",pretrain,6,0.3113504742604714
+"baseline, diverse data",pretrain,7,0.3559806508574423
+"baseline, diverse data",pretrain,8,0.3266247975921631
+"baseline, diverse data",pretrain,9,0.2996417151620407
+"baseline, diverse data",pretrain,10,0.2604467226463169
+"baseline, diverse data",pretrain,11,0.2501145321585371
+"baseline, diverse data",pretrain,12,0.23152590574108886
+"baseline, diverse data",pretrain,13,0.22114426913542143
+"baseline, diverse data",pretrain,14,0.21750846314441669
+"baseline, diverse data",pretrain,15,0.2524935628316478
+"baseline, diverse data",pretrain,16,0.24435050873915698
+"baseline, diverse data",pretrain,17,0.23232891995353624
+"baseline, diverse data",pretrain,18,0.22904108738035384
+"baseline, diverse data",pretrain,19,0.21412664569216808
+"baseline, diverse data",pretrain,20,0.2034885342789039
+"baseline, diverse data",pretrain,21,0.20247332546724514
+"baseline, diverse data",pretrain,22,0.18642722311147067
+"baseline, diverse data",pretrain,23,0.17658099443753217
+"baseline, diverse data",pretrain,24,0.17341502633978148
+"baseline, diverse data",pretrain,25,0.1689435894050525
+"baseline, diverse data",pretrain,26,0.1532996278904193
+"baseline, diverse data",pretrain,27,0.15475356667972942
+"baseline, diverse data",pretrain,28,0.15283360062247944
+"baseline, diverse data",pretrain,29,0.14692452530322808
+"baseline, diverse data",pretrain,30,0.14572914235212633
+"baseline, diverse data",posttrain,0,0.4026853648440799
+"baseline, diverse data",posttrain,1,0.3894489385967417
+"baseline, diverse data",posttrain,2,0.28905703757220635
+"baseline, diverse data",posttrain,3,0.3232992332073334
+"baseline, diverse data",posttrain,4,0.27030701919795774
+"baseline, diverse data",posttrain,5,0.24944276136728327
+"baseline, diverse data",posttrain,6,0.21555494477336332
+"baseline, diverse data",posttrain,7,0.2678951717659225
+"baseline, diverse data",posttrain,8,0.25501184741360433
+"baseline, diverse data",posttrain,9,0.23453826274492132
+"baseline, diverse data",posttrain,10,0.21267070656413392
+"baseline, diverse data",posttrain,11,0.1993433691808314
+"baseline, diverse data",posttrain,12,0.17906099686055152
+"baseline, diverse data",posttrain,13,0.1719200926458926
+"baseline, diverse data",posttrain,14,0.16396117348436104
+"baseline, diverse data",posttrain,15,0.22564330388550186
+"baseline, diverse data",posttrain,16,0.2165263322188647
+"baseline, diverse data",posttrain,17,0.2089227155450241
+"baseline, diverse data",posttrain,18,0.2050073551315764
+"baseline, diverse data",posttrain,19,0.1915760714811275
+"baseline, diverse data",posttrain,20,0.1833802268700324
+"baseline, diverse data",posttrain,21,0.17566813599580022
+"baseline, diverse data",posttrain,22,0.16428188306758115
+"baseline, diverse data",posttrain,23,0.15628676055017524
+"baseline, diverse data",posttrain,24,0.1504458938089984
+"baseline, diverse data",posttrain,25,0.1437343100889292
+"baseline, diverse data",posttrain,26,0.1407053298148974
+"baseline, diverse data",posttrain,27,0.13169146449618868
+"baseline, diverse data",posttrain,28,0.13098511015663702
+"baseline, diverse data",posttrain,29,0.1340722887498297
+"baseline, diverse data",posttrain,30,0.126204579758698
+"deformable, diverse data",pretrain,0,0.926576494174545
+"deformable, diverse data",pretrain,1,0.6514754520838467
+"deformable, diverse data",pretrain,2,0.468692682623525
+"deformable, diverse data",pretrain,3,0.4673245248359547
+"deformable, diverse data",pretrain,4,0.37963001798009016
+"deformable, diverse data",pretrain,5,0.3429478826949315
+"deformable, diverse data",pretrain,6,0.3043417404891993
+"deformable, diverse data",pretrain,7,0.3472270896756144
+"deformable, diverse data",pretrain,8,0.3049039689779683
+"deformable, diverse data",pretrain,9,0.28504380078081676
+"deformable, diverse data",pretrain,10,0.2699943055310637
+"deformable, diverse data",pretrain,11,0.2396557561511073
+"deformable, diverse data",pretrain,12,0.22679246241396436
+"deformable, diverse data",pretrain,13,0.21297255468894755
+"deformable, diverse data",pretrain,14,0.21169222797983056
+"deformable, diverse data",pretrain,15,0.2630115558805349
+"deformable, diverse data",pretrain,16,0.24952071067614748
+"deformable, diverse data",pretrain,17,0.24293647850584565
+"deformable, diverse data",pretrain,18,0.23508814638813946
+"deformable, diverse data",pretrain,19,0.2029632183481992
+"deformable, diverse data",pretrain,20,0.20365311733687458
+"deformable, diverse data",pretrain,21,0.1868941731591971
+"deformable, diverse data",pretrain,22,0.18201224007935038
+"deformable, diverse data",pretrain,23,0.17494797511487473
+"deformable, diverse data",pretrain,24,0.16977871288699325
+"deformable, diverse data",pretrain,25,0.16315081597993716
+"deformable, diverse data",pretrain,26,0.15645217278331888
+"deformable, diverse data",pretrain,27,0.1512018754725001
+"deformable, diverse data",pretrain,28,0.14876434655321932
+"deformable, diverse data",pretrain,29,0.14767952373589602
+"deformable, diverse data",pretrain,30,0.14614640323491968
+"deformable, diverse data",posttrain,0,0.42233074310517543
+"deformable, diverse data",posttrain,1,0.35570193090853763
+"deformable, diverse data",posttrain,2,0.25585804028703346
+"deformable, diverse data",posttrain,3,0.30938505790893106
+"deformable, diverse data",posttrain,4,0.27233684228447014
+"deformable, diverse data",posttrain,5,0.23059914717679753
+"deformable, diverse data",posttrain,6,0.20487859473343953
+"deformable, diverse data",posttrain,7,0.2673197067803067
+"deformable, diverse data",posttrain,8,0.23876040247688812
+"deformable, diverse data",posttrain,9,0.22164629708935812
+"deformable, diverse data",posttrain,10,0.202515415169641
+"deformable, diverse data",posttrain,11,0.18746027025377998
+"deformable, diverse data",posttrain,12,0.1720025565846901
+"deformable, diverse data",posttrain,13,0.15894134993846543
+"deformable, diverse data",posttrain,14,0.1602660765609618
+"deformable, diverse data",posttrain,15,0.22536524993284957
+"deformable, diverse data",posttrain,16,0.21900987453682988
+"deformable, diverse data",posttrain,17,0.20366235669130597
+"deformable, diverse data",posttrain,18,0.19827262769221013
+"deformable, diverse data",posttrain,19,0.19155104561061384
+"deformable, diverse data",posttrain,20,0.16981378062953756
+"deformable, diverse data",posttrain,21,0.16697533642687606
+"deformable, diverse data",posttrain,22,0.15807889043242085
+"deformable, diverse data",posttrain,23,0.15992923723049696
+"deformable, diverse data",posttrain,24,0.15312538788573954
+"deformable, diverse data",posttrain,25,0.14352509256272267
+"deformable, diverse data",posttrain,26,0.13617053133325766
+"deformable, diverse data",posttrain,27,0.13494037470817627
+"deformable, diverse data",posttrain,28,0.13014552725991613
+"deformable, diverse data",posttrain,29,0.12808121357066207
+"deformable, diverse data",posttrain,30,0.12987853407665118
+deformable + curriculum v2,pretrain,0,0.9606198040452354
+deformable + curriculum v2,pretrain,1,0.7117812642009325
+deformable + curriculum v2,pretrain,2,0.5406701880283675
+deformable + curriculum v2,pretrain,3,0.5239115755223936
+deformable + curriculum v2,pretrain,4,0.44252244050291045
+deformable + curriculum v2,pretrain,5,0.38092095792263825
+deformable + curriculum v2,pretrain,6,0.3593268183155822
+deformable + curriculum v2,pretrain,7,0.40166735337909715
+deformable + curriculum v2,pretrain,8,0.35865162457096295
+deformable + curriculum v2,pretrain,9,0.33496320080371333
+deformable + curriculum v2,pretrain,10,0.2973376856722146
+deformable + curriculum v2,pretrain,11,0.2897759916739975
+deformable + curriculum v2,pretrain,12,0.26470550973433665
+deformable + curriculum v2,pretrain,13,0.25916782630625484
+deformable + curriculum v2,pretrain,14,0.25404619045446597
+deformable + curriculum v2,pretrain,15,0.30186962914049936
+deformable + curriculum v2,pretrain,16,0.2867680074928103
+deformable + curriculum v2,pretrain,17,0.2657344350431183
+deformable + curriculum v2,pretrain,18,0.25837871482569524
+deformable + curriculum v2,pretrain,19,0.25191825551552793
+deformable + curriculum v2,pretrain,20,0.2386410999246628
+deformable + curriculum v2,pretrain,21,0.227091158036836
+deformable + curriculum v2,pretrain,22,0.22150453166909756
+deformable + curriculum v2,pretrain,23,0.21177016870599705
+deformable + curriculum v2,pretrain,24,0.20465768986583785
+deformable + curriculum v2,pretrain,25,0.20000244817639315
+deformable + curriculum v2,pretrain,26,0.19085054861168255
+deformable + curriculum v2,pretrain,27,0.18323348184379173
+deformable + curriculum v2,pretrain,28,0.18133120248629844
+deformable + curriculum v2,pretrain,29,0.1829909954791985
+deformable + curriculum v2,pretrain,30,0.17891977416519167
+deformable + curriculum v2,posttrain,0,0.42623136764750064
+deformable + curriculum v2,posttrain,1,0.3867883370288862
+deformable + curriculum v2,posttrain,2,0.30972499063068426
+deformable + curriculum v2,posttrain,3,0.34760661229341216
+deformable + curriculum v2,posttrain,4,0.29116584108210725
+deformable + curriculum v2,posttrain,5,0.2575010988383547
+deformable + curriculum v2,posttrain,6,0.2399179603443479
+deformable + curriculum v2,posttrain,7,0.2950886466706051
+deformable + curriculum v2,posttrain,8,0.28116559519269363
+deformable + curriculum v2,posttrain,9,0.26499031365719045
+deformable + curriculum v2,posttrain,10,0.24095142767507294
+deformable + curriculum v2,posttrain,11,0.23337830440947174
+deformable + curriculum v2,posttrain,12,0.21162014167186818
+deformable + curriculum v2,posttrain,13,0.20561250063531133
+deformable + curriculum v2,posttrain,14,0.18956714115338133
+deformable + curriculum v2,posttrain,15,0.241102247489064
+deformable + curriculum v2,posttrain,16,0.24210128359898
+deformable + curriculum v2,posttrain,17,0.23273764780555617
+deformable + curriculum v2,posttrain,18,0.2217621298039857
+deformable + curriculum v2,posttrain,19,0.2103368651238245
+deformable + curriculum v2,posttrain,20,0.20473841958730912
+deformable + curriculum v2,posttrain,21,0.19643495106841632
+deformable + curriculum v2,posttrain,22,0.19336954927807845
+deformable + curriculum v2,posttrain,23,0.18554023362908842
+deformable + curriculum v2,posttrain,24,0.18641028686483743
+deformable + curriculum v2,posttrain,25,0.17463929251941104
+deformable + curriculum v2,posttrain,26,0.16829936330770365
+deformable + curriculum v2,posttrain,27,0.1638583723065368
+deformable + curriculum v2,posttrain,28,0.16355144010358078
+deformable + curriculum v2,posttrain,29,0.1703362689690064
+deformable + curriculum v2,posttrain,30,0.15706147678359042
+dense + curriculum v2,pretrain,0,0.9898898857782873
+dense + curriculum v2,pretrain,1,0.7256525820056069
+dense + curriculum v2,pretrain,2,0.5444440996005285
+dense + curriculum v2,pretrain,3,0.5366512535293192
+dense + curriculum v2,pretrain,4,0.46311179001888475
+dense + curriculum v2,pretrain,5,0.40107027683773977
+dense + curriculum v2,pretrain,6,0.36735533148586047
+dense + curriculum v2,pretrain,7,0.4130729061387707
+dense + curriculum v2,pretrain,8,0.3747948123253704
+dense + curriculum v2,pretrain,9,0.34995340846975714
+dense + curriculum v2,pretrain,10,0.3103167286388414
+dense + curriculum v2,pretrain,11,0.3067334720833036
+dense + curriculum v2,pretrain,12,0.27623417485286056
+dense + curriculum v2,pretrain,13,0.26310901192331776
+dense + curriculum v2,pretrain,14,0.2600545368712382
+dense + curriculum v2,pretrain,15,0.3020557295539172
+dense + curriculum v2,pretrain,16,0.30064085258516715
+dense + curriculum v2,pretrain,17,0.28202098159041317
+dense + curriculum v2,pretrain,18,0.2622718250374156
+dense + curriculum v2,pretrain,19,0.26760868113243114
+dense + curriculum v2,pretrain,20,0.24467592963037532
+dense + curriculum v2,pretrain,21,0.22740536361953004
+dense + curriculum v2,pretrain,22,0.23255287563713528
+dense + curriculum v2,pretrain,23,0.2175033001887737
+dense + curriculum v2,pretrain,24,0.20924545242503786
+dense + curriculum v2,pretrain,25,0.19435593434352288
+dense + curriculum v2,pretrain,26,0.19689333143037402
+dense + curriculum v2,pretrain,27,0.18777737610776057
+dense + curriculum v2,pretrain,28,0.18504111387035568
+dense + curriculum v2,pretrain,29,0.18449035437519293
+dense + curriculum v2,pretrain,30,0.18079023416963105
+dense + curriculum v2,posttrain,0,0.41245347087245887
+dense + curriculum v2,posttrain,1,0.3826400597559869
+dense + curriculum v2,posttrain,2,0.3063541703613068
+dense + curriculum v2,posttrain,3,0.3477513335374043
+dense + curriculum v2,posttrain,4,0.3017615063544701
+dense + curriculum v2,posttrain,5,0.2694500853162178
+dense + curriculum v2,posttrain,6,0.248056514086824
+dense + curriculum v2,posttrain,7,0.2969051203536108
+dense + curriculum v2,posttrain,8,0.28493897204852786
+dense + curriculum v2,posttrain,9,0.27157135737930577
+dense + curriculum v2,posttrain,10,0.24440758655594116
+dense + curriculum v2,posttrain,11,0.21685343706787485
+dense + curriculum v2,posttrain,12,0.2131303330638596
+dense + curriculum v2,posttrain,13,0.20412273210358003
+dense + curriculum v2,posttrain,14,0.20453033394799416
+dense + curriculum v2,posttrain,15,0.24647040226146702
+dense + curriculum v2,posttrain,16,0.24907137319975364
+dense + curriculum v2,posttrain,17,0.24332732348174582
+dense + curriculum v2,posttrain,18,0.23236779110533567
+dense + curriculum v2,posttrain,19,0.2262288760338025
+dense + curriculum v2,posttrain,20,0.21991000462366414
+dense + curriculum v2,posttrain,21,0.20483428813003635
+dense + curriculum v2,posttrain,22,0.19810379300837908
+dense + curriculum v2,posttrain,23,0.18123696472774656
+dense + curriculum v2,posttrain,24,0.18267172556501438
+dense + curriculum v2,posttrain,25,0.1774101421068129
+dense + curriculum v2,posttrain,26,0.17125231351394632
+dense + curriculum v2,posttrain,27,0.16358591200188735
+dense + curriculum v2,posttrain,28,0.1671286998871638
+dense + curriculum v2,posttrain,29,0.16636428293100558
+dense + curriculum v2,posttrain,30,0.1609103609940736

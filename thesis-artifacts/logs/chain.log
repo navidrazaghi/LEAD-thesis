@@ -1,0 +1,17 @@
+[07:59:02] chain starting
+[07:59:02] SKIP rung0_baseline_post (already has model_0009.pth)
+[07:59:02] SKIP rung1_deformable_free (already has model_0009.pth)
+[07:59:02] SKIP rung1_deformable_free_post (already has model_0009.pth)
+[07:59:02] SKIP rung2_deformable_calibrated (already has model_0009.pth)
+[07:59:02] SKIP rung2_deformable_calibrated_post (already has model_0009.pth)
+[07:59:02] SKIP rung2a_curriculum_only (already has model_0009.pth)
+[07:59:02] SKIP rung2a_curriculum_only_post (already has model_0009.pth)
+[07:59:02] SKIP rung2b_observability_ungated (already has model_0009.pth)
+[07:59:02] SKIP rung2b_observability_ungated_post (already has model_0009.pth)
+[07:59:02] SKIP rung3_observability_gated (already has model_0009.pth)
+[07:59:02] SKIP rung3_observability_gated_post (already has model_0009.pth)
+[07:59:02] START rung4_light_auxiliary
+[12:43:22] DONE  rung4_light_auxiliary
+[12:43:22] START rung4_light_auxiliary_post
+[17:06:10] DONE  rung4_light_auxiliary_post
+[17:06:10] chain finished: all rungs complete

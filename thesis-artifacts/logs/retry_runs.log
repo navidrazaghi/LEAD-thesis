@@ -1,0 +1,131 @@
+[22:07:36] waiting for the main sweep to finish
+[11:47:46] nothing running; confirming after a settling period
+[12:07:46] the main sweep has exited
+[12:07:46] models: rung0=outputs/rung0_baseline_post rung2a=outputs/rung2a_curriculum_only_post rung4=outputs/rung4_light_auxiliary_post
+[12:07:46] state before any retry:
+  model   condition       measured   lost
+  rung0   camera:1.0            28      2
+  rung0   lidar:1.0             28      2
+  rung0   none:0                29      3
+  rung2a  camera:1.0            30      0
+  rung2a  lidar:1.0             29      1
+  rung2a  none:0                30      0
+  rung4   camera:1.0            27      3
+  rung4   lidar:1.0             28      2
+  rung4   none:0                29      1
+
+  camera:1.0     routes usable by every model: 27
+  lidar:1.0      routes usable by every model: 28
+  none:0         routes usable by every model: 28
+[12:07:46] pass 1: 11 cell(s) still unmeasured
+  1 cell(s) abandoned after two failures
+    rung0 none:0 11755.xml
+270 runs in the matrix, 259 already done, 11 to go
+  first pending: rung4 at none:0
+CARLA on 3000, traffic manager on 3100
+      | timed out after 2700s, killing the group
+[1/11] rung4 none:0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[2/11] rung0 lidar:1.0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[3/11] rung4 lidar:1.0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[4/11] rung0 lidar:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[5/11] rung2a lidar:1.0 24071.xml -> DS 100.0 (Completed, 190.0s)
+      | timed out after 2700s, killing the group
+[6/11] rung4 lidar:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[7/11] rung4 camera:1.0 11715.xml -> DS 42.909618 (Completed, 164.5s)
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[8/11] rung0 camera:1.0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[9/11] rung4 camera:1.0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[10/11] rung0 camera:1.0 24071.xml -> DS 61.641987 (Completed, 190.7s)
+      | timed out after 2700s, killing the group
+[11/11] rung4 camera:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+results in /home/razzaghi/LEAD/lead/results/closed_loop.csv
+[18:19:01] pass 1 finished with status 0
+[18:19:01] pass 2: 0 cell(s) still unmeasured
+[18:19:01] nothing left to retry
+[18:19:01] state after the retries:
+  model   condition       measured   lost
+  rung0   camera:1.0            29      3
+  rung0   lidar:1.0             28      4
+  rung0   none:0                29      3
+  rung2a  camera:1.0            30      0
+  rung2a  lidar:1.0             30      1
+  rung2a  none:0                30      0
+  rung4   camera:1.0            28      5
+  rung4   lidar:1.0             28      4
+  rung4   none:0                29      2
+
+  camera:1.0     routes usable by every model: 28
+  lidar:1.0      routes usable by every model: 28
+  none:0         routes usable by every model: 28
+[18:19:01] rewriting the summary
+270 runs | models ['rung0', 'rung2a', 'rung4'] | 30 routes
+
+============================================================================
+1. COVERAGE -- usable runs per cell, and what the rest were
+============================================================================
+model            none:0     lidar:1.0    camera:1.0
+rung0             29/30         28/30         29/30
+rung2a            30/30         30/30         30/30
+rung4             29/30         28/30         28/30
+
+   statuses across every run:
+      142  Completed
+       57  Failed - TickRuntime
+       49  Failed - Agent got blocked
+       13  Failed - Agent deviated from the route
+        9  NoResult
+
+============================================================================
+2. DRIVING SCORE, paired on the routes every model completed
+============================================================================
+
+  none:0   (n = 28 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        25.8    57.0        9       10
+    rung2a       41.8    83.0        5        5
+    rung4        37.1    85.6        2        4
+
+  lidar:1.0   (n = 28 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        34.6    80.0        4        8
+    rung2a       51.6    81.0        2        6
+    rung4        39.6    85.7        4        3
+
+  camera:1.0   (n = 28 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        32.9    61.3        9        9
+    rung2a       46.0    78.5        5        6
+    rung4        30.9    71.1        8        6
+
+============================================================================
+3. THE COMPARISON -- each model minus rung2a, paired route by route
+============================================================================
+
+  none:0   (n = 28)
+    rung0     vs rung2a    mean  -15.9  sd  38.5  se   7.3  95% [ -30.5,   -1.4]  better on 11/28  resolved
+    rung4     vs rung2a    mean   -4.7  sd  43.2  se   8.2  95% [ -21.0,  +11.7]  better on 11/28  NOT resolved (interval spans 0)
+
+  lidar:1.0   (n = 28)
+    rung0     vs rung2a    mean  -17.0  sd  40.4  se   7.6  95% [ -32.3,   -1.7]  better on 7/28  resolved
+    rung4     vs rung2a    mean  -12.0  sd  38.8  se   7.3  95% [ -26.7,   +2.6]  better on 11/28  NOT resolved (interval spans 0)
+
+  camera:1.0   (n = 28)
+    rung0     vs rung2a    mean  -13.2  sd  33.0  se   6.2  95% [ -25.6,   -0.7]  better on 11/28  resolved
+    rung4     vs rung2a    mean  -15.1  sd  34.5  se   6.5  95% [ -28.1,   -2.1]  better on 9/28  resolved
+
+  A positive mean favours the first model. Read the interval before the
+  mean: with a per-route spread this wide, only an interval clear of zero
+  supports a claim.
+[18:19:02] done

@@ -1,0 +1,3 @@
+[10-13 16:03:32] pretrain starting: 31 epochs, deformable + calibrated reference
+[10-14 00:30:27] pretrain done
+[10-14 00:30:27] post-train starting: 31 epochs from the pretrain

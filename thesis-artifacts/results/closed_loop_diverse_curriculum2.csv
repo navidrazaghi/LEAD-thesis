@@ -1,0 +1,91 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds,ticks,distance_m,stationary_frac
+curriculum2,none,0,10857.xml,37.786,53.98,0.7,Failed - Agent deviated from the route,Town12,11,203.5,351,67.8,0.263
+curriculum2,none,0,14194.xml,100.0,100,1.0,Completed,Town12,20,168.7,380,75.7,0.288
+curriculum2,none,0,24092.xml,100.0,100,1.0,Completed,Town13,20,196.8,346,149.6,0.029
+curriculum2,none,0,24294.xml,50.0,100,0.5,Completed,Town02,20,101.8,230,102.4,0.044
+curriculum2,none,0,24841.xml,100.0,100,1.0,Completed,Town01,20,156.3,458,130.4,0.022
+curriculum2,none,0,25845.xml,100.0,100,1.0,Completed,Town15,19,189.0,584,106.2,0.377
+curriculum2,none,0,25928.xml,100.0,100,1.0,Completed,Town11,18,134.3,379,100.8,0.206
+curriculum2,none,0,26405.xml,100.0,100,1.0,Completed,Town15,18,118.4,376,134.3,0.027
+curriculum2,none,0,26956.xml,60.0,100,0.6,Completed,Town05,21,124.6,369,75.5,0.239
+curriculum2,none,0,27582.xml,31.788,52.98,0.6,Failed - Agent deviated from the route,Town11,11,141.7,471,63.7,0.409
+curriculum2,lidar,1.0,10857.xml,17.5,100,0.175,Completed,Town12,23,239.8,374,77.1,0.273
+curriculum2,lidar,1.0,14194.xml,100.0,100,1.0,Completed,Town12,20,244.5,564,76.2,0.526
+curriculum2,lidar,1.0,24092.xml,100.0,100,1.0,Completed,Town13,20,194.1,313,149.0,0.032
+curriculum2,lidar,1.0,24294.xml,50.0,100,0.5,Completed,Town02,20,235.7,927,102.4,0.706
+curriculum2,lidar,1.0,24841.xml,100.0,100,1.0,Completed,Town01,20,144.2,457,130.2,0.024
+curriculum2,lidar,1.0,25845.xml,100.0,100,1.0,Completed,Town15,19,175.7,592,106.5,0.367
+curriculum2,lidar,1.0,25928.xml,100.0,100,1.0,Completed,Town11,18,163.4,575,101.0,0.458
+curriculum2,lidar,1.0,26405.xml,100.0,100,1.0,Completed,Town15,18,132.6,421,134.3,0.043
+curriculum2,lidar,1.0,26956.xml,32.682,54.47,0.6,Failed - Agent deviated from the route,Town05,11,116.0,339,69.3,0.251
+curriculum2,lidar,1.0,27582.xml,52.98,52.98,1.0,Failed - Agent deviated from the route,Town11,10,132.2,391,63.7,0.349
+curriculum2,camera,1.0,10857.xml,53.98,53.98,1.0,Failed - Agent deviated from the route,Town12,10,196.8,244,67.6,0.041
+curriculum2,camera,1.0,14194.xml,32.527636,52.7,0.617223,Failed - Agent got blocked,Town12,12,561.5,1540,43.1,0.875
+curriculum2,camera,1.0,24092.xml,9.351344,17.6,0.531326,Failed - TickRuntime,Town13,5,1005.2,3999,28.1,0.974
+curriculum2,camera,1.0,24294.xml,50.0,100,0.5,Completed,Town02,20,132.0,486,102.5,0.41
+curriculum2,camera,1.0,24841.xml,63.001814,100,0.630018,Completed,Town01,22,142.6,458,133.2,0.022
+curriculum2,camera,1.0,25845.xml,25.734,42.89,0.6,Failed - TickRuntime,Town15,8,920.2,3999,46.5,0.954
+curriculum2,camera,1.0,25928.xml,12.535563,64.03,0.195776,Failed - Agent deviated from the route,Town11,15,395.4,2192,99.1,0.724
+curriculum2,camera,1.0,26405.xml,16.716315,31.78,0.526001,Failed - Agent got blocked,Town15,8,313.5,1442,46.9,0.865
+curriculum2,camera,1.0,26956.xml,32.682,54.47,0.6,Failed - Agent deviated from the route,Town05,11,132.6,432,68.4,0.429
+curriculum2,camera,1.0,27582.xml,37.891,54.13,0.7,Failed - Agent deviated from the route,Town11,11,120.3,341,64.4,0.229
+curriculum2,none,0,11715.xml,33.103,47.29,0.7,Failed - Agent deviated from the route,Town12,10,153.3,281,68.2,0.089
+curriculum2,none,0,23901.xml,100.0,100.0,1.0,Completed,Town13,21,216.3,427,176.1,0.023
+curriculum2,none,0,24224.xml,100.0,100,1.0,Completed,Town02,20,131.8,373,132.4,0.083
+curriculum2,none,0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,131.1,327,100.8,0.031
+curriculum2,none,0,25300.xml,100.0,100.0,1.0,Completed,Town04,21,165.8,517,185.3,0.019
+curriculum2,none,0,25854.xml,60.0,100,0.6,Completed,Town03,21,165.2,463,132.2,0.074
+curriculum2,none,0,25951.xml,22.869077,100,0.228691,Completed,Town04,24,144.0,433,138.8,0.023
+curriculum2,none,0,26406.xml,7.8696,21.86,0.36,Failed - TickRuntime,Town04,6,848.7,3999,42.5,0.93
+curriculum2,none,0,27515.xml,14.0525,40.15,0.35,Failed - Agent deviated from the route,Town03,9,107.5,315,60.4,0.137
+curriculum2,none,0,28035.xml,50.82,72.6,0.7,Failed - Agent deviated from the route,Town01,14,133.7,411,114.7,0.024
+curriculum2,lidar,1.0,11715.xml,33.924965,54.3,0.624769,Failed - Agent deviated from the route,Town12,12,204.3,395,69.2,0.284
+curriculum2,lidar,1.0,23901.xml,100.0,100.0,1.0,Completed,Town13,21,238.4,438,175.7,0.023
+curriculum2,lidar,1.0,24224.xml,50.0,100,0.5,Completed,Town02,21,131.0,369,132.6,0.027
+curriculum2,lidar,1.0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,135.0,341,100.8,0.029
+curriculum2,lidar,1.0,25300.xml,23.4,100.0,0.234,Completed,Town04,22,873.5,3999,186.2,0.84
+curriculum2,lidar,1.0,25854.xml,100.0,100,1.0,Completed,Town03,20,156.8,472,132.7,0.093
+curriculum2,lidar,1.0,25951.xml,36.0,100,0.36,Completed,Town04,22,135.0,427,135.8,0.023
+curriculum2,lidar,1.0,26406.xml,21.6,100,0.216,Completed,Town04,23,161.4,642,144.2,0.198
+curriculum2,lidar,1.0,27515.xml,9.081578,42.2,0.215203,Failed - Agent deviated from the route,Town03,10,103.1,290,62.4,0.145
+curriculum2,lidar,1.0,28035.xml,70.0,100,0.7,Completed,Town01,20,144.1,431,121.8,0.023
+curriculum2,camera,1.0,11715.xml,,,,NoResult,,,2700.1,1000,53.0,0.748
+curriculum2,camera,1.0,23901.xml,6.549185,19.16,0.341816,Failed - Agent got blocked,Town13,6,604.4,2239,31.9,0.938
+curriculum2,camera,1.0,24224.xml,47.349838,100,0.473498,Completed,Town02,22,124.6,358,133.3,0.028
+curriculum2,camera,1.0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,132.4,377,100.4,0.09
+curriculum2,camera,1.0,25300.xml,60.0,100.0,0.6,Completed,Town04,22,149.6,508,186.3,0.043
+curriculum2,camera,1.0,25854.xml,100.0,100,1.0,Completed,Town03,20,144.3,437,133.5,0.023
+curriculum2,camera,1.0,25951.xml,10.761524,27.09,0.397251,Failed - TickRuntime,Town04,7,856.1,3999,39.2,0.968
+curriculum2,camera,1.0,26406.xml,60.0,100.0,0.6,Completed,Town04,22,167.7,652,170.6,0.233
+curriculum2,camera,1.0,27515.xml,30.388793,40.15,0.756882,Failed - Agent deviated from the route,Town03,8,81.8,182,53.5,0.055
+curriculum2,camera,1.0,28035.xml,61.063868,100,0.610639,Completed,Town01,21,130.3,407,117.0,0.025
+curriculum2,none,0,11755.xml,38.865757,100,0.388658,Completed,Town12,20,177.5,389,84.5,0.232
+curriculum2,none,0,24071.xml,100.0,100,1.0,Completed,Town13,20,169.5,224,154.1,0.045
+curriculum2,none,0,24258.xml,28.3176,78.66,0.36,Failed - TickRuntime,Town07,15,899.4,3999,105.8,0.894
+curriculum2,none,0,24795.xml,100.0,100,1.0,Completed,Town04,20,123.9,410,141.5,0.032
+curriculum2,none,0,25439.xml,60.0,100,0.6,Completed,Town15,19,142.2,506,130.1,0.067
+curriculum2,none,0,25857.xml,33.83,33.83,1.0,Failed - TickRuntime,Town05,5,926.5,3999,44.2,0.966
+curriculum2,none,0,25968.xml,34.11,34.11,1.0,Failed - Agent deviated from the route,Town07,7,189.9,740,48.0,0.755
+curriculum2,none,0,26456.xml,100.0,100,1.0,Completed,Town03,20,373.1,1560,130.6,0.695
+curriculum2,none,0,27532.xml,51.44,51.44,1.0,Failed - Agent deviated from the route,Town11,10,112.5,282,64.2,0.157
+curriculum2,none,0,28154.xml,19.441096,100,0.194411,Completed,Town10HD,24,724.8,2707,158.8,0.756
+curriculum2,lidar,1.0,11755.xml,100.0,100,1.0,Completed,Town12,17,215.3,480,81.9,0.443
+curriculum2,lidar,1.0,24071.xml,100.0,100,1.0,Completed,Town13,21,178.4,212,153.9,0.047
+curriculum2,lidar,1.0,24258.xml,55.428,92.38,0.6,Failed - TickRuntime,Town07,16,908.4,3999,122.9,0.894
+curriculum2,lidar,1.0,24795.xml,100.0,100.0,1.0,Completed,Town04,21,147.4,539,169.9,0.019
+curriculum2,lidar,1.0,25439.xml,100.0,100,1.0,Completed,Town15,18,131.6,462,130.8,0.061
+curriculum2,lidar,1.0,25857.xml,33.83,33.83,1.0,Failed - TickRuntime,Town05,5,906.0,3999,45.0,0.963
+curriculum2,lidar,1.0,25968.xml,34.11,34.11,1.0,Failed - Agent deviated from the route,Town07,7,138.5,527,48.0,0.65
+curriculum2,lidar,1.0,26456.xml,100.0,100,1.0,Completed,Town03,20,366.3,1561,130.4,0.705
+curriculum2,lidar,1.0,27532.xml,51.44,51.44,1.0,Failed - Agent deviated from the route,Town11,10,102.6,236,64.0,0.072
+curriculum2,lidar,1.0,28154.xml,48.37232,100,0.483723,Completed,Town10HD,22,615.0,2470,160.9,0.766
+curriculum2,camera,1.0,11755.xml,42.0,100,0.42,Completed,Town12,19,188.2,393,83.9,0.235
+curriculum2,camera,1.0,24071.xml,100.0,100,1.0,Completed,Town13,20,170.3,231,153.7,0.043
+curriculum2,camera,1.0,24258.xml,27.24523,80.18,0.339801,Failed - TickRuntime,Town07,16,868.6,3999,113.1,0.901
+curriculum2,camera,1.0,24795.xml,100.0,100,1.0,Completed,Town04,20,115.8,384,141.7,0.112
+curriculum2,camera,1.0,25439.xml,5.414821,83.56,0.064802,Failed - TickRuntime,Town15,18,712.8,3999,123.3,0.881
+curriculum2,camera,1.0,25857.xml,96.928632,100,0.969286,Completed,Town05,19,126.2,404,134.2,0.082
+curriculum2,camera,1.0,25968.xml,7.42,7.42,1.0,Failed - Agent got blocked,Town07,2,266.4,1251,4.5,0.971
+curriculum2,camera,1.0,26456.xml,13.206116,100,0.132061,Completed,Town03,24,209.6,785,136.3,0.316
+curriculum2,camera,1.0,27532.xml,26.164129,100,0.261641,Completed,Town11,21,108.8,298,74.1,0.168
+curriculum2,camera,1.0,28154.xml,33.088947,55.68,0.59427,Failed - TickRuntime,Town10HD,12,1015.6,3999,90.1,0.91

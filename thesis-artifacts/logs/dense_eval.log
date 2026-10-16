@@ -1,0 +1,71 @@
+[15:00:38] waiting for the training lock
+[15:00:38] lock acquired
+[15:00:38] scoring 30 routes x 3 conditions
+90 runs in the matrix, 0 already done, 90 to go
+  first pending: rung2a_dense at none:0
+CARLA on 3000, traffic manager on 3100
+[1/90] rung2a_dense none:0 10857.xml -> DS 23.72 (Failed - Agent got blocked, 1645.7s)
+      | timed out after 2700s, killing the group
+[2/90] rung2a_dense none:0 11715.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[3/90] rung2a_dense none:0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[4/90] rung2a_dense none:0 14194.xml -> DS 19.5552 (Failed - Agent got blocked, 1518.0s)
+[5/90] rung2a_dense none:0 23901.xml -> DS 3.8 (Failed - Agent got blocked, 1216.6s)
+[6/90] rung2a_dense none:0 24071.xml -> DS 96.773489 (Completed, 555.4s)
+[7/90] rung2a_dense none:0 24092.xml -> DS 100.0 (Completed, 544.9s)
+  restarting CARLA
+[8/90] rung2a_dense none:0 24224.xml -> DS 0.0 (Failed - Agent got blocked, 866.3s)
+[9/90] rung2a_dense none:0 24258.xml -> DS 31.14125 (Completed, 498.5s)
+[10/90] rung2a_dense none:0 24294.xml -> DS None (NoResult, 444.8s)  [sim failure, will restart]
+  restarting CARLA
+[11/90] rung2a_dense none:0 24340.xml -> DS 43.78 (Failed - Agent got blocked, 1216.3s)
+[12/90] rung2a_dense none:0 24795.xml -> DS 100.0 (Completed, 431.4s)
+[13/90] rung2a_dense none:0 24841.xml -> DS 49.9324 (Failed - Agent got blocked, 1979.6s)
+[14/90] rung2a_dense none:0 25300.xml -> DS 36.0 (Completed, 494.6s)
+[15/90] rung2a_dense none:0 25439.xml -> DS 36.0 (Completed, 1518.2s)
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[16/90] rung2a_dense none:0 25845.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[17/90] rung2a_dense none:0 25854.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[18/90] rung2a_dense none:0 25857.xml -> DS None (NoResult, 2700.3s)  [sim failure, will restart]
+  restarting CARLA
+[19/90] rung2a_dense none:0 25928.xml -> DS 32.05 (Failed - TickRuntime, 2619.6s)
+[20/90] rung2a_dense none:0 25951.xml -> DS 0.0 (Failed - Agent got blocked, 937.2s)
+[21/90] rung2a_dense none:0 25968.xml -> DS 0.0 (Failed - Agent got blocked, 822.0s)
+[22/90] rung2a_dense none:0 26405.xml -> DS 30.264359 (Failed - Agent got blocked, 950.4s)
+[23/90] rung2a_dense none:0 26406.xml -> DS 21.6 (Completed, 664.1s)
+  restarting CARLA
+[24/90] rung2a_dense none:0 26456.xml -> DS 7.32 (Failed - Agent got blocked, 1017.8s)
+      | timed out after 2700s, killing the group
+[25/90] rung2a_dense none:0 26956.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[26/90] rung2a_dense none:0 27515.xml -> DS 0.0 (Failed - Agent got blocked, 900.6s)
+[27/90] rung2a_dense none:0 27532.xml -> DS 14.43 (Failed - TickRuntime, 2684.4s)
+[28/90] rung2a_dense none:0 27582.xml -> DS 20.66 (Failed - Agent got blocked, 803.7s)
+      | timed out after 2700s, killing the group
+[29/90] rung2a_dense none:0 28035.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[30/90] rung2a_dense none:0 28154.xml -> DS 70.0 (Completed, 790.6s)
+[31/90] rung2a_dense lidar:1.0 10857.xml -> DS 10.63 (Failed - Agent got blocked, 1528.4s)
+  restarting CARLA
+[32/90] rung2a_dense lidar:1.0 11715.xml -> DS 0.0 (Failed - Agent got blocked, 1119.5s)
+[33/90] rung2a_dense lidar:1.0 11755.xml -> DS 0.0 (Failed - Agent got blocked, 1101.3s)
+[34/90] rung2a_dense lidar:1.0 14194.xml -> DS 17.44 (Failed - Agent got blocked, 1323.5s)
+[35/90] rung2a_dense lidar:1.0 23901.xml -> DS 0.0 (Failed - Agent got blocked, 1180.7s)
+[36/90] rung2a_dense lidar:1.0 24071.xml -> DS 36.0 (Completed, 698.3s)
+[37/90] rung2a_dense lidar:1.0 24092.xml -> DS 0.0 (Failed - Agent got blocked, 1000.9s)
+[38/90] rung2a_dense lidar:1.0 24224.xml -> DS 0.0 (Failed - Agent got blocked, 902.5s)
+[39/90] rung2a_dense lidar:1.0 24258.xml -> DS 5.96 (Failed - Agent got blocked, 942.4s)
+  restarting CARLA
+[40/90] rung2a_dense lidar:1.0 24294.xml -> DS 0.0 (Failed - Agent got blocked, 871.9s)
+[41/90] rung2a_dense lidar:1.0 24340.xml -> DS 14.628 (Failed - Agent got blocked, 1220.7s)
+      | timed out after 2700s, killing the group
+[42/90] rung2a_dense lidar:1.0 24795.xml -> DS None (NoResult, 2700.4s)  [sim failure, will restart]
+  restarting CARLA
+[43/90] rung2a_dense lidar:1.0 24841.xml -> DS 0.0 (Failed - Agent got blocked, 941.5s)

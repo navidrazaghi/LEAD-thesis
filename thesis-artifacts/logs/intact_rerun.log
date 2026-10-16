@@ -1,0 +1,67 @@
+[09:48:46] waiting for the first evaluation to finish
+[15:33:58] the first evaluation has exited
+[15:33:58] first file holds 90 of 90 rows
+[15:33:58] waiting for the training lock
+[15:33:58] lock acquired
+[15:33:58] scoring 30 routes, intact only
+30 runs in the matrix, 0 already done, 30 to go
+  first pending: rung0_lead at none:0
+CARLA on 3000, traffic manager on 3100
+[1/30] rung0_lead none:0 10857.xml -> DS None (NoResult, 366.8s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+      | 1000 ticks, 50.6 m, 82% of ticks stationary
+[2/30] rung0_lead none:0 11715.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+      | 1800 ticks, 55.9 m, 88% of ticks stationary
+[3/30] rung0_lead none:0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[4/30] rung0_lead none:0 14194.xml -> DS 13.542138 (Failed - Agent got blocked, 2124.1s)
+[5/30] rung0_lead none:0 23901.xml -> DS 9.686888 (Failed - Agent got blocked, 1470.1s)
+[6/30] rung0_lead none:0 24071.xml -> DS 94.871216 (Completed, 339.1s)
+[7/30] rung0_lead none:0 24092.xml -> DS 30.223457 (Failed - TickRuntime, 2664.4s)
+  restarting CARLA
+[8/30] rung0_lead none:0 24224.xml -> DS None (NoResult, 1142.4s)  [sim failure, will restart]
+  restarting CARLA
+[9/30] rung0_lead none:0 24258.xml -> DS 11.37888 (Failed - TickRuntime, 2426.8s)
+[10/30] rung0_lead none:0 24294.xml -> DS 20.871713 (Failed - Agent got blocked, 900.3s)
+[11/30] rung0_lead none:0 24340.xml -> DS 13.67412 (Failed - Agent got blocked, 1267.2s)
+[12/30] rung0_lead none:0 24795.xml -> DS 23.517 (Failed - TickRuntime, 2542.4s)
+[13/30] rung0_lead none:0 24841.xml -> DS 15.34 (Failed - Agent got blocked, 1455.2s)
+[14/30] rung0_lead none:0 25300.xml -> DS 10.743225 (Failed - TickRuntime, 2604.3s)
+[15/30] rung0_lead none:0 25439.xml -> DS 13.219725 (Failed - TickRuntime, 2388.9s)
+  restarting CARLA
+[16/30] rung0_lead none:0 25845.xml -> DS 16.7271 (Failed - TickRuntime, 2636.7s)
+      | timed out after 2700s, killing the group
+      | 3600 ticks, 43.8 m, 94% of ticks stationary
+[17/30] rung0_lead none:0 25854.xml -> DS None (NoResult, 2700.2s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+      | 3800 ticks, 73.3 m, 91% of ticks stationary
+[18/30] rung0_lead none:0 25857.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[19/30] rung0_lead none:0 25928.xml -> DS 31.0555 (Completed, 319.9s)
+[20/30] rung0_lead none:0 25951.xml -> DS 3.224607 (Failed - TickRuntime, 2501.9s)
+[21/30] rung0_lead none:0 25968.xml -> DS 14.4612 (Failed - Agent got blocked, 1575.4s)
+[22/30] rung0_lead none:0 26405.xml -> DS 28.75 (Failed - Agent got blocked, 1886.5s)
+[23/30] rung0_lead none:0 26406.xml -> DS 45.496091 (Completed, 362.6s)
+  restarting CARLA
+[24/30] rung0_lead none:0 26456.xml -> DS 12.313787 (Failed - Agent got blocked, 1751.2s)
+[25/30] rung0_lead none:0 26956.xml -> DS 20.041905 (Failed - TickRuntime, 2650.4s)
+[26/30] rung0_lead none:0 27515.xml -> DS 18.950013 (Completed, 346.1s)
+[27/30] rung0_lead none:0 27532.xml -> DS 27.446849 (Completed, 349.8s)
+[28/30] rung0_lead none:0 27582.xml -> DS 6.157287 (Failed - Agent deviated from the route, 257.3s)
+      | timed out after 2700s, killing the group
+      | 3800 ticks, 54.4 m, 86% of ticks stationary
+[29/30] rung0_lead none:0 28035.xml -> DS None (NoResult, 2700.3s)  [sim failure, will restart]
+  restarting CARLA
+[30/30] rung0_lead none:0 28154.xml -> DS 20.6505 (Failed - TickRuntime, 2537.2s)
+results in /home/razzaghi/LEAD/lead/results/closed_loop_new_baseline_intact_rerun.csv
+[06:11:03] evaluation exited 0
+[06:11:03] rows: 30 of 30
+
+  Read this against the intact rows of the first file. Same routes, same
+  checkpoint, different machine load. If the censored count falls toward
+  the lidar column's one in thirty, the first column's width was the
+  machine and not the model.

@@ -1,0 +1,13 @@
+[10-15 08:03:23] curriculum-v2 deformable run finished; starting dense + curriculum v2
+[10-15 08:03:23] pretrain starting: 31 epochs, dense + curriculum v2
+[10-15 13:58:24] pretrain done
+[10-15 13:58:24] post-train starting: 31 epochs from the pretrain
+[10-15 19:39:40] post-train done
+[10-15 19:39:40] scoring dense_curriculum2, 30 routes x 3 conditions, 3 instance(s)
+shard 0: 10 routes on port 7600
+shard 1: 10 routes on port 8000
+shard 2: 10 routes on port 8400
+shards finished, failed: none
+merged 90 rows into /home/razzaghi/LEAD/lead/results/closed_loop_diverse_dense_curriculum2.csv (matrix is 90)
+[10-15 22:55:17] done: 90 rows in results/closed_loop_diverse_dense_curriculum2.csv
+[10-15 22:55:17] read against results/closed_loop_diverse_baseline.csv: only the curriculum differs.

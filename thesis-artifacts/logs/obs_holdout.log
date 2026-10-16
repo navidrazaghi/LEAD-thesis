@@ -1,0 +1,39 @@
+
+  HELD OUT: 28 logs the model did not train on.
+  25 batches of 8, supervised cells only.
+
+  modality       cells  pearson  spearman     MAE    base    RMSE    base  cal gap
+  --------------------------------------------------------------------------------
+  camera         50960    0.524     0.438   0.160   0.232   0.289   0.338    0.019
+  lidar          50726    0.637     0.582   0.193   0.369   0.342   0.422    0.103
+
+  'base' is the same error for predicting the label mean everywhere. A head
+  that does not beat it has learned nothing usable, whatever its correlation.
+
+  calibration, camera:
+    bin             cells  mean pred  mean label
+    0.0-0.1           134      0.073       0.215
+    0.1-0.2           356      0.153       0.271
+    0.2-0.3           514      0.253       0.229
+    0.3-0.4           702      0.352       0.303
+    0.4-0.5           908      0.453       0.395
+    0.5-0.6          1336      0.553       0.483
+    0.6-0.7          1849      0.655       0.599
+    0.7-0.8          3451      0.755       0.689
+    0.8-0.9          7495      0.859       0.832
+    0.9-1.0         34215      0.967       0.961
+
+  calibration, lidar:
+    bin             cells  mean pred  mean label
+    0.0-0.1          1526      0.041       0.013
+    0.1-0.2          1045      0.151       0.055
+    0.2-0.3           974      0.250       0.088
+    0.3-0.4          1056      0.350       0.150
+    0.4-0.5          1140      0.450       0.218
+    0.5-0.6          1148      0.551       0.330
+    0.6-0.7          1494      0.652       0.469
+    0.7-0.8          2504      0.755       0.573
+    0.8-0.9          5389      0.857       0.665
+    0.9-1.0         34450      0.971       0.900
+
+  wrote results/observability_head_holdout.json

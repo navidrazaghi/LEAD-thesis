@@ -1,0 +1,28 @@
+[12:10:44] calibrating the governor on the calibration routes
+20 runs in the matrix, 0 already done, 20 to go
+  first pending: rung4_ens at both:1.0
+CARLA on 3000, traffic manager on 3100
+[1/20] rung4_ens both:1.0 18305.xml -> DS 0.0 (Failed - Agent couldn't be set up, 188.1s)
+[2/20] rung4_ens both:1.0 18311.xml -> DS 0.0 (Failed - Agent couldn't be set up, 101.6s)
+[3/20] rung4_ens both:1.0 1833.xml -> DS 0.0 (Failed - Agent couldn't be set up, 94.2s)
+[4/20] rung4_ens both:1.0 1852.xml -> DS 0.0 (Failed - Agent couldn't be set up, 98.4s)
+[5/20] rung4_ens both:1.0 1956.xml -> DS 0.0 (Failed - Agent couldn't be set up, 103.3s)
+[6/20] rung4_ens both:1.0 2086.xml -> DS 0.0 (Failed - Agent couldn't be set up, 97.9s)
+[7/20] rung4_ens both:1.0 2091.xml -> DS 0.0 (Failed - Agent couldn't be set up, 96.7s)
+  restarting CARLA
+[8/20] rung4_ens both:1.0 2143.xml -> DS 0.0 (Failed - Agent couldn't be set up, 182.7s)
+[9/20] rung4_ens both:1.0 2144.xml -> DS 0.0 (Failed - Agent couldn't be set up, 108.6s)
+[10/20] rung4_ens both:1.0 2164.xml -> DS 0.0 (Failed - Agent couldn't be set up, 97.8s)
+[11/20] rung4_ens both:1.0 2273.xml -> DS 0.0 (Failed - Agent couldn't be set up, 94.9s)
+[12/20] rung4_ens both:1.0 2286.xml -> DS 0.0 (Failed - Agent couldn't be set up, 95.7s)
+[13/20] rung4_ens both:1.0 23708.xml -> DS 0.0 (Failed - Agent couldn't be set up, 94.3s)
+[14/20] rung4_ens both:1.0 2373.xml -> DS 0.0 (Failed - Agent couldn't be set up, 98.5s)
+[15/20] rung4_ens both:1.0 23771.xml -> DS 0.0 (Failed - Agent couldn't be set up, 93.0s)
+  restarting CARLA
+[16/20] rung4_ens both:1.0 3572.xml -> DS 0.0 (Failed - Agent couldn't be set up, 242.1s)
+[17/20] rung4_ens both:1.0 3676.xml -> DS 0.0 (Failed - Agent couldn't be set up, 134.1s)
+[18/20] rung4_ens both:1.0 3697.xml -> DS 0.0 (Failed - Agent couldn't be set up, 133.9s)
+[19/20] rung4_ens both:1.0 3749.xml -> DS 0.0 (Failed - Agent couldn't be set up, 126.9s)
+[20/20] rung4_ens both:1.0 3905.xml -> DS 0.0 (Failed - Agent couldn't be set up, 136.3s)
+results in results/calibration_closed_loop.csv
+[12:52:17] calibration done

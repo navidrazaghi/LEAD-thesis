@@ -1,0 +1,40 @@
+[06:18:45] waiting for the sweep to finish
+[22:36:30] the sweep has exited
+[22:36:50] capturing stall  (11715.xml under none:0)
+[23:22:07]   kept stall_11715_demo.mp4  (62M)
+[23:22:08]   kept stall_11715_grid.mp4  (65M)
+[23:22:08] capturing intact  (24071.xml under none:0)
+[23:27:00]   kept intact_24071_demo.mp4  (42M)
+[23:27:00]   kept intact_24071_grid.mp4  (41M)
+[23:27:00] capturing camera_destroyed  (24071.xml under camera:1.0)
+[00:12:18]   kept camera_destroyed_24071_demo.mp4  (78M)
+[00:12:18]   kept camera_destroyed_24071_grid.mp4  (77M)
+[00:12:18] capturing lidar_destroyed  (24071.xml under lidar:1.0)
+[00:57:32]   kept lidar_destroyed_24071_demo.mp4  (61M)
+[00:57:32]   kept lidar_destroyed_24071_grid.mp4  (62M)
+[00:57:32] compressing for transfer
+[00:57:40]   camera_destroyed_24071_demo_small.mp4  78M -> 6.3M
+[00:57:46]   camera_destroyed_24071_grid_small.mp4  77M -> 4.7M
+[00:57:50]   intact_24071_demo_small.mp4  42M -> 3.8M
+[00:57:54]   intact_24071_grid_small.mp4  41M -> 2.8M
+[00:58:00]   lidar_destroyed_24071_demo_small.mp4  61M -> 4.6M
+[00:58:06]   lidar_destroyed_24071_grid_small.mp4  62M -> 3.6M
+[00:58:14]   stall_11715_demo_small.mp4  62M -> 4.6M
+[00:58:19]   stall_11715_grid_small.mp4  65M -> 4.0M
+[00:58:19] done
+78M /home/razzaghi/videos/camera_destroyed_24071_demo.mp4
+6.3M /home/razzaghi/videos/camera_destroyed_24071_demo_small.mp4
+77M /home/razzaghi/videos/camera_destroyed_24071_grid.mp4
+4.7M /home/razzaghi/videos/camera_destroyed_24071_grid_small.mp4
+42M /home/razzaghi/videos/intact_24071_demo.mp4
+3.8M /home/razzaghi/videos/intact_24071_demo_small.mp4
+41M /home/razzaghi/videos/intact_24071_grid.mp4
+2.8M /home/razzaghi/videos/intact_24071_grid_small.mp4
+61M /home/razzaghi/videos/lidar_destroyed_24071_demo.mp4
+4.6M /home/razzaghi/videos/lidar_destroyed_24071_demo_small.mp4
+62M /home/razzaghi/videos/lidar_destroyed_24071_grid.mp4
+3.6M /home/razzaghi/videos/lidar_destroyed_24071_grid_small.mp4
+62M /home/razzaghi/videos/stall_11715_demo.mp4
+4.6M /home/razzaghi/videos/stall_11715_demo_small.mp4
+65M /home/razzaghi/videos/stall_11715_grid.mp4
+4.0M /home/razzaghi/videos/stall_11715_grid_small.mp4

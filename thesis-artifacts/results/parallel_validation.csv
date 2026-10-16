@@ -1,0 +1,7 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds,ticks,distance_m,stationary_frac
+ref0,none,0,10857.xml,100.0,100,1.0,Completed,Town12,20,213.5,350,77.0,0.307
+ref0,none,0,24071.xml,100.0,100,1.0,Completed,Town13,21,203.7,289,154.6,0.035
+ref0,none,0,11715.xml,100.0,100,1.0,Completed,Town12,19,276.0,749,86.4,0.654
+ref0,none,0,24092.xml,100.0,100,1.0,Completed,Town13,20,200.8,330,151.1,0.03
+ref0,none,0,23901.xml,100.0,100,1.0,Completed,Town13,20,223.3,436,158.5,0.023
+ref0,none,0,24258.xml,100.0,100,1.0,Completed,Town07,19,144.8,435,132.4,0.035

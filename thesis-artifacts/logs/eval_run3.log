@@ -1,0 +1,41 @@
+26-09-15 12:22:13 [INFO] [src/lead/common/logging_setup.py:171] Logging configured: level=INFO for 'lead' modules
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:398] Removing existing output directory: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:437] 
+================================================================================
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:438] Starting CARLA Leaderboard Evaluation (bench2drive)
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:441] Command: /home/razzaghi/miniconda3/envs/lead/bin/python /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py --routes /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/23687.xml --track SENSORS --checkpoint /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687/checkpoint_endpoint.json --agent /home/razzaghi/LEAD/lead/src/lead/evaluation/agents/transfuser/transfuser_agent.py --agent-config /home/razzaghi/LEAD/lead/checkpoints/transfuser --debug 0 --resume 0 --port 2000 --traffic-manager-port 8055 --traffic-manager-seed 0 --repetitions 1 --timeout 600.0 --record None
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:442] ================================================================================
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:443] Routes: /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/23687.xml
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:444] Scenario Type: HighwayExit
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:445] Route ID: 23687
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:446] Output Dir: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] PYTHONPATH: /home/razzaghi/CARLA/standard_0916/PythonAPI/carla:/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard:/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/scenario_runner
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] SCENARIO_RUNNER_ROOT: /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/scenario_runner
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] LEADERBOARD_ROOT: /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] ROUTES: /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/23687.xml
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] SCENARIO_TYPE: HighwayExit
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] BENCHMARK_ROUTE_ID: 23687
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] ROUTE_NUMBER: 23687
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] PYTHONUNBUFFERED: 1
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] IS_BENCH2DRIVE: 1
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] OUTPUT_DIR: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] EVALUATION_OUTPUT_DIR: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] CHECKPOINT_DIR: /home/razzaghi/LEAD/lead/checkpoints/transfuser
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:448] SAVE_PATH: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 12:22:13 [INFO] [src/lead/__main__.py:449] ================================================================================
+
+/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py:21: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+load_world failed , attempts=0
+time-out of 600000ms while waiting for the simulator, make sure the simulator is ready and connected to localhost:2000
+Traceback (most recent call last):
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py", line 598, in <module>
+    main()
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py", line 587, in main
+    leaderboard_evaluator = LeaderboardEvaluator(arguments, statistics_manager)
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py", line 96, in __init__
+    self.client, self.client_timeout, self.traffic_manager = self._setup_simulation(args)
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py", line 212, in _setup_simulation
+    raise RuntimeError("Failed to connect to CARLA server after {} attempts".format(num_max_restarts))
+RuntimeError: Failed to connect to CARLA server after 1 attempts
+26-09-15 12:32:28 [ERROR] [src/lead/__main__.py:644] Leaderboard evaluator exited with non-zero code 1

@@ -1,0 +1,514 @@
+26-09-18 20:32:07 [INFO] [src/lead/common/logging_setup.py:171] Logging configured: level=INFO for 'lead' modules
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:398] Removing existing output directory: /home/razzaghi/LEAD/lead/outputs/local_evaluation/10857
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:437] 
+================================================================================
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:438] Starting CARLA Leaderboard Evaluation (bench2drive)
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:441] Command: /home/razzaghi/miniconda3/envs/lead/bin/python /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py --routes /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/10857.xml --track SENSORS --checkpoint /home/razzaghi/LEAD/lead/outputs/local_evaluation/10857/checkpoint_endpoint.json --agent /home/razzaghi/LEAD/lead/src/lead/evaluation/agents/transfuser/transfuser_agent.py --agent-config /home/razzaghi/LEAD/lead/checkpoints/transfuser --debug 0 --resume 0 --port 2000 --traffic-manager-port 8055 --traffic-manager-seed 0 --repetitions 1 --timeout 180.0 --record None
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:442] ================================================================================
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:443] Routes: /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/10857.xml
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:444] Scenario Type: VehicleTurningRoutePedestrian
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:445] Route ID: 10857
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:446] Output Dir: /home/razzaghi/LEAD/lead/outputs/local_evaluation/10857
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] PYTHONPATH: /home/razzaghi/CARLA/standard_0916/PythonAPI/carla:/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard:/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/scenario_runner
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] SCENARIO_RUNNER_ROOT: /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/scenario_runner
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] LEADERBOARD_ROOT: /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] ROUTES: /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/10857.xml
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] SCENARIO_TYPE: VehicleTurningRoutePedestrian
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] BENCHMARK_ROUTE_ID: 10857
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] ROUTE_NUMBER: 10857
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] PYTHONUNBUFFERED: 1
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] IS_BENCH2DRIVE: 1
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] OUTPUT_DIR: /home/razzaghi/LEAD/lead/outputs/local_evaluation/10857
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] EVALUATION_OUTPUT_DIR: /home/razzaghi/LEAD/lead/outputs/local_evaluation/10857
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] CHECKPOINT_DIR: /home/razzaghi/LEAD/lead/checkpoints/transfuser
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:448] SAVE_PATH: /home/razzaghi/LEAD/lead/outputs/local_evaluation/10857
+26-09-18 20:32:07 [INFO] [src/lead/__main__.py:449] ================================================================================
+
+/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py:21: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+load_world success , attempts=0
+traffic_manager init success, try_time=0
+/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py:100: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if LooseVersion(dist.version) < LooseVersion('0.9.10'):
+26-09-18 20:32:15 [INFO] [src/lead/common/logging_setup.py:171] Logging configured: level=INFO for 'lead' modules
+26-09-18 20:32:17 [INFO] [src/lead/common/logging_setup.py:171] Logging configured: level=INFO for 'lead' modules
+Problem reading checkpoint. Found no data
+
+[1m========= Preparing RouteScenario_10857 (repetition 0) =========[0m
+[1m> Loading the world[0m
+[1m>  Load_world time=30.590543508529663
+[1m> Apply settings time=4.330855369567871
+[1m> Reset all traffic lights time=3.703505754470825
+26-09-18 20:33:20 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:25] WDT: Started
+26-09-18 20:33:20 [INFO] [src/lead/api/abstract_driving_agent.py:512] Set global plan with 75 waypoints.
+26-09-18 20:33:20 [INFO] [src/lead/evaluation/inference/policy_runner.py:53] Loading model weight from /home/razzaghi/LEAD/lead/checkpoints/transfuser/model_0030.pth
+26-09-18 20:33:22 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:407] Using velocity encoder.
+26-09-18 20:33:22 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:412] Using target point encoder.
+26-09-18 20:33:22 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:416] Using previous target point encoder.
+26-09-18 20:33:22 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:420] Using next target point encoder.
+26-09-18 20:33:22 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:432] Using radar encoder with 20 tokens.
+26-09-18 20:33:25 [INFO] [src/lead/common/base_agent.py:42] Noisy lat ref: -1.4210854715202004e-14, Noisy lon ref: 0.0
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_1 at position (0.0, -0.3, 2.25), size: 384x384px
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_2 at position (0.25, 0.0, 2.25), size: 384x384px
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_3 at position (0.0, 0.3, 2.25), size: 384x384px
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_4 at position (-0.3, 0.3, 2.25), size: 384x384px
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_5 at position (-0.55, 0.0, 2.25), size: 384x384px
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_6 at position (-0.3, -0.3, 2.25), size: 384x384px
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:164] Added sensor: lidar1 at position (1.0, 0.0, 2.5)
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:164] Added sensor: lidar2 at position (-1.0, 0.0, 2.5)
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar1 at position (2.6, 0.0, 0.6)
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar2 at position (2.6, 0.0, 0.6)
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar3 at position (-2.6, 0.0, 0.6)
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar4 at position (-2.6, 0.0, 0.6)
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:110] Added sensor: imu
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:124] Added sensor: gps
+26-09-18 20:33:51 [INFO] [src/lead/common/sensors/av_sensor_setup.py:132] Added sensor: speed
+26-09-18 20:33:52 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+[1m> Agent setup time=32.07s[0m
+[1m> Running the route[0m
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_1 at position (0.0, -0.3, 2.25), size: 384x384px
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_2 at position (0.25, 0.0, 2.25), size: 384x384px
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_3 at position (0.0, 0.3, 2.25), size: 384x384px
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_4 at position (-0.3, 0.3, 2.25), size: 384x384px
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_5 at position (-0.55, 0.0, 2.25), size: 384x384px
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_6 at position (-0.3, -0.3, 2.25), size: 384x384px
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:164] Added sensor: lidar1 at position (1.0, 0.0, 2.5)
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:164] Added sensor: lidar2 at position (-1.0, 0.0, 2.5)
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar1 at position (2.6, 0.0, 0.6)
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar2 at position (2.6, 0.0, 0.6)
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar3 at position (-2.6, 0.0, 0.6)
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar4 at position (-2.6, 0.0, 0.6)
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:110] Added sensor: imu
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:124] Added sensor: gps
+26-09-18 20:33:52 [INFO] [src/lead/common/sensors/av_sensor_setup.py:132] Added sensor: speed
+26-09-18 20:33:55 [INFO] [src/lead/api/abstract_driving_agent.py:522] [TransfuserAgent] Scenario reference set for infraction tracking
+26-09-18 20:33:55 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:25] WDT: Started
+26-09-18 20:33:55 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:25] WDT: Started
+=== [Agent] -- Wallclock = 2026-09-18 20:33:55.518 -- System time = 0.000 -- Game time = 0.050 -- Ratio = 0.000x
+26-09-18 20:33:55 [INFO] [src/lead/evaluation/recorder/video_recorder.py:240] [VideoRecorder] Initialized 2 demo cameras
+=== [Agent] -- Wallclock = 2026-09-18 20:33:56.338 -- System time = 0.820 -- Game time = 0.100 -- Ratio = 0.122x
+26-09-18 20:34:17 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 1: RouteCompletionTest
+=== [Agent] -- Wallclock = 2026-09-18 20:34:22.966 -- System time = 27.448 -- Game time = 0.150 -- Ratio = 0.005x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:23.590 -- System time = 28.073 -- Game time = 0.200 -- Ratio = 0.007x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:24.020 -- System time = 28.502 -- Game time = 0.250 -- Ratio = 0.009x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:24.424 -- System time = 28.907 -- Game time = 0.300 -- Ratio = 0.010x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:24.824 -- System time = 29.306 -- Game time = 0.350 -- Ratio = 0.012x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:25.234 -- System time = 29.716 -- Game time = 0.400 -- Ratio = 0.013x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:25.632 -- System time = 30.114 -- Game time = 0.450 -- Ratio = 0.015x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:26.037 -- System time = 30.519 -- Game time = 0.500 -- Ratio = 0.016x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:26.455 -- System time = 30.937 -- Game time = 0.550 -- Ratio = 0.018x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:26.839 -- System time = 31.321 -- Game time = 0.600 -- Ratio = 0.019x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:27.213 -- System time = 31.695 -- Game time = 0.650 -- Ratio = 0.021x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:27.602 -- System time = 32.084 -- Game time = 0.700 -- Ratio = 0.022x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:28.054 -- System time = 32.536 -- Game time = 0.750 -- Ratio = 0.023x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:28.411 -- System time = 32.893 -- Game time = 0.800 -- Ratio = 0.024x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:28.799 -- System time = 33.281 -- Game time = 0.850 -- Ratio = 0.026x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:29.167 -- System time = 33.649 -- Game time = 0.900 -- Ratio = 0.027x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:29.537 -- System time = 34.020 -- Game time = 0.950 -- Ratio = 0.028x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:29.883 -- System time = 34.365 -- Game time = 1.000 -- Ratio = 0.029x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:30.250 -- System time = 34.732 -- Game time = 1.050 -- Ratio = 0.030x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:30.646 -- System time = 35.128 -- Game time = 1.100 -- Ratio = 0.031x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:31.030 -- System time = 35.512 -- Game time = 1.150 -- Ratio = 0.032x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:31.424 -- System time = 35.906 -- Game time = 1.200 -- Ratio = 0.033x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:31.807 -- System time = 36.289 -- Game time = 1.250 -- Ratio = 0.034x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:32.198 -- System time = 36.680 -- Game time = 1.300 -- Ratio = 0.035x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:32.576 -- System time = 37.058 -- Game time = 1.350 -- Ratio = 0.036x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:32.939 -- System time = 37.422 -- Game time = 1.400 -- Ratio = 0.037x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:33.348 -- System time = 37.830 -- Game time = 1.450 -- Ratio = 0.038x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:33.754 -- System time = 38.236 -- Game time = 1.500 -- Ratio = 0.039x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:34.151 -- System time = 38.634 -- Game time = 1.550 -- Ratio = 0.040x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:34.728 -- System time = 39.210 -- Game time = 1.600 -- Ratio = 0.041x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:35.125 -- System time = 39.608 -- Game time = 1.650 -- Ratio = 0.042x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:35.552 -- System time = 40.034 -- Game time = 1.700 -- Ratio = 0.042x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:35.955 -- System time = 40.437 -- Game time = 1.750 -- Ratio = 0.043x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:36.373 -- System time = 40.855 -- Game time = 1.800 -- Ratio = 0.044x
+26-09-18 20:34:36 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 35: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:34:36.775 -- System time = 41.257 -- Game time = 1.850 -- Ratio = 0.045x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:37.173 -- System time = 41.655 -- Game time = 1.900 -- Ratio = 0.046x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:37.572 -- System time = 42.054 -- Game time = 1.950 -- Ratio = 0.046x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:37.984 -- System time = 42.466 -- Game time = 2.000 -- Ratio = 0.047x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:38.380 -- System time = 42.862 -- Game time = 2.050 -- Ratio = 0.048x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:38.779 -- System time = 43.261 -- Game time = 2.100 -- Ratio = 0.049x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:42.120 -- System time = 46.603 -- Game time = 2.150 -- Ratio = 0.046x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:42.534 -- System time = 47.016 -- Game time = 2.200 -- Ratio = 0.047x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:42.955 -- System time = 47.437 -- Game time = 2.250 -- Ratio = 0.047x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:47.000 -- System time = 51.483 -- Game time = 2.300 -- Ratio = 0.045x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:47.405 -- System time = 51.888 -- Game time = 2.350 -- Ratio = 0.045x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:47.772 -- System time = 52.254 -- Game time = 2.400 -- Ratio = 0.046x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:48.845 -- System time = 53.327 -- Game time = 2.450 -- Ratio = 0.046x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:49.224 -- System time = 53.706 -- Game time = 2.500 -- Ratio = 0.047x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:49.663 -- System time = 54.146 -- Game time = 2.550 -- Ratio = 0.047x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:50.095 -- System time = 54.577 -- Game time = 2.600 -- Ratio = 0.048x
+26-09-18 20:34:50 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 51: MinSpeedTest
+26-09-18 20:34:50 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 51: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:34:50.474 -- System time = 54.956 -- Game time = 2.650 -- Ratio = 0.048x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:50.850 -- System time = 55.332 -- Game time = 2.700 -- Ratio = 0.049x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:51.351 -- System time = 55.833 -- Game time = 2.750 -- Ratio = 0.049x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:51.746 -- System time = 56.228 -- Game time = 2.800 -- Ratio = 0.050x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:52.150 -- System time = 56.632 -- Game time = 2.850 -- Ratio = 0.050x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:56.532 -- System time = 61.014 -- Game time = 2.900 -- Ratio = 0.048x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:56.973 -- System time = 61.455 -- Game time = 2.950 -- Ratio = 0.048x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:57.424 -- System time = 61.906 -- Game time = 3.000 -- Ratio = 0.048x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:57.839 -- System time = 62.321 -- Game time = 3.050 -- Ratio = 0.049x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:58.285 -- System time = 62.767 -- Game time = 3.100 -- Ratio = 0.049x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:58.721 -- System time = 63.203 -- Game time = 3.150 -- Ratio = 0.050x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:59.156 -- System time = 63.639 -- Game time = 3.200 -- Ratio = 0.050x
+=== [Agent] -- Wallclock = 2026-09-18 20:34:59.598 -- System time = 64.080 -- Game time = 3.250 -- Ratio = 0.051x
+26-09-18 20:35:00 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 64: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:35:00.166 -- System time = 64.648 -- Game time = 3.300 -- Ratio = 0.051x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:00.563 -- System time = 65.045 -- Game time = 3.350 -- Ratio = 0.052x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:00.997 -- System time = 65.479 -- Game time = 3.400 -- Ratio = 0.052x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:01.414 -- System time = 65.896 -- Game time = 3.450 -- Ratio = 0.052x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:01.820 -- System time = 66.303 -- Game time = 3.500 -- Ratio = 0.053x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:02.242 -- System time = 66.724 -- Game time = 3.550 -- Ratio = 0.053x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:02.687 -- System time = 67.169 -- Game time = 3.600 -- Ratio = 0.054x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:03.076 -- System time = 67.559 -- Game time = 3.650 -- Ratio = 0.054x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:07.561 -- System time = 72.043 -- Game time = 3.700 -- Ratio = 0.051x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:08.010 -- System time = 72.492 -- Game time = 3.750 -- Ratio = 0.052x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:08.414 -- System time = 72.896 -- Game time = 3.800 -- Ratio = 0.052x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:08.794 -- System time = 73.276 -- Game time = 3.850 -- Ratio = 0.053x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:09.164 -- System time = 73.646 -- Game time = 3.900 -- Ratio = 0.053x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:09.545 -- System time = 74.027 -- Game time = 3.950 -- Ratio = 0.053x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:09.947 -- System time = 74.429 -- Game time = 4.000 -- Ratio = 0.054x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:10.317 -- System time = 74.799 -- Game time = 4.050 -- Ratio = 0.054x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:10.727 -- System time = 75.209 -- Game time = 4.100 -- Ratio = 0.055x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:11.105 -- System time = 75.587 -- Game time = 4.150 -- Ratio = 0.055x
+26-09-18 20:35:11 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 82: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:35:11.478 -- System time = 75.961 -- Game time = 4.200 -- Ratio = 0.055x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:11.846 -- System time = 76.329 -- Game time = 4.250 -- Ratio = 0.056x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:12.222 -- System time = 76.704 -- Game time = 4.300 -- Ratio = 0.056x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:12.597 -- System time = 77.079 -- Game time = 4.350 -- Ratio = 0.056x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:13.032 -- System time = 77.514 -- Game time = 4.400 -- Ratio = 0.057x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:13.466 -- System time = 77.948 -- Game time = 4.450 -- Ratio = 0.057x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:13.920 -- System time = 78.402 -- Game time = 4.500 -- Ratio = 0.057x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:14.355 -- System time = 78.837 -- Game time = 4.550 -- Ratio = 0.058x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:14.798 -- System time = 79.280 -- Game time = 4.600 -- Ratio = 0.058x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:15.200 -- System time = 79.682 -- Game time = 4.650 -- Ratio = 0.058x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:15.593 -- System time = 80.075 -- Game time = 4.700 -- Ratio = 0.059x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:15.955 -- System time = 80.437 -- Game time = 4.750 -- Ratio = 0.059x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:16.321 -- System time = 80.803 -- Game time = 4.800 -- Ratio = 0.059x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:16.699 -- System time = 81.181 -- Game time = 4.850 -- Ratio = 0.060x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:17.078 -- System time = 81.560 -- Game time = 4.900 -- Ratio = 0.060x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:17.460 -- System time = 81.942 -- Game time = 4.950 -- Ratio = 0.060x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:17.835 -- System time = 82.317 -- Game time = 5.000 -- Ratio = 0.061x
+26-09-18 20:35:18 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 99: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:35:18.192 -- System time = 82.674 -- Game time = 5.050 -- Ratio = 0.061x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:18.570 -- System time = 83.052 -- Game time = 5.100 -- Ratio = 0.061x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:18.962 -- System time = 83.444 -- Game time = 5.150 -- Ratio = 0.062x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:19.388 -- System time = 83.871 -- Game time = 5.200 -- Ratio = 0.062x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:19.799 -- System time = 84.281 -- Game time = 5.250 -- Ratio = 0.062x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:20.222 -- System time = 84.704 -- Game time = 5.300 -- Ratio = 0.063x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:20.583 -- System time = 85.065 -- Game time = 5.350 -- Ratio = 0.063x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:20.957 -- System time = 85.439 -- Game time = 5.400 -- Ratio = 0.063x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:21.326 -- System time = 85.808 -- Game time = 5.450 -- Ratio = 0.064x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:21.710 -- System time = 86.192 -- Game time = 5.500 -- Ratio = 0.064x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:22.091 -- System time = 86.573 -- Game time = 5.550 -- Ratio = 0.064x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:22.539 -- System time = 87.021 -- Game time = 5.600 -- Ratio = 0.064x
+26-09-18 20:35:22 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 111: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:35:22.995 -- System time = 87.477 -- Game time = 5.650 -- Ratio = 0.065x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:23.455 -- System time = 87.937 -- Game time = 5.700 -- Ratio = 0.065x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:23.880 -- System time = 88.362 -- Game time = 5.750 -- Ratio = 0.065x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:24.339 -- System time = 88.821 -- Game time = 5.800 -- Ratio = 0.065x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:24.750 -- System time = 89.232 -- Game time = 5.850 -- Ratio = 0.066x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:25.167 -- System time = 89.649 -- Game time = 5.900 -- Ratio = 0.066x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:25.590 -- System time = 90.072 -- Game time = 5.950 -- Ratio = 0.066x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:26.002 -- System time = 90.484 -- Game time = 6.000 -- Ratio = 0.066x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:26.446 -- System time = 90.928 -- Game time = 6.050 -- Ratio = 0.067x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:26.875 -- System time = 91.357 -- Game time = 6.100 -- Ratio = 0.067x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:27.294 -- System time = 91.776 -- Game time = 6.150 -- Ratio = 0.067x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:27.736 -- System time = 92.218 -- Game time = 6.200 -- Ratio = 0.067x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:28.148 -- System time = 92.630 -- Game time = 6.250 -- Ratio = 0.067x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:28.561 -- System time = 93.043 -- Game time = 6.300 -- Ratio = 0.068x
+26-09-18 20:35:28 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 125: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:35:28.978 -- System time = 93.460 -- Game time = 6.350 -- Ratio = 0.068x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:29.453 -- System time = 93.936 -- Game time = 6.400 -- Ratio = 0.068x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:29.880 -- System time = 94.362 -- Game time = 6.450 -- Ratio = 0.068x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:30.293 -- System time = 94.775 -- Game time = 6.500 -- Ratio = 0.069x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:30.711 -- System time = 95.193 -- Game time = 6.550 -- Ratio = 0.069x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:31.224 -- System time = 95.706 -- Game time = 6.600 -- Ratio = 0.069x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:31.650 -- System time = 96.132 -- Game time = 6.650 -- Ratio = 0.069x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:32.073 -- System time = 96.555 -- Game time = 6.700 -- Ratio = 0.069x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:32.493 -- System time = 96.975 -- Game time = 6.750 -- Ratio = 0.070x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:32.925 -- System time = 97.407 -- Game time = 6.800 -- Ratio = 0.070x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:33.386 -- System time = 97.868 -- Game time = 6.850 -- Ratio = 0.070x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:33.839 -- System time = 98.321 -- Game time = 6.900 -- Ratio = 0.070x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:34.252 -- System time = 98.734 -- Game time = 6.950 -- Ratio = 0.070x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:34.650 -- System time = 99.132 -- Game time = 7.000 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:35.071 -- System time = 99.553 -- Game time = 7.050 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:35.487 -- System time = 99.969 -- Game time = 7.100 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:35.933 -- System time = 100.415 -- Game time = 7.150 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:36.363 -- System time = 100.845 -- Game time = 7.200 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:36.806 -- System time = 101.288 -- Game time = 7.250 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:37.216 -- System time = 101.698 -- Game time = 7.300 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:37.614 -- System time = 102.096 -- Game time = 7.350 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:38.019 -- System time = 102.501 -- Game time = 7.400 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:38.454 -- System time = 102.936 -- Game time = 7.450 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:38.908 -- System time = 103.390 -- Game time = 7.500 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:39.346 -- System time = 103.828 -- Game time = 7.550 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:39.764 -- System time = 104.246 -- Game time = 7.600 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:40.186 -- System time = 104.668 -- Game time = 7.650 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:40.635 -- System time = 105.117 -- Game time = 7.700 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:41.068 -- System time = 105.550 -- Game time = 7.750 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:41.483 -- System time = 105.965 -- Game time = 7.800 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:41.909 -- System time = 106.391 -- Game time = 7.850 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:42.302 -- System time = 106.784 -- Game time = 7.900 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:42.710 -- System time = 107.192 -- Game time = 7.950 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:43.137 -- System time = 107.619 -- Game time = 8.000 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:43.584 -- System time = 108.066 -- Game time = 8.050 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:44.031 -- System time = 108.513 -- Game time = 8.100 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:44.459 -- System time = 108.941 -- Game time = 8.150 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:44.871 -- System time = 109.353 -- Game time = 8.200 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:45.285 -- System time = 109.767 -- Game time = 8.250 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:45.711 -- System time = 110.193 -- Game time = 8.300 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:46.136 -- System time = 110.618 -- Game time = 8.350 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:46.565 -- System time = 111.047 -- Game time = 8.400 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:47.017 -- System time = 111.499 -- Game time = 8.450 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:47.443 -- System time = 111.926 -- Game time = 8.500 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:47.867 -- System time = 112.349 -- Game time = 8.550 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:53.118 -- System time = 117.600 -- Game time = 8.600 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:58.596 -- System time = 123.078 -- Game time = 8.650 -- Ratio = 0.070x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:59.009 -- System time = 123.491 -- Game time = 8.700 -- Ratio = 0.070x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:59.394 -- System time = 123.876 -- Game time = 8.750 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:35:59.771 -- System time = 124.253 -- Game time = 8.800 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:00.184 -- System time = 124.666 -- Game time = 8.850 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:00.558 -- System time = 125.041 -- Game time = 8.900 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:00.965 -- System time = 125.447 -- Game time = 8.950 -- Ratio = 0.071x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:01.356 -- System time = 125.838 -- Game time = 9.000 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:01.756 -- System time = 126.238 -- Game time = 9.050 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:02.143 -- System time = 126.626 -- Game time = 9.100 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:02.544 -- System time = 127.026 -- Game time = 9.150 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:02.945 -- System time = 127.427 -- Game time = 9.200 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:03.390 -- System time = 127.872 -- Game time = 9.250 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:03.817 -- System time = 128.299 -- Game time = 9.300 -- Ratio = 0.072x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:04.277 -- System time = 128.759 -- Game time = 9.350 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:04.727 -- System time = 129.210 -- Game time = 9.400 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:05.163 -- System time = 129.645 -- Game time = 9.450 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:05.572 -- System time = 130.054 -- Game time = 9.500 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:05.990 -- System time = 130.472 -- Game time = 9.550 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:06.423 -- System time = 130.906 -- Game time = 9.600 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:06.882 -- System time = 131.365 -- Game time = 9.650 -- Ratio = 0.073x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:07.323 -- System time = 131.805 -- Game time = 9.700 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:07.759 -- System time = 132.241 -- Game time = 9.750 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:08.164 -- System time = 132.646 -- Game time = 9.800 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:08.600 -- System time = 133.082 -- Game time = 9.850 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:09.055 -- System time = 133.538 -- Game time = 9.900 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:09.493 -- System time = 133.975 -- Game time = 9.950 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:09.933 -- System time = 134.415 -- Game time = 10.000 -- Ratio = 0.074x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:10.364 -- System time = 134.846 -- Game time = 10.050 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:10.813 -- System time = 135.295 -- Game time = 10.100 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:11.249 -- System time = 135.731 -- Game time = 10.150 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:11.678 -- System time = 136.160 -- Game time = 10.200 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:12.113 -- System time = 136.596 -- Game time = 10.250 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:12.541 -- System time = 137.023 -- Game time = 10.300 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:12.967 -- System time = 137.449 -- Game time = 10.350 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:13.392 -- System time = 137.874 -- Game time = 10.400 -- Ratio = 0.075x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:13.846 -- System time = 138.328 -- Game time = 10.450 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:14.281 -- System time = 138.763 -- Game time = 10.500 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:14.689 -- System time = 139.171 -- Game time = 10.550 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:15.094 -- System time = 139.576 -- Game time = 10.600 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:15.495 -- System time = 139.977 -- Game time = 10.650 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:15.898 -- System time = 140.380 -- Game time = 10.700 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:16.349 -- System time = 140.831 -- Game time = 10.750 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:16.795 -- System time = 141.277 -- Game time = 10.800 -- Ratio = 0.076x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:17.229 -- System time = 141.712 -- Game time = 10.850 -- Ratio = 0.077x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:17.635 -- System time = 142.117 -- Game time = 10.900 -- Ratio = 0.077x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:18.033 -- System time = 142.515 -- Game time = 10.950 -- Ratio = 0.077x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:18.459 -- System time = 142.941 -- Game time = 11.000 -- Ratio = 0.077x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:18.860 -- System time = 143.342 -- Game time = 11.050 -- Ratio = 0.077x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:19.274 -- System time = 143.756 -- Game time = 11.100 -- Ratio = 0.077x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:19.711 -- System time = 144.193 -- Game time = 11.150 -- Ratio = 0.077x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:20.163 -- System time = 144.645 -- Game time = 11.200 -- Ratio = 0.077x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:20.593 -- System time = 145.075 -- Game time = 11.250 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:21.021 -- System time = 145.503 -- Game time = 11.300 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:21.443 -- System time = 145.925 -- Game time = 11.350 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:21.876 -- System time = 146.358 -- Game time = 11.400 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:22.340 -- System time = 146.822 -- Game time = 11.450 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:22.777 -- System time = 147.259 -- Game time = 11.500 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:23.195 -- System time = 147.677 -- Game time = 11.550 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:23.626 -- System time = 148.109 -- Game time = 11.600 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:24.076 -- System time = 148.558 -- Game time = 11.650 -- Ratio = 0.078x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:24.492 -- System time = 148.974 -- Game time = 11.700 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:24.937 -- System time = 149.419 -- Game time = 11.750 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:25.347 -- System time = 149.829 -- Game time = 11.800 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:25.773 -- System time = 150.255 -- Game time = 11.850 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:26.205 -- System time = 150.687 -- Game time = 11.900 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:26.618 -- System time = 151.100 -- Game time = 11.950 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:27.032 -- System time = 151.514 -- Game time = 12.000 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:27.455 -- System time = 151.937 -- Game time = 12.050 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:27.906 -- System time = 152.388 -- Game time = 12.100 -- Ratio = 0.079x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:28.325 -- System time = 152.808 -- Game time = 12.150 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:28.773 -- System time = 153.255 -- Game time = 12.200 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:29.211 -- System time = 153.693 -- Game time = 12.250 -- Ratio = 0.080x
+26-09-18 20:36:29 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 244: RunningRedLightTest
+=== [Agent] -- Wallclock = 2026-09-18 20:36:29.632 -- System time = 154.115 -- Game time = 12.300 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:30.057 -- System time = 154.539 -- Game time = 12.350 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:30.500 -- System time = 154.982 -- Game time = 12.400 -- Ratio = 0.080x
+26-09-18 20:36:30 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 247: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:36:30.949 -- System time = 155.431 -- Game time = 12.450 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:31.389 -- System time = 155.871 -- Game time = 12.500 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:31.835 -- System time = 156.317 -- Game time = 12.550 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:32.262 -- System time = 156.745 -- Game time = 12.600 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:32.710 -- System time = 157.193 -- Game time = 12.650 -- Ratio = 0.080x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:33.146 -- System time = 157.628 -- Game time = 12.700 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:33.560 -- System time = 158.042 -- Game time = 12.750 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:33.985 -- System time = 158.467 -- Game time = 12.800 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:34.434 -- System time = 158.916 -- Game time = 12.850 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:34.873 -- System time = 159.355 -- Game time = 12.900 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:35.300 -- System time = 159.782 -- Game time = 12.950 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:35.711 -- System time = 160.194 -- Game time = 13.000 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:36.138 -- System time = 160.620 -- Game time = 13.050 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:36.541 -- System time = 161.023 -- Game time = 13.100 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:36.927 -- System time = 161.410 -- Game time = 13.150 -- Ratio = 0.081x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:37.293 -- System time = 161.775 -- Game time = 13.200 -- Ratio = 0.082x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:37.682 -- System time = 162.164 -- Game time = 13.250 -- Ratio = 0.082x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:38.056 -- System time = 162.538 -- Game time = 13.300 -- Ratio = 0.082x
+26-09-18 20:36:38 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 265: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:36:38.421 -- System time = 162.903 -- Game time = 13.350 -- Ratio = 0.082x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:38.824 -- System time = 163.306 -- Game time = 13.400 -- Ratio = 0.082x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:39.196 -- System time = 163.678 -- Game time = 13.450 -- Ratio = 0.082x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:39.622 -- System time = 164.104 -- Game time = 13.500 -- Ratio = 0.082x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:40.035 -- System time = 164.517 -- Game time = 13.550 -- Ratio = 0.082x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:40.446 -- System time = 164.928 -- Game time = 13.600 -- Ratio = 0.082x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:40.842 -- System time = 165.324 -- Game time = 13.650 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:41.214 -- System time = 165.696 -- Game time = 13.700 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:41.603 -- System time = 166.086 -- Game time = 13.750 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:41.989 -- System time = 166.471 -- Game time = 13.800 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:42.402 -- System time = 166.884 -- Game time = 13.850 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:42.790 -- System time = 167.272 -- Game time = 13.900 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:43.199 -- System time = 167.682 -- Game time = 13.950 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:43.581 -- System time = 168.063 -- Game time = 14.000 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:43.975 -- System time = 168.457 -- Game time = 14.050 -- Ratio = 0.083x
+26-09-18 20:36:44 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 280: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:36:44.389 -- System time = 168.871 -- Game time = 14.100 -- Ratio = 0.083x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:44.836 -- System time = 169.319 -- Game time = 14.150 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:45.289 -- System time = 169.771 -- Game time = 14.200 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:45.739 -- System time = 170.221 -- Game time = 14.250 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:46.157 -- System time = 170.639 -- Game time = 14.300 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:46.584 -- System time = 171.066 -- Game time = 14.350 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:47.061 -- System time = 171.543 -- Game time = 14.400 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:47.489 -- System time = 171.971 -- Game time = 14.450 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:47.916 -- System time = 172.398 -- Game time = 14.500 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:48.336 -- System time = 172.818 -- Game time = 14.550 -- Ratio = 0.084x
+26-09-18 20:36:48 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 290: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:36:48.750 -- System time = 173.232 -- Game time = 14.600 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:49.178 -- System time = 173.660 -- Game time = 14.650 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:49.622 -- System time = 174.104 -- Game time = 14.700 -- Ratio = 0.084x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:50.045 -- System time = 174.527 -- Game time = 14.750 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:50.457 -- System time = 174.940 -- Game time = 14.800 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:50.859 -- System time = 175.342 -- Game time = 14.850 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:51.273 -- System time = 175.755 -- Game time = 14.900 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:51.723 -- System time = 176.205 -- Game time = 14.950 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:52.160 -- System time = 176.642 -- Game time = 15.000 -- Ratio = 0.085x
+26-09-18 20:36:52 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 299: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:36:52.613 -- System time = 177.095 -- Game time = 15.050 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:53.026 -- System time = 177.508 -- Game time = 15.100 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:53.463 -- System time = 177.945 -- Game time = 15.150 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:53.868 -- System time = 178.350 -- Game time = 15.200 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:54.314 -- System time = 178.796 -- Game time = 15.250 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:54.764 -- System time = 179.246 -- Game time = 15.300 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:55.207 -- System time = 179.689 -- Game time = 15.350 -- Ratio = 0.085x
+26-09-18 20:36:55 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 306: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:36:55.638 -- System time = 180.120 -- Game time = 15.400 -- Ratio = 0.085x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:56.064 -- System time = 180.546 -- Game time = 15.450 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:56.493 -- System time = 180.975 -- Game time = 15.500 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:56.936 -- System time = 181.418 -- Game time = 15.550 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:57.348 -- System time = 181.830 -- Game time = 15.600 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:57.752 -- System time = 182.234 -- Game time = 15.650 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:58.146 -- System time = 182.628 -- Game time = 15.700 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:58.577 -- System time = 183.059 -- Game time = 15.750 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:59.007 -- System time = 183.489 -- Game time = 15.800 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:36:59.461 -- System time = 183.943 -- Game time = 15.850 -- Ratio = 0.086x
+26-09-18 20:36:59 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 316: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:36:59.883 -- System time = 184.365 -- Game time = 15.900 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:00.308 -- System time = 184.790 -- Game time = 15.950 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:00.721 -- System time = 185.203 -- Game time = 16.000 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:01.133 -- System time = 185.616 -- Game time = 16.050 -- Ratio = 0.086x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:01.548 -- System time = 186.030 -- Game time = 16.100 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:01.952 -- System time = 186.434 -- Game time = 16.150 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:02.390 -- System time = 186.872 -- Game time = 16.200 -- Ratio = 0.087x
+26-09-18 20:37:02 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 323: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:37:02.828 -- System time = 187.310 -- Game time = 16.250 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:03.277 -- System time = 187.759 -- Game time = 16.300 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:03.694 -- System time = 188.176 -- Game time = 16.350 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:04.113 -- System time = 188.595 -- Game time = 16.400 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:04.528 -- System time = 189.010 -- Game time = 16.450 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:04.948 -- System time = 189.430 -- Game time = 16.500 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:05.385 -- System time = 189.867 -- Game time = 16.550 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:05.840 -- System time = 190.323 -- Game time = 16.600 -- Ratio = 0.087x
+26-09-18 20:37:06 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 331: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:37:06.275 -- System time = 190.757 -- Game time = 16.650 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:06.704 -- System time = 191.187 -- Game time = 16.700 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:07.167 -- System time = 191.649 -- Game time = 16.750 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:07.602 -- System time = 192.084 -- Game time = 16.800 -- Ratio = 0.087x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:08.008 -- System time = 192.490 -- Game time = 16.850 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:08.434 -- System time = 192.916 -- Game time = 16.900 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:08.869 -- System time = 193.351 -- Game time = 16.950 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:09.311 -- System time = 193.793 -- Game time = 17.000 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:09.759 -- System time = 194.241 -- Game time = 17.050 -- Ratio = 0.088x
+26-09-18 20:37:10 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 340: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:37:10.187 -- System time = 194.670 -- Game time = 17.100 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:10.634 -- System time = 195.116 -- Game time = 17.150 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:11.093 -- System time = 195.575 -- Game time = 17.200 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:11.531 -- System time = 196.014 -- Game time = 17.250 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:11.937 -- System time = 196.420 -- Game time = 17.300 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:12.348 -- System time = 196.830 -- Game time = 17.350 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:12.743 -- System time = 197.225 -- Game time = 17.400 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:13.139 -- System time = 197.621 -- Game time = 17.450 -- Ratio = 0.088x
+26-09-18 20:37:13 [INFO] [src/lead/evaluation/recorder/infraction_recorder.py:99] [TransfuserAgent] Infraction detected at step 348: MinSpeedTest
+=== [Agent] -- Wallclock = 2026-09-18 20:37:13.547 -- System time = 198.029 -- Game time = 17.500 -- Ratio = 0.088x
+=== [Agent] -- Wallclock = 2026-09-18 20:37:13.976 -- System time = 198.458 -- Game time = 17.550 -- Ratio = 0.088x
+[1m> Stopping the route[0m
+26-09-18 20:37:14 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+26-09-18 20:37:14 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+
+[1m========= Results of RouteScenario_10857 (repetition 0) ------ [91mFAILURE[0m [1m=========[0m
+
+╒═══════════════════════╤═════════════════════╕
+│ Start Time            │ 2026-09-18 20:33:55 │
+├───────────────────────┼─────────────────────┤
+│ End Time              │ 2026-09-18 20:37:14 │
+├───────────────────────┼─────────────────────┤
+│ System Time           │ 199.4s              │
+├───────────────────────┼─────────────────────┤
+│ Game Time             │ 17.55s              │
+├───────────────────────┼─────────────────────┤
+│ Ratio (Game / System) │ 0.088               │
+╘═══════════════════════╧═════════════════════╛
+
+╒═══════════════════════╤═════════╤══════════╕
+│ Criterion             │ Result  │ Value    │
+├───────────────────────┼─────────┼──────────┤
+│ RouteCompletionTest   │ [92mSUCCESS[0m │ 100 %    │
+├───────────────────────┼─────────┼──────────┤
+│ OutsideRouteLanesTest │ [92mSUCCESS[0m │ 0 %      │
+├───────────────────────┼─────────┼──────────┤
+│ CollisionTest         │ [92mSUCCESS[0m │ 0 times  │
+├───────────────────────┼─────────┼──────────┤
+│ RunningRedLightTest   │ [91mFAILURE[0m │ 1 times  │
+├───────────────────────┼─────────┼──────────┤
+│ RunningStopTest       │ [92mSUCCESS[0m │ 0 times  │
+├───────────────────────┼─────────┼──────────┤
+│ MinSpeedTest          │ [91mFAILURE[0m │ 337.24 % │
+├───────────────────────┼─────────┼──────────┤
+│ InRouteTest           │ [92mSUCCESS[0m │          │
+├───────────────────────┼─────────┼──────────┤
+│ AgentBlockedTest      │ [92mSUCCESS[0m │          │
+├───────────────────────┼─────────┼──────────┤
+│ Timeout               │ [92mSUCCESS[0m │          │
+╘═══════════════════════╧═════════╧══════════╛
+
+[1m> Registering the route statistics[0m
+26-09-18 20:37:14 [INFO] [src/lead/api/abstract_driving_agent.py:634] <leaderboard.utils.statistics_manager.RouteRecord object at 0x7f2b2137e140>
+26-09-18 20:37:14 [INFO] [src/lead/evaluation/recorder/video_recorder.py:814] Destroyed demo camera 1
+26-09-18 20:37:14 [INFO] [src/lead/evaluation/recorder/video_recorder.py:814] Destroyed demo camera 2
+26-09-18 20:37:15 [INFO] [src/lead/evaluation/recorder/video_recorder.py:103] Finalized video: /home/razzaghi/LEAD/lead/outputs/local_evaluation/10857/10857_demo.mp4
+WARNING: attempting to unsubscribe from stream but sensor wasn't listening: Actor 3713 (sensor.camera.rgb) 
+ERROR: failed to destroy actor 3713 : unable to destroy actor: not found 
+WARNING: attempting to unsubscribe from stream but sensor wasn't listening: Actor 3712 (sensor.camera.rgb) 
+ERROR: failed to destroy actor 3712 : unable to destroy actor: not found 
+False
+cost time=298.72374725341797
+[1m> Registering the global statistics[0m
+26-09-18 20:37:16 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+26-09-18 20:37:16 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+26-09-18 20:37:16 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped

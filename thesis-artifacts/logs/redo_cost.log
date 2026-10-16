@@ -1,0 +1,16 @@
+[22:03:10] stopping the campaign for the re-measurement
+[22:03:30] processes still on the GPU: 1
+2743223, 1514 MiB
+[22:03:30] measuring
+== cost ==
+  rung0      45.90 ±  0.95 ms    1.35 GB    68.88 M
+  rung2      51.70 ±  1.02 ms    1.34 GB    67.67 M
+  rung4      52.66 ±  1.35 ms    1.34 GB    67.71 M
+wrote /home/razzaghi/LEAD/lead/results/cost.csv
+[22:04:06] cost re-measured with status 0
+model,forward_ms_mean,forward_ms_sd,peak_memory_gb,parameters_m,warmup,repeats,batch_size
+rung0,45.9,0.95,1.35,68.88,20,100,8
+rung2,51.7,1.02,1.34,67.67,20,100,8
+rung4,52.66,1.35,1.34,67.71,20,100,8
+[22:04:06] restarting the campaign
+[22:04:26] campaign is running again

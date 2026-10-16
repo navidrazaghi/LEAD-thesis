@@ -1,0 +1,91 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds,ticks,distance_m,stationary_frac
+deformable_diverse,none,0,10857.xml,53.98,53.98,1.0,Failed - Agent deviated from the route,Town12,10,174.2,241,67.8,0.042
+deformable_diverse,none,0,14194.xml,50.043682,54.03,0.92622,Failed - Agent deviated from the route,Town12,12,190.6,420,64.1,0.413
+deformable_diverse,none,0,24092.xml,100.0,100,1.0,Completed,Town13,20,211.0,293,149.9,0.034
+deformable_diverse,none,0,24294.xml,50.0,100,0.5,Completed,Town02,20,242.1,929,102.4,0.684
+deformable_diverse,none,0,24841.xml,100.0,100,1.0,Completed,Town01,20,155.4,445,130.6,0.023
+deformable_diverse,none,0,25845.xml,38.14,38.14,1.0,Failed - TickRuntime,Town15,6,1026.1,3999,40.9,0.962
+deformable_diverse,none,0,25928.xml,100.0,100,1.0,Completed,Town11,18,131.3,394,101.7,0.198
+deformable_diverse,none,0,26405.xml,100.0,100,1.0,Completed,Town15,18,106.9,337,133.9,0.03
+deformable_diverse,none,0,26956.xml,60.0,100,0.6,Completed,Town05,21,126.1,360,79.7,0.242
+deformable_diverse,none,0,27582.xml,10.1952,47.2,0.216,Failed - Agent deviated from the route,Town11,12,179.2,673,67.5,0.583
+deformable_diverse,lidar,1.0,10857.xml,53.98,53.98,1.0,Failed - Agent deviated from the route,Town12,10,189.4,245,67.9,0.041
+deformable_diverse,lidar,1.0,14194.xml,60.0,100,0.6,Completed,Town12,21,185.2,389,75.8,0.32
+deformable_diverse,lidar,1.0,24092.xml,100.0,100,1.0,Completed,Town13,20,196.4,328,149.6,0.031
+deformable_diverse,lidar,1.0,24294.xml,100.0,100,1.0,Completed,Town02,19,229.4,930,102.5,0.624
+deformable_diverse,lidar,1.0,24841.xml,100.0,100,1.0,Completed,Town01,20,152.7,459,130.5,0.022
+deformable_diverse,lidar,1.0,25845.xml,60.0,100,0.6,Completed,Town15,20,505.1,2156,107.7,0.849
+deformable_diverse,lidar,1.0,25928.xml,100.0,100,1.0,Completed,Town11,18,172.7,599,100.7,0.435
+deformable_diverse,lidar,1.0,26405.xml,100.0,100,1.0,Completed,Town15,18,118.4,347,134.4,0.032
+deformable_diverse,lidar,1.0,26956.xml,60.0,100,0.6,Completed,Town05,21,123.6,390,78.7,0.213
+deformable_diverse,lidar,1.0,27582.xml,100.0,100,1.0,Completed,Town11,19,129.2,415,71.7,0.415
+deformable_diverse,camera,1.0,10857.xml,0.862438,81.66,0.010561,Failed - Agent got blocked,Town12,22,667.2,1797,53.0,0.834
+deformable_diverse,camera,1.0,14194.xml,37.359335,64.12,0.582647,Failed - Agent got blocked,Town12,14,478.5,1490,49.8,0.854
+deformable_diverse,camera,1.0,24092.xml,6.922821,14.39,0.481086,Failed - TickRuntime,Town13,4,932.7,3999,26.1,0.983
+deformable_diverse,camera,1.0,24294.xml,47.55177,100,0.475518,Completed,Town02,21,105.8,322,103.0,0.031
+deformable_diverse,camera,1.0,24841.xml,5.511157,17.63,0.312601,Failed - Agent got blocked,Town01,6,310.2,1294,27.7,0.933
+deformable_diverse,camera,1.0,25845.xml,21.177,54.3,0.39,Failed - TickRuntime,Town15,11,926.7,3999,61.5,0.92
+deformable_diverse,camera,1.0,25928.xml,6.03827,14.06,0.429464,Failed - Agent deviated from the route,Town11,5,91.9,154,52.7,0.065
+deformable_diverse,camera,1.0,26405.xml,2.735772,12.1,0.226097,Failed - Agent deviated from the route,Town15,5,94.4,247,60.7,0.154
+deformable_diverse,camera,1.0,26956.xml,15.111542,49.24,0.306896,Failed - Agent deviated from the route,Town05,11,105.1,277,66.2,0.083
+deformable_diverse,camera,1.0,27582.xml,10.424986,17.74,0.587654,Failed - Agent deviated from the route,Town11,5,85.5,114,46.5,0.088
+deformable_diverse,none,0,11715.xml,42.0,100,0.42,Completed,Town12,21,156.5,279,86.8,0.068
+deformable_diverse,none,0,23901.xml,100.0,100.0,1.0,Completed,Town13,21,235.5,442,175.6,0.023
+deformable_diverse,none,0,24224.xml,100.0,100,1.0,Completed,Town02,20,135.4,341,132.7,0.135
+deformable_diverse,none,0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,138.4,329,100.9,0.034
+deformable_diverse,none,0,25300.xml,100.0,100,1.0,Completed,Town04,19,184.0,598,154.2,0.174
+deformable_diverse,none,0,25854.xml,60.0,100,0.6,Completed,Town03,21,192.8,571,134.7,0.128
+deformable_diverse,none,0,25951.xml,60.0,100,0.6,Completed,Town04,21,157.9,462,137.0,0.056
+deformable_diverse,none,0,26406.xml,36.0,100,0.36,Completed,Town04,22,169.7,601,144.6,0.257
+deformable_diverse,none,0,27515.xml,26.677,38.11,0.7,Failed - Agent deviated from the route,Town03,8,254.4,961,59.2,0.731
+deformable_diverse,none,0,28035.xml,50.82,72.6,0.7,Failed - Agent deviated from the route,Town01,14,139.6,398,114.8,0.025
+deformable_diverse,lidar,1.0,11715.xml,42.0,100,0.42,Completed,Town12,21,160.1,228,86.8,0.044
+deformable_diverse,lidar,1.0,23901.xml,100.0,100.0,1.0,Completed,Town13,21,232.4,450,175.8,0.022
+deformable_diverse,lidar,1.0,24224.xml,50.0,100,0.5,Completed,Town02,21,134.8,355,132.4,0.028
+deformable_diverse,lidar,1.0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,142.5,359,100.8,0.028
+deformable_diverse,lidar,1.0,25300.xml,100.0,100,1.0,Completed,Town04,19,172.1,578,154.0,0.09
+deformable_diverse,lidar,1.0,25854.xml,100.0,100,1.0,Completed,Town03,20,209.1,724,130.5,0.131
+deformable_diverse,lidar,1.0,25951.xml,36.0,100,0.36,Completed,Town04,22,151.9,530,135.7,0.087
+deformable_diverse,lidar,1.0,26406.xml,100.0,100,1.0,Completed,Town04,20,163.2,621,144.3,0.316
+deformable_diverse,lidar,1.0,27515.xml,37.09,37.09,1.0,Failed - Agent deviated from the route,Town03,7,530.7,2386,58.4,0.898
+deformable_diverse,lidar,1.0,28035.xml,50.82,72.6,0.7,Failed - Agent deviated from the route,Town01,14,136.2,413,114.6,0.024
+deformable_diverse,camera,1.0,11715.xml,,,,NoResult,,,2700.1,1000,21.9,0.923
+deformable_diverse,camera,1.0,23901.xml,13.844345,93.02,0.148832,Failed - Agent got blocked,Town13,20,476.6,1727,167.4,0.728
+deformable_diverse,camera,1.0,24224.xml,14.533495,46.99,0.309289,Failed - Agent got blocked,Town02,12,319.8,1442,75.1,0.84
+deformable_diverse,camera,1.0,24340.xml,46.57217,84.0,0.554431,Failed - Agent got blocked,Town10HD,17,453.9,1624,89.7,0.813
+deformable_diverse,camera,1.0,25300.xml,3.1005,4.77,0.65,Failed - Agent got blocked,Town04,2,292.4,1283,17.9,0.945
+deformable_diverse,camera,1.0,25854.xml,26.628794,52.8,0.504333,Failed - TickRuntime,Town03,11,918.7,3999,74.3,0.942
+deformable_diverse,camera,1.0,25951.xml,13.209474,48.17,0.274226,Failed - TickRuntime,Town04,12,854.6,3999,68.8,0.94
+deformable_diverse,camera,1.0,26406.xml,1.5145,2.33,0.65,Failed - Agent got blocked,Town04,2,328.7,1525,18.3,0.925
+deformable_diverse,camera,1.0,27515.xml,7.847453,14.07,0.557744,Failed - Agent got blocked,Town03,5,296.8,1309,34.6,0.926
+deformable_diverse,camera,1.0,28035.xml,5.023529,12.51,0.401561,Failed - Agent got blocked,Town01,5,307.9,1276,16.8,0.951
+deformable_diverse,none,0,11755.xml,13.37868,53.09,0.252,Failed - Agent deviated from the route,Town12,12,168.3,290,68.9,0.152
+deformable_diverse,none,0,24071.xml,100.0,100,1.0,Completed,Town13,21,182.6,207,154.6,0.049
+deformable_diverse,none,0,24258.xml,100.0,100,1.0,Completed,Town07,19,159.6,470,132.3,0.16
+deformable_diverse,none,0,24795.xml,100.0,100,1.0,Completed,Town04,20,135.4,418,144.4,0.024
+deformable_diverse,none,0,25439.xml,100.0,100,1.0,Completed,Town15,18,171.3,610,130.3,0.184
+deformable_diverse,none,0,25857.xml,33.83,33.83,1.0,Failed - TickRuntime,Town05,5,1007.3,3999,44.9,0.964
+deformable_diverse,none,0,25968.xml,34.11,34.11,1.0,Failed - Agent deviated from the route,Town07,7,92.1,247,48.0,0.329
+deformable_diverse,none,0,26456.xml,3.80709,100,0.038071,Completed,Town03,24,619.8,2615,135.4,0.794
+deformable_diverse,none,0,27532.xml,21.992287,100,0.219923,Completed,Town11,22,128.0,381,76.8,0.203
+deformable_diverse,none,0,28154.xml,90.005087,100,0.900051,Completed,Town10HD,21,221.8,670,162.0,0.217
+deformable_diverse,lidar,1.0,11755.xml,70.0,100,0.7,Completed,Town12,18,200.9,412,81.8,0.328
+deformable_diverse,lidar,1.0,24071.xml,100.0,100,1.0,Completed,Town13,21,191.7,272,153.9,0.037
+deformable_diverse,lidar,1.0,24258.xml,100.0,100,1.0,Completed,Town07,19,143.0,390,131.0,0.026
+deformable_diverse,lidar,1.0,24795.xml,100.0,100,1.0,Completed,Town04,20,138.0,440,141.0,0.043
+deformable_diverse,lidar,1.0,25439.xml,60.0,100,0.6,Completed,Town15,19,132.0,419,130.7,0.036
+deformable_diverse,lidar,1.0,25857.xml,33.83,33.83,1.0,Failed - TickRuntime,Town05,5,905.2,3999,44.5,0.962
+deformable_diverse,lidar,1.0,25968.xml,34.11,34.11,1.0,Failed - Agent deviated from the route,Town07,7,73.1,147,47.7,0.068
+deformable_diverse,lidar,1.0,26456.xml,100.0,100,1.0,Completed,Town03,20,372.1,1563,130.3,0.697
+deformable_diverse,lidar,1.0,27532.xml,88.091483,100,0.880915,Completed,Town11,20,108.6,286,73.3,0.256
+deformable_diverse,lidar,1.0,28154.xml,50.629764,100,0.506298,Completed,Town10HD,22,640.4,2501,168.9,0.658
+deformable_diverse,camera,1.0,11755.xml,5.00403,13.63,0.367133,Failed - Agent deviated from the route,Town12,4,133.0,160,43.6,0.063
+deformable_diverse,camera,1.0,24071.xml,,,,NoResult,,,2700.1,600,47.8,0.855
+deformable_diverse,camera,1.0,24258.xml,10.70147,34.54,0.309828,Failed - TickRuntime,Town07,7,846.8,3999,49.5,0.96
+deformable_diverse,camera,1.0,24795.xml,0.55692,2.38,0.234,Failed - Agent got blocked,Town04,4,318.3,1496,36.8,0.847
+deformable_diverse,camera,1.0,25439.xml,2.067,3.18,0.65,Failed - Agent got blocked,Town15,2,284.2,1295,21.5,0.935
+deformable_diverse,camera,1.0,25857.xml,4.926454,41.33,0.119198,Failed - TickRuntime,Town05,10,873.5,3999,63.4,0.93
+deformable_diverse,camera,1.0,25968.xml,23.877,34.11,0.7,Failed - Agent deviated from the route,Town07,8,87.3,250,47.9,0.289
+deformable_diverse,camera,1.0,26456.xml,10.436247,100,0.104362,Completed,Town03,25,159.5,551,138.2,0.04
+deformable_diverse,camera,1.0,27532.xml,5.868333,8.72,0.672974,Failed - Agent deviated from the route,Town11,3,84.4,125,42.2,0.081
+deformable_diverse,camera,1.0,28154.xml,1.022425,53.73,0.019029,Failed - TickRuntime,Town10HD,18,997.5,3999,93.6,0.819

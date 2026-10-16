@@ -1,0 +1,7 @@
+[10-13 10:11:47] held-out loss: diverse on train_check_div_28
+[10-13 10:14:18] held-out loss: diverse on held_out_28
+[10-13 10:18:38] done:
+post31@train_check_28,/home/razzaghi/LEAD/lead/outputs/rung0_lead_recipe_post31/model_0030.pth,4046,objective,0.079045
+post31@held_out_28,/home/razzaghi/LEAD/lead/outputs/rung0_lead_recipe_post31/model_0030.pth,4683,objective,0.724779
+diverse@train_check_div_28,/home/razzaghi/LEAD/lead/outputs/rung0_diverse_post31/model_0030.pth,2885,objective,0.135797
+diverse@held_out_28,/home/razzaghi/LEAD/lead/outputs/rung0_diverse_post31/model_0030.pth,4683,objective,0.640108

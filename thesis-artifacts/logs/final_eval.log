@@ -1,0 +1,431 @@
+[10:57:30] waiting for training and the open-loop analysis to finish
+[17:13:35] both are done
+[17:13:35] gated candidate: rung4 (rung4_light_auxiliary_post)
+[17:13:35] starting the sweep: 3 models x 3 conditions x 30 routes = 270 runs
+[17:13:35] resumable, so an interruption costs one route rather than the campaign
+270 runs in the matrix, 0 already done, 270 to go
+  first pending: rung0 at none:0
+CARLA on 3000, traffic manager on 3100
+[1/270] rung0 none:0 10857.xml -> DS 17.18 (Failed - Agent got blocked, 480.1s)
+[2/270] rung2a none:0 10857.xml -> DS 5.211268 (Failed - Agent got blocked, 1152.4s)
+[3/270] rung4 none:0 10857.xml -> DS 53.98 (Failed - Agent deviated from the route, 139.6s)
+      | timed out after 2400s, killing the group
+[4/270] rung0 none:0 11715.xml -> DS None (NoResult, 2400.1s)  [sim failure, will restart]
+  restarting CARLA
+[5/270] rung2a none:0 11715.xml -> DS 42.0 (Completed, 148.6s)
+[6/270] rung4 none:0 11715.xml -> DS 2.611841 (Completed, 297.7s)
+      | timed out after 2400s, killing the group
+[7/270] rung0 none:0 11755.xml -> DS None (NoResult, 2400.2s)  [sim failure, will restart]
+  restarting CARLA
+[8/270] rung2a none:0 11755.xml -> DS 70.0 (Completed, 279.3s)
+
+=== restarted 19:27:29 with _ROUTE_TIMEOUT_S=5400 ===
+[19:27:29] waiting for training and the open-loop analysis to finish
+[19:27:30] both are done
+[19:27:30] gated candidate: rung4 (rung4_light_auxiliary_post)
+[19:27:30] starting the sweep: 3 models x 3 conditions x 30 routes = 270 runs
+[19:27:30] resumable, so an interruption costs one route rather than the campaign
+270 runs in the matrix, 6 already done, 264 to go
+  first pending: rung0 at none:0
+CARLA on 3000, traffic manager on 3100
+[1/264] rung0 none:0 11715.xml -> DS 15.12 (Completed, 1031.0s)
+      | timed out after 5400s, killing the group
+[2/264] rung0 none:0 11755.xml -> DS None (NoResult, 5400.1s)  [sim failure, will restart]
+  restarting CARLA
+[3/264] rung4 none:0 11755.xml -> DS 6.560352 (Failed - Agent deviated from the route, 464.7s)
+[4/264] rung0 none:0 14194.xml -> DS 45.448581 (Completed, 187.6s)
+[5/264] rung2a none:0 14194.xml -> DS 7.201949 (Failed - Agent got blocked, 839.5s)
+
+=== campaign resumed 22:00:35 after the light experiments ===
+[22:00:35] waiting for training and the open-loop analysis to finish
+[22:00:35] both are done
+[22:00:35] gated candidate: rung4 (rung4_light_auxiliary_post)
+[22:00:35] starting the sweep: 3 models x 3 conditions x 30 routes = 270 runs
+[22:00:35] resumable, so an interruption costs one route rather than the campaign
+  1 cell(s) abandoned after two failures
+    rung0 none:0 11755.xml
+270 runs in the matrix, 11 already done, 259 to go
+  first pending: rung4 at none:0
+CARLA on 3000, traffic manager on 3101
+
+=== campaign resumed 22:04:06 after re-measuring cost ===
+[22:04:06] waiting for training and the open-loop analysis to finish
+[22:04:06] both are done
+[22:04:06] gated candidate: rung4 (rung4_light_auxiliary_post)
+[22:04:06] starting the sweep: 3 models x 3 conditions x 30 routes = 270 runs
+[22:04:06] resumable, so an interruption costs one route rather than the campaign
+  1 cell(s) abandoned after two failures
+    rung0 none:0 11755.xml
+270 runs in the matrix, 11 already done, 259 to go
+  first pending: rung4 at none:0
+CARLA on 3000, traffic manager on 3100
+[1/259] rung4 none:0 14194.xml -> DS 4.013048 (Failed - Agent got blocked, 628.3s)
+[2/259] rung0 none:0 23901.xml -> DS 1.306101 (Completed, 442.7s)
+[3/259] rung2a none:0 23901.xml -> DS 100.0 (Completed, 170.9s)
+[4/259] rung4 none:0 23901.xml -> DS 100.0 (Completed, 166.0s)
+[5/259] rung0 none:0 24071.xml -> DS 1.99 (Failed - Agent got blocked, 334.0s)
+[6/259] rung2a none:0 24071.xml -> DS 100.0 (Completed, 120.3s)
+      | timed out after 2700s, killing the group
+[7/259] rung4 none:0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[8/259] rung0 none:0 24092.xml -> DS 15.14713 (Failed - TickRuntime, 1041.2s)
+[9/259] rung2a none:0 24092.xml -> DS 59.60281 (Completed, 107.9s)
+[10/259] rung4 none:0 24092.xml -> DS 100.0 (Completed, 103.4s)
+[11/259] rung0 none:0 24224.xml -> DS 1.307181 (Failed - TickRuntime, 998.1s)
+[12/259] rung2a none:0 24224.xml -> DS 50.0 (Completed, 106.7s)
+[13/259] rung4 none:0 24224.xml -> DS 50.0 (Completed, 101.3s)
+[14/259] rung0 none:0 24258.xml -> DS 60.0 (Completed, 147.8s)
+[15/259] rung2a none:0 24258.xml -> DS 24.819196 (Completed, 117.2s)
+  restarting CARLA
+[16/259] rung4 none:0 24258.xml -> DS 6.065348 (Failed - TickRuntime, 1017.1s)
+[17/259] rung0 none:0 24294.xml -> DS 43.69566 (Failed - Agent got blocked, 340.1s)
+[18/259] rung2a none:0 24294.xml -> DS 50.0 (Completed, 91.5s)
+[19/259] rung4 none:0 24294.xml -> DS 50.0 (Completed, 86.5s)
+[20/259] rung0 none:0 24340.xml -> DS 38.07 (Failed - Agent got blocked, 469.4s)
+[21/259] rung2a none:0 24340.xml -> DS 7.00462 (Completed, 617.0s)
+[22/259] rung4 none:0 24340.xml -> DS 14.088229 (Completed, 142.1s)
+[23/259] rung0 none:0 24795.xml -> DS 58.302 (Failed - Agent got blocked, 359.5s)
+  restarting CARLA
+[24/259] rung2a none:0 24795.xml -> DS 25.35 (Completed, 109.9s)
+[25/259] rung4 none:0 24795.xml -> DS 36.0 (Completed, 104.0s)
+[26/259] rung0 none:0 24841.xml -> DS 0.0 (Failed - Agent got blocked, 268.2s)
+[27/259] rung2a none:0 24841.xml -> DS 100.0 (Completed, 125.7s)
+[28/259] rung4 none:0 24841.xml -> DS 90.00907 (Completed, 116.6s)
+[29/259] rung0 none:0 25300.xml -> DS 60.0 (Completed, 138.4s)
+[30/259] rung2a none:0 25300.xml -> DS 100.0 (Completed, 121.8s)
+[31/259] rung4 none:0 25300.xml -> DS 21.6 (Completed, 110.7s)
+  restarting CARLA
+[32/259] rung0 none:0 25439.xml -> DS 100.0 (Completed, 213.9s)
+[33/259] rung2a none:0 25439.xml -> DS 100.0 (Completed, 113.4s)
+[34/259] rung4 none:0 25439.xml -> DS 4.287641 (Completed, 535.5s)
+[35/259] rung0 none:0 25845.xml -> DS 0.0 (Failed - Agent got blocked, 255.6s)
+[36/259] rung2a none:0 25845.xml -> DS 24.788478 (Failed - TickRuntime, 1082.8s)
+[37/259] rung4 none:0 25845.xml -> DS 13.01934 (Failed - TickRuntime, 1061.2s)
+[38/259] rung0 none:0 25854.xml -> DS 9.477 (Failed - TickRuntime, 1096.4s)
+[39/259] rung2a none:0 25854.xml -> DS 7.592 (Failed - TickRuntime, 1111.6s)
+  restarting CARLA
+[40/259] rung4 none:0 25854.xml -> DS 7.776 (Completed, 902.5s)
+[41/259] rung0 none:0 25857.xml -> DS 16.488 (Failed - TickRuntime, 1053.7s)
+[42/259] rung2a none:0 25857.xml -> DS 6.6264 (Failed - TickRuntime, 1059.0s)
+[43/259] rung4 none:0 25857.xml -> DS 60.0 (Completed, 126.8s)
+[44/259] rung0 none:0 25928.xml -> DS 22.06 (Failed - TickRuntime, 823.9s)
+[45/259] rung2a none:0 25928.xml -> DS 31.224 (Failed - TickRuntime, 853.6s)
+[46/259] rung4 none:0 25928.xml -> DS 100.0 (Completed, 151.3s)
+[47/259] rung0 none:0 25951.xml -> DS 7.52872 (Failed - TickRuntime, 983.1s)
+  restarting CARLA
+[48/259] rung2a none:0 25951.xml -> DS 21.6 (Completed, 197.3s)
+[49/259] rung4 none:0 25951.xml -> DS 26.446127 (Completed, 126.2s)
+[50/259] rung0 none:0 25968.xml -> DS 14.742199 (Completed, 111.3s)
+[51/259] rung2a none:0 25968.xml -> DS 57.157557 (Completed, 427.7s)
+[52/259] rung4 none:0 25968.xml -> DS 7.42 (Failed - Agent got blocked, 397.8s)
+[53/259] rung0 none:0 26405.xml -> DS 49.996874 (Completed, 623.9s)
+[54/259] rung2a none:0 26405.xml -> DS 39.991496 (Failed - Agent got blocked, 343.3s)
+[55/259] rung4 none:0 26405.xml -> DS 7.852055 (Completed, 476.3s)
+  restarting CARLA
+[56/259] rung0 none:0 26406.xml -> DS 36.0 (Completed, 164.4s)
+[57/259] rung2a none:0 26406.xml -> DS 21.6 (Completed, 163.1s)
+[58/259] rung4 none:0 26406.xml -> DS 13.153054 (Completed, 150.3s)
+[59/259] rung0 none:0 26456.xml -> DS 7.592 (Failed - Agent got blocked, 327.0s)
+[60/259] rung2a none:0 26456.xml -> DS 7.592 (Failed - Agent got blocked, 314.2s)
+[61/259] rung4 none:0 26456.xml -> DS 100.0 (Completed, 107.4s)
+[62/259] rung0 none:0 26956.xml -> DS 22.711 (Failed - TickRuntime, 987.7s)
+[63/259] rung2a none:0 26956.xml -> DS 49.239991 (Completed, 103.9s)
+  restarting CARLA
+[64/259] rung4 none:0 26956.xml -> DS 5.029925 (Completed, 147.3s)
+[65/259] rung0 none:0 27515.xml -> DS 7.849562 (Failed - Agent got blocked, 313.7s)
+[66/259] rung2a none:0 27515.xml -> DS 35.0 (Completed, 88.1s)
+[67/259] rung4 none:0 27515.xml -> DS 16.18059 (Failed - Agent deviated from the route, 81.0s)
+[68/259] rung0 none:0 27532.xml -> DS 32.96 (Failed - TickRuntime, 823.3s)
+[69/259] rung2a none:0 27532.xml -> DS 19.83345 (Failed - Agent got blocked, 314.4s)
+[70/259] rung4 none:0 27532.xml -> DS 51.44 (Failed - Agent deviated from the route, 86.2s)
+[71/259] rung0 none:0 27582.xml -> DS 33.83 (Failed - Agent got blocked, 323.8s)
+  restarting CARLA
+[72/259] rung2a none:0 27582.xml -> DS 30.789177 (Completed, 187.3s)
+[73/259] rung4 none:0 27582.xml -> DS 52.98 (Failed - Agent deviated from the route, 111.6s)
+[74/259] rung0 none:0 28035.xml -> DS 3.267328 (Failed - TickRuntime, 1009.9s)
+[75/259] rung2a none:0 28035.xml -> DS 45.602971 (Failed - TickRuntime, 1002.3s)
+[76/259] rung4 none:0 28035.xml -> DS 16.140776 (Failed - TickRuntime, 1024.7s)
+[77/259] rung0 none:0 28154.xml -> DS 3.514274 (Failed - TickRuntime, 1156.3s)
+[78/259] rung2a none:0 28154.xml -> DS 100.0 (Completed, 192.6s)
+[79/259] rung4 none:0 28154.xml -> DS 28.839309 (Failed - TickRuntime, 1126.8s)
+  restarting CARLA
+[80/259] rung0 lidar:1.0 10857.xml -> DS 2.375364 (Failed - Agent got blocked, 1091.1s)
+[81/259] rung2a lidar:1.0 10857.xml -> DS 15.882279 (Failed - Agent got blocked, 512.3s)
+[82/259] rung4 lidar:1.0 10857.xml -> DS 6.292079 (Failed - Agent got blocked, 678.3s)
+[83/259] rung0 lidar:1.0 11715.xml -> DS 42.0 (Completed, 228.4s)
+[84/259] rung2a lidar:1.0 11715.xml -> DS 70.0 (Completed, 126.0s)
+[85/259] rung4 lidar:1.0 11715.xml -> DS 14.385839 (Completed, 144.8s)
+      | timed out after 2700s, killing the group
+[86/259] rung0 lidar:1.0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[87/259] rung2a lidar:1.0 11755.xml -> DS 41.453934 (Completed, 141.8s)
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[88/259] rung4 lidar:1.0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[89/259] rung0 lidar:1.0 14194.xml -> DS 94.684543 (Completed, 342.5s)
+[90/259] rung2a lidar:1.0 14194.xml -> DS 6.141744 (Failed - Agent deviated from the route, 298.6s)
+[91/259] rung4 lidar:1.0 14194.xml -> DS 19.668246 (Failed - Agent got blocked, 543.2s)
+[92/259] rung0 lidar:1.0 23901.xml -> DS 100.0 (Completed, 395.6s)
+[93/259] rung2a lidar:1.0 23901.xml -> DS 100.0 (Completed, 168.4s)
+[94/259] rung4 lidar:1.0 23901.xml -> DS 100.0 (Completed, 167.1s)
+      | timed out after 2700s, killing the group
+[95/259] rung0 lidar:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[96/259] rung2a lidar:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[97/259] rung4 lidar:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[98/259] rung0 lidar:1.0 24092.xml -> DS 60.0 (Completed, 283.0s)
+[99/259] rung2a lidar:1.0 24092.xml -> DS 100.0 (Completed, 108.9s)
+[100/259] rung4 lidar:1.0 24092.xml -> DS 16.009691 (Failed - TickRuntime, 1039.8s)
+[101/259] rung0 lidar:1.0 24224.xml -> DS 100.0 (Completed, 231.7s)
+[102/259] rung2a lidar:1.0 24224.xml -> DS 50.0 (Completed, 105.3s)
+[103/259] rung4 lidar:1.0 24224.xml -> DS 23.866768 (Completed, 100.5s)
+  restarting CARLA
+[104/259] rung0 lidar:1.0 24258.xml -> DS 0.320543 (Completed, 918.4s)
+[105/259] rung2a lidar:1.0 24258.xml -> DS 17.71884 (Completed, 105.8s)
+[106/259] rung4 lidar:1.0 24258.xml -> DS 21.6 (Completed, 128.9s)
+[107/259] rung0 lidar:1.0 24294.xml -> DS 100.0 (Completed, 168.6s)
+[108/259] rung2a lidar:1.0 24294.xml -> DS 50.0 (Completed, 90.6s)
+[109/259] rung4 lidar:1.0 24294.xml -> DS 46.082832 (Completed, 86.3s)
+[110/259] rung0 lidar:1.0 24340.xml -> DS 16.585573 (Completed, 338.8s)
+[111/259] rung2a lidar:1.0 24340.xml -> DS 15.042539 (Completed, 268.7s)
+  restarting CARLA
+[112/259] rung4 lidar:1.0 24340.xml -> DS 33.798273 (Completed, 611.6s)
+[113/259] rung0 lidar:1.0 24795.xml -> DS 24.0175 (Failed - TickRuntime, 960.9s)
+[114/259] rung2a lidar:1.0 24795.xml -> DS 60.0 (Completed, 106.0s)
+[115/259] rung4 lidar:1.0 24795.xml -> DS 36.0 (Completed, 105.6s)
+[116/259] rung0 lidar:1.0 24841.xml -> DS 64.15 (Failed - TickRuntime, 1037.3s)
+[117/259] rung2a lidar:1.0 24841.xml -> DS 100.0 (Completed, 125.7s)
+[118/259] rung4 lidar:1.0 24841.xml -> DS 95.388802 (Completed, 124.5s)
+[119/259] rung0 lidar:1.0 25300.xml -> DS 12.96 (Completed, 311.4s)
+  restarting CARLA
+[120/259] rung2a lidar:1.0 25300.xml -> DS 60.0 (Completed, 115.3s)
+[121/259] rung4 lidar:1.0 25300.xml -> DS 100.0 (Completed, 111.7s)
+[122/259] rung0 lidar:1.0 25439.xml -> DS 18.880903 (Failed - TickRuntime, 908.4s)
+[123/259] rung2a lidar:1.0 25439.xml -> DS 100.0 (Completed, 111.7s)
+[124/259] rung4 lidar:1.0 25439.xml -> DS 7.699295 (Failed - Agent deviated from the route, 112.9s)
+[125/259] rung0 lidar:1.0 25845.xml -> DS 26.304 (Failed - TickRuntime, 1044.2s)
+[126/259] rung2a lidar:1.0 25845.xml -> DS 28.500692 (Failed - TickRuntime, 1067.6s)
+[127/259] rung4 lidar:1.0 25845.xml -> DS 18.310174 (Failed - TickRuntime, 1044.4s)
+  restarting CARLA
+[128/259] rung0 lidar:1.0 25854.xml -> DS 12.311891 (Completed, 460.9s)
+[129/259] rung2a lidar:1.0 25854.xml -> DS 9.477 (Failed - TickRuntime, 1078.9s)
+[130/259] rung4 lidar:1.0 25854.xml -> DS 36.0 (Completed, 107.9s)
+[131/259] rung0 lidar:1.0 25857.xml -> DS 13.806 (Failed - TickRuntime, 1033.3s)
+[132/259] rung2a lidar:1.0 25857.xml -> DS 33.83 (Failed - TickRuntime, 1042.9s)
+[133/259] rung4 lidar:1.0 25857.xml -> DS 60.0 (Completed, 590.5s)
+[134/259] rung0 lidar:1.0 25928.xml -> DS 17.067637 (Completed, 535.2s)
+[135/259] rung2a lidar:1.0 25928.xml -> DS 50.04 (Failed - TickRuntime, 821.6s)
+  restarting CARLA
+[136/259] rung4 lidar:1.0 25928.xml -> DS 98.0 (Failed - TickRuntime, 841.3s)
+[137/259] rung0 lidar:1.0 25951.xml -> DS 2.544648 (Completed, 473.0s)
+[138/259] rung2a lidar:1.0 25951.xml -> DS 100.0 (Completed, 132.9s)
+[139/259] rung4 lidar:1.0 25951.xml -> DS 36.0 (Completed, 102.7s)
+[140/259] rung0 lidar:1.0 25968.xml -> DS 17.388906 (Failed - Agent got blocked, 464.1s)
+[141/259] rung2a lidar:1.0 25968.xml -> DS 86.939051 (Completed, 66.3s)
+[142/259] rung4 lidar:1.0 25968.xml -> DS 34.11 (Failed - Agent deviated from the route, 235.0s)
+[143/259] rung0 lidar:1.0 26405.xml -> DS 31.361388 (Completed, 211.9s)
+  restarting CARLA
+[144/259] rung2a lidar:1.0 26405.xml -> DS 19.980607 (Failed - TickRuntime, 900.8s)
+[145/259] rung4 lidar:1.0 26405.xml -> DS 31.802229 (Failed - Agent got blocked, 275.8s)
+[146/259] rung0 lidar:1.0 26406.xml -> DS 36.0 (Completed, 239.5s)
+[147/259] rung2a lidar:1.0 26406.xml -> DS 36.0 (Completed, 166.3s)
+[148/259] rung4 lidar:1.0 26406.xml -> DS 7.776 (Completed, 148.1s)
+[149/259] rung0 lidar:1.0 26456.xml -> DS 5.702726 (Failed - Agent got blocked, 308.1s)
+[150/259] rung2a lidar:1.0 26456.xml -> DS 8.5345 (Failed - Agent got blocked, 311.6s)
+[151/259] rung4 lidar:1.0 26456.xml -> DS 58.619259 (Completed, 108.1s)
+  restarting CARLA
+[152/259] rung0 lidar:1.0 26956.xml -> DS 15.597891 (Failed - TickRuntime, 976.8s)
+[153/259] rung2a lidar:1.0 26956.xml -> DS 60.0 (Completed, 108.6s)
+[154/259] rung4 lidar:1.0 26956.xml -> DS 3.017922 (Failed - Agent got blocked, 420.2s)
+[155/259] rung0 lidar:1.0 27515.xml -> DS 5.252759 (Failed - Agent got blocked, 365.4s)
+[156/259] rung2a lidar:1.0 27515.xml -> DS 20.367794 (Completed, 102.4s)
+[157/259] rung4 lidar:1.0 27515.xml -> DS 10.3299 (Failed - Agent deviated from the route, 90.3s)
+[158/259] rung0 lidar:1.0 27532.xml -> DS 54.294865 (Completed, 239.2s)
+[159/259] rung2a lidar:1.0 27532.xml -> DS 43.077425 (Completed, 158.1s)
+  restarting CARLA
+[160/259] rung4 lidar:1.0 27532.xml -> DS 51.44 (Failed - Agent deviated from the route, 91.2s)
+[161/259] rung0 lidar:1.0 27582.xml -> DS 54.388699 (Completed, 213.8s)
+[162/259] rung2a lidar:1.0 27582.xml -> DS 70.0 (Completed, 188.1s)
+[163/259] rung4 lidar:1.0 27582.xml -> DS 52.98 (Failed - Agent deviated from the route, 201.0s)
+[164/259] rung0 lidar:1.0 28035.xml -> DS 20.32225 (Failed - TickRuntime, 1009.8s)
+[165/259] rung2a lidar:1.0 28035.xml -> DS 33.033399 (Failed - TickRuntime, 999.1s)
+[166/259] rung4 lidar:1.0 28035.xml -> DS 53.562933 (Failed - Agent deviated from the route, 103.8s)
+[167/259] rung0 lidar:1.0 28154.xml -> DS 20.14446 (Failed - TickRuntime, 1136.4s)
+  restarting CARLA
+[168/259] rung2a lidar:1.0 28154.xml -> DS 100.0 (Completed, 182.0s)
+[169/259] rung4 lidar:1.0 28154.xml -> DS 34.791771 (Completed, 580.8s)
+[170/259] rung0 camera:1.0 10857.xml -> DS 25.03 (Failed - Agent got blocked, 503.4s)
+[171/259] rung2a camera:1.0 10857.xml -> DS 26.34 (Failed - Agent got blocked, 467.8s)
+[172/259] rung4 camera:1.0 10857.xml -> DS 25.03 (Failed - Agent got blocked, 597.7s)
+[173/259] rung0 camera:1.0 11715.xml -> DS 42.0 (Completed, 200.7s)
+[174/259] rung2a camera:1.0 11715.xml -> DS 70.0 (Completed, 128.0s)
+      | timed out after 2700s, killing the group
+[175/259] rung4 camera:1.0 11715.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[176/259] rung0 camera:1.0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[177/259] rung2a camera:1.0 11755.xml -> DS 70.0 (Completed, 146.7s)
+      | timed out after 2700s, killing the group
+[178/259] rung4 camera:1.0 11755.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[179/259] rung0 camera:1.0 14194.xml -> DS 31.536 (Failed - Agent got blocked, 461.2s)
+[180/259] rung2a camera:1.0 14194.xml -> DS 8.380679 (Failed - TickRuntime, 1280.4s)
+[181/259] rung4 camera:1.0 14194.xml -> DS 30.822 (Failed - Agent got blocked, 646.3s)
+[182/259] rung0 camera:1.0 23901.xml -> DS 18.5562 (Failed - Agent got blocked, 428.8s)
+[183/259] rung2a camera:1.0 23901.xml -> DS 92.975322 (Completed, 157.6s)
+  restarting CARLA
+[184/259] rung4 camera:1.0 23901.xml -> DS 100.0 (Completed, 191.0s)
+      | timed out after 2700s, killing the group
+[185/259] rung0 camera:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[186/259] rung2a camera:1.0 24071.xml -> DS 62.499729 (Completed, 163.6s)
+      | timed out after 2700s, killing the group
+[187/259] rung4 camera:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[188/259] rung0 camera:1.0 24092.xml -> DS 19.0255 (Failed - TickRuntime, 1013.9s)
+[189/259] rung2a camera:1.0 24092.xml -> DS 91.376575 (Completed, 120.0s)
+[190/259] rung4 camera:1.0 24092.xml -> DS 13.851477 (Failed - TickRuntime, 1023.1s)
+[191/259] rung0 camera:1.0 24224.xml -> DS 16.643217 (Failed - Agent got blocked, 792.1s)
+  restarting CARLA
+[192/259] rung2a camera:1.0 24224.xml -> DS 50.0 (Completed, 104.5s)
+[193/259] rung4 camera:1.0 24224.xml -> DS 34.85297 (Completed, 100.6s)
+[194/259] rung0 camera:1.0 24258.xml -> DS 100.0 (Completed, 154.9s)
+[195/259] rung2a camera:1.0 24258.xml -> DS 87.923321 (Completed, 116.2s)
+[196/259] rung4 camera:1.0 24258.xml -> DS 23.043252 (Completed, 186.9s)
+[197/259] rung0 camera:1.0 24294.xml -> DS 36.910143 (Failed - Agent got blocked, 308.8s)
+[198/259] rung2a camera:1.0 24294.xml -> DS 50.0 (Completed, 91.8s)
+[199/259] rung4 camera:1.0 24294.xml -> DS 19.576295 (Failed - Agent got blocked, 339.3s)
+  restarting CARLA
+[200/259] rung0 camera:1.0 24340.xml -> DS 36.0 (Completed, 136.6s)
+[201/259] rung2a camera:1.0 24340.xml -> DS 28.210632 (Completed, 119.1s)
+[202/259] rung4 camera:1.0 24340.xml -> DS 4.772145 (Failed - Agent got blocked, 556.6s)
+[203/259] rung0 camera:1.0 24795.xml -> DS 60.0 (Completed, 132.3s)
+[204/259] rung2a camera:1.0 24795.xml -> DS 60.0 (Completed, 127.3s)
+[205/259] rung4 camera:1.0 24795.xml -> DS 36.0 (Completed, 104.0s)
+[206/259] rung0 camera:1.0 24841.xml -> DS 27.55 (Failed - Agent got blocked, 304.3s)
+[207/259] rung2a camera:1.0 24841.xml -> DS 93.851735 (Completed, 126.2s)
+  restarting CARLA
+[208/259] rung4 camera:1.0 24841.xml -> DS 87.703471 (Completed, 110.7s)
+[209/259] rung0 camera:1.0 25300.xml -> DS 60.0 (Completed, 137.5s)
+[210/259] rung2a camera:1.0 25300.xml -> DS 100.0 (Completed, 116.4s)
+[211/259] rung4 camera:1.0 25300.xml -> DS 78.693812 (Completed, 107.2s)
+[212/259] rung0 camera:1.0 25439.xml -> DS 100.0 (Completed, 192.2s)
+[213/259] rung2a camera:1.0 25439.xml -> DS 100.0 (Completed, 113.7s)
+[214/259] rung4 camera:1.0 25439.xml -> DS 15.081224 (Failed - TickRuntime, 940.1s)
+[215/259] rung0 camera:1.0 25845.xml -> DS 26.73 (Failed - TickRuntime, 966.4s)
+  restarting CARLA
+[216/259] rung2a camera:1.0 25845.xml -> DS 25.734 (Failed - TickRuntime, 1061.3s)
+[217/259] rung4 camera:1.0 25845.xml -> DS 13.391897 (Failed - TickRuntime, 1005.7s)
+[218/259] rung0 camera:1.0 25854.xml -> DS 8.5345 (Failed - TickRuntime, 1073.5s)
+[219/259] rung2a camera:1.0 25854.xml -> DS 7.522435 (Completed, 366.7s)
+[220/259] rung4 camera:1.0 25854.xml -> DS 12.96 (Completed, 613.0s)
+[221/259] rung0 camera:1.0 25857.xml -> DS 16.488 (Failed - TickRuntime, 1027.6s)
+[222/259] rung2a camera:1.0 25857.xml -> DS 33.83 (Failed - TickRuntime, 1023.8s)
+[223/259] rung4 camera:1.0 25857.xml -> DS 16.488 (Failed - TickRuntime, 1049.9s)
+  restarting CARLA
+[224/259] rung0 camera:1.0 25928.xml -> DS 12.07 (Failed - TickRuntime, 777.5s)
+[225/259] rung2a camera:1.0 25928.xml -> DS 52.04 (Failed - TickRuntime, 808.4s)
+[226/259] rung4 camera:1.0 25928.xml -> DS 92.006788 (Completed, 152.3s)
+[227/259] rung0 camera:1.0 25951.xml -> DS 9.784149 (Failed - TickRuntime, 952.7s)
+[228/259] rung2a camera:1.0 25951.xml -> DS 23.04605 (Completed, 126.0s)
+[229/259] rung4 camera:1.0 25951.xml -> DS 4.931403 (Failed - TickRuntime, 993.8s)
+[230/259] rung0 camera:1.0 25968.xml -> DS 26.365836 (Completed, 76.8s)
+[231/259] rung2a camera:1.0 25968.xml -> DS 43.239883 (Failed - Agent got blocked, 440.8s)
+  restarting CARLA
+[232/259] rung4 camera:1.0 25968.xml -> DS 34.11 (Failed - Agent deviated from the route, 373.7s)
+[233/259] rung0 camera:1.0 26405.xml -> DS 45.43 (Failed - Agent got blocked, 292.3s)
+[234/259] rung2a camera:1.0 26405.xml -> DS 7.192924 (Failed - TickRuntime, 921.1s)
+[235/259] rung4 camera:1.0 26405.xml -> DS 13.626 (Failed - Agent got blocked, 466.6s)
+[236/259] rung0 camera:1.0 26406.xml -> DS 12.96 (Completed, 178.7s)
+[237/259] rung2a camera:1.0 26406.xml -> DS 21.6 (Completed, 150.3s)
+[238/259] rung4 camera:1.0 26406.xml -> DS 1.090523 (Completed, 168.9s)
+[239/259] rung0 camera:1.0 26456.xml -> DS 21.964022 (Completed, 348.4s)
+  restarting CARLA
+[240/259] rung2a camera:1.0 26456.xml -> DS 6.647361 (Failed - Agent got blocked, 306.9s)
+[241/259] rung4 camera:1.0 26456.xml -> DS 63.464466 (Failed - Agent got blocked, 338.3s)
+[242/259] rung0 camera:1.0 26956.xml -> DS 34.94 (Failed - TickRuntime, 970.4s)
+[243/259] rung2a camera:1.0 26956.xml -> DS 59.18468 (Completed, 98.9s)
+[244/259] rung4 camera:1.0 26956.xml -> DS 36.0 (Completed, 104.9s)
+[245/259] rung0 camera:1.0 27515.xml -> DS 16.071314 (Failed - Agent got blocked, 293.2s)
+[246/259] rung2a camera:1.0 27515.xml -> DS 10.447563 (Failed - Agent got blocked, 345.9s)
+[247/259] rung4 camera:1.0 27515.xml -> DS 11.744672 (Failed - Agent got blocked, 311.4s)
+  restarting CARLA
+[248/259] rung0 camera:1.0 27532.xml -> DS 52.867262 (Completed, 128.1s)
+[249/259] rung2a camera:1.0 27532.xml -> DS 20.34305 (Failed - Agent got blocked, 305.2s)
+[250/259] rung4 camera:1.0 27532.xml -> DS 11.354246 (Failed - Agent got blocked, 372.6s)
+[251/259] rung0 camera:1.0 27582.xml -> DS 39.700761 (Failed - Agent got blocked, 292.8s)
+[252/259] rung2a camera:1.0 27582.xml -> DS 14.463259 (Completed, 109.1s)
+[253/259] rung4 camera:1.0 27582.xml -> DS 35.0 (Completed, 89.9s)
+[254/259] rung0 camera:1.0 28035.xml -> DS 13.594813 (Failed - TickRuntime, 994.1s)
+[255/259] rung2a camera:1.0 28035.xml -> DS 4.85036 (Failed - TickRuntime, 1002.5s)
+  restarting CARLA
+[256/259] rung4 camera:1.0 28035.xml -> DS 5.985849 (Failed - TickRuntime, 1007.4s)
+[257/259] rung0 camera:1.0 28154.xml -> DS 9.762131 (Failed - TickRuntime, 1115.5s)
+[258/259] rung2a camera:1.0 28154.xml -> DS 100.0 (Completed, 179.4s)
+[259/259] rung4 camera:1.0 28154.xml -> DS 1.254956 (Completed, 916.0s)
+results in /home/razzaghi/LEAD/lead/results/closed_loop.csv
+[11:47:30] sweep exited with status 0; writing the summary
+270 runs | models ['rung0', 'rung2a', 'rung4'] | 30 routes
+
+============================================================================
+1. COVERAGE -- usable runs per cell, and what the rest were
+============================================================================
+model            none:0     lidar:1.0    camera:1.0
+rung0             29/30         28/30         28/30
+rung2a            30/30         29/30         30/30
+rung4             29/30         28/30         27/30
+
+   statuses across every run:
+      139  Completed
+       57  Failed - TickRuntime
+       49  Failed - Agent got blocked
+       13  Failed - Agent deviated from the route
+       12  NoResult
+
+============================================================================
+2. DRIVING SCORE, paired on the routes every model completed
+============================================================================
+
+  none:0   (n = 28 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        25.8    57.0        9       10
+    rung2a       41.8    83.0        5        5
+    rung4        37.1    85.6        2        4
+
+  lidar:1.0   (n = 28 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        34.6    80.0        4        8
+    rung2a       51.6    81.0        2        6
+    rung4        39.6    85.7        4        3
+
+  camera:1.0   (n = 27 routes usable for all models)
+    model          DS     RC%  blocked  stalled
+    rung0        32.5    59.8        9        9
+    rung2a       45.2    77.7        5        6
+    rung4        30.5    70.0        8        6
+
+============================================================================
+3. THE COMPARISON -- each model minus rung2a, paired route by route
+============================================================================
+
+  none:0   (n = 28)
+    rung0     vs rung2a    mean  -15.9  sd  38.5  se   7.3  95% [ -30.5,   -1.4]  better on 11/28  resolved
+    rung4     vs rung2a    mean   -4.7  sd  43.2  se   8.2  95% [ -21.0,  +11.7]  better on 11/28  NOT resolved (interval spans 0)
+
+  lidar:1.0   (n = 28)
+    rung0     vs rung2a    mean  -17.0  sd  40.4  se   7.6  95% [ -32.3,   -1.7]  better on 7/28  resolved
+    rung4     vs rung2a    mean  -12.0  sd  38.8  se   7.3  95% [ -26.7,   +2.6]  better on 11/28  NOT resolved (interval spans 0)
+
+  camera:1.0   (n = 27)
+    rung0     vs rung2a    mean  -12.6  sd  33.5  se   6.4  95% [ -25.5,   +0.3]  better on 11/27  NOT resolved (interval spans 0)
+    rung4     vs rung2a    mean  -14.7  sd  35.0  se   6.7  95% [ -28.2,   -1.2]  better on 9/27  resolved
+
+  A positive mean favours the first model. Read the interval before the
+  mean: with a per-route spread this wide, only an interval clear of zero
+  supports a claim.

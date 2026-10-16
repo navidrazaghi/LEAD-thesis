@@ -1,0 +1,896 @@
+26-09-16 18:59:44 [INFO] [src/lead/common/logging_setup.py:171] Logging configured: level=INFO for 'lead' modules
+26-09-16 18:59:47 [INFO] [src/lead/training/build_cache.py:307] Starting cache build: policy lead.policy.transfuser.transfuser:Transfuser, split normal_view, cache dir /home/razzaghi/LEAD/lead/data/lead/123D/transfuser_training_cache
+26-09-16 18:59:48 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 61568 scenes in ['normal_view']
+26-09-16 18:59:48 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:48 [INFO] [src/lead/training/build_cache.py:364] Building 444 logs with 8 workers
+Caching:   0%|          | 0/444 [00:00<?, ?log/s]26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 49 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:   0%|          | 1/444 [00:00<05:42,  1.29log/s]26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 55 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 47 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 51 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 163 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 56 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 157 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 37 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 41 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 40 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 45 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 43 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 45 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 47 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 385 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 82 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:   3%|▎         | 14/444 [00:00<00:20, 21.22log/s]26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 42 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 48 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 46 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 40 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 22 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 43 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 126 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 140 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 53 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 67 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 111 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 196 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 114 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 76 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 107 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 416 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 103 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 125 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 412 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 104 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 412 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 122 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 461 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 87 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 67 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:   8%|▊         | 37/444 [00:00<00:06, 58.60log/s]26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 70 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 71 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 98 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 196 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 119 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 76 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 419 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 131 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 406 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 424 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 48 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 39 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 135 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 414 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 40 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 45 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 139 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 26 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  13%|█▎        | 59/444 [00:01<00:04, 91.39log/s]26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 199 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 72 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 64 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 241 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 121 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 180 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 129 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 146 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 147 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 149 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 146 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 153 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 162 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 166 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 122 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 173 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 77 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 117 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 140 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 78 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 205 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 139 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 135 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  18%|█▊        | 82/444 [00:01<00:02, 122.50log/s]26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 198 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 286 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 230 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 139 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 158 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 165 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 131 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 72 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 73 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 76 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 85 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 210 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 211 scenes in ['normal_view']
+26-09-16 18:59:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 90 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 91 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 384 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 132 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 135 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 132 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 130 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 503 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 132 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 131 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  23%|██▎       | 104/444 [00:01<00:02, 143.82log/s]26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 132 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 132 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 133 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 129 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 136 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 129 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 138 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 104 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 118 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 106 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 152 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 109 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 111 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 110 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 113 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 105 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 108 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 114 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 114 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 81 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 87 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 82 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 145 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  30%|██▉       | 132/444 [00:01<00:01, 177.00log/s]26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 162 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 213 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 70 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 97 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 143 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 86 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 123 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 137 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 105 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 137 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 131 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 136 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 108 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 135 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 136 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 186 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 126 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 41 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 105 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 53 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 43 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 52 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 51 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 51 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 58 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 110 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 102 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 92 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 108 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 86 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 96 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  35%|███▌      | 157/444 [00:01<00:01, 191.67log/s]26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 116 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 90 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 146 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 159 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 222 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 107 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 222 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 223 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 237 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 287 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 111 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 78 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 93 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 93 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 95 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 99 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 76 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 103 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 109 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 114 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 94 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  41%|████      | 183/444 [00:01<00:01, 209.84log/s]26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 96 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 194 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 251 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 251 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 87 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 199 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 199 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 195 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 111 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 97 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 114 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 137 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 127 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 153 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 139 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 137 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 134 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 139 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 130 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 101 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 135 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 761 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  47%|████▋     | 207/444 [00:01<00:01, 214.86log/s]26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 202 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 162 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 234 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 233 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 90 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 133 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 105 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 78 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 128 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 146 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 142 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 141 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 216 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 193 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 108 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 159 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 258 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 138 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 134 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 167 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 91 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 130 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 109 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  52%|█████▏    | 231/444 [00:01<00:00, 215.47log/s]26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 97 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 90 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 153 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 85 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 113 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 109 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 99 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 141 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 90 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 81 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 79 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 172 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 172 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 172 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 113 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 106 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 185 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 204 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 158 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 285 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 144 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 128 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 169 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 159 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  57%|█████▋    | 255/444 [00:01<00:00, 218.92log/s]26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 175 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 171 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 158 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 159 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 163 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 156 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 162 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 175 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 161 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 174 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 133 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 119 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 126 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 134 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 94 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 124 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 122 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 95 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 98 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 98 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 104 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 117 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 130 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  63%|██████▎   | 279/444 [00:02<00:00, 224.45log/s]26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 94 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 93 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 130 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 98 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 81 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 102 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 130 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 96 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 87 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 94 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 118 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 119 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 122 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 98 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 127 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 118 scenes in ['normal_view']
+26-09-16 18:59:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:03 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 101 scenes in ['normal_view']
+26-09-16 19:00:03 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:05 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 144 scenes in ['normal_view']
+26-09-16 19:00:05 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:05 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 167 scenes in ['normal_view']
+26-09-16 19:00:05 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  63%|██████▎   | 279/444 [00:18<00:00, 224.45log/s]Caching:  66%|██████▌   | 292/444 [00:19<00:38,  3.91log/s] 26-09-16 19:00:08 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 124 scenes in ['normal_view']
+26-09-16 19:00:08 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  66%|██████▌   | 293/444 [00:19<00:38,  3.92log/s]26-09-16 19:00:08 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 58 scenes in ['normal_view']
+26-09-16 19:00:08 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:08 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 77 scenes in ['normal_view']
+26-09-16 19:00:08 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:08 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 146 scenes in ['normal_view']
+26-09-16 19:00:08 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:09 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 170 scenes in ['normal_view']
+26-09-16 19:00:09 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:15 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 77 scenes in ['normal_view']
+26-09-16 19:00:15 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:17 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 112 scenes in ['normal_view']
+26-09-16 19:00:17 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:17 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 110 scenes in ['normal_view']
+26-09-16 19:00:17 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:22 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 118 scenes in ['normal_view']
+26-09-16 19:00:22 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:24 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 119 scenes in ['normal_view']
+26-09-16 19:00:24 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:25 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 93 scenes in ['normal_view']
+26-09-16 19:00:25 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  66%|██████▌   | 293/444 [00:38<00:38,  3.92log/s]Caching:  68%|██████▊   | 303/444 [00:39<01:30,  1.55log/s]26-09-16 19:00:28 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 178 scenes in ['normal_view']
+26-09-16 19:00:28 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  68%|██████▊   | 304/444 [00:39<01:28,  1.58log/s]26-09-16 19:00:28 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 93 scenes in ['normal_view']
+26-09-16 19:00:28 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:33 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 197 scenes in ['normal_view']
+26-09-16 19:00:33 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:33 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 155 scenes in ['normal_view']
+26-09-16 19:00:33 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:34 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 95 scenes in ['normal_view']
+26-09-16 19:00:34 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:40 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 61 scenes in ['normal_view']
+26-09-16 19:00:40 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:40 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 142 scenes in ['normal_view']
+26-09-16 19:00:40 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:43 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 147 scenes in ['normal_view']
+26-09-16 19:00:43 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:44 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 185 scenes in ['normal_view']
+26-09-16 19:00:44 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  68%|██████▊   | 304/444 [00:59<01:28,  1.58log/s]Caching:  70%|███████   | 312/444 [00:59<02:27,  1.11s/log]26-09-16 19:00:48 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 147 scenes in ['normal_view']
+26-09-16 19:00:48 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  70%|███████   | 313/444 [01:01<02:31,  1.15s/log]26-09-16 19:00:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 131 scenes in ['normal_view']
+26-09-16 19:00:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:56 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 93 scenes in ['normal_view']
+26-09-16 19:00:56 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:00:57 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 84 scenes in ['normal_view']
+26-09-16 19:00:57 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:02 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 170 scenes in ['normal_view']
+26-09-16 19:01:02 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:05 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 195 scenes in ['normal_view']
+26-09-16 19:01:05 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  70%|███████   | 313/444 [01:19<02:31,  1.15s/log]Caching:  72%|███████▏  | 318/444 [01:20<03:45,  1.79s/log]26-09-16 19:01:08 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 280 scenes in ['normal_view']
+26-09-16 19:01:08 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  72%|███████▏  | 319/444 [01:21<03:39,  1.76s/log]26-09-16 19:01:10 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 92 scenes in ['normal_view']
+26-09-16 19:01:10 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:11 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 204 scenes in ['normal_view']
+26-09-16 19:01:11 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:12 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 200 scenes in ['normal_view']
+26-09-16 19:01:12 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:12 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 103 scenes in ['normal_view']
+26-09-16 19:01:12 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:13 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 156 scenes in ['normal_view']
+26-09-16 19:01:13 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:25 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 180 scenes in ['normal_view']
+26-09-16 19:01:25 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  72%|███████▏  | 319/444 [01:39<03:39,  1.76s/log]Caching:  73%|███████▎  | 325/444 [01:41<04:33,  2.30s/log]26-09-16 19:01:29 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 154 scenes in ['normal_view']
+26-09-16 19:01:29 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  73%|███████▎  | 326/444 [01:43<04:29,  2.29s/log]26-09-16 19:01:32 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 151 scenes in ['normal_view']
+26-09-16 19:01:32 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:38 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 85 scenes in ['normal_view']
+26-09-16 19:01:38 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:43 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 95 scenes in ['normal_view']
+26-09-16 19:01:43 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:46 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 92 scenes in ['normal_view']
+26-09-16 19:01:46 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  74%|███████▍  | 330/444 [01:58<05:15,  2.77s/log]26-09-16 19:01:47 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 106 scenes in ['normal_view']
+26-09-16 19:01:47 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  75%|███████▍  | 331/444 [02:06<06:06,  3.24s/log]26-09-16 19:01:54 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 96 scenes in ['normal_view']
+26-09-16 19:01:54 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:55 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 95 scenes in ['normal_view']
+26-09-16 19:01:55 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:58 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 95 scenes in ['normal_view']
+26-09-16 19:01:58 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  75%|███████▌  | 334/444 [02:10<04:54,  2.68s/log]26-09-16 19:01:59 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 95 scenes in ['normal_view']
+26-09-16 19:01:59 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:01:59 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 97 scenes in ['normal_view']
+26-09-16 19:01:59 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  76%|███████▌  | 336/444 [02:13<04:19,  2.40s/log]26-09-16 19:02:01 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 94 scenes in ['normal_view']
+26-09-16 19:02:01 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:02:04 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 92 scenes in ['normal_view']
+26-09-16 19:02:04 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  76%|███████▌  | 338/444 [02:18<04:25,  2.51s/log]26-09-16 19:02:07 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 94 scenes in ['normal_view']
+26-09-16 19:02:07 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  76%|███████▋  | 339/444 [02:24<05:06,  2.92s/log]26-09-16 19:02:12 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 97 scenes in ['normal_view']
+26-09-16 19:02:12 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  77%|███████▋  | 340/444 [02:24<04:14,  2.45s/log]26-09-16 19:02:13 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 85 scenes in ['normal_view']
+26-09-16 19:02:13 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  77%|███████▋  | 341/444 [02:27<04:21,  2.54s/log]26-09-16 19:02:16 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 19:02:16 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  77%|███████▋  | 342/444 [02:27<03:36,  2.13s/log]26-09-16 19:02:16 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 51 scenes in ['normal_view']
+26-09-16 19:02:16 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  77%|███████▋  | 343/444 [02:29<03:16,  1.95s/log]26-09-16 19:02:18 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 68 scenes in ['normal_view']
+26-09-16 19:02:18 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  77%|███████▋  | 344/444 [02:30<02:56,  1.77s/log]26-09-16 19:02:19 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 65 scenes in ['normal_view']
+26-09-16 19:02:19 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  78%|███████▊  | 345/444 [02:32<03:11,  1.94s/log]26-09-16 19:02:21 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 67 scenes in ['normal_view']
+26-09-16 19:02:21 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  78%|███████▊  | 346/444 [02:36<03:53,  2.38s/log]26-09-16 19:02:25 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 19:02:25 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  78%|███████▊  | 347/444 [02:37<03:12,  1.99s/log]26-09-16 19:02:26 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 124 scenes in ['normal_view']
+26-09-16 19:02:26 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  78%|███████▊  | 348/444 [02:41<04:02,  2.53s/log]26-09-16 19:02:30 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 128 scenes in ['normal_view']
+26-09-16 19:02:30 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  79%|███████▊  | 349/444 [02:42<03:20,  2.11s/log]26-09-16 19:02:31 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 111 scenes in ['normal_view']
+26-09-16 19:02:31 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  79%|███████▉  | 350/444 [02:42<02:26,  1.56s/log]26-09-16 19:02:31 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 206 scenes in ['normal_view']
+26-09-16 19:02:31 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  79%|███████▉  | 351/444 [02:43<02:05,  1.35s/log]26-09-16 19:02:32 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 180 scenes in ['normal_view']
+26-09-16 19:02:32 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  79%|███████▉  | 352/444 [02:43<01:31,  1.01log/s]26-09-16 19:02:32 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 163 scenes in ['normal_view']
+26-09-16 19:02:32 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  80%|███████▉  | 353/444 [02:45<01:58,  1.30s/log]26-09-16 19:02:34 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 221 scenes in ['normal_view']
+26-09-16 19:02:34 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  80%|███████▉  | 354/444 [02:50<03:33,  2.37s/log]26-09-16 19:02:39 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 197 scenes in ['normal_view']
+26-09-16 19:02:39 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  80%|███████▉  | 355/444 [02:57<05:41,  3.84s/log]26-09-16 19:02:46 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 165 scenes in ['normal_view']
+26-09-16 19:02:46 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  80%|████████  | 356/444 [03:01<05:44,  3.91s/log]26-09-16 19:02:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 298 scenes in ['normal_view']
+26-09-16 19:02:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  80%|████████  | 357/444 [03:02<04:12,  2.91s/log]26-09-16 19:02:51 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 177 scenes in ['normal_view']
+26-09-16 19:02:51 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  81%|████████  | 358/444 [03:07<05:11,  3.62s/log]26-09-16 19:02:56 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 195 scenes in ['normal_view']
+26-09-16 19:02:56 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  81%|████████  | 359/444 [03:10<04:38,  3.27s/log]26-09-16 19:02:59 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 258 scenes in ['normal_view']
+26-09-16 19:02:59 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  81%|████████  | 360/444 [03:13<04:35,  3.28s/log]26-09-16 19:03:02 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 90 scenes in ['normal_view']
+26-09-16 19:03:02 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  81%|████████▏ | 361/444 [03:18<05:21,  3.88s/log]26-09-16 19:03:07 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 79 scenes in ['normal_view']
+26-09-16 19:03:07 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  82%|████████▏ | 362/444 [03:20<04:17,  3.14s/log]26-09-16 19:03:09 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 172 scenes in ['normal_view']
+26-09-16 19:03:09 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  82%|████████▏ | 363/444 [03:22<03:57,  2.93s/log]26-09-16 19:03:11 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 156 scenes in ['normal_view']
+26-09-16 19:03:11 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  82%|████████▏ | 364/444 [03:27<04:45,  3.57s/log]26-09-16 19:03:16 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 142 scenes in ['normal_view']
+26-09-16 19:03:16 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  82%|████████▏ | 365/444 [03:30<04:23,  3.34s/log]26-09-16 19:03:19 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 80 scenes in ['normal_view']
+26-09-16 19:03:19 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  82%|████████▏ | 366/444 [03:30<03:09,  2.43s/log]26-09-16 19:03:19 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 94 scenes in ['normal_view']
+26-09-16 19:03:19 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  83%|████████▎ | 367/444 [03:39<05:21,  4.18s/log]26-09-16 19:03:27 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 115 scenes in ['normal_view']
+26-09-16 19:03:27 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  83%|████████▎ | 368/444 [03:44<05:39,  4.47s/log]26-09-16 19:03:33 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 81 scenes in ['normal_view']
+26-09-16 19:03:33 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  83%|████████▎ | 369/444 [03:46<04:33,  3.65s/log]26-09-16 19:03:34 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 154 scenes in ['normal_view']
+26-09-16 19:03:34 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  83%|████████▎ | 370/444 [03:46<03:19,  2.70s/log]26-09-16 19:03:35 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 153 scenes in ['normal_view']
+26-09-16 19:03:35 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  84%|████████▎ | 371/444 [03:50<03:36,  2.97s/log]26-09-16 19:03:38 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 79 scenes in ['normal_view']
+26-09-16 19:03:38 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  84%|████████▍ | 372/444 [03:50<02:34,  2.15s/log]26-09-16 19:03:39 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 177 scenes in ['normal_view']
+26-09-16 19:03:39 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  84%|████████▍ | 373/444 [03:51<02:12,  1.87s/log]26-09-16 19:03:40 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 79 scenes in ['normal_view']
+26-09-16 19:03:40 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  84%|████████▍ | 374/444 [03:52<01:50,  1.58s/log]26-09-16 19:03:41 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 134 scenes in ['normal_view']
+26-09-16 19:03:41 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  84%|████████▍ | 375/444 [03:57<03:09,  2.75s/log]26-09-16 19:03:46 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 141 scenes in ['normal_view']
+26-09-16 19:03:46 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  85%|████████▍ | 376/444 [03:58<02:16,  2.01s/log]26-09-16 19:03:46 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 207 scenes in ['normal_view']
+26-09-16 19:03:46 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  85%|████████▍ | 377/444 [04:03<03:17,  2.94s/log]26-09-16 19:03:52 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 144 scenes in ['normal_view']
+26-09-16 19:03:52 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  85%|████████▌ | 378/444 [04:04<02:45,  2.50s/log]26-09-16 19:03:53 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 137 scenes in ['normal_view']
+26-09-16 19:03:53 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  85%|████████▌ | 379/444 [04:13<04:39,  4.29s/log]26-09-16 19:04:02 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 99 scenes in ['normal_view']
+26-09-16 19:04:02 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  86%|████████▌ | 380/444 [04:13<03:22,  3.17s/log]26-09-16 19:04:02 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 221 scenes in ['normal_view']
+26-09-16 19:04:02 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  86%|████████▌ | 381/444 [04:14<02:24,  2.30s/log]26-09-16 19:04:02 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 244 scenes in ['normal_view']
+26-09-16 19:04:02 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  86%|████████▌ | 382/444 [04:19<03:15,  3.15s/log]26-09-16 19:04:08 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 765 scenes in ['normal_view']
+26-09-16 19:04:08 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  86%|████████▋ | 383/444 [04:19<02:18,  2.27s/log]26-09-16 19:04:08 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 142 scenes in ['normal_view']
+26-09-16 19:04:08 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  86%|████████▋ | 384/444 [04:24<03:13,  3.23s/log]26-09-16 19:04:13 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 961 scenes in ['normal_view']
+26-09-16 19:04:13 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  87%|████████▋ | 385/444 [04:25<02:24,  2.46s/log]26-09-16 19:04:14 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 188 scenes in ['normal_view']
+26-09-16 19:04:14 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  87%|████████▋ | 386/444 [04:28<02:25,  2.50s/log]26-09-16 19:04:16 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 145 scenes in ['normal_view']
+26-09-16 19:04:16 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  87%|████████▋ | 387/444 [04:28<01:51,  1.96s/log]26-09-16 19:04:17 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 208 scenes in ['normal_view']
+26-09-16 19:04:17 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  87%|████████▋ | 388/444 [04:40<04:39,  4.99s/log]26-09-16 19:04:29 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 144 scenes in ['normal_view']
+26-09-16 19:04:29 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  88%|████████▊ | 389/444 [04:48<05:08,  5.61s/log]26-09-16 19:04:36 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 134 scenes in ['normal_view']
+26-09-16 19:04:36 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  88%|████████▊ | 390/444 [04:51<04:28,  4.97s/log]26-09-16 19:04:40 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 133 scenes in ['normal_view']
+26-09-16 19:04:40 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  88%|████████▊ | 391/444 [04:52<03:19,  3.77s/log]26-09-16 19:04:41 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 52 scenes in ['normal_view']
+26-09-16 19:04:41 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  88%|████████▊ | 392/444 [04:54<02:45,  3.19s/log]26-09-16 19:04:43 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 106 scenes in ['normal_view']
+26-09-16 19:04:43 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  89%|████████▊ | 393/444 [05:00<03:27,  4.06s/log]26-09-16 19:04:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 178 scenes in ['normal_view']
+26-09-16 19:04:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  89%|████████▊ | 394/444 [05:02<02:48,  3.38s/log]26-09-16 19:04:50 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 187 scenes in ['normal_view']
+26-09-16 19:04:50 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  89%|████████▉ | 395/444 [05:05<02:50,  3.49s/log]26-09-16 19:04:54 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 226 scenes in ['normal_view']
+26-09-16 19:04:54 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  89%|████████▉ | 396/444 [05:10<03:03,  3.83s/log]26-09-16 19:04:59 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 191 scenes in ['normal_view']
+26-09-16 19:04:59 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  89%|████████▉ | 397/444 [05:11<02:15,  2.89s/log]26-09-16 19:05:00 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 191 scenes in ['normal_view']
+26-09-16 19:05:00 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  90%|████████▉ | 398/444 [05:13<02:03,  2.69s/log]26-09-16 19:05:02 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 174 scenes in ['normal_view']
+26-09-16 19:05:02 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  90%|████████▉ | 399/444 [05:30<05:10,  6.89s/log]26-09-16 19:05:18 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 188 scenes in ['normal_view']
+26-09-16 19:05:18 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  90%|█████████ | 400/444 [05:33<04:17,  5.85s/log]26-09-16 19:05:22 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 185 scenes in ['normal_view']
+26-09-16 19:05:22 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  90%|█████████ | 401/444 [05:41<04:35,  6.41s/log]26-09-16 19:05:30 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 174 scenes in ['normal_view']
+26-09-16 19:05:30 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  91%|█████████ | 402/444 [05:42<03:24,  4.88s/log]26-09-16 19:05:31 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 185 scenes in ['normal_view']
+26-09-16 19:05:31 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  91%|█████████ | 403/444 [05:42<02:24,  3.52s/log]26-09-16 19:05:31 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 221 scenes in ['normal_view']
+26-09-16 19:05:31 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  91%|█████████ | 404/444 [05:43<01:44,  2.61s/log]26-09-16 19:05:32 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 214 scenes in ['normal_view']
+26-09-16 19:05:32 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  91%|█████████ | 405/444 [06:00<04:27,  6.87s/log]26-09-16 19:05:49 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 173 scenes in ['normal_view']
+26-09-16 19:05:49 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  91%|█████████▏| 406/444 [06:03<03:39,  5.78s/log]26-09-16 19:05:52 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 186 scenes in ['normal_view']
+26-09-16 19:05:52 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  92%|█████████▏| 407/444 [06:09<03:34,  5.80s/log]26-09-16 19:05:58 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 167 scenes in ['normal_view']
+26-09-16 19:05:58 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  92%|█████████▏| 408/444 [06:12<03:04,  5.13s/log]26-09-16 19:06:01 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 175 scenes in ['normal_view']
+26-09-16 19:06:01 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  92%|█████████▏| 409/444 [06:18<03:00,  5.17s/log]26-09-16 19:06:06 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 190 scenes in ['normal_view']
+26-09-16 19:06:06 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  92%|█████████▏| 410/444 [06:18<02:05,  3.68s/log]26-09-16 19:06:07 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 105 scenes in ['normal_view']
+26-09-16 19:06:07 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:06:07 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 104 scenes in ['normal_view']
+26-09-16 19:06:07 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  93%|█████████▎| 412/444 [06:27<02:14,  4.20s/log]26-09-16 19:06:16 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 101 scenes in ['normal_view']
+26-09-16 19:06:16 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  93%|█████████▎| 413/444 [06:33<02:17,  4.43s/log]26-09-16 19:06:21 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 160 scenes in ['normal_view']
+26-09-16 19:06:21 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  93%|█████████▎| 414/444 [06:36<02:01,  4.05s/log]26-09-16 19:06:24 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 136 scenes in ['normal_view']
+26-09-16 19:06:24 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+26-09-16 19:06:24 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 184 scenes in ['normal_view']
+26-09-16 19:06:24 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  94%|█████████▎| 416/444 [06:36<01:07,  2.40s/log]26-09-16 19:06:25 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 157 scenes in ['normal_view']
+26-09-16 19:06:25 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  94%|█████████▍| 417/444 [06:40<01:18,  2.89s/log]26-09-16 19:06:29 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 139 scenes in ['normal_view']
+26-09-16 19:06:29 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  94%|█████████▍| 418/444 [06:45<01:22,  3.18s/log]26-09-16 19:06:33 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 159 scenes in ['normal_view']
+26-09-16 19:06:33 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  94%|█████████▍| 419/444 [06:45<01:00,  2.40s/log]26-09-16 19:06:34 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 167 scenes in ['normal_view']
+26-09-16 19:06:34 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  95%|█████████▍| 420/444 [06:49<01:07,  2.80s/log]26-09-16 19:06:37 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 159 scenes in ['normal_view']
+26-09-16 19:06:37 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  95%|█████████▍| 421/444 [06:55<01:25,  3.72s/log]26-09-16 19:06:43 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 160 scenes in ['normal_view']
+26-09-16 19:06:43 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  95%|█████████▌| 422/444 [07:00<01:30,  4.09s/log]26-09-16 19:06:48 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 148 scenes in ['normal_view']
+26-09-16 19:06:48 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  95%|█████████▌| 423/444 [07:04<01:27,  4.19s/log]26-09-16 19:06:53 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 180 scenes in ['normal_view']
+26-09-16 19:06:53 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  95%|█████████▌| 424/444 [07:06<01:07,  3.39s/log]26-09-16 19:06:54 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 264 scenes in ['normal_view']
+26-09-16 19:06:54 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  96%|█████████▌| 425/444 [07:08<00:58,  3.10s/log]26-09-16 19:06:57 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 242 scenes in ['normal_view']
+26-09-16 19:06:57 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  96%|█████████▌| 426/444 [07:13<01:04,  3.61s/log]26-09-16 19:07:02 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 53 scenes in ['normal_view']
+26-09-16 19:07:02 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  96%|█████████▌| 427/444 [07:15<00:52,  3.08s/log]26-09-16 19:07:03 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 54 scenes in ['normal_view']
+26-09-16 19:07:03 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  96%|█████████▋| 428/444 [07:17<00:43,  2.73s/log]26-09-16 19:07:05 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 50 scenes in ['normal_view']
+26-09-16 19:07:05 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  97%|█████████▋| 429/444 [07:22<00:55,  3.68s/log]26-09-16 19:07:11 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 48 scenes in ['normal_view']
+26-09-16 19:07:11 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  97%|█████████▋| 430/444 [07:23<00:39,  2.79s/log]26-09-16 19:07:12 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 51 scenes in ['normal_view']
+26-09-16 19:07:12 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  97%|█████████▋| 431/444 [07:24<00:29,  2.28s/log]26-09-16 19:07:13 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 44 scenes in ['normal_view']
+26-09-16 19:07:13 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  97%|█████████▋| 432/444 [07:25<00:23,  1.94s/log]26-09-16 19:07:14 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 46 scenes in ['normal_view']
+26-09-16 19:07:14 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  98%|█████████▊| 433/444 [07:26<00:17,  1.56s/log]26-09-16 19:07:15 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 45 scenes in ['normal_view']
+26-09-16 19:07:15 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  98%|█████████▊| 434/444 [07:31<00:26,  2.64s/log]26-09-16 19:07:20 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 40 scenes in ['normal_view']
+26-09-16 19:07:20 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  98%|█████████▊| 435/444 [07:33<00:20,  2.25s/log]26-09-16 19:07:21 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 43 scenes in ['normal_view']
+26-09-16 19:07:21 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  98%|█████████▊| 436/444 [07:33<00:14,  1.79s/log]26-09-16 19:07:22 [INFO] [src/lead/log_reader/scene_index.py:92] Scene index: 49 scenes in ['normal_view']
+26-09-16 19:07:22 [INFO] [src/lead/log_reader/scene_index.py:219] No perturbated split at /home/razzaghi/LEAD/lead/data/lead/123D/logs/perturbated_view, using normal views only
+Caching:  98%|█████████▊| 437/444 [07:34<00:10,  1.53s/log]Caching:  99%|█████████▊| 438/444 [07:34<00:06,  1.10s/log]Caching:  99%|█████████▉| 439/444 [07:36<00:06,  1.23s/log]Caching:  99%|█████████▉| 440/444 [07:38<00:06,  1.65s/log]Caching:  99%|█████████▉| 441/444 [07:40<00:04,  1.49s/log]Caching: 100%|█████████▉| 442/444 [07:41<00:03,  1.51s/log]Caching: 100%|█████████▉| 443/444 [07:47<00:02,  2.93s/log]Caching: 100%|██████████| 444/444 [07:49<00:00,  2.66s/log]Caching: 100%|██████████| 444/444 [07:49<00:00,  1.06s/log]
+26-09-16 19:07:38 [INFO] [src/lead/training/build_cache.py:368] Cached 22493 (sample, view) pairs (0.38 GB) over 444 logs
+26-09-16 19:07:38 [INFO] [src/lead/training/build_cache.py:393] Every shard of 1 is built; wrote the manifest.

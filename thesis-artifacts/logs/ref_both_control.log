@@ -1,0 +1,5 @@
+1 runs in the matrix, 0 already done, 1 to go
+  first pending: ref0 at both:1.0
+CARLA on 3000, traffic manager on 3100
+[1/1] ref0 both:1.0 18305.xml -> DS 2.0085 (Failed - Agent got blocked, 1447.8s)
+results in results/ref_both_control.csv

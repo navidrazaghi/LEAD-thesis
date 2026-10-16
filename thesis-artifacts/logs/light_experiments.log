@@ -1,0 +1,124 @@
+[21:52:08] starting the three experiments; the campaign is stopped
+[21:52:08] === cost ===
+== cost ==
+  rung0      60.30 ±  6.37 ms    1.35 GB    68.88 M
+  rung2      66.08 ±  6.73 ms    1.34 GB    67.67 M
+  rung4      66.31 ±  6.10 ms    1.34 GB    67.71 M
+wrote /home/razzaghi/LEAD/lead/results/cost.csv
+[21:52:38] cost finished
+[21:52:38] === intervention ===
+== intervention ==
+  rung2a   none   :0.0  replace camera  -> 0.3625 m
+  rung2a   none   :0.0  replace lidar   -> 2.3164 m
+  rung2a   camera :1.0  replace camera  -> 0.2240 m
+  rung2a   camera :1.0  replace lidar   -> 1.3563 m
+  rung2a   lidar  :1.0  replace camera  -> 1.0055 m
+  rung2a   lidar  :1.0  replace lidar   -> 2.4043 m
+  rung2b   none   :0.0  replace camera  -> 0.2821 m
+  rung2b   none   :0.0  replace lidar   -> 0.9761 m
+  rung2b   camera :1.0  replace camera  -> 0.3043 m
+  rung2b   camera :1.0  replace lidar   -> 1.1187 m
+  rung2b   lidar  :1.0  replace camera  -> 0.6558 m
+  rung2b   lidar  :1.0  replace lidar   -> 0.6952 m
+  rung3    none   :0.0  replace camera  -> 0.2017 m
+  rung3    none   :0.0  replace lidar   -> 1.2539 m
+  rung3    camera :1.0  replace camera  -> 0.3311 m
+  rung3    camera :1.0  replace lidar   -> 1.4283 m
+  rung3    lidar  :1.0  replace camera  -> 0.9244 m
+  rung3    lidar  :1.0  replace lidar   -> 1.1264 m
+  rung4    none   :0.0  replace camera  -> 0.3661 m
+  rung4    none   :0.0  replace lidar   -> 1.3193 m
+  rung4    camera :1.0  replace camera  -> 0.4654 m
+  rung4    camera :1.0  replace lidar   -> 1.6298 m
+  rung4    lidar  :1.0  replace camera  -> 0.9170 m
+  rung4    lidar  :1.0  replace lidar   -> 0.8448 m
+wrote /home/razzaghi/LEAD/lead/results/intervention.csv
+[21:57:25] intervention finished
+[21:57:25] === ood ===
+== ood ==
+  rung0    clean          -> 0.6909 m
+  rung0    motion_blur    -> 0.6998 m
+  rung0    posterise      -> 0.6923 m
+  rung0    occlusion      -> 0.7043 m
+  rung0    misalignment   -> 0.9971 m
+  rung0    band_dropout   -> 0.8957 m
+  rung2a   clean          -> 0.4424 m
+  rung2a   motion_blur    -> 0.4541 m
+  rung2a   posterise      -> 0.4563 m
+  rung2a   occlusion      -> 0.5143 m
+  rung2a   misalignment   -> 1.2174 m
+  rung2a   band_dropout   -> 0.9743 m
+  rung3    clean          -> 0.5812 m
+  rung3    motion_blur    -> 0.5850 m
+  rung3    posterise      -> 0.5742 m
+  rung3    occlusion      -> 0.6274 m
+  rung3    misalignment   -> 1.4411 m
+  rung3    band_dropout   -> 1.2889 m
+  rung4    clean          -> 0.4412 m
+  rung4    motion_blur    -> 0.4508 m
+  rung4    posterise      -> 0.4441 m
+  rung4    occlusion      -> 0.4546 m
+  rung4    misalignment   -> 1.0646 m
+  rung4    band_dropout   -> 1.0283 m
+wrote /home/razzaghi/LEAD/lead/results/ood.csv
+[22:00:35] ood finished
+[22:00:35] results:
+--- cost ---
+model,forward_ms_mean,forward_ms_sd,peak_memory_gb,parameters_m,warmup,repeats,batch_size
+rung0,60.3,6.37,1.35,68.88,10,50,8
+rung2,66.08,6.73,1.34,67.67,10,50,8
+rung4,66.31,6.1,1.34,67.71,10,50,8
+--- intervention ---
+model,condition,replaced,waypoint_movement_m,batches,failure
+rung2a,none:0.0,camera,0.3625,60,
+rung2a,none:0.0,lidar,2.3164,60,
+rung2a,camera:1.0,camera,0.224,60,
+rung2a,camera:1.0,lidar,1.3563,60,
+rung2a,lidar:1.0,camera,1.0055,60,
+rung2a,lidar:1.0,lidar,2.4043,60,
+rung2b,none:0.0,camera,0.2821,60,
+rung2b,none:0.0,lidar,0.9761,60,
+rung2b,camera:1.0,camera,0.3043,60,
+rung2b,camera:1.0,lidar,1.1187,60,
+rung2b,lidar:1.0,camera,0.6558,60,
+rung2b,lidar:1.0,lidar,0.6952,60,
+rung3,none:0.0,camera,0.2017,60,
+rung3,none:0.0,lidar,1.2539,60,
+rung3,camera:1.0,camera,0.3311,60,
+rung3,camera:1.0,lidar,1.4283,60,
+rung3,lidar:1.0,camera,0.9244,60,
+rung3,lidar:1.0,lidar,1.1264,60,
+rung4,none:0.0,camera,0.3661,60,
+rung4,none:0.0,lidar,1.3193,60,
+rung4,camera:1.0,camera,0.4654,60,
+rung4,camera:1.0,lidar,1.6298,60,
+rung4,lidar:1.0,camera,0.917,60,
+rung4,lidar:1.0,lidar,0.8448,60,
+--- ood ---
+model,corruption,waypoint_l2_m,batches,failure
+rung0,clean,0.6909,60,
+rung0,motion_blur,0.6998,60,
+rung0,posterise,0.6923,60,
+rung0,occlusion,0.7043,60,
+rung0,misalignment,0.9971,60,
+rung0,band_dropout,0.8957,60,
+rung2a,clean,0.4424,60,
+rung2a,motion_blur,0.4541,60,
+rung2a,posterise,0.4563,60,
+rung2a,occlusion,0.5143,60,
+rung2a,misalignment,1.2174,60,
+rung2a,band_dropout,0.9743,60,
+rung3,clean,0.5812,60,
+rung3,motion_blur,0.585,60,
+rung3,posterise,0.5742,60,
+rung3,occlusion,0.6274,60,
+rung3,misalignment,1.4411,60,
+rung3,band_dropout,1.2889,60,
+rung4,clean,0.4412,60,
+rung4,motion_blur,0.4508,60,
+rung4,posterise,0.4441,60,
+rung4,occlusion,0.4546,60,
+rung4,misalignment,1.0646,60,
+rung4,band_dropout,1.0283,60,
+[22:00:35] restarting the closed-loop campaign
+[22:00:55] campaign is running again

@@ -1,0 +1,23 @@
+
+rung4  signal=observability
+  condition        caution       sd  batches
+  none:0.0           0.390    0.176       25
+  camera:0.5         0.546    0.201       25
+  camera:1.0         0.566    0.214       25
+  lidar:0.5          0.316    0.153       25
+  lidar:1.0          0.204    0.073       25
+  both:0.5           0.596    0.154       25
+  both:1.0           0.822    0.045       25
+  --- swing from intact ---
+  camera:0.5        +0.155
+  camera:1.0        +0.175
+  lidar:0.5         -0.074
+  lidar:1.0         -0.186
+  both:0.5          +0.206
+  both:1.0          +0.431
+
+wrote results/observability_sweep.csv
+
+Read the swing, and read the sd next to it. A signal whose between-condition
+swing is smaller than its within-condition spread cannot be acted on per tick,
+whatever its mean does.

@@ -1,0 +1,241 @@
+26-09-15 11:03:58 [INFO] [src/lead/common/logging_setup.py:171] Logging configured: level=INFO for 'lead' modules
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:398] Removing existing output directory: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:437] 
+================================================================================
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:438] Starting CARLA Leaderboard Evaluation (bench2drive)
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:441] Command: /home/razzaghi/miniconda3/envs/lead/bin/python /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py --routes /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/23687.xml --track SENSORS --checkpoint /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687/checkpoint_endpoint.json --agent /home/razzaghi/LEAD/lead/src/lead/evaluation/agents/transfuser/transfuser_agent.py --agent-config /home/razzaghi/LEAD/lead/checkpoints/transfuser --debug 0 --resume 0 --port 2000 --traffic-manager-port 8055 --traffic-manager-seed 0 --repetitions 1 --timeout 180.0 --record None
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:442] ================================================================================
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:443] Routes: /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/23687.xml
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:444] Scenario Type: HighwayExit
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:445] Route ID: 23687
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:446] Output Dir: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] PYTHONPATH: /home/razzaghi/CARLA/standard_0916/PythonAPI/carla:/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard:/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/scenario_runner
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] SCENARIO_RUNNER_ROOT: /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/scenario_runner
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] LEADERBOARD_ROOT: /home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] ROUTES: /home/razzaghi/LEAD/lead/src/lead/routes/benchmark_routes/bench2drive/23687.xml
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] SCENARIO_TYPE: HighwayExit
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] BENCHMARK_ROUTE_ID: 23687
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] ROUTE_NUMBER: 23687
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] PYTHONUNBUFFERED: 1
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] IS_BENCH2DRIVE: 1
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] OUTPUT_DIR: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] EVALUATION_OUTPUT_DIR: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] CHECKPOINT_DIR: /home/razzaghi/LEAD/lead/checkpoints/transfuser
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:448] SAVE_PATH: /home/razzaghi/LEAD/lead/outputs/local_evaluation/23687
+26-09-15 11:03:58 [INFO] [src/lead/__main__.py:449] ================================================================================
+
+/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py:21: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+load_world success , attempts=0
+traffic_manager init success, try_time=0
+/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py:100: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if LooseVersion(dist.version) < LooseVersion('0.9.10'):
+26-09-15 11:04:59 [INFO] [src/lead/common/logging_setup.py:171] Logging configured: level=INFO for 'lead' modules
+26-09-15 11:05:02 [INFO] [src/lead/common/logging_setup.py:171] Logging configured: level=INFO for 'lead' modules
+Problem reading checkpoint. Found no data
+
+[1m========= Preparing RouteScenario_23687 (repetition 0) =========[0m
+[1m> Loading the world[0m
+[1m>  Load_world time=3.5704777240753174
+[1m> Apply settings time=0.05503511428833008
+[1m> Reset all traffic lights time=4.75493597984314
+26-09-15 11:05:38 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:25] WDT: Started
+26-09-15 11:05:38 [INFO] [src/lead/api/abstract_driving_agent.py:512] Set global plan with 143 waypoints.
+26-09-15 11:05:38 [INFO] [src/lead/evaluation/inference/policy_runner.py:53] Loading model weight from /home/razzaghi/LEAD/lead/checkpoints/transfuser/model_0030.pth
+26-09-15 11:05:40 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:407] Using velocity encoder.
+26-09-15 11:05:40 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:412] Using target point encoder.
+26-09-15 11:05:40 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:416] Using previous target point encoder.
+26-09-15 11:05:40 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:420] Using next target point encoder.
+26-09-15 11:05:40 [INFO] [src/lead/policy/transfuser/decoder/planning_decoder.py:432] Using radar encoder with 20 tokens.
+26-09-15 11:06:06 [INFO] [src/lead/common/base_agent.py:42] Noisy lat ref: 0.0, Noisy lon ref: 0.0
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_1 at position (0.0, -0.3, 2.25), size: 384x384px
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_2 at position (0.25, 0.0, 2.25), size: 384x384px
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_3 at position (0.0, 0.3, 2.25), size: 384x384px
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_4 at position (-0.3, 0.3, 2.25), size: 384x384px
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_5 at position (-0.55, 0.0, 2.25), size: 384x384px
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_6 at position (-0.3, -0.3, 2.25), size: 384x384px
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:164] Added sensor: lidar1 at position (1.0, 0.0, 2.5)
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:164] Added sensor: lidar2 at position (-1.0, 0.0, 2.5)
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar1 at position (2.6, 0.0, 0.6)
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar2 at position (2.6, 0.0, 0.6)
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar3 at position (-2.6, 0.0, 0.6)
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar4 at position (-2.6, 0.0, 0.6)
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:110] Added sensor: imu
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:124] Added sensor: gps
+26-09-15 11:06:46 [INFO] [src/lead/common/sensors/av_sensor_setup.py:132] Added sensor: speed
+26-09-15 11:06:47 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+[1m> Agent setup time=68.45s[0m
+[1m> Running the route[0m
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_1 at position (0.0, -0.3, 2.25), size: 384x384px
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_2 at position (0.25, 0.0, 2.25), size: 384x384px
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_3 at position (0.0, 0.3, 2.25), size: 384x384px
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_4 at position (-0.3, 0.3, 2.25), size: 384x384px
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_5 at position (-0.55, 0.0, 2.25), size: 384x384px
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:226] Added sensor: rgb_6 at position (-0.3, -0.3, 2.25), size: 384x384px
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:164] Added sensor: lidar1 at position (1.0, 0.0, 2.5)
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:164] Added sensor: lidar2 at position (-1.0, 0.0, 2.5)
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar1 at position (2.6, 0.0, 0.6)
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar2 at position (2.6, 0.0, 0.6)
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar3 at position (-2.6, 0.0, 0.6)
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:67] Added sensor: radar4 at position (-2.6, 0.0, 0.6)
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:110] Added sensor: imu
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:124] Added sensor: gps
+26-09-15 11:06:47 [INFO] [src/lead/common/sensors/av_sensor_setup.py:132] Added sensor: speed
+26-09-15 11:20:41 [INFO] [src/lead/api/abstract_driving_agent.py:522] [TransfuserAgent] Scenario reference set for infraction tracking
+26-09-15 11:20:41 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:25] WDT: Started
+26-09-15 11:20:41 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:25] WDT: Started
+=== [Agent] -- Wallclock = 2026-09-15 11:22:28.241 -- System time = 0.000 -- Game time = 0.050 -- Ratio = 0.000x
+26-09-15 11:24:18 [INFO] [src/lead/evaluation/recorder/video_recorder.py:240] [VideoRecorder] Initialized 2 demo cameras
+=== [Agent] -- Wallclock = 2026-09-15 11:24:19.665 -- System time = 111.424 -- Game time = 0.100 -- Ratio = 0.001x
+Watchdog exception - Timeout of 181.0 seconds occured
+
+[91mStopping the route, the agent has crashed:
+
+Traceback (most recent call last):
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/scenarios/scenario_manager.py", line 188, in _tick_scenario
+    ego_action = self._agent_wrapper()
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/autoagents/agent_wrapper.py", line 151, in __call__
+    return self._agent()
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/autoagents/autonomous_agent.py", line 122, in __call__
+    control = self.run_step(input_data, timestamp)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 549, in wrapped_fn
+    return wrapped_fn_impl(args, kwargs, bound, memos)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 473, in wrapped_fn_impl
+    out = fn(*args, **kwargs)
+  File "/home/razzaghi/LEAD/lead/src/lead/api/abstract_driving_agent.py", line 600, in run_step
+    prediction = self.policy_runner.forward(self.features)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 549, in wrapped_fn
+    return wrapped_fn_impl(args, kwargs, bound, memos)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 473, in wrapped_fn_impl
+    out = fn(*args, **kwargs)
+  File "/home/razzaghi/LEAD/lead/src/lead/evaluation/inference/policy_runner.py", line 86, in forward
+    return self.policy(data)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 549, in wrapped_fn
+    return wrapped_fn_impl(args, kwargs, bound, memos)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 473, in wrapped_fn_impl
+    out = fn(*args, **kwargs)
+  File "/home/razzaghi/LEAD/lead/src/lead/policy/transfuser/transfuser.py", line 130, in forward
+    bev_features, image_features = self.backbone(batch)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 549, in wrapped_fn
+    return wrapped_fn_impl(args, kwargs, bound, memos)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 473, in wrapped_fn_impl
+    out = fn(*args, **kwargs)
+  File "/home/razzaghi/LEAD/lead/src/lead/policy/transfuser/encoder/transfuser_backbone.py", line 215, in forward
+    return self._forward(rgb, lidar)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 549, in wrapped_fn
+    return wrapped_fn_impl(args, kwargs, bound, memos)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 473, in wrapped_fn_impl
+    out = fn(*args, **kwargs)
+  File "/home/razzaghi/LEAD/lead/src/lead/policy/transfuser/encoder/transfuser_backbone.py", line 257, in _forward
+    image_features = self.forward_layer_block(
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 549, in wrapped_fn
+    return wrapped_fn_impl(args, kwargs, bound, memos)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/jaxtyping/_decorator.py", line 473, in wrapped_fn_impl
+    out = fn(*args, **kwargs)
+  File "/home/razzaghi/LEAD/lead/src/lead/policy/transfuser/encoder/transfuser_backbone.py", line 293, in forward_layer_block
+    features = module(features)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/container.py", line 244, in forward
+    input = module(input)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/timm/models/resnet.py", line 131, in forward
+    x = self.conv1(x)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 548, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/home/razzaghi/miniconda3/envs/lead/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 543, in _conv_forward
+    return F.conv2d(
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py", line 129, in _signal_handler
+    self.manager.signal_handler(signum, frame)
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/scenarios/scenario_manager.py", line 87, in signal_handler
+    raise RuntimeError("Agent took longer than {}s to send its command".format(self._timeout))
+RuntimeError: Agent took longer than 180.0s to send its command
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/leaderboard_evaluator.py", line 416, in _load_and_run_scenario
+    self.manager.run_scenario()
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/scenarios/scenario_manager.py", line 161, in run_scenario
+    self._tick_scenario()
+  File "/home/razzaghi/LEAD/lead/3rd_party/leaderboard/bench2drive/leaderboard/leaderboard/scenarios/scenario_manager.py", line 196, in _tick_scenario
+    raise AgentError(e)
+leaderboard.autoagents.agent_wrapper.AgentError: Agent took longer than 180.0s to send its command
+[0m
+[1m> Stopping the route[0m
+26-09-15 11:27:29 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+26-09-15 11:27:30 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+
+[1m========= Results of RouteScenario_23687 (repetition 0) ------ [91mFAILURE[0m [1m=========[0m
+
+╒═══════════════════════╤═════════════════════╕
+│ Start Time            │ 2026-09-15 11:20:41 │
+├───────────────────────┼─────────────────────┤
+│ End Time              │ 2026-09-15 11:27:30 │
+├───────────────────────┼─────────────────────┤
+│ System Time           │ 409.84s             │
+├───────────────────────┼─────────────────────┤
+│ Game Time             │ 0.1s                │
+├───────────────────────┼─────────────────────┤
+│ Ratio (Game / System) │ 0.0                 │
+╘═══════════════════════╧═════════════════════╛
+
+╒═══════════════════════╤═════════╤═════════╕
+│ Criterion             │ Result  │ Value   │
+├───────────────────────┼─────────┼─────────┤
+│ RouteCompletionTest   │ [91mFAILURE[0m │ 0.0 %   │
+├───────────────────────┼─────────┼─────────┤
+│ OutsideRouteLanesTest │ [92mSUCCESS[0m │ 0 %     │
+├───────────────────────┼─────────┼─────────┤
+│ CollisionTest         │ [92mSUCCESS[0m │ 0 times │
+├───────────────────────┼─────────┼─────────┤
+│ RunningRedLightTest   │ [92mSUCCESS[0m │ 0 times │
+├───────────────────────┼─────────┼─────────┤
+│ RunningStopTest       │ [92mSUCCESS[0m │ 0 times │
+├───────────────────────┼─────────┼─────────┤
+│ MinSpeedTest          │ [92mSUCCESS[0m │ 100 %   │
+├───────────────────────┼─────────┼─────────┤
+│ InRouteTest           │ [92mSUCCESS[0m │         │
+├───────────────────────┼─────────┼─────────┤
+│ AgentBlockedTest      │ [92mSUCCESS[0m │         │
+├───────────────────────┼─────────┼─────────┤
+│ ScenarioTimeoutTest   │ [92mSUCCESS[0m │ 0 times │
+├───────────────────────┼─────────┼─────────┤
+│ Timeout               │ [92mSUCCESS[0m │         │
+╘═══════════════════════╧═════════╧═════════╛
+
+[1m> Registering the route statistics[0m
+26-09-15 11:28:18 [INFO] [src/lead/api/abstract_driving_agent.py:633] <leaderboard.utils.statistics_manager.RouteRecord object at 0x7f07a93971f0>
+26-09-15 11:29:00 [INFO] [src/lead/evaluation/recorder/video_recorder.py:814] Destroyed demo camera 1
+26-09-15 11:29:00 [INFO] [src/lead/evaluation/recorder/video_recorder.py:814] Destroyed demo camera 2
+WARNING: attempting to unsubscribe from stream but sensor wasn't listening: Actor 3712 (sensor.camera.rgb) 
+ERROR: failed to destroy actor 3712 : unable to destroy actor: not found 
+WARNING: attempting to unsubscribe from stream but sensor wasn't listening: Actor 3711 (sensor.camera.rgb) 
+ERROR: failed to destroy actor 3711 : unable to destroy actor: not found 
+False
+cost time=1437.9909238815308
+[1m> Registering the global statistics[0m
+26-09-15 11:29:02 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+26-09-15 11:29:02 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped
+26-09-15 11:29:02 [INFO] [../../miniconda3/envs/lead/lib/python3.10/site-packages/simple_watchdog_timer.py:92] WDT: Stopped

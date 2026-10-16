@@ -1,0 +1,12 @@
+[10-15 22:59:04] dense curriculum-v2 run finished; starting consistency post-train from its pretrain
+[10-15 22:59:04] post-train starting: 31 epochs, curriculum v2 + consistency 0.1
+[10-16 05:24:21] post-train done
+[10-16 05:24:21] scoring dense_consistency, 30 routes x 3 conditions, 3 instance(s)
+shard 0: 10 routes on port 8800
+shard 1: 10 routes on port 9200
+shard 2: 10 routes on port 9600
+shards finished, failed: none
+merged 90 rows into /home/razzaghi/LEAD/lead/results/closed_loop_diverse_dense_consistency.csv (matrix is 90)
+[10-16 07:54:58] done: 90 rows in results/closed_loop_diverse_dense_consistency.csv
+[10-16 07:54:58] read against results/closed_loop_diverse_dense_curriculum2.csv: same pretrain,
+[10-16 07:54:58] same curriculum, same recipe -- only the consistency term differs.

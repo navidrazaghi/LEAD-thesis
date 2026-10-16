@@ -1,0 +1,23 @@
+
+rung4  signal=cross_modal
+  condition        caution       sd  batches
+  none:0.0           0.608    0.115       25
+  camera:0.5         0.658    0.087       25
+  camera:1.0         0.833    0.114       25
+  lidar:0.5          0.600    0.113       25
+  lidar:1.0          0.567    0.116       25
+  both:0.5           0.667    0.059       25
+  both:1.0           0.875    0.082       25
+  --- swing from intact ---
+  camera:0.5        +0.050
+  camera:1.0        +0.225
+  lidar:0.5         -0.008
+  lidar:1.0         -0.042
+  both:0.5          +0.058
+  both:1.0          +0.267
+
+wrote results/cross_modal_sweep.csv
+
+Read the swing, and read the sd next to it. A signal whose between-condition
+swing is smaller than its within-condition spread cannot be acted on per tick,
+whatever its mean does.

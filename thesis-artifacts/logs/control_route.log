@@ -1,0 +1,5 @@
+1 runs in the matrix, 0 already done, 1 to go
+  first pending: rung4_ens at both:1.0
+CARLA on 3000, traffic manager on 3100
+[1/1] rung4_ens both:1.0 18305.xml -> DS 5.911385 (Failed - Agent got blocked, 1092.8s)
+results in results/control_route.csv

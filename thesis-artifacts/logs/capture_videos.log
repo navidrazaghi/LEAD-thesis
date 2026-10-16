@@ -1,0 +1,26 @@
+1 runs in the matrix, 0 already done, 1 to go
+  first pending: rung0_lead at none:0
+CARLA on 3000, traffic manager on 3100
+      | timed out after 2700s, killing the group
+      | 1000 ticks, 51.0 m, 82% of ticks stationary
+[1/1] rung0_lead none:0 11715.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+results in /home/razzaghi/videos/capture_stall.csv
+1 runs in the matrix, 0 already done, 1 to go
+  first pending: rung0_lead at none:0
+CARLA on 3000, traffic manager on 3100
+[1/1] rung0_lead none:0 24071.xml -> DS 91.024693 (Completed, 275.4s)
+results in /home/razzaghi/videos/capture_intact.csv
+1 runs in the matrix, 0 already done, 1 to go
+  first pending: rung0_lead at camera:1.0
+CARLA on 3000, traffic manager on 3100
+      | timed out after 2700s, killing the group
+      | 600 ticks, 70.8 m, 23% of ticks stationary
+[1/1] rung0_lead camera:1.0 24071.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+results in /home/razzaghi/videos/capture_camera_destroyed.csv
+1 runs in the matrix, 0 already done, 1 to go
+  first pending: rung0_lead at lidar:1.0
+CARLA on 3000, traffic manager on 3100
+      | timed out after 2700s, killing the group
+      | 600 ticks, 19.8 m, 85% of ticks stationary
+[1/1] rung0_lead lidar:1.0 24071.xml -> DS None (NoResult, 2700.2s)  [sim failure, will restart]
+results in /home/razzaghi/videos/capture_lidar_destroyed.csv

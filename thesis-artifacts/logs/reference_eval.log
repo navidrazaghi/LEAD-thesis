@@ -1,0 +1,120 @@
+[08:12:34] starting reference evaluation
+90 runs in the matrix, 0 already done, 90 to go
+  first pending: ref0 at none:0
+CARLA on 3000, traffic manager on 3100
+[1/90] ref0 none:0 10857.xml -> DS 100.0 (Completed, 585.9s)
+[2/90] ref0 none:0 11715.xml -> DS 100.0 (Completed, 695.3s)
+[3/90] ref0 none:0 11755.xml -> DS 60.0 (Completed, 473.0s)
+[4/90] ref0 none:0 14194.xml -> DS 27.636 (Failed - Agent got blocked, 1806.2s)
+[5/90] ref0 none:0 23901.xml -> DS 100.0 (Completed, 594.7s)
+[6/90] ref0 none:0 24071.xml -> DS 100.0 (Completed, 355.4s)
+[7/90] ref0 none:0 24092.xml -> DS 100.0 (Completed, 370.3s)
+  restarting CARLA
+[8/90] ref0 none:0 24224.xml -> DS 50.0 (Completed, 284.7s)
+[9/90] ref0 none:0 24258.xml -> DS 100.0 (Completed, 383.0s)
+[10/90] ref0 none:0 24294.xml -> DS 100.0 (Completed, 673.2s)
+[11/90] ref0 none:0 24340.xml -> DS 100.0 (Completed, 372.7s)
+[12/90] ref0 none:0 24795.xml -> DS 100.0 (Completed, 401.5s)
+[13/90] ref0 none:0 24841.xml -> DS 100.0 (Completed, 422.8s)
+[14/90] ref0 none:0 25300.xml -> DS 100.0 (Completed, 457.1s)
+[15/90] ref0 none:0 25439.xml -> DS 100.0 (Completed, 368.1s)
+  restarting CARLA
+[16/90] ref0 none:0 25845.xml -> DS 100.0 (Completed, 1691.9s)
+[17/90] ref0 none:0 25854.xml -> DS 100.0 (Completed, 629.0s)
+[18/90] ref0 none:0 25857.xml -> DS 100.0 (Completed, 1753.9s)
+[19/90] ref0 none:0 25928.xml -> DS 100.0 (Completed, 391.1s)
+[20/90] ref0 none:0 25951.xml -> DS 100.0 (Completed, 380.9s)
+[21/90] ref0 none:0 25968.xml -> DS 40.681481 (Failed - Agent got blocked, 886.8s)
+[22/90] ref0 none:0 26405.xml -> DS 100.0 (Completed, 330.0s)
+[23/90] ref0 none:0 26406.xml -> DS 100.0 (Completed, 507.6s)
+  restarting CARLA
+[24/90] ref0 none:0 26456.xml -> DS 100.0 (Completed, 1260.9s)
+[25/90] ref0 none:0 26956.xml -> DS 100.0 (Completed, 318.5s)
+[26/90] ref0 none:0 27515.xml -> DS 72.946137 (Completed, 507.8s)
+[27/90] ref0 none:0 27532.xml -> DS 100.0 (Completed, 377.8s)
+[28/90] ref0 none:0 27582.xml -> DS 100.0 (Completed, 333.0s)
+[29/90] ref0 none:0 28035.xml -> DS 70.0 (Completed, 404.4s)
+[30/90] ref0 none:0 28154.xml -> DS 100.0 (Completed, 610.2s)
+[31/90] ref0 lidar:1.0 10857.xml -> DS 100.0 (Completed, 552.5s)
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[32/90] ref0 lidar:1.0 11715.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[33/90] ref0 lidar:1.0 11755.xml -> DS 60.0 (Completed, 567.6s)
+[34/90] ref0 lidar:1.0 14194.xml -> DS 48.0 (Completed, 539.8s)
+[35/90] ref0 lidar:1.0 23901.xml -> DS 100.0 (Completed, 618.7s)
+[36/90] ref0 lidar:1.0 24071.xml -> DS 100.0 (Completed, 417.9s)
+[37/90] ref0 lidar:1.0 24092.xml -> DS 60.0 (Completed, 321.3s)
+[38/90] ref0 lidar:1.0 24224.xml -> DS 100.0 (Completed, 396.4s)
+[39/90] ref0 lidar:1.0 24258.xml -> DS 36.0 (Completed, 392.8s)
+  restarting CARLA
+[40/90] ref0 lidar:1.0 24294.xml -> DS 100.0 (Completed, 682.2s)
+[41/90] ref0 lidar:1.0 24340.xml -> DS 100.0 (Completed, 334.0s)
+[42/90] ref0 lidar:1.0 24795.xml -> DS 60.0 (Completed, 369.1s)
+[43/90] ref0 lidar:1.0 24841.xml -> DS 100.0 (Completed, 417.8s)
+[44/90] ref0 lidar:1.0 25300.xml -> DS 100.0 (Completed, 482.8s)
+[45/90] ref0 lidar:1.0 25439.xml -> DS 100.0 (Completed, 518.4s)
+      | timed out after 2700s, killing the group
+[46/90] ref0 lidar:1.0 25845.xml -> DS None (NoResult, 2700.4s)  [sim failure, will restart]
+  restarting CARLA
+[47/90] ref0 lidar:1.0 25854.xml -> DS 100.0 (Completed, 1298.5s)
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[48/90] ref0 lidar:1.0 25857.xml -> DS None (NoResult, 2700.4s)  [sim failure, will restart]
+  restarting CARLA
+[49/90] ref0 lidar:1.0 25928.xml -> DS 34.818 (Failed - TickRuntime, 2691.8s)
+[50/90] ref0 lidar:1.0 25951.xml -> DS 36.0 (Completed, 674.6s)
+[51/90] ref0 lidar:1.0 25968.xml -> DS 100.0 (Completed, 203.6s)
+[52/90] ref0 lidar:1.0 26405.xml -> DS 100.0 (Completed, 339.4s)
+[53/90] ref0 lidar:1.0 26406.xml -> DS 100.0 (Completed, 498.1s)
+[54/90] ref0 lidar:1.0 26456.xml -> DS 100.0 (Completed, 1216.1s)
+[55/90] ref0 lidar:1.0 26956.xml -> DS 60.0 (Completed, 321.8s)
+  restarting CARLA
+[56/90] ref0 lidar:1.0 27515.xml -> DS 100.0 (Completed, 786.6s)
+[57/90] ref0 lidar:1.0 27532.xml -> DS 100.0 (Completed, 358.6s)
+[58/90] ref0 lidar:1.0 27582.xml -> DS 60.0 (Completed, 357.5s)
+[59/90] ref0 lidar:1.0 28035.xml -> DS 70.0 (Completed, 377.4s)
+[60/90] ref0 lidar:1.0 28154.xml -> DS 100.0 (Completed, 599.3s)
+[61/90] ref0 camera:1.0 10857.xml -> DS None (NoResult, 195.8s)  [sim failure, will restart]
+  restarting CARLA
+[62/90] ref0 camera:1.0 11715.xml -> DS 70.0 (Completed, 433.2s)
+[63/90] ref0 camera:1.0 11755.xml -> DS 70.0 (Completed, 699.8s)
+  restarting CARLA
+[64/90] ref0 camera:1.0 14194.xml -> DS 100.0 (Completed, 551.2s)
+[65/90] ref0 camera:1.0 23901.xml -> DS 77.65444 (Completed, 602.8s)
+[66/90] ref0 camera:1.0 24071.xml -> DS 100.0 (Completed, 341.6s)
+[67/90] ref0 camera:1.0 24092.xml -> DS 96.020018 (Completed, 441.3s)
+[68/90] ref0 camera:1.0 24224.xml -> DS 50.0 (Completed, 389.8s)
+[69/90] ref0 camera:1.0 24258.xml -> DS 94.001539 (Completed, 395.6s)
+[70/90] ref0 camera:1.0 24294.xml -> DS 50.0 (Completed, 304.6s)
+[71/90] ref0 camera:1.0 24340.xml -> DS 30.831447 (Completed, 416.6s)
+  restarting CARLA
+[72/90] ref0 camera:1.0 24795.xml -> DS 100.0 (Completed, 392.1s)
+[73/90] ref0 camera:1.0 24841.xml -> DS 100.0 (Completed, 393.1s)
+[74/90] ref0 camera:1.0 25300.xml -> DS 36.0 (Completed, 550.9s)
+[75/90] ref0 camera:1.0 25439.xml -> DS 100.0 (Completed, 466.3s)
+[76/90] ref0 camera:1.0 25845.xml -> DS 21.6 (Completed, 539.0s)
+      | timed out after 2700s, killing the group
+[77/90] ref0 camera:1.0 25854.xml -> DS None (NoResult, 2700.1s)  [sim failure, will restart]
+  restarting CARLA
+[78/90] ref0 camera:1.0 25857.xml -> DS 21.6 (Completed, 828.5s)
+[79/90] ref0 camera:1.0 25928.xml -> DS 60.0 (Completed, 333.3s)
+  restarting CARLA
+      | timed out after 2700s, killing the group
+[80/90] ref0 camera:1.0 25951.xml -> DS None (NoResult, 2700.5s)  [sim failure, will restart]
+  restarting CARLA
+[81/90] ref0 camera:1.0 25968.xml -> DS 47.026974 (Completed, 225.3s)
+[82/90] ref0 camera:1.0 26405.xml -> DS 60.0 (Completed, 336.9s)
+[83/90] ref0 camera:1.0 26406.xml -> DS 21.6 (Completed, 587.1s)
+[84/90] ref0 camera:1.0 26456.xml -> DS 100.0 (Completed, 415.1s)
+[85/90] ref0 camera:1.0 26956.xml -> DS 60.0 (Completed, 326.3s)
+[86/90] ref0 camera:1.0 27515.xml -> DS 28.71415 (Completed, 305.5s)
+[87/90] ref0 camera:1.0 27532.xml -> DS 31.535385 (Failed - Agent got blocked, 968.2s)
+  restarting CARLA
+[88/90] ref0 camera:1.0 27582.xml -> DS 100.0 (Completed, 370.5s)
+      | timed out after 2700s, killing the group
+[89/90] ref0 camera:1.0 28035.xml -> DS None (NoResult, 2700.7s)  [sim failure, will restart]
+  restarting CARLA
+[90/90] ref0 camera:1.0 28154.xml -> DS 36.0 (Completed, 684.9s)
+results in /home/razzaghi/LEAD/lead/results/reference_closed_loop.csv
+[02:01:10] done

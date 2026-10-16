@@ -98,3 +98,66 @@ will be present here only if they finished in time:
 
 `docs/baseline_convergence.md` and the thesis text carry the reasoning behind
 all three.
+
+## Status on 2026-10-16: the diverse-subset campaign
+
+Everything below was added after the section above was written. It is enough to
+continue from where the server stopped, without the server.
+
+### What ran
+
+All on the 585-log diverse subset (`provenance/new_subset/selected_frames_town.txt`),
+same recipe, 31 pretrain + 31 post-train epochs each, closed loop on the 30
+degradation routes x {intact, LiDAR destroyed, camera destroyed}.
+
+| Model | Output dirs (server) | Config | Closed-loop CSV |
+| :--- | :--- | :--- | :--- |
+| Baseline, dense fusion | `rung0_diverse`, `rung0_diverse_post31` | `configs/rung0_diverse*.yaml` | `results/closed_loop_diverse_baseline.csv` |
+| Deformable fusion | `rung2ad_diverse`, `rung2ad_diverse_post31` | `configs/rung2ad_diverse*.yaml` | `results/closed_loop_diverse_deformable.csv` |
+| Deformable + curriculum v2 | `rung2ad_diverse_curriculum2`, `..._post31` | `configs/rung2ad_diverse_curriculum2*.yaml` | `results/closed_loop_diverse_curriculum2.csv` |
+| Dense + curriculum v2 | `rung2a_diverse_curriculum2`, `..._post31` | `configs/rung2a_diverse_curriculum2*.yaml` | `results/closed_loop_diverse_dense_curriculum2.csv` |
+| Dense + curriculum v2 + consistency 0.1 | `rung2a_diverse_consistency_post31` (post-train from the dense + curriculum v2 pretrain) | `configs/rung2a_diverse_consistency_post31.yaml` | `results/closed_loop_diverse_dense_consistency.csv` |
+
+Also: `results/closed_loop_scenario44.csv` (44-route one-per-scenario set,
+baseline and reference), `results/heldout_loss.csv` (28 held-out logs),
+`results/parallel_validation.csv` (parallel vs sequential evaluation agreement),
+`results/training_curves_diverse_4models.csv` (per-epoch training objective).
+
+### Code added in this campaign (this commit series)
+
+- Curriculum v2 in `src/lead/policy/transfuser/utils/sensor_degradation.py`:
+  independent per-modality draws, a full-failure probability, and camera/LiDAR
+  misalignment. Flags in `src/lead/config/training/data_config.py`, all default
+  off and draw-for-draw identical to the old curriculum when off.
+- Degradation-consistency distillation: `training.data.degradation_consistency_weight`
+  (default 0). `augment_batch_with_clean` in `transfuser.py` builds the damaged
+  student batch and a clean teacher copy; `_degradation_consistency` in
+  `train.py` adds an L1 term on waypoints and route, damaged samples only,
+  teacher without gradient.
+- `scripts/common/run_evaluation.py --work-dir`, so parallel shards do not share
+  (and wipe) one scratch directory.
+- `src/lead/routes/eval_sets/scenario_44.txt`, one Bench2Drive route per scenario type.
+
+### Scripts as they were run
+
+`scripts/server_home/` is every driver and analysis script from the server home
+directory touched since 2026-10-05, unedited. The ones that matter to continue:
+
+| Script | What it does |
+| :--- | :--- |
+| `design_subset.py`, `fetch_selected.py` | Build and download the diverse subset |
+| `run_diverse_*.sh` | Train + evaluate one model of the table above |
+| `eval_parallel.py` | Sharded closed-loop evaluation (3 CARLA instances, ports 400 apart) |
+| `heldout_loss.py` | Loss on the 28 held-out logs |
+| `live_loss_plot.py`, `curves_dump.py` | Training curves from the offline W&B logs |
+| `modality_intervention.py` | Open-loop plan displacement when one sensor is destroyed |
+| `verify_deformable.py`, `verify_curriculum_v2.py`, `verify_consistency.py` | Checks run before training |
+| `model_view.py` | Export what the policy receives for one sample |
+
+Chain logs of these runs are in `logs/diverse/`.
+
+### Not in git
+
+The checkpoints of the five models above (`outputs/<run>/model_0030.pth`), for
+the same size reason as before. Without them every result above is reproducible
+from the configs, at 11.5 hours (dense) to 16.7 hours (deformable) of training per model on one A100.

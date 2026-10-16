@@ -1,0 +1,5 @@
+1 runs in the matrix, 0 already done, 1 to go
+  first pending: rung0 at camera:0.5
+CARLA on 3000, traffic manager on 3100
+[1/1] rung0 camera:0.5 10857.xml -> DS 23.72 (Failed - Agent got blocked, 514.2s)
+results in results/smoke.csv

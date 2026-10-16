@@ -1,0 +1,91 @@
+model,modality,severity,route,driving_score,route_completion,infraction_penalty,status,town,num_infractions,seconds,ticks,distance_m,stationary_frac
+dense_curriculum2,none,0,10857.xml,53.98,53.98,1.0,Failed - Agent deviated from the route,Town12,10,166.0,241,67.9,0.042
+dense_curriculum2,none,0,14194.xml,26.838,44.73,0.6,Failed - Agent got blocked,Town12,10,647.2,1995,35.3,0.908
+dense_curriculum2,none,0,24092.xml,100.0,100,1.0,Completed,Town13,20,202.6,380,149.0,0.026
+dense_curriculum2,none,0,24294.xml,50.0,100,0.5,Completed,Town02,20,227.7,929,102.3,0.7
+dense_curriculum2,none,0,24841.xml,100.0,100,1.0,Completed,Town01,20,153.2,453,130.6,0.022
+dense_curriculum2,none,0,25845.xml,18.522,51.45,0.36,Failed - TickRuntime,Town15,11,1015.4,3999,56.3,0.934
+dense_curriculum2,none,0,25928.xml,100.0,100,1.0,Completed,Town11,18,127.3,366,101.0,0.121
+dense_curriculum2,none,0,26405.xml,60.0,100,0.6,Completed,Town15,19,107.1,368,134.2,0.027
+dense_curriculum2,none,0,26956.xml,22.05469,100.0,0.220547,Completed,Town05,24,142.7,475,114.0,0.175
+dense_curriculum2,none,0,27582.xml,52.98,52.98,1.0,Failed - Agent deviated from the route,Town11,10,125.6,404,63.9,0.471
+dense_curriculum2,lidar,1.0,10857.xml,53.98,53.98,1.0,Failed - Agent deviated from the route,Town12,10,176.4,239,67.7,0.042
+dense_curriculum2,lidar,1.0,14194.xml,100.0,100,1.0,Completed,Town12,20,206.4,489,75.7,0.449
+dense_curriculum2,lidar,1.0,24092.xml,,,,NoResult,,,287.0,,,
+dense_curriculum2,lidar,1.0,24294.xml,50.0,100,0.5,Completed,Town02,20,219.3,921,102.4,0.707
+dense_curriculum2,lidar,1.0,24841.xml,100.0,100,1.0,Completed,Town01,20,157.9,457,130.5,0.022
+dense_curriculum2,lidar,1.0,25845.xml,30.87,51.45,0.6,Failed - TickRuntime,Town15,10,990.1,3999,56.1,0.944
+dense_curriculum2,lidar,1.0,25928.xml,100.0,100,1.0,Completed,Town11,18,128.3,371,100.6,0.141
+dense_curriculum2,lidar,1.0,26405.xml,100.0,100,1.0,Completed,Town15,18,133.2,431,133.9,0.049
+dense_curriculum2,lidar,1.0,26956.xml,33.930292,100.0,0.339303,Completed,Town05,23,492.8,2341,111.0,0.808
+dense_curriculum2,lidar,1.0,27582.xml,52.98,52.98,1.0,Failed - Agent deviated from the route,Town11,10,125.5,403,63.7,0.463
+dense_curriculum2,camera,1.0,10857.xml,53.98,53.98,1.0,Failed - Agent deviated from the route,Town12,10,187.4,256,67.7,0.043
+dense_curriculum2,camera,1.0,14194.xml,40.0,100,0.4,Completed,Town12,22,138.0,263,75.9,0.038
+dense_curriculum2,camera,1.0,24092.xml,33.454289,100,0.334543,Completed,Town13,23,217.4,512,158.6,0.07
+dense_curriculum2,camera,1.0,24294.xml,44.665,89.33,0.5,Failed - Agent got blocked,Town02,17,407.8,2137,92.7,0.856
+dense_curriculum2,camera,1.0,24841.xml,100.0,100,1.0,Completed,Town01,20,135.7,462,130.8,0.041
+dense_curriculum2,camera,1.0,25845.xml,11.1132,51.45,0.216,Failed - TickRuntime,Town15,12,869.1,3999,61.7,0.905
+dense_curriculum2,camera,1.0,25928.xml,98.001799,100,0.980018,Completed,Town11,19,127.1,428,102.3,0.314
+dense_curriculum2,camera,1.0,26405.xml,44.537893,100,0.445379,Completed,Town15,20,197.7,884,137.6,0.588
+dense_curriculum2,camera,1.0,26956.xml,13.693005,100,0.13693,Completed,Town05,24,299.3,1334,87.1,0.623
+dense_curriculum2,camera,1.0,27582.xml,37.086,52.98,0.7,Failed - Agent deviated from the route,Town11,11,113.4,334,63.9,0.243
+dense_curriculum2,none,0,11715.xml,24.564612,100,0.245646,Completed,Town12,23,273.5,763,93.3,0.541
+dense_curriculum2,none,0,23901.xml,100.0,100.0,1.0,Completed,Town13,21,228.9,457,175.4,0.022
+dense_curriculum2,none,0,24224.xml,50.0,100,0.5,Completed,Town02,21,130.2,354,132.6,0.028
+dense_curriculum2,none,0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,130.1,330,100.8,0.03
+dense_curriculum2,none,0,25300.xml,60.0,100,0.6,Completed,Town04,20,135.6,424,153.9,0.024
+dense_curriculum2,none,0,25854.xml,36.0,100,0.36,Completed,Town03,22,200.1,674,130.4,0.098
+dense_curriculum2,none,0,25951.xml,25.5333,65.47,0.39,Failed - TickRuntime,Town04,14,845.8,3999,94.4,0.891
+dense_curriculum2,none,0,26406.xml,12.96,100,0.1296,Completed,Town04,24,160.0,577,144.5,0.273
+dense_curriculum2,none,0,27515.xml,12.712436,80.48,0.157958,Failed - Agent got blocked,Town03,17,435.3,1963,74.5,0.86
+dense_curriculum2,none,0,28035.xml,50.82,72.6,0.7,Failed - Agent deviated from the route,Town01,14,130.8,411,114.6,0.024
+dense_curriculum2,lidar,1.0,11715.xml,42.0,100,0.42,Completed,Town12,21,164.6,291,86.7,0.069
+dense_curriculum2,lidar,1.0,23901.xml,100.0,100.0,1.0,Completed,Town13,21,223.3,463,175.4,0.022
+dense_curriculum2,lidar,1.0,24224.xml,50.0,100,0.5,Completed,Town02,21,131.5,368,132.3,0.027
+dense_curriculum2,lidar,1.0,24340.xml,100.0,100,1.0,Completed,Town10HD,19,125.1,327,100.7,0.031
+dense_curriculum2,lidar,1.0,25300.xml,100.0,100,1.0,Completed,Town04,19,149.8,483,154.7,0.064
+dense_curriculum2,lidar,1.0,25854.xml,100.0,100,1.0,Completed,Town03,20,138.8,423,133.6,0.024
+dense_curriculum2,lidar,1.0,25951.xml,33.1461,84.99,0.39,Failed - TickRuntime,Town04,18,707.2,3999,120.5,0.842
+dense_curriculum2,lidar,1.0,26406.xml,21.6,100,0.216,Completed,Town04,23,162.1,571,145.3,0.256
+dense_curriculum2,lidar,1.0,27515.xml,28.07601,40.15,0.699278,Failed - Agent deviated from the route,Town03,8,115.8,323,53.7,0.227
+dense_curriculum2,lidar,1.0,28035.xml,72.6,72.6,1.0,Failed - Agent deviated from the route,Town01,13,282.4,1037,114.5,0.603
+dense_curriculum2,camera,1.0,11715.xml,,,,NoResult,,,2700.1,1000,74.2,0.779
+dense_curriculum2,camera,1.0,23901.xml,7.366472,18.39,0.400569,Failed - Agent got blocked,Town13,6,582.2,2292,31.0,0.954
+dense_curriculum2,camera,1.0,24224.xml,50.0,100,0.5,Completed,Town02,21,124.0,362,132.6,0.028
+dense_curriculum2,camera,1.0,24340.xml,72.386872,100,0.723869,Completed,Town10HD,20,128.9,390,115.1,0.026
+dense_curriculum2,camera,1.0,25300.xml,60.0,100,0.6,Completed,Town04,20,130.3,449,160.5,0.022
+dense_curriculum2,camera,1.0,25854.xml,60.0,100,0.6,Completed,Town03,21,629.4,2829,137.4,0.834
+dense_curriculum2,camera,1.0,25951.xml,26.112201,74.48,0.350593,Failed - TickRuntime,Town04,17,825.1,3999,106.8,0.897
+dense_curriculum2,camera,1.0,26406.xml,21.6,100,0.216,Completed,Town04,23,148.6,578,141.2,0.27
+dense_curriculum2,camera,1.0,27515.xml,6.047763,38.11,0.158692,Failed - Agent deviated from the route,Town03,9,149.3,553,49.0,0.69
+dense_curriculum2,camera,1.0,28035.xml,72.6,72.6,1.0,Failed - Agent deviated from the route,Town01,13,279.2,1200,114.4,0.635
+dense_curriculum2,none,0,11755.xml,12.44376,49.38,0.252,Failed - Agent deviated from the route,Town12,12,171.3,327,70.3,0.23
+dense_curriculum2,none,0,24071.xml,100.0,100,1.0,Completed,Town13,21,177.4,239,154.6,0.042
+dense_curriculum2,none,0,24258.xml,60.0,100,0.6,Completed,Town07,20,143.4,407,132.4,0.025
+dense_curriculum2,none,0,24795.xml,100.0,100,1.0,Completed,Town04,20,128.8,425,140.7,0.033
+dense_curriculum2,none,0,25439.xml,100.0,100,1.0,Completed,Town15,18,121.5,410,130.7,0.056
+dense_curriculum2,none,0,25857.xml,60.0,100,0.6,Completed,Town05,19,298.2,1162,134.2,0.677
+dense_curriculum2,none,0,25968.xml,34.11,34.11,1.0,Failed - Agent deviated from the route,Town07,7,186.7,722,47.9,0.76
+dense_curriculum2,none,0,26456.xml,100.0,100,1.0,Completed,Town03,20,397.3,1565,130.5,0.691
+dense_curriculum2,none,0,27532.xml,52.56,52.56,1.0,Failed - Agent deviated from the route,Town11,10,98.9,188,63.9,0.053
+dense_curriculum2,none,0,28154.xml,47.695909,85.08,0.560601,Failed - TickRuntime,Town10HD,18,999.2,3999,134.1,0.873
+dense_curriculum2,lidar,1.0,11755.xml,22.2978,53.09,0.42,Failed - Agent deviated from the route,Town12,11,144.2,217,70.2,0.046
+dense_curriculum2,lidar,1.0,24071.xml,100.0,100,1.0,Completed,Town13,21,176.6,234,154.8,0.043
+dense_curriculum2,lidar,1.0,24258.xml,59.088,98.48,0.6,Failed - TickRuntime,Town07,18,872.9,3999,130.4,0.845
+dense_curriculum2,lidar,1.0,24795.xml,100.0,100,1.0,Completed,Town04,20,137.0,421,140.5,0.062
+dense_curriculum2,lidar,1.0,25439.xml,100.0,100,1.0,Completed,Town15,18,145.3,462,130.4,0.108
+dense_curriculum2,lidar,1.0,25857.xml,100.0,100,1.0,Completed,Town05,18,646.3,2613,133.9,0.855
+dense_curriculum2,lidar,1.0,25968.xml,34.11,34.11,1.0,Failed - Agent deviated from the route,Town07,7,182.9,723,47.8,0.778
+dense_curriculum2,lidar,1.0,26456.xml,100.0,100,1.0,Completed,Town03,20,366.4,1561,130.5,0.69
+dense_curriculum2,lidar,1.0,27532.xml,52.567163,57.37,0.916283,Failed - Agent deviated from the route,Town11,12,125.4,404,66.7,0.524
+dense_curriculum2,lidar,1.0,28154.xml,49.121939,100,0.491219,Completed,Town10HD,22,601.7,2485,157.6,0.774
+dense_curriculum2,camera,1.0,11755.xml,,,,NoResult,,,2700.1,1800,53.5,0.892
+dense_curriculum2,camera,1.0,24071.xml,100.0,100,1.0,Completed,Town13,21,160.7,262,154.7,0.038
+dense_curriculum2,camera,1.0,24258.xml,56.381307,100,0.563813,Completed,Town07,21,134.6,414,135.7,0.024
+dense_curriculum2,camera,1.0,24795.xml,100.0,100,1.0,Completed,Town04,20,106.3,368,138.6,0.027
+dense_curriculum2,camera,1.0,25439.xml,36.0,100,0.36,Completed,Town15,20,110.8,372,133.2,0.027
+dense_curriculum2,camera,1.0,25857.xml,12.667169,41.33,0.306488,Failed - TickRuntime,Town05,10,869.1,3999,60.9,0.952
+dense_curriculum2,camera,1.0,25968.xml,34.11,34.11,1.0,Failed - Agent deviated from the route,Town07,7,120.3,437,47.7,0.587
+dense_curriculum2,camera,1.0,26456.xml,8.983413,100,0.089834,Completed,Town03,25,389.0,1658,148.3,0.662
+dense_curriculum2,camera,1.0,27532.xml,23.721198,100,0.237212,Completed,Town11,22,162.2,715,75.8,0.399
+dense_curriculum2,camera,1.0,28154.xml,53.244842,100,0.532448,Completed,Town10HD,22,671.6,2759,159.7,0.793
